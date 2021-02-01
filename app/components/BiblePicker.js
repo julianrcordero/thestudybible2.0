@@ -31,6 +31,7 @@ const Stack = createStackNavigator();
 import SegmentedControl from "@react-native-community/segmented-control";
 import BooksListScreen from "../screens/BooksListScreen";
 import routes from "../navigation/routes";
+import AppForm from "./forms/Form";
 
 class BiblePicker extends PureComponent {
   constructor(props) {
@@ -62,7 +63,14 @@ class BiblePicker extends PureComponent {
     () => interactionPromise.cancel();
   };
 
-  toggleSearch = () => this.setState({ searchOn: !this.state.searchOn });
+  toggleSearch = () => {
+    this.setState({ searchOn: !this.state.searchOn });
+    this.props.setHistoryVisible(this.state.searchOn);
+  };
+
+  search = ({ search }) => {
+    console.log("My word is: " + search);
+  };
 
   render() {
     const {
@@ -72,40 +80,78 @@ class BiblePicker extends PureComponent {
       fontSize,
       HEADER_HEIGHT,
       placeholder,
+      setHistoryVisible,
       topPanel,
     } = this.props;
 
     return (
-      <View style={{ width: "100%" }}>
+      <View
+        style={{
+          backgroundColor: colors.light,
+          borderColor: colors.medium,
+          borderBottomWidth: 0.2,
+          flexDirection: "row",
+          height: HEADER_HEIGHT,
+          flex: 1,
+          zIndex: 1,
+          width: "100%",
+        }}
+      >
         <View
-          style={{
-            flexDirection: "row",
-            height: HEADER_HEIGHT,
-            zIndex: 1,
-            paddingHorizontal: 10,
-          }}
-        >
-          <View
-            style={{
-              flex: 12,
+          style={[
+            {
               flexDirection: "row",
-            }}
-          >
-            <TouchableOpacity style={styles.search} onPress={this.toggleSearch}>
-              <MaterialCommunityIcons
-                name="magnify"
-                color={colors.black}
-                size={28}
-              />
-            </TouchableOpacity>
-            {this.state.searchOn ? (
+              flex: 12,
+              marginLeft: 15,
+              marginRight: 5,
+              marginVertical: 12,
+            },
+            this.state.searchOn
+              ? {
+                  backgroundColor: "#fff",
+                  borderColor: "#000",
+                  borderRadius: 10,
+                  borderWidth: 0.2,
+                }
+              : null,
+          ]}
+        >
+          <TouchableOpacity style={styles.search} onPress={this.toggleSearch}>
+            <MaterialCommunityIcons
+              name="magnify"
+              color={colors.black}
+              size={26}
+            />
+          </TouchableOpacity>
+          {this.state.searchOn ? (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                // justifyContent: "space-around",
+              }}
+            >
               <TextInput
                 autoFocus
-                style={[styles.reference, styles.searchBar]}
+                icon={"search"}
+                style={styles.searchBar}
                 keyboardType="default"
+                name="search"
                 placeholder="Search"
               />
-            ) : (
+              <TouchableOpacity
+                style={styles.cancel}
+                onPress={this.toggleSearch}
+              >
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  color={colors.black}
+                  size={16}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={{ flex: 1, flexDirection: "row", marginRight: 5 }}>
               <TouchableOpacity
                 onPress={() => topPanel.current.setState({ collapsed: false })}
                 style={styles.reference}
@@ -128,40 +174,48 @@ class BiblePicker extends PureComponent {
                   color={defaultStyles.colors.dark}
                 />
               </TouchableOpacity>
-            )}
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              flex: 8,
-              // width: "45%",
-            }}
-          >
-            <TouchableOpacity
-              style={[styles.icon, { paddingHorizontal: 10 }]}
-              // onPress={props.toggleParagraphMode}
+              <TouchableOpacity style={styles.icon}>
+                <Text style={styles.translationText}>NASB</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.rightButtons}>
+          {this.state.searchOn ? (
+            <View style={{ justifyContent: "center" }}>
+              <Button
+                title={"Cancel"}
+                onPress={() => this.setState({ collapsed: true })}
+              ></Button>
+            </View>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
             >
-              <Text style={styles.translationText}>NASB</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.icon}>
-              <MaterialCommunityIcons
-                name="speaker"
-                color={colors.black}
-                size={24}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.icon}
-              onPress={this._toggleSettings}
-            >
-              <MaterialCommunityIcons
-                name="format-letter-case"
-                color={colors.black}
-                size={24}
-              />
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity style={styles.icon}>
+                <MaterialCommunityIcons
+                  name="speaker"
+                  color={colors.black}
+                  size={24}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.icon}
+                onPress={this._toggleSettings}
+              >
+                <MaterialCommunityIcons
+                  name="format-letter-case"
+                  color={colors.black}
+                  size={24}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     );
@@ -169,23 +223,14 @@ class BiblePicker extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  search: {
+  cancel: {
     alignItems: "center",
-    aspectRatio: 0.8,
-    // backgroundColor: "green",
-    // flexShrink: 1,
+    aspectRatio: 0.75,
     justifyContent: "center",
-  },
-  searchBar: {
-    backgroundColor: colors.white,
-    marginRight: 5,
-    marginVertical: 15,
-    paddingHorizontal: 10,
-    borderRadius: 10,
   },
   icon: {
     alignItems: "center",
-    flex: 1,
+    // backgroundColor: "green",
     justifyContent: "center",
   },
   placeholder: {
@@ -194,8 +239,7 @@ const styles = StyleSheet.create({
   },
   reference: {
     alignItems: "center",
-    // backgroundColor: "blue",
-    flex: 1,
+    flex: 5.5,
     flexDirection: "row",
     justifyContent: "center",
   },
@@ -203,6 +247,22 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.black,
     fontWeight: "bold",
+  },
+  rightButtons: {
+    // backgroundColor: "purple",
+    // flexDirection: "row",
+    flex: 3,
+    justifyContent: "center",
+    marginRight: 15,
+  },
+  search: {
+    alignItems: "center",
+    // backgroundColor: "yellow",
+    aspectRatio: 1,
+    justifyContent: "center",
+  },
+  searchBar: {
+    flex: 1,
   },
   sectionTitle: {
     fontSize: 20,

@@ -50,6 +50,8 @@ function ListItem({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    borderWidth: 0.2,
+    borderColor: colors.light,
     flexDirection: "row",
     height: 50,
     padding: 5,

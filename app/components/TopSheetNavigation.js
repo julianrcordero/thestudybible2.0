@@ -22,6 +22,7 @@ import ListItem from "../components/lists/ListItem";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer } from "@react-navigation/native";
+import SearchHistory from "./SearchHistory";
 
 export default class TopSheetNavigation extends PureComponent {
   constructor(props) {
@@ -31,25 +32,6 @@ export default class TopSheetNavigation extends PureComponent {
   state = {
     pickerType: 0,
     collapsed: true,
-    searchHistory: [
-      { id: 0, title: "monkey" },
-      { id: 1, title: "giraffe" },
-      { id: 2, title: "elephant" },
-    ],
-  };
-
-  renderSearchItem = ({ item, index, separators }) => {
-    return (
-      <ListItem
-        title={item.title}
-        description={item.description}
-        image={item.image}
-        onPress={() => console.log("Message selected", item)}
-        renderRightActions={() => (
-          <ListItemDeleteAction onPress={() => handleDelete(item)} />
-        )}
-      />
-    );
   };
 
   selectedPicker = () => {
@@ -111,13 +93,7 @@ export default class TopSheetNavigation extends PureComponent {
           </NavigationContainer>
         );
       case 2:
-        return (
-          <FlatList
-            data={this.state.searchHistory}
-            renderItem={this.renderSearchItem}
-            keyExtractor={(item) => item.id}
-          />
-        );
+        return <SearchHistory />;
       default:
         break;
     }
@@ -131,17 +107,18 @@ export default class TopSheetNavigation extends PureComponent {
         align={"center"}
         collapsed={this.state.collapsed}
         // collapsedHeight={-70}
-        style={{ backgroundColor: "blue" }}
+        style={{
+          backgroundColor: colors.white,
+          height: 800, //height - top - 70 - getBottomSpace(),
+          paddingHorizontal: 15,
+        }}
       >
         <View
-          style={{
-            backgroundColor: colors.white,
-            height: 800, //height - top - 70 - getBottomSpace(),
-            paddingHorizontal: 15,
-            // marginHorizontal: 15,
-            // width: "100%",
-            // top: -70,
-          }}
+          style={
+            {
+              // opacity: 0
+            }
+          }
         >
           <View
             style={{
@@ -171,8 +148,8 @@ export default class TopSheetNavigation extends PureComponent {
             }}
             style={{ backgroundColor: colors.light, height: 45 }}
           />
-          {this.selectedPicker()}
         </View>
+        {this.selectedPicker()}
       </Collapsible>
       // </View>
       //   </Screen>
@@ -200,10 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  placeholder: {
-    color: defaultStyles.colors.medium,
-    flex: 1,
-  },
+
   reference: {
     alignItems: "center",
     // backgroundColor: "blue",

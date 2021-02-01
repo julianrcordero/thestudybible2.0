@@ -9,20 +9,18 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 
 import colors from "../config/colors";
 import BiblePickerItem from "./BiblePickerItem";
+import SearchHistory from "./SearchHistory";
+import AppText from "./Text";
 
 export default function BibleScreenToolBar(props) {
-  const [sliderVisible, setSliderVisible] = useState(false);
-  const handleFontSize = () => setSliderVisible(!sliderVisible);
+  // const [sliderVisible, setSliderVisible] = useState(false);
+  // const handleFontSize = () => setSliderVisible(!sliderVisible);
+  const [historyVisible, setHistoryVisible] = useState(false);
 
   return (
     <Animated.View
       style={{
-        borderBottomWidth: 0.2,
         justifyContent: "center",
-        backgroundColor: colors.light,
-        borderColor: colors.medium,
-        flexDirection: "row",
-        height: props.HEADER_HEIGHT,
         position: "absolute",
         transform: [{ translateY: props.headerY }],
         width: "100%",
@@ -41,8 +39,27 @@ export default function BibleScreenToolBar(props) {
         PickerItemComponent={BiblePickerItem}
         bottomSheetRef={props.bottomSheetRef}
         setSettingsMode={props.setSettingsMode}
+        setHistoryVisible={setHistoryVisible}
         topPanel={props.topPanel}
       />
+      <View
+        style={[
+          {
+            backgroundColor: colors.white,
+            borderBottomWidth: 0.2,
+            position: "relative",
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            // width: "100%",
+          },
+          historyVisible ? { opacity: 0 } : null,
+        ]}
+      >
+        <AppText style={{ margin: 5, fontSize: 20, fontWeight: "bold" }}>
+          History
+        </AppText>
+        <SearchHistory />
+      </View>
     </Animated.View>
   );
 }

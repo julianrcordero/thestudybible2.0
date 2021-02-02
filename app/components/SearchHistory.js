@@ -56,7 +56,7 @@ export default class SearchHistory extends PureComponent {
         data={this.state.searchHistory}
         renderItem={this.renderSearchItem}
         keyExtractor={(item) => item.id}
-        style={{ backgroundColor: colors.white }}
+        style={{ backgroundColor: "green" }}
       />
     );
   }

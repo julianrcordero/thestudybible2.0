@@ -60,6 +60,8 @@ const AppNavigator = (props) =>
               crossrefSize={props.crossrefSize}
               titleSize={props.titleSize}
               bottomSheetRef={props.bottomSheetRef}
+              searchHistoryComponent={props.searchHistoryComponent}
+              searchHistoryRef={props.searchHistoryRef}
               setCurrentBook={props.setCurrentBook}
               setSettingsMode={props.setSettingsMode}
               topPanel={props.topPanel}

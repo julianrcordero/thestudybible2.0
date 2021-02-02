@@ -1,28 +1,15 @@
 import React, { PureComponent } from "react";
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-} from "react-native";
-import defaultStyles from "../config/styles";
+import { Button, StyleSheet, Text, View } from "react-native";
 import AppText from "./Text";
-import Screen from "./Screen";
 import colors from "../config/colors";
 import Collapsible from "react-native-collapsible";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 import BooksGridScreen from "../screens/BooksGridScreen";
 import BooksListScreen from "../screens/BooksListScreen";
 import ChaptersGridScreen from "../screens/ChaptersGridScreen";
-import ListItem from "../components/lists/ListItem";
-import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer } from "@react-navigation/native";
-import SearchHistory from "./SearchHistory";
 
 export default class TopSheetNavigation extends PureComponent {
   constructor(props) {
@@ -81,7 +68,7 @@ export default class TopSheetNavigation extends PureComponent {
                 // component={BooksListScreen}
                 options={{ headerShown: false, title: "Books" }}
               >
-                {(props) => (
+                {() => (
                   <BooksListScreen
                     changeBibleBook={this.props.changeBibleBook}
                     close={() => this.setState({ collapsed: true })}
@@ -93,7 +80,7 @@ export default class TopSheetNavigation extends PureComponent {
           </NavigationContainer>
         );
       case 2:
-        return <SearchHistory />;
+        return this.props.searchHistoryComponent;
       default:
         break;
     }

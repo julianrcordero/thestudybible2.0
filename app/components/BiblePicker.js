@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useRef } from "react";
 import {
   Dimensions,
   FlatList,
@@ -42,11 +42,6 @@ class BiblePicker extends PureComponent {
     pickerType: 0,
     collapsed: true,
     searchOn: false,
-    searchHistory: [
-      { id: 0, title: "monkey" },
-      { id: 1, title: "giraffe" },
-      { id: 2, title: "elephant" },
-    ],
   };
 
   _toggleSettings = () => {
@@ -65,11 +60,18 @@ class BiblePicker extends PureComponent {
 
   toggleSearch = () => {
     this.setState({ searchOn: !this.state.searchOn });
-    this.props.setHistoryVisible(this.state.searchOn);
+    this.props.setHistoryVisible(!this.state.searchOn);
   };
 
-  search = ({ search }) => {
-    console.log("My word is: " + search);
+  search = (search) => {
+    console.log(this.props.searchHistoryRef.current.state);
+    const currentSearchHistory = this.props.searchHistoryRef.current; //this.props.searchHistoryList.current;
+
+    const newSearchHistory = [
+      { id: currentSearchHistory.state.searchHistory.length, title: search },
+      ...currentSearchHistory.state.searchHistory,
+    ];
+    currentSearchHistory.setState({ searchHistory: newSearchHistory });
   };
 
   render() {
@@ -134,14 +136,24 @@ class BiblePicker extends PureComponent {
               <TextInput
                 autoFocus
                 icon={"search"}
-                style={styles.searchBar}
                 keyboardType="default"
                 name="search"
+                onSubmitEditing={
+                  (event) => {
+                    console.log(event.nativeEvent.text);
+                    this.search(event.nativeEvent.text);
+                  }
+                  // this.updateText( event.nativeEvent.text)
+                }
                 placeholder="Search"
+                ref={(input) => {
+                  this.TextInput = input;
+                }}
+                style={styles.searchBar}
               />
               <TouchableOpacity
                 style={styles.cancel}
-                onPress={this.toggleSearch}
+                onPress={() => this.TextInput.clear()}
               >
                 <MaterialCommunityIcons
                   name="close-circle"
@@ -184,10 +196,7 @@ class BiblePicker extends PureComponent {
         <View style={styles.rightButtons}>
           {this.state.searchOn ? (
             <View style={{ justifyContent: "center" }}>
-              <Button
-                title={"Cancel"}
-                onPress={() => this.setState({ collapsed: true })}
-              ></Button>
+              <Button title={"Cancel"} onPress={this.toggleSearch}></Button>
             </View>
           ) : (
             <View

@@ -26,6 +26,7 @@ import Constants from "expo-constants";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
+import SearchHistory from "./app/components/SearchHistory";
 const Stack = createStackNavigator();
 const { height, width } = Dimensions.get("window");
 
@@ -41,6 +42,9 @@ export default function App() {
   const handleSlide = (value) => setFontSize(value);
 
   const topPanel = React.useRef();
+  const searchHistoryRef = React.useRef();
+  const searchHistoryComponent = <SearchHistory ref={searchHistoryRef} />;
+  // const [searchHistory, setSearchHistory] = useState();
 
   const [settingsMode, setSettingsMode] = useState(false);
   const [verseList, setVerseList] = useState([]);
@@ -708,7 +712,12 @@ export default function App() {
   return (
     <>
       <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
-        <TopSheetNavigation ref={topPanel} width={width} />
+        <TopSheetNavigation
+          ref={topPanel}
+          width={width}
+          searchHistoryComponent={searchHistoryComponent}
+          // searchHistoryRef={searchHistoryRef}
+        />
       </Screen>
       <Screen>
         <NavigationContainer ref={navigationRef}>
@@ -721,6 +730,8 @@ export default function App() {
                 fontSize={fontSize}
                 crossrefSize={crossrefSize}
                 titleSize={titleSize}
+                searchHistoryComponent={searchHistoryComponent}
+                searchHistoryRef={searchHistoryRef}
                 setSettingsMode={setSettingsMode}
                 setVerseList={setVerseList}
                 setCurrentBook={setCurrentBook}

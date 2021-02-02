@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import BiblePicker from "../components/BiblePicker";
-import CategoryPickerItem from "../components/CategoryPickerItem";
 
 import colors from "../config/colors";
 import BiblePickerItem from "./BiblePickerItem";
-import SearchHistory from "./SearchHistory";
 import AppText from "./Text";
 
 export default function BibleScreenToolBar(props) {
@@ -38,6 +34,7 @@ export default function BibleScreenToolBar(props) {
         // placeholder="Category"
         PickerItemComponent={BiblePickerItem}
         bottomSheetRef={props.bottomSheetRef}
+        searchHistoryRef={props.searchHistoryRef}
         setSettingsMode={props.setSettingsMode}
         setHistoryVisible={setHistoryVisible}
         topPanel={props.topPanel}
@@ -52,13 +49,13 @@ export default function BibleScreenToolBar(props) {
             paddingVertical: 10,
             // width: "100%",
           },
-          historyVisible ? { opacity: 0 } : null,
+          historyVisible ? null : { opacity: 0 },
         ]}
       >
         <AppText style={{ margin: 5, fontSize: 20, fontWeight: "bold" }}>
           History
         </AppText>
-        <SearchHistory />
+        {props.searchHistoryComponent}
       </View>
     </Animated.View>
   );

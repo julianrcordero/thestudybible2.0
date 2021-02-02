@@ -63,10 +63,12 @@ export default function BibleScreen({
   crossrefSize,
   titleSize,
   bottomSheetRef,
-  setSettingsMode,
-  topPanel,
-  setVerseList,
+  searchHistoryComponent,
+  searchHistoryRef,
   setCurrentBook,
+  setSettingsMode,
+  setVerseList,
+  topPanel,
   verseList,
 }) {
   useEffect(() => {
@@ -301,6 +303,8 @@ export default function BibleScreen({
         bottomSheetRef={bottomSheetRef}
         setSettingsMode={setSettingsMode}
         topPanel={topPanel}
+        searchHistoryComponent={searchHistoryComponent}
+        searchHistoryRef={searchHistoryRef}
         style={styles.toolBar}
       />
 

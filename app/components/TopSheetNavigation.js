@@ -10,6 +10,7 @@ import BooksListScreen from "../screens/BooksListScreen";
 import ChaptersGridScreen from "../screens/ChaptersGridScreen";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer } from "@react-navigation/native";
+import SearchHistory from "./SearchHistory";
 
 export default class TopSheetNavigation extends PureComponent {
   constructor(props) {
@@ -80,7 +81,11 @@ export default class TopSheetNavigation extends PureComponent {
           </NavigationContainer>
         );
       case 2:
-        return this.props.searchHistoryComponent;
+        return (
+          <SearchHistory
+            data={this.props.searchHistoryRef.current.state.searchHistory}
+          />
+        );
       default:
         break;
     }

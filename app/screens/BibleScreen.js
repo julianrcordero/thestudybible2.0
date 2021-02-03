@@ -63,7 +63,6 @@ export default function BibleScreen({
   crossrefSize,
   titleSize,
   bottomSheetRef,
-  searchHistoryComponent,
   searchHistoryRef,
   setCurrentBook,
   setSettingsMode,
@@ -303,7 +302,6 @@ export default function BibleScreen({
         bottomSheetRef={bottomSheetRef}
         setSettingsMode={setSettingsMode}
         topPanel={topPanel}
-        searchHistoryComponent={searchHistoryComponent}
         searchHistoryRef={searchHistoryRef}
         style={styles.toolBar}
       />

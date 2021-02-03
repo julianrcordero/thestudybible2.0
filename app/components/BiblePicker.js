@@ -64,8 +64,7 @@ class BiblePicker extends PureComponent {
   };
 
   search = (search) => {
-    console.log(this.props.searchHistoryRef.current.state);
-    const currentSearchHistory = this.props.searchHistoryRef.current; //this.props.searchHistoryList.current;
+    const currentSearchHistory = this.props.searchHistoryRef.current;
 
     const newSearchHistory = [
       { id: currentSearchHistory.state.searchHistory.length, title: search },
@@ -134,13 +133,14 @@ class BiblePicker extends PureComponent {
               }}
             >
               <TextInput
+                autoCapitalize={"none"}
                 autoFocus
                 icon={"search"}
                 keyboardType="default"
                 name="search"
                 onSubmitEditing={
                   (event) => {
-                    console.log(event.nativeEvent.text);
+                    // console.log(event.nativeEvent.text);
                     this.search(event.nativeEvent.text);
                   }
                   // this.updateText( event.nativeEvent.text)

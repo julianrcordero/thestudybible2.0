@@ -28,13 +28,34 @@ export default class SearchHistory extends PureComponent {
     super(props);
 
     this.state = {
-      searchHistory: [
-        { id: 0, title: "monkey" },
-        { id: 1, title: "giraffe" },
+      searchHistory: props.data ?? [
         { id: 2, title: "elephant" },
+        { id: 1, title: "giraffe" },
+        { id: 0, title: "monkey" },
       ],
     };
   }
+
+  handleDelete = (item) => {
+    //Delete the message from messages
+    this.props.setSearchHistory(
+      this.props.data.filter((m) => m.id !== item.id)
+    );
+  };
+
+  listEmptyComponent = () => (
+    <View
+      style={{
+        // borderWidth: 1,
+        height: 50,
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text>No search history</Text>
+    </View>
+  );
 
   renderSearchItem = ({ item, index, separators }) => {
     return (
@@ -44,7 +65,7 @@ export default class SearchHistory extends PureComponent {
         image={item.image}
         onPress={() => console.log("Message selected", item)}
         renderRightActions={() => (
-          <ListItemDeleteAction onPress={() => handleDelete(item)} />
+          <ListItemDeleteAction onPress={() => this.handleDelete(item)} />
         )}
       />
     );
@@ -54,9 +75,11 @@ export default class SearchHistory extends PureComponent {
     return (
       <FlatList
         data={this.state.searchHistory}
+        extraData={this.props}
         renderItem={this.renderSearchItem}
-        keyExtractor={(item) => item.id}
-        style={{ backgroundColor: "green" }}
+        keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={() => this.listEmptyComponent()}
+        // style={{ backgroundColor: "green" }}
       />
     );
   }

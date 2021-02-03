@@ -42,9 +42,8 @@ export default function App() {
   const handleSlide = (value) => setFontSize(value);
 
   const topPanel = React.useRef();
+
   const searchHistoryRef = React.useRef();
-  const searchHistoryComponent = <SearchHistory ref={searchHistoryRef} />;
-  // const [searchHistory, setSearchHistory] = useState();
 
   const [settingsMode, setSettingsMode] = useState(false);
   const [verseList, setVerseList] = useState([]);
@@ -715,8 +714,7 @@ export default function App() {
         <TopSheetNavigation
           ref={topPanel}
           width={width}
-          searchHistoryComponent={searchHistoryComponent}
-          // searchHistoryRef={searchHistoryRef}
+          searchHistoryRef={searchHistoryRef}
         />
       </Screen>
       <Screen>
@@ -730,7 +728,6 @@ export default function App() {
                 fontSize={fontSize}
                 crossrefSize={crossrefSize}
                 titleSize={titleSize}
-                searchHistoryComponent={searchHistoryComponent}
                 searchHistoryRef={searchHistoryRef}
                 setSettingsMode={setSettingsMode}
                 setVerseList={setVerseList}

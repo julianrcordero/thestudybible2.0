@@ -7,6 +7,7 @@ import BiblePicker from "../components/BiblePicker";
 import colors from "../config/colors";
 import BiblePickerItem from "./BiblePickerItem";
 import AppText from "./Text";
+import SearchHistory from "./SearchHistory";
 
 export default function BibleScreenToolBar(props) {
   // const [sliderVisible, setSliderVisible] = useState(false);
@@ -47,7 +48,6 @@ export default function BibleScreenToolBar(props) {
             position: "relative",
             paddingHorizontal: 15,
             paddingVertical: 10,
-            // width: "100%",
           },
           historyVisible ? null : { opacity: 0 },
         ]}
@@ -55,7 +55,7 @@ export default function BibleScreenToolBar(props) {
         <AppText style={{ margin: 5, fontSize: 20, fontWeight: "bold" }}>
           History
         </AppText>
-        {props.searchHistoryComponent}
+        <SearchHistory ref={props.searchHistoryRef} />
       </View>
     </Animated.View>
   );

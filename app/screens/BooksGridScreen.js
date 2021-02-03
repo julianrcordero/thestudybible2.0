@@ -556,7 +556,7 @@ class BooksGridScreen extends PureComponent {
       <View
         style={{
           backgroundColor: colors.white,
-          paddingBottom: 30,
+          height: "100%",
         }}
       >
         <View style={styles.titleCard}>

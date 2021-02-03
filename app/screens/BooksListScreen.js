@@ -16,6 +16,8 @@ class BooksListScreen extends PureComponent {
 
   render() {
     const { width } = this.props;
+    const headerHeight = 55;
+
     const books = [
       ////
       {
@@ -598,13 +600,13 @@ class BooksListScreen extends PureComponent {
     };
 
     return (
-      <>
+      <View style={{ backgroundColor: colors.white, height: "100%" }}>
         <View
           style={{
             alignItems: "center",
             flexDirection: "row",
             justifyContent: "space-around",
-            height: 55,
+            height: headerHeight,
           }}
         >
           <AppText style={[styles.sectionTitle]}>Old Testament</AppText>
@@ -613,7 +615,7 @@ class BooksListScreen extends PureComponent {
         <View
           style={{
             flexDirection: "row",
-            paddingBottom: 30,
+            paddingBottom: headerHeight,
             justifyContent: "space-between",
           }}
         >
@@ -624,11 +626,6 @@ class BooksListScreen extends PureComponent {
               body={_renderContent}
               keyExtractor={(item) => `${item.value}`}
               showsVerticalScrollIndicator={false}
-              // onToggle={
-              // (item, index, isExpanded) =>
-              // this.setState({ leftOpen: isExpanded })
-              // console.log(item, index, isExpanded)
-              // }
             />
           </View>
           <View style={styles.column2}>
@@ -638,16 +635,13 @@ class BooksListScreen extends PureComponent {
               body={_renderContent}
               keyExtractor={(item) => `${item.value}`}
               showsVerticalScrollIndicator={false}
-              onToggle={
-                (item, index, isExpanded) =>
-                  this.setState({ rightOpen: isExpanded })
-                // console.log(item, index, isExpanded)
+              onToggle={(item, index, isExpanded) =>
+                this.setState({ rightOpen: isExpanded })
               }
-              // contentContainerStyle={{ alignSelf: "flex-end" }}
             />
           </View>
         </View>
-      </>
+      </View>
     );
   }
 }

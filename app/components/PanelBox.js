@@ -1,16 +1,60 @@
 import React, { PureComponent } from "react";
-import {
-  Image,
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Image, FlatList, View, StyleSheet, Text } from "react-native";
 
 import colors from "../config/colors";
 import AppText from "../components/Text";
 import defaultStyles from "../config/styles";
+import NoteHistory from "./NoteHistory";
+import ResourcesScreen from "../screens/ResourcesScreen";
+
+class ResourceBox extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <View
+        style={{
+          // backgroundColor: "pink",
+          borderColor: colors.medium,
+          borderWidth: 0.2,
+          marginVertical: 10,
+          padding: 10,
+          width: "100%",
+        }}
+      >
+        <View
+          style={{
+            // backgroundColor: "orange",
+            flexDirection: "row",
+            height: 40,
+            alignItems: "center",
+            justifyContent: "flex-start",
+            paddingHorizontal: 5,
+            // marginBottom: 5,
+          }}
+        >
+          {this.props.image ? (
+            <Image
+              style={{
+                aspectRatio: 1,
+                backgroundColor: "red",
+                marginRight: 5,
+                width: 30,
+              }}
+              source={this.props.image}
+            ></Image>
+          ) : null}
+          <AppText style={[styles.titleText, defaultStyles.bibleText]}>
+            {this.props.title}
+          </AppText>
+        </View>
+        {this.props.children}
+      </View>
+    );
+  }
+}
 
 export default class PanelBox extends PureComponent {
   constructor(props) {
@@ -22,12 +66,18 @@ export default class PanelBox extends PureComponent {
     // };
   }
 
+  renderResourceGroup = ({ item, index, separators }) => {
+    return (
+      <ResourceBox title={item.title} image={item.image}>
+        {item.child}
+      </ResourceBox>
+    );
+  };
+
   render() {
     const {
       fontSize,
-      verseContent,
       johnsNote,
-      crossrefs,
       // paragraphBibleRef,
       bottomSheetRef,
     } = this.props;
@@ -35,109 +85,65 @@ export default class PanelBox extends PureComponent {
     const macarthurText = fontSize * 0.85;
     const macarthurLineHeight = macarthurText * 2;
 
-    const navigateBible = () => {
-      bottomSheetRef.current.snapTo(1);
-      // paragraphBibleRef.current.getNode().scrollToIndex({
-      //   animated: true,
-      //   index: Number(code.substr(2, 3)) - 1,
-      // });
-    };
+    // const data = [
+    //   {
+    //     id: "0",
+    //     title: "My Notes",
+    //     image: require("../assets/studyBibleAppLogo.jpg"),
+    //     child: <NoteHistory />,
+    //   },
+    //   {
+    //     id: "1",
+    //     title: "John's Notes",
+    //     image: require("../assets/studyBibleAppLogo.jpg"),
+    //     child: (
+    //       <Text
+    //         style={[
+    //           defaultStyles.macArthurText,
+    //           { fontSize: macarthurText, lineHeight: macarthurLineHeight },
+    //         ]}
+    //       >
+    //         {johnsNote}
+    //       </Text>
+    //     ),
+    //   },
+    //   {
+    //     id: "2",
+    //     title: "Related Resources",
+    //     image: require("../assets/gtylogo.jpg"),
+    //     child: <ResourcesScreen />,
+    //   },
+    // ];
 
-    function VerseHyperlink({ cr }) {
-      return (
-        <>
-          <TouchableOpacity
-            onPress={() => {
-              navigateBible(cr["for"]);
-            }}
-          >
-            <Text style={styles.verseLink}>{cr["text"] + ",\t\t"}</Text>
-          </TouchableOpacity>
-        </>
-      );
-    }
+    // return (
+    //   <FlatList
+    //     data={data}
+    //     // extraData={this.props}
+    //     renderItem={this.renderResourceGroup}
+    //     keyExtractor={(item) => item.id}
+    //     // ListEmptyComponent={() => this.listEmptyComponent()}
+    //   />
+    // );
 
     return (
-      <>
-        <AppText
-          style={{
-            fontSize: fontSize,
-            lineHeight: fontSize * 2,
-          }}
+      <View
+        style={
+          {
+            // backgroundColor: "orange",
+          }
+        }
+      >
+        <ResourceBox
+          title={"My Notes"}
+          // image={require("../assets/studyBibleAppLogo.jpg")}
         >
-          {verseContent}
-        </AppText>
-        {Array.isArray(crossrefs) ? (
-          crossrefs.map((crossref) => (
-            <Text key={crossref["id"]}>
-              {"\n" + crossref["title"] + "\t"}
-              {Array.isArray(crossref["refs"]["ref"]) ? (
-                crossref["refs"]["ref"].map((cr) => (
-                  <VerseHyperlink key={cr["for"]} cr={cr} />
-                ))
-              ) : (
-                <VerseHyperlink
-                  key={crossref["for"]}
-                  cr={crossref["refs"]["ref"]}
-                />
-              )}
-            </Text>
-          ))
-        ) : crossrefs["title"] == "" ? null : (
-          <Text>
-            {"\n" + crossrefs["title"] + "\t"}
-            {Array.isArray(crossrefs["refs"]["ref"]) ? (
-              crossrefs["refs"]["ref"].map((cr) => (
-                <VerseHyperlink key={cr["for"]} cr={cr} />
-              ))
-            ) : (
-              <VerseHyperlink
-                key={crossrefs["for"]}
-                cr={crossrefs["refs"]["ref"]}
-              />
-            )}
-          </Text>
-        )}
-        {/* <Text>{"\n"}</Text> */}
-        <TextInput
-          style={{
-            backgroundColor: colors.light,
-            borderColor: colors.medium,
-            borderWidth: 0.5,
-            fontFamily:
-              Platform.OS === "android" ? "notoserif" : "ChalkboardSE-Light",
-            marginVertical: 15,
-            padding: 10,
-            width: "100%",
-          }}
-          multiline
-          placeholder="This is my note about the Bible verse."
-        ></TextInput>
-        <View
-          style={{
-            borderColor: colors.medium,
-            borderWidth: 0.5,
-            marginVertical: 0,
-            padding: 10,
-            width: "100%",
-          }}
+          <NoteHistory />
+        </ResourceBox>
+
+        <ResourceBox
+          title={"John's Note"}
+          image={require("../assets/studyBibleAppLogo.jpg")}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignSelf: "flex-start",
-              alignItems: "center",
-              // marginBottom: 5,
-            }}
-          >
-            <Image
-              style={{ width: 30, height: 30 }}
-              source={require("../assets/studyBibleAppLogo.jpg")}
-            ></Image>
-            <AppText style={[styles.titleText, defaultStyles.macArthurText]}>
-              John's Note
-            </AppText>
-          </View>
           <Text
             style={[
               defaultStyles.macArthurText,
@@ -146,34 +152,15 @@ export default class PanelBox extends PureComponent {
           >
             {johnsNote}
           </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            // flex: 1,
-            borderColor: colors.medium,
-            borderWidth: 0.5,
-            marginVertical: 15,
-            padding: 10,
-            width: "100%",
-          }}
+        </ResourceBox>
+
+        <ResourceBox
+          title={"Related Resources"}
+          image={require("../assets/gtylogo.jpg")}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignSelf: "flex-start",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              style={{ width: 40, height: 40 }}
-              source={require("../assets/gtylogo.jpg")}
-            ></Image>
-            <AppText style={styles.titleText}>Related Resources</AppText>
-          </View>
-          {/* <ResourcesScreen /> */}
-        </View>
-      </>
+          <ResourcesScreen />
+        </ResourceBox>
+      </View>
     );
   }
 }
@@ -195,7 +182,9 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    paddingVertical: 10,
+    fontWeight: "bold",
+    fontSize: 16,
+    // paddingHorizontal: 10,
   },
 
   verseLink: {

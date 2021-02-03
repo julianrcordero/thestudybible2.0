@@ -40,23 +40,30 @@ export default function BibleScreenToolBar(props) {
         setHistoryVisible={setHistoryVisible}
         topPanel={props.topPanel}
       />
-      <View
-        style={[
-          {
-            backgroundColor: colors.white,
-            borderBottomWidth: 0.2,
-            position: "relative",
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-          },
-          historyVisible ? null : { opacity: 0 },
-        ]}
-      >
-        <AppText style={{ margin: 5, fontSize: 20, fontWeight: "bold" }}>
-          History
-        </AppText>
-        <SearchHistory ref={props.searchHistoryRef} />
-      </View>
+      {
+        <View
+          style={[
+            {
+              backgroundColor: colors.white,
+              paddingHorizontal: 15,
+            },
+            historyVisible
+              ? { paddingVertical: 5, borderBottomWidth: 0.2 }
+              : {
+                  borderBottomWidth: 0,
+                  height: 0,
+                  paddingVertical: 0,
+                },
+          ]}
+        >
+          <AppText
+            style={{ marginVertical: 10, fontSize: 18, fontWeight: "bold" }}
+          >
+            History
+          </AppText>
+          <SearchHistory ref={props.searchHistoryRef} />
+        </View>
+      }
     </Animated.View>
   );
 }

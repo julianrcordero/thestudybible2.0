@@ -22,6 +22,7 @@ import ListItem from "../components/lists/ListItem";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer } from "@react-navigation/native";
+import SearchHistoryItem from "./lists/SearchHistoryItem";
 
 export default class SearchHistory extends PureComponent {
   constructor(props) {
@@ -38,9 +39,11 @@ export default class SearchHistory extends PureComponent {
 
   handleDelete = (item) => {
     //Delete the message from messages
-    this.props.setSearchHistory(
-      this.props.data.filter((m) => m.id !== item.id)
-    );
+    const newList = this.state.searchHistory.filter((m) => m.id !== item.id);
+
+    this.setState({
+      searchHistory: newList,
+    });
   };
 
   listEmptyComponent = () => (
@@ -59,11 +62,9 @@ export default class SearchHistory extends PureComponent {
 
   renderSearchItem = ({ item, index, separators }) => {
     return (
-      <ListItem
+      <SearchHistoryItem
         title={item.title}
-        description={item.description}
-        image={item.image}
-        onPress={() => console.log("Message selected", item)}
+        onPress={() => console.log(item)}
         renderRightActions={() => (
           <ListItemDeleteAction onPress={() => this.handleDelete(item)} />
         )}
@@ -79,7 +80,6 @@ export default class SearchHistory extends PureComponent {
         renderItem={this.renderSearchItem}
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={() => this.listEmptyComponent()}
-        // style={{ backgroundColor: "green" }}
       />
     );
   }

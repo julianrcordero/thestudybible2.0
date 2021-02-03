@@ -1,7 +1,6 @@
-import React, { PureComponent, useRef } from "react";
+import React, { PureComponent } from "react";
 import {
   Dimensions,
-  FlatList,
   View,
   StyleSheet,
   InteractionManager,
@@ -14,24 +13,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../config/styles";
 import AppText from "./Text";
 import colors from "../config/colors";
-import ListItem from "../components/lists/ListItem";
-import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import BooksGridScreen from "../screens/BooksGridScreen";
-import ChaptersGridScreen from "../screens/ChaptersGridScreen";
-
-import Constants from "expo-constants";
-import { getBottomSpace } from "react-native-iphone-x-helper";
-const { height, width } = Dimensions.get("window");
-
-import Collapsible from "react-native-collapsible";
-const Stack = createStackNavigator();
-
-import SegmentedControl from "@react-native-community/segmented-control";
-import BooksListScreen from "../screens/BooksListScreen";
-import routes from "../navigation/routes";
-import AppForm from "./forms/Form";
 
 class BiblePicker extends PureComponent {
   constructor(props) {
@@ -76,12 +59,9 @@ class BiblePicker extends PureComponent {
   render() {
     const {
       currentBook,
-      currentChapter,
-      changeBibleBook,
       fontSize,
       HEADER_HEIGHT,
       placeholder,
-      setHistoryVisible,
       topPanel,
     } = this.props;
 
@@ -140,7 +120,6 @@ class BiblePicker extends PureComponent {
                 name="search"
                 onSubmitEditing={
                   (event) => {
-                    // console.log(event.nativeEvent.text);
                     this.search(event.nativeEvent.text);
                   }
                   // this.updateText( event.nativeEvent.text)
@@ -163,7 +142,7 @@ class BiblePicker extends PureComponent {
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={{ flex: 1, flexDirection: "row", marginRight: 5 }}>
+            <View style={{ flex: 1, flexDirection: "row", marginRight: 10 }}>
               <TouchableOpacity
                 onPress={() => topPanel.current.setState({ collapsed: false })}
                 style={styles.reference}
@@ -239,7 +218,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignItems: "center",
-    // backgroundColor: "green",
     justifyContent: "center",
   },
   placeholder: {

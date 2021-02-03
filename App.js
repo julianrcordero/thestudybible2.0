@@ -548,7 +548,7 @@ export default function App() {
     <View
       style={{
         backgroundColor: colors.light,
-        height: top - 50,
+        height: top - bottomSheetHeaderHeight,
         borderTopWidth: 0.2,
         // alignItems: "center",
         // justifyContent: "center",
@@ -640,36 +640,22 @@ export default function App() {
 
   const renderVerseCardItem = ({ item, index }) => {
     return (
-      <View
+      <VerseCard
         key={index}
-        style={{
-          // backgroundColor: "red",
-          // flex: 1,
-          width: width,
-          paddingHorizontal: 30,
-        }}
-      >
-        <VerseCard
-          key={index}
-          currentBook={currentBook}
-          item={item}
-          crossrefSize={crossrefSize}
-          fontSize={fontSize}
-          height={top - 70 - bottomSheetHeaderHeight - verseCardReferenceHeight}
-          // paragraphBibleRef={paragraphBibleRef}
-          bottomSheetRef={bottomSheetRef}
-          verseCardReferenceHeight={verseCardReferenceHeight}
-        />
-      </View>
+        currentBook={currentBook}
+        item={item}
+        crossrefSize={crossrefSize}
+        fontSize={fontSize}
+        // paragraphBibleRef={paragraphBibleRef}
+        bottomSheetRef={bottomSheetRef}
+        style={{ paddingHorizontal: 30, width: width }}
+        verseCardReferenceHeight={verseCardReferenceHeight}
+      />
     );
   };
 
   const renderBibleContent = () => (
-    <View
-      style={{
-        height: top - 50,
-      }}
-    >
+    <View style={{}}>
       <FlatList
         bounces={false}
         data={verseList}
@@ -688,7 +674,9 @@ export default function App() {
         showsHorizontalScrollIndicator={false}
         snapToAlignment={"start"}
         snapToInterval={width}
-        style={{ backgroundColor: colors.white }}
+        style={{
+          backgroundColor: colors.white,
+        }}
         // onViewableItemsChanged={onViewRef.current}
         // viewabilityConfig={viewConfigRef.current}
         // onViewableItemsChanged={onViewableItemsChanged}
@@ -696,6 +684,9 @@ export default function App() {
         //   itemVisiblePercentThreshold: 50,
         // }}
       />
+
+      {/* NOT SURE WHY */}
+      <View style={{ backgroundColor: "green", height: 500 }}></View>
     </View>
   );
 
@@ -713,6 +704,7 @@ export default function App() {
       <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
         <TopSheetNavigation
           ref={topPanel}
+          height={top - getBottomSpace()}
           width={width}
           searchHistoryRef={searchHistoryRef}
         />

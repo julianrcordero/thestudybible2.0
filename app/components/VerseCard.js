@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import colors from "../config/colors";
 import PanelBox from "../components/PanelBox";
@@ -21,14 +21,28 @@ export default class VerseCard extends PureComponent {
       currentBook,
       item,
       fontSize,
-      height,
       crossRefSize,
       // paragraphBibleRef,
       bottomSheetRef,
+      style,
     } = this.props;
 
+    function VerseHyperlink({ cr }) {
+      return (
+        <>
+          <TouchableOpacity
+            onPress={() => {
+              navigateBible(cr["for"]);
+            }}
+          >
+            <AppText style={styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
+          </TouchableOpacity>
+        </>
+      );
+    }
+
     return (
-      <View>
+      <View style={style}>
         <View
           style={{
             alignItems: "center",
@@ -52,19 +66,61 @@ export default class VerseCard extends PureComponent {
             ) : null}
           </View>
         </View>
-        <View>
-          <PanelBox
-            fontSize={fontSize}
-            verseContent={item.content}
-            johnsNote={item.johnsNote}
-            crossrefs={item.crossrefs}
-            crossRefSize={crossRefSize}
-            // paragraphBibleRef={paragraphBibleRef}
-            bottomSheetRef={bottomSheetRef}
-            // landscape={landscape}
-          ></PanelBox>
-        </View>
+
+        <AppText
+          style={{
+            fontSize: fontSize,
+            lineHeight: fontSize * 2,
+          }}
+        >
+          {item.content}
+        </AppText>
+        {Array.isArray(item.crossrefs) ? (
+          item.crossrefs.map((crossref) => (
+            <AppText key={crossref["id"]}>
+              {"\n" + crossref["title"] + "\t"}
+              {Array.isArray(crossref["refs"]["ref"]) ? (
+                crossref["refs"]["ref"].map((cr) => (
+                  <VerseHyperlink key={cr["for"]} cr={cr} />
+                ))
+              ) : (
+                <VerseHyperlink
+                  key={crossref["for"]}
+                  cr={crossref["refs"]["ref"]}
+                />
+              )}
+            </AppText>
+          ))
+        ) : item.crossrefs["title"] == "" ? null : (
+          <AppText>
+            {"\n" + item.crossrefs["title"] + "\t"}
+            {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
+              item.crossrefs["refs"]["ref"].map((cr) => (
+                <VerseHyperlink key={cr["for"]} cr={cr} />
+              ))
+            ) : (
+              <VerseHyperlink
+                key={item.crossrefs["for"]}
+                cr={item.crossrefs["refs"]["ref"]}
+              />
+            )}
+          </AppText>
+        )}
+
+        <PanelBox
+          fontSize={fontSize}
+          johnsNote={item.johnsNote}
+          crossRefSize={crossRefSize}
+          // paragraphBibleRef={paragraphBibleRef}
+          bottomSheetRef={bottomSheetRef}
+          // landscape={landscape}
+        ></PanelBox>
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  verseLink: {
+    color: "#00aeef",
+  },
+});

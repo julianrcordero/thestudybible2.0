@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "react-native-animatable";
 
 import BiblePickerItem from "../components/BiblePickerItem";
+import colors from "../config/colors";
 
 class ChaptersGridScreen extends PureComponent {
   constructor(props) {
@@ -27,19 +28,6 @@ class ChaptersGridScreen extends PureComponent {
     }
 
     return (
-      // <View
-      //   style={{
-      //     flexDirection: "row",
-      //     justifyContent: "flex-start",
-      //     flexWrap: "wrap",
-      //   }}
-      // >
-      //   {DATA.map((item) => (
-      //     <TouchableOpacity onPress={close} style={{}}>
-      //       <BiblePickerItem item={item} label={item.short} flex={1 / 7} />
-      //     </TouchableOpacity>
-      //   ))}
-      // </View>
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}
@@ -54,6 +42,7 @@ class ChaptersGridScreen extends PureComponent {
           width: "14.2857%",
         }}
         showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: colors.white }}
       />
     );
   }

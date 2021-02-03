@@ -26,12 +26,8 @@ export default class TopSheetNavigation extends PureComponent {
     switch (this.state.pickerType) {
       case 0:
         return (
-          // <View style={{ backgroundColor: "blue", height: 1000 }}></View>
           <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{ headerShown: true }}
-              style={{ elevation: 0 }}
-            >
+            <Stack.Navigator screenOptions={{ headerShown: true }}>
               <Stack.Screen
                 name="Books"
                 component={BooksGridScreen}
@@ -60,10 +56,7 @@ export default class TopSheetNavigation extends PureComponent {
         return (
           // <View style={{ backgroundColor: "red", height: 1000 }}></View>
           <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{ headerShown: true }}
-              style={{ elevation: 0 }}
-            >
+            <Stack.Navigator screenOptions={{ headerShown: true }}>
               <Stack.Screen
                 name="BooksList"
                 // component={BooksListScreen}
@@ -101,17 +94,12 @@ export default class TopSheetNavigation extends PureComponent {
         // collapsedHeight={-70}
         style={{
           backgroundColor: colors.white,
-          height: 800, //height - top - 70 - getBottomSpace(),
+          // borderBottomWidth: 1,
+          height: this.props.height, //height - top - 70 - getBottomSpace(),
           paddingHorizontal: 15,
         }}
       >
-        <View
-          style={
-            {
-              // opacity: 0
-            }
-          }
-        >
+        <View>
           <View
             style={{
               alignItems: "center",
@@ -172,7 +160,6 @@ const styles = StyleSheet.create({
 
   reference: {
     alignItems: "center",
-    // backgroundColor: "blue",
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",

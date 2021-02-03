@@ -648,14 +648,14 @@ export default function App() {
         fontSize={fontSize}
         // paragraphBibleRef={paragraphBibleRef}
         bottomSheetRef={bottomSheetRef}
-        style={{ paddingHorizontal: 30, width: width }}
+        style={{ borderWidth: 0.5, paddingHorizontal: 30, width: width }}
         verseCardReferenceHeight={verseCardReferenceHeight}
       />
     );
   };
 
   const renderBibleContent = () => (
-    <View style={{}}>
+    <View onStartShouldSetResponderCapture={() => console.log("FlatList")}>
       <FlatList
         bounces={false}
         data={verseList}
@@ -686,7 +686,13 @@ export default function App() {
       />
 
       {/* NOT SURE WHY */}
-      <View style={{ backgroundColor: "green", height: 500 }}></View>
+      <View
+        style={{
+          backgroundColor: colors.light,
+          height: 500,
+          position: "relative",
+        }}
+      ></View>
     </View>
   );
 
@@ -738,6 +744,7 @@ export default function App() {
         ref={bottomSheetRef}
         snapPoints={[top, "50%", "0%"]}
         initialSnap={2}
+        onStartShouldSetResponderCapture={() => console.log("ScrollView")}
         renderHeader={settingsMode ? renderSettingsHeader : renderBibleHeader}
         renderContent={
           settingsMode ? renderSettingsContent : renderBibleContent

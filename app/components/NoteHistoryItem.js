@@ -1,36 +1,69 @@
-import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import React, { PureComponent } from "react";
+import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import Text from "./Text";
 import colors from "../config/colors";
 
-function NoteHistoryItem({
-  title,
-  subTitle,
-  image,
-  IconComponent,
-  onPress,
-  renderRightActions,
-}) {
-  return (
-    <View style={{}}>
-      <View style={styles.container}>
-        {/* {IconComponent}
+export default class NoteHistoryItem extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    isFocused: false,
+  };
+
+  render() {
+    const {
+      title,
+      subTitle,
+      image,
+      IconComponent,
+      onPress,
+      renderRightActions,
+    } = this.props;
+
+    return (
+      <View style={{}}>
+        <View style={styles.container}>
+          {/* {IconComponent}
       {image && <Image style={styles.image} source={image} />} */}
-        <Text style={styles.title} numberOfLines={1}>
-          {title}
-        </Text>
-      </View>
-      {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
-      {/* <MaterialCommunityIcons
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+        </View>
+        {/* {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>} */}
+        <TextInput
+          autoCapitalize={"none"}
+          keyboardType="default"
+          multiline
+          onBlur={() => this.setState({ isFocused: false })}
+          onFocus={() => this.setState({ isFocused: true })}
+          onSelectionChange={(event) => console.log(event.nativeEvent)}
+          onSubmitEditing={
+            (event) => {
+              this.search(event.nativeEvent.text);
+            }
+            // this.updateText( event.nativeEvent.text)
+          }
+          placeholder={subTitle}
+          style={[
+            { borderColor: colors.medium, padding: 15 },
+            this.state.isFocused ? { borderWidth: 0.5 } : null,
+          ]}
+          // value={subTitle}
+        />
+        {/* </View> */}
+        {/* <MaterialCommunityIcons
         color={colors.medium}
         name="chevron-right"
         size={25}
       /> */}
-    </View>
-  );
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -65,5 +98,3 @@ const styles = StyleSheet.create({
     fontWeight: "100",
   },
 });
-
-export default NoteHistoryItem;

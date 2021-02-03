@@ -46,6 +46,7 @@ export default class VerseCard extends PureComponent {
         <View
           style={{
             alignItems: "center",
+            // backgroundColor: "green",
             height: 50,
             flexDirection: "row",
             justifyContent: "flex-start",
@@ -75,37 +76,39 @@ export default class VerseCard extends PureComponent {
         >
           {item.content}
         </AppText>
-        {Array.isArray(item.crossrefs) ? (
-          item.crossrefs.map((crossref) => (
-            <AppText key={crossref["id"]}>
-              {"\n" + crossref["title"] + "\t"}
-              {Array.isArray(crossref["refs"]["ref"]) ? (
-                crossref["refs"]["ref"].map((cr) => (
+        <View style={{}}>
+          {Array.isArray(item.crossrefs) ? (
+            item.crossrefs.map((crossref) => (
+              <AppText key={crossref["id"]}>
+                {"\n" + crossref["title"] + "\t"}
+                {Array.isArray(crossref["refs"]["ref"]) ? (
+                  crossref["refs"]["ref"].map((cr) => (
+                    <VerseHyperlink key={cr["for"]} cr={cr} />
+                  ))
+                ) : (
+                  <VerseHyperlink
+                    key={crossref["for"]}
+                    cr={crossref["refs"]["ref"]}
+                  />
+                )}
+              </AppText>
+            ))
+          ) : item.crossrefs["title"] == "" ? null : (
+            <AppText>
+              {"\n" + item.crossrefs["title"] + "\t"}
+              {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
+                item.crossrefs["refs"]["ref"].map((cr) => (
                   <VerseHyperlink key={cr["for"]} cr={cr} />
                 ))
               ) : (
                 <VerseHyperlink
-                  key={crossref["for"]}
-                  cr={crossref["refs"]["ref"]}
+                  key={item.crossrefs["for"]}
+                  cr={item.crossrefs["refs"]["ref"]}
                 />
               )}
             </AppText>
-          ))
-        ) : item.crossrefs["title"] == "" ? null : (
-          <AppText>
-            {"\n" + item.crossrefs["title"] + "\t"}
-            {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
-              item.crossrefs["refs"]["ref"].map((cr) => (
-                <VerseHyperlink key={cr["for"]} cr={cr} />
-              ))
-            ) : (
-              <VerseHyperlink
-                key={item.crossrefs["for"]}
-                cr={item.crossrefs["refs"]["ref"]}
-              />
-            )}
-          </AppText>
-        )}
+          )}
+        </View>
 
         <PanelBox
           fontSize={fontSize}

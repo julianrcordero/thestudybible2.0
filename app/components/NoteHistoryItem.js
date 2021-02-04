@@ -31,7 +31,7 @@ export default class NoteHistoryItem extends PureComponent {
           "",
           [
             {
-              text: "Cancel",
+              text: "Delete",
               onPress: this.cancel,
               style: "cancel",
             },

@@ -655,7 +655,9 @@ export default function App() {
   };
 
   const renderBibleContent = () => (
-    <View onStartShouldSetResponderCapture={() => console.log("FlatList")}>
+    <View
+    // onStartShouldSetResponderCapture={() => console.log("FlatList")}
+    >
       <FlatList
         bounces={false}
         data={verseList}

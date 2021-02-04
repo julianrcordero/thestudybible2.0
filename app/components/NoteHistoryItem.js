@@ -1,10 +1,17 @@
 import React, { PureComponent } from "react";
-import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Button,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import Text from "./Text";
 import colors from "../config/colors";
+import AppText from "./Text";
 
 export default class NoteHistoryItem extends PureComponent {
   constructor(props) {
@@ -13,12 +20,12 @@ export default class NoteHistoryItem extends PureComponent {
 
   state = {
     isFocused: false,
+    noteText: this.props.subTitle,
   };
 
   render() {
     const {
       title,
-      subTitle,
       image,
       IconComponent,
       onPress,
@@ -34,28 +41,44 @@ export default class NoteHistoryItem extends PureComponent {
             {title}
           </Text>
         </View>
-        {/* {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>} */}
-        <TextInput
-          autoCapitalize={"none"}
-          keyboardType="default"
-          multiline
-          onBlur={() => this.setState({ isFocused: false })}
-          onFocus={() => this.setState({ isFocused: true })}
-          onSelectionChange={(event) => console.log(event.nativeEvent)}
-          onSubmitEditing={
-            (event) => {
-              this.search(event.nativeEvent.text);
-            }
-            // this.updateText( event.nativeEvent.text)
-          }
-          placeholder={subTitle}
-          style={[
-            { borderColor: colors.medium, padding: 15 },
-            this.state.isFocused ? { borderWidth: 0.5 } : null,
-          ]}
-          // value={subTitle}
-        />
-        {/* </View> */}
+        <View>
+          {this.state.isFocused ? (
+            <>
+              <TextInput
+                autoCapitalize={"none"}
+                keyboardType="default"
+                defaultValue={this.state.noteText}
+                multiline
+                onBlur={() => {
+                  console.log("TextInput onBlur");
+                  this.setState({ isFocused: false });
+                }}
+                onFocus={() => this.setState({ isFocused: true })}
+                onSelectionChange={(event) => console.log("onSelectionChange")}
+                onSubmitEditing={
+                  (event) => {
+                    // this.search(event.nativeEvent.text);
+                    this.setState({ noteText: event.nativeEvent.text });
+                  }
+                  // this.updateText( event.nativeEvent.text)
+                }
+                placeholder={"Your note here"}
+                style={[
+                  { borderColor: colors.medium, padding: 15 },
+                  this.state.isFocused ? { borderWidth: 0.5 } : null,
+                ]}
+              />
+              <Button
+                title={"Save"}
+                onPress={() => this.setState({ isFocused: false })}
+              ></Button>
+            </>
+          ) : (
+            <Text onPress={() => this.setState({ isFocused: true })}>
+              {this.state.noteText}
+            </Text>
+          )}
+        </View>
         {/* <MaterialCommunityIcons
         color={colors.medium}
         name="chevron-right"

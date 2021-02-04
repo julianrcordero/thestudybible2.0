@@ -642,11 +642,11 @@ export default function App() {
     return (
       <VerseCard
         key={index}
+        carousel={carousel}
         currentBook={currentBook}
         item={item}
         crossrefSize={crossrefSize}
         fontSize={fontSize}
-        // paragraphBibleRef={paragraphBibleRef}
         bottomSheetRef={bottomSheetRef}
         style={{ borderWidth: 0.5, paddingHorizontal: 30, width: width }}
         verseCardReferenceHeight={verseCardReferenceHeight}
@@ -655,9 +655,7 @@ export default function App() {
   };
 
   const renderBibleContent = () => (
-    <View
-    // onStartShouldSetResponderCapture={() => console.log("FlatList")}
-    >
+    <View onStartShouldSetResponderCapture={() => console.log("")}>
       <FlatList
         bounces={false}
         data={verseList}
@@ -670,6 +668,7 @@ export default function App() {
         horizontal={true}
         initialNumToRender={5}
         keyExtractor={(item, index) => item + index}
+        onStartShouldSetResponderCapture={() => console.log("Vertical Scroll")}
         ref={carousel}
         renderItem={renderVerseCardItem}
         scrollEventThrottle={16}

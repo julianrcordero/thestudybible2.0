@@ -1,17 +1,16 @@
 import React, { PureComponent } from "react";
 import {
+  Alert,
+  Keyboard,
   View,
   StyleSheet,
-  TouchableOpacity,
   TextInput,
-  Button,
+  TouchableWithoutFeedback,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Swipeable from "react-native-gesture-handler/Swipeable";
 
+import Button from "./Button";
 import Text from "./Text";
 import colors from "../config/colors";
-import AppText from "./Text";
 
 export default class NoteHistoryItem extends PureComponent {
   constructor(props) {
@@ -19,26 +18,69 @@ export default class NoteHistoryItem extends PureComponent {
   }
 
   state = {
-    isFocused: false,
+    isFocused: this.props.open ?? false,
     noteText: this.props.subTitle,
+    oldNoteText: this.props.subTitle,
+  };
+
+  notFinishedAlert = () => {
+    this.state.noteText == ""
+      ? this.cancel()
+      : Alert.alert(
+          "Are you sure you want to delete this note?",
+          "",
+          [
+            {
+              text: "Cancel",
+              onPress: this.cancel,
+              style: "cancel",
+            },
+            { text: "Go back" },
+          ],
+          { cancelable: false }
+        );
+  };
+
+  setFocusedTrue = () => {
+    this.setState({ isFocused: true });
+    this.props.carousel.current.setNativeProps({ scrollEnabled: false });
+  };
+
+  setFocusedFalse = () => {
+    this.setState({ isFocused: false });
+    this.props.carousel.current.setNativeProps({ scrollEnabled: true });
+  };
+
+  cancel = () => {
+    this.setFocusedFalse();
+    this.props.handleDelete();
+  };
+
+  save = () => {
+    if (this.state.noteText == "") {
+      this.props.handleDelete();
+      return;
+    }
+
+    this.setFocusedFalse();
+
+    this.setState({ oldNoteText: this.state.noteText });
   };
 
   render() {
-    const {
-      title,
-      image,
-      IconComponent,
-      onPress,
-      renderRightActions,
-    } = this.props;
+    const { carousel, date } = this.props;
+
+    const DismissKeyboard = ({ children }) => (
+      <TouchableWithoutFeedback onPress={this.notFinishedAlert}>
+        {children}
+      </TouchableWithoutFeedback>
+    );
 
     return (
-      <View style={{}}>
+      <View style={{ marginVertical: 15 }}>
         <View style={styles.container}>
-          {/* {IconComponent}
-      {image && <Image style={styles.image} source={image} />} */}
-          <Text style={styles.title} numberOfLines={1}>
-            {title}
+          <Text style={styles.date} numberOfLines={1}>
+            {date}
           </Text>
         </View>
         <View>
@@ -47,43 +89,48 @@ export default class NoteHistoryItem extends PureComponent {
               <TextInput
                 autoCapitalize={"none"}
                 keyboardType="default"
-                defaultValue={this.state.noteText}
+                defaultValue={this.state.oldNoteText}
                 multiline
-                onBlur={() => {
-                  console.log("TextInput onBlur");
-                  this.setState({ isFocused: false });
-                }}
-                onFocus={() => this.setState({ isFocused: true })}
-                onSelectionChange={(event) => console.log("onSelectionChange")}
-                onSubmitEditing={
-                  (event) => {
-                    // this.search(event.nativeEvent.text);
-                    this.setState({ noteText: event.nativeEvent.text });
-                  }
-                  // this.updateText( event.nativeEvent.text)
-                }
+                // onBlur={this.notFinishedAlert}
+                // onEndEditing={() => console.log("onEndEditing")}
+                onFocus={this.setFocusedTrue}
+                // onSelectionChange={(event) => console.log("onSelectionChange")}
+                blurOnSubmit={true}
+                onChangeText={(newText) => this.setState({ noteText: newText })}
                 placeholder={"Your note here"}
                 style={[
-                  { borderColor: colors.medium, padding: 15 },
+                  {
+                    borderColor: colors.medium,
+                    marginHorizontal: 10,
+                    padding: 5,
+                  },
                   this.state.isFocused ? { borderWidth: 0.5 } : null,
                 ]}
               />
-              <Button
-                title={"Save"}
-                onPress={() => this.setState({ isFocused: false })}
-              ></Button>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  marginVertical: 10,
+                }}
+              >
+                {this.state.noteText == "" ? null : (
+                  <Button
+                    title={"Save"}
+                    onPress={this.save} //API CALL
+                  ></Button>
+                )}
+                <Button
+                  color={this.state.noteText == "" ? "secondary" : "danger"}
+                  title={this.state.noteText == "" ? "Cancel" : "Delete"}
+                  onPress={this.notFinishedAlert} //API CALL
+                ></Button>
+              </View>
             </>
           ) : (
-            <Text onPress={() => this.setState({ isFocused: true })}>
-              {this.state.noteText}
-            </Text>
+            <Text onPress={this.setFocusedTrue}>{this.state.oldNoteText}</Text>
           )}
         </View>
-        {/* <MaterialCommunityIcons
-        color={colors.medium}
-        name="chevron-right"
-        size={25}
-      /> */}
       </View>
     );
   }
@@ -116,8 +163,9 @@ const styles = StyleSheet.create({
   subTitle: {
     color: colors.dark,
   },
-  title: {
+  date: {
     color: colors.medium,
+    fontSize: 12,
     fontWeight: "100",
   },
 });

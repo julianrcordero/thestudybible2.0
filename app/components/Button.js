@@ -18,19 +18,20 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     backgroundColor: colors.primary,
-    borderRadius: 25,
+    borderRadius: 10,
     justifyContent: "center",
-    alignItems: "center",
-    padding: 15,
-    width: "100%",
-    marginVertical: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    // width: "100%",
+    marginLeft: 5,
   },
   text: {
+    // backgroundColor: "green",
     color: colors.white,
-    fontSize: 18,
+    fontSize: 14,
     textTransform: "uppercase",
     fontWeight: "bold",
-    flex: 0.8,
+    // flex: 0.8,
   },
 });
 

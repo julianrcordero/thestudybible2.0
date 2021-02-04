@@ -28,39 +28,7 @@ import NoteHistoryItem from "./NoteHistoryItem";
 export default class NoteHistory extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      noteHistory: props.data ?? [
-        {
-          id: 2,
-          title: "Note 3, Wednesday",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          id: 1,
-          title: "Note 2, Tuesday",
-          description:
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. ",
-        },
-        {
-          id: 0,
-          title: "Note 1, Monday",
-          description:
-            "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
-        },
-      ],
-    };
   }
-
-  handleDelete = (item) => {
-    //Delete the message from messages
-    const newList = this.state.noteHistory.filter((m) => m.id !== item.id);
-
-    this.setState({
-      noteHistory: newList,
-    });
-  };
 
   listEmptyComponent = () => (
     <View
@@ -72,41 +40,22 @@ export default class NoteHistory extends PureComponent {
         alignItems: "center",
       }}
     >
-      <Text>No search history</Text>
+      <Text>No note history</Text>
     </View>
   );
 
-  renderSearchItem = ({ item, index, separators }) => {
-    return (
-      <NoteHistoryItem
-        title={item.title}
-        subTitle={item.description}
-        onPress={() => console.log(item)}
-        renderRightActions={() => (
-          <ListItemDeleteAction onPress={() => this.handleDelete(item)} />
-        )}
-      />
-    );
-  };
-
   render() {
-    return this.state.noteHistory.map((item) => (
+    const { carousel, noteHistory, handleDelete } = this.props;
+    return noteHistory.map((item) => (
       <NoteHistoryItem
+        carousel={carousel}
         key={item.id.toString()}
-        title={item.title}
+        handleDelete={() => handleDelete(item)}
+        date={item.title}
         subTitle={item.description}
         onPress={() => console.log(item)}
-        renderRightActions={() => (
-          <ListItemDeleteAction onPress={() => this.handleDelete(item)} />
-        )}
+        open={item.open}
       />
     ));
-    //   <FlatList
-    //     data={this.state.noteHistory}
-    //     extraData={this.props}
-    //     renderItem={this.renderSearchItem}
-    //     keyExtractor={(item) => item.id.toString()}
-    //     ListEmptyComponent={() => this.listEmptyComponent()}
-    //   />
   }
 }

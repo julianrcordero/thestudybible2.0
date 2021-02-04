@@ -18,6 +18,7 @@ export default class VerseCard extends PureComponent {
 
   render() {
     const {
+      carousel,
       currentBook,
       item,
       fontSize,
@@ -76,7 +77,7 @@ export default class VerseCard extends PureComponent {
         >
           {item.content}
         </AppText>
-        <View style={{}}>
+        <View style={{ marginBottom: 20 }}>
           {Array.isArray(item.crossrefs) ? (
             item.crossrefs.map((crossref) => (
               <AppText key={crossref["id"]}>
@@ -111,6 +112,7 @@ export default class VerseCard extends PureComponent {
         </View>
 
         <PanelBox
+          carousel={carousel}
           fontSize={fontSize}
           johnsNote={item.johnsNote}
           crossRefSize={crossRefSize}

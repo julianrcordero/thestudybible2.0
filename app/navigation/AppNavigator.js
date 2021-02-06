@@ -103,7 +103,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         right: 0,
         bottom: 0,
         height: 70,
-        backgroundColor: "yellow", // colors.light,
+        backgroundColor: colors.secondary,
         transform: [{ translateY: navigationY }],
         // alignItems: "center",
         // justifyContent: "center",

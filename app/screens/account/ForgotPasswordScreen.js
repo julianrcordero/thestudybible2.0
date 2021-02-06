@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Image, StyleSheet, View, Alert } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import {
   AppForm,
@@ -15,8 +15,8 @@ import useApi from "../../hooks/useApi";
 import useAuth from "../../auth/useAuth";
 import ActivityIndicator from "../../components/ActivityIndicator";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
+const validationSchema = yup.object().shape({
+  email: yup.string().required().email().label("Email"),
 });
 
 function ForgotPasswordScreen({ navigation }) {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import {
   AppForm as Form,
@@ -14,13 +14,13 @@ import listingsApi from "../api/listings";
 import useLocation from "../hooks/useLocation";
 import UploadScreen from "./UploadScreen";
 
-const validationSchema = Yup.object().shape({
-  title: Yup.string().required().min(1).label("Title"),
-  // price: Yup.number().required().min(1).max(10000).label("Price"),
-  scripture: Yup.string().label("Scripture"),
-  description: Yup.string().label("Description"),
-  category: Yup.object().required().nullable().label("Category"),
-  images: Yup.array().min(1, "Please select at least one image."),
+const validationSchema = yup.object().shape({
+  title: yup.string().required().min(1).label("Title"),
+  // price: yup.number().required().min(1).max(10000).label("Price"),
+  scripture: yup.string().label("Scripture"),
+  description: yup.string().label("Description"),
+  category: yup.object().required().nullable().label("Category"),
+  images: yup.array().min(1, "Please select at least one image."),
 });
 
 const categories = [

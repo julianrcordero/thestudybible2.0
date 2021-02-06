@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Image, StyleSheet, View } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import authApi from "../../api/auth";
 import useApi from "../../hooks/useApi";
@@ -15,8 +15,9 @@ import {
 } from "../../components/forms/Index";
 import colors from "../../config/colors";
 
-const validationSchema = Yup.object().shape({
-  code: Yup.string()
+const validationSchema = yup.object().shape({
+  code: yup
+    .string()
     .required()
     .min(6) //test("len", "Code must be 6 digits", (label) => val.length === 5)
     .label("Code"),

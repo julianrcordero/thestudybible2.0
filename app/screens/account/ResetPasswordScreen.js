@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Image, StyleSheet, View, Alert } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import authApi from "../../api/auth";
 import ActivityIndicator from "../../components/ActivityIndicator";
@@ -13,14 +13,16 @@ import {
 } from "../../components/forms/Index";
 import colors from "../../config/colors";
 
-const validationSchema = Yup.object().shape({
-  code: Yup.string()
+const validationSchema = yup.object().shape({
+  code: yup
+    .string()
     .required()
     .min(6) //test("len", "Code must be 6 digits", (label) => val.length === 5)
     .label("Code"),
-  proposed_password: Yup.string().required().min(4).label("Phone"),
-  confirm_proposed_password: Yup.string()
-    .oneOf([Yup.ref("proposed_password"), null], "Passwords must match")
+  proposed_password: yup.string().required().min(4).label("Phone"),
+  confirm_proposed_password: yup
+    .string()
+    .oneOf([yup.ref("proposed_password"), null], "Passwords must match")
     .required("Password confirm is required"),
 });
 

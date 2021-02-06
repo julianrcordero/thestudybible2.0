@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Image, StyleSheet, View } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import usersApi from "../../api/users";
 import authApi from "../../api/auth";
@@ -16,11 +16,11 @@ import {
 } from "../../components/forms/Index";
 import colors from "../../config/colors";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
-  phone_number: Yup.string().required().min(10).label("Phone"),
+const validationSchema = yup.object().shape({
+  name: yup.string().required().label("Name"),
+  email: yup.string().required().email().label("Email"),
+  password: yup.string().required().min(4).label("Password"),
+  phone_number: yup.string().required().min(10).label("Phone"),
 });
 
 function RegisterScreen({ navigation }) {

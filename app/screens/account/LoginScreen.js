@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Button, Image, StyleSheet, View } from "react-native";
-import * as Yup from "yup";
+import * as yup from "yup";
 
 import TextInput from "../../components/TextInput";
 import {
@@ -15,9 +15,9 @@ import colors from "../../config/colors";
 import { Formik } from "formik";
 import useAuth from "../../auth/useAuth";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+const validationSchema = yup.object().shape({
+  email: yup.string().required().email().label("Email"),
+  password: yup.string().required().min(4).label("Password"),
 });
 
 function LoginScreen({ navigation }) {

@@ -92,7 +92,7 @@ export default class NoteHistoryItem extends PureComponent {
                 defaultValue={this.state.oldNoteText}
                 multiline
                 // onBlur={this.notFinishedAlert}
-                // onEndEditing={() => console.log("onEndEditing")}
+                onEndEditing={this.save}
                 onFocus={this.setFocusedTrue}
                 // onSelectionChange={(event) => console.log("onSelectionChange")}
                 blurOnSubmit={true}
@@ -112,6 +112,7 @@ export default class NoteHistoryItem extends PureComponent {
                   flexDirection: "row",
                   justifyContent: "flex-end",
                   marginVertical: 10,
+                  marginRight: 10,
                 }}
               >
                 {this.state.noteText == "" ? null : (

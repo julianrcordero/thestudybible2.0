@@ -26,6 +26,8 @@ import defaultStyles from "../config/styles";
 import colors from "../config/colors";
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import verseFormatted from "../components/VerseFormatted";
+import ParagraphBible from "../components/ParagraphBible";
+import VerseByVerseBible from "../components/VerseByVerseBible";
 
 class SectionHeader extends PureComponent {
   constructor(props) {
@@ -51,7 +53,6 @@ class SectionHeader extends PureComponent {
 }
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 const AnimatedSectionHeader = Animated.createAnimatedComponent(SectionHeader);
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default function BibleScreen({
   carousel,
@@ -63,6 +64,7 @@ export default function BibleScreen({
   crossrefSize,
   titleSize,
   bottomSheetRef,
+  paragraphBibleRef,
   searchHistoryRef,
   setCurrentBook,
   setSettingsMode,
@@ -100,7 +102,7 @@ export default function BibleScreen({
   const [] = useState(true);
   const { height, width } = Dimensions.get("window");
   const top = height - Constants.statusBarHeight - getBottomSpace();
-  const paragraphBibleRef = React.useRef();
+  // const paragraphBibleRef = React.useRef();
   // const [verseList, setVerseList] = useState([]);
   // const [focusedVerse, setFocusedVerse] = useState(null);
 
@@ -211,79 +213,29 @@ export default function BibleScreen({
     () => interactionPromise.cancel();
   };
 
-  const renderParagraphItem = ({ item, i }) => (
-    <React.Fragment key={i}>
-      <AnimatedSectionHeader title={item.title} titleSize={titleSize} />
-      <Paragraph
-        key={i}
-        chapterNum={item.chapterNum}
-        crossrefSize={crossrefSize}
-        // focusedVerse={focusedVerse}
-        fontSize={fontSize}
-        section={item}
-        searchWords={searchWords}
-        onPress={toggleSlideView}
-      />
-    </React.Fragment>
-  );
-
   let paragraphBible = (
-    <AnimatedFlatList
-      bounces={false}
-      data={sections}
-      initialNumToRender={60}
-      keyExtractor={(item) => item.chapterNum.toString()}
-      onScroll={Animated.event([
-        {
-          nativeEvent: { contentOffset: { y: scrollY } },
-        },
-      ])}
+    <ParagraphBible
+      crossrefSize={crossrefSize}
+      fontSize={fontSize}
+      HEADER_HEIGHT={HEADER_HEIGHT}
       ref={paragraphBibleRef}
-      renderItem={renderParagraphItem}
-      scrollEventThrottle={16}
-      showsVerticalScrollIndicator={false}
-      style={[
-        styles.bibleTextView,
-        { paddingTop: HEADER_HEIGHT, paddingBottom: HEADER_HEIGHT + 300 },
-      ]}
+      sections={sections}
+      scrollY={scrollY}
+      titleSize={titleSize}
+      toggleSlideView={toggleSlideView}
     />
   );
 
   let verseByVerseBible = (
-    <AnimatedSectionList
-      bounces={false}
-      initialNumToRender={1}
-      keyExtractor={(item, index) => item + index}
-      onScroll={Animated.event([
-        {
-          nativeEvent: { contentOffset: { y: scrollY } },
-        },
-      ])}
-      renderItem={({ item, index, section }) => (
-        <Text style={[defaultStyles.bibleText]}>
-          <Verse
-            key={index}
-            chapterNum={section.chapterNum}
-            crossrefSize={crossrefSize}
-            verse={item}
-            searchWords={searchWords}
-            onPress={() => toggleSlideView(section.chapterNum, index + 1)}
-            style={[
-              defaultStyles.bibleText,
-              { fontSize: fontSize, lineHeight: fontSize * 2 },
-            ]}
-            // landscape={landscape}
-          />
-        </Text>
-      )}
-      renderSectionHeader={({ section: { title } }) => (
-        <AnimatedSectionHeader title={title} titleSize={titleSize} />
-      )}
-      scrollEventThrottle={16}
+    <VerseByVerseBible
+      crossrefSize={crossrefSize}
+      fontSize={fontSize}
+      HEADER_HEIGHT={HEADER_HEIGHT}
+      // ref={paragraphBibleRef}
       sections={sections}
-      showsVerticalScrollIndicator={false}
-      stickySectionHeadersEnabled={false}
-      style={[styles.bibleTextView, { paddingTop: HEADER_HEIGHT }]}
+      scrollY={scrollY}
+      titleSize={titleSize}
+      toggleSlideView={toggleSlideView}
     />
   );
 

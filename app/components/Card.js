@@ -1,20 +1,33 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Image as RNImage,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Image } from "react-native-expo-image-cache";
 
 import Text from "./Text";
 import colors from "../config/colors";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableHighlight onPress={onPress}>
       <View style={styles.card}>
-        <Image
-          style={styles.image}
-          tint="light"
-          preview={{ uri: thumbnailUrl }}
-          uri={imageUrl}
-        />
+        {thumbnailUrl ? (
+          <Image
+            style={styles.image}
+            tint="light"
+            preview={{ uri: thumbnailUrl }}
+            uri={imageUrl}
+          />
+        ) : (
+          <RNImage
+            style={styles.image}
+            source={require("../assets/gtylogo.jpg")}
+          />
+        )}
         <View style={styles.detailsContainer}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
@@ -24,23 +37,28 @@ function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
           </Text>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: colors.white,
-    marginBottom: 20,
+    marginVertical: 20,
     overflow: "hidden",
   },
   detailsContainer: {
-    padding: 20,
+    backgroundColor: colors.primary,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
   image: {
-    width: "100%",
-    height: 200,
+    alignSelf: "center",
+    aspectRatio: 1.2,
+    backgroundColor: "green",
+    width: "60%",
+    height: undefined,
   },
   subTitle: {
     color: colors.secondary,

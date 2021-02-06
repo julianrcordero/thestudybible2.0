@@ -54,16 +54,15 @@ export default class TopSheetNavigation extends PureComponent {
         );
       case 1:
         return (
-          // <View style={{ backgroundColor: "red", height: 1000 }}></View>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: true }}>
               <Stack.Screen
                 name="BooksList"
-                // component={BooksListScreen}
                 options={{ headerShown: false, title: "Books" }}
               >
                 {() => (
                   <BooksListScreen
+                    books={this.props.books}
                     changeBibleBook={this.props.changeBibleBook}
                     close={() => this.setState({ collapsed: true })}
                     width={this.props.width - 30}
@@ -86,16 +85,12 @@ export default class TopSheetNavigation extends PureComponent {
 
   render() {
     return (
-      //   <Screen style={{ position: "absolute", zIndex: 200, width: "100%" }}>
-      // <View style={{ position: "relative" }}>
       <Collapsible
         align={"center"}
         collapsed={this.state.collapsed}
-        // collapsedHeight={-70}
         style={{
           backgroundColor: colors.white,
-          // borderBottomWidth: 1,
-          height: this.props.height, //height - top - 70 - getBottomSpace(),
+          height: this.props.height,
           paddingHorizontal: 15,
         }}
       >
@@ -107,7 +102,6 @@ export default class TopSheetNavigation extends PureComponent {
               height: 70,
               justifyContent: "space-between",
               flexDirection: "row",
-              // width: width ,
             }}
           >
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>
@@ -131,8 +125,6 @@ export default class TopSheetNavigation extends PureComponent {
         </View>
         {this.selectedPicker()}
       </Collapsible>
-      // </View>
-      //   </Screen>
     );
   }
 }
@@ -141,8 +133,6 @@ const styles = StyleSheet.create({
   search: {
     alignItems: "center",
     aspectRatio: 0.8,
-    // backgroundColor: "green",
-    // flexShrink: 1,
     justifyContent: "center",
   },
   searchBar: {

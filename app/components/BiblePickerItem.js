@@ -47,7 +47,7 @@ class BiblePickerItem extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    borderColor: "red", //colors.white,
+    borderColor: colors.white,
     justifyContent: "center",
   },
   text: {

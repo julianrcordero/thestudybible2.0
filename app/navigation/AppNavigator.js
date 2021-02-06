@@ -35,7 +35,7 @@ const AppNavigator = (props) =>
 
     return (
       <Tab.Navigator
-        initialRouteName="Bible"
+        initialRouteName="Home"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{}}
@@ -51,20 +51,21 @@ const AppNavigator = (props) =>
           name="Bible"
           children={() => (
             <BibleScreen
+              bottomSheetRef={props.bottomSheetRef}
               carousel={props.carousel}
+              crossrefSize={props.crossrefSize}
               currentBook={props.currentBook}
               HEADER_HEIGHT={HEADER_HEIGHT}
-              scrollY={scrollY}
               headerY={headerY}
               fontSize={props.fontSize}
-              crossrefSize={props.crossrefSize}
-              titleSize={props.titleSize}
-              bottomSheetRef={props.bottomSheetRef}
+              paragraphBibleRef={props.paragraphBibleRef}
+              scrollY={scrollY}
               searchHistoryRef={props.searchHistoryRef}
               setCurrentBook={props.setCurrentBook}
               setSettingsMode={props.setSettingsMode}
-              topPanel={props.topPanel}
               setVerseList={props.setVerseList}
+              titleSize={props.titleSize}
+              topPanel={props.topPanel}
               verseList={props.verseList}
             />
           )}

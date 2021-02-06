@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, Image as RNImage, ScrollView, StyleSheet } from "react-native";
 import { Image } from "react-native-expo-image-cache";
 
 import colors from "../config/colors";
@@ -7,38 +7,48 @@ import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 import AppText from "../components/Text";
 
+import HTML from "react-native-render-html";
+
 function ListingDetailsScreen({ route }) {
   const listing = route.params;
   const fontSize = 16;
 
   return (
-    <View>
-      <Image
-        style={styles.image}
-        preview={{ uri: listing.images[0].thumbnailUrl }}
-        tint="light"
-        uri={listing.images[0].url}
-      />
+    <View style={{ backgroundColor: colors.white }}>
+      {listing.images ? (
+        <Image
+          style={styles.image}
+          preview={{ uri: listing.images[0].thumbnailUrl }}
+          tint="light"
+          uri={listing.images[0].url}
+        />
+      ) : (
+        <RNImage
+          style={styles.image}
+          source={require("../assets/gtylogo.jpg")}
+        />
+      )}
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>{listing.title}</Text>
-        <Text style={styles.scripture}>${listing.scripture}</Text>
+        <Text style={styles.scripture}>{listing.scripture}</Text>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.userContainer}>
             <ListItem
               image={require("../assets/gtylogo.jpg")}
-              title="Mosh Hamedani"
+              title={listing.author ? listing.author : "John MacArthur"}
               subTitle="5 Listings"
             />
           </View>
-          <AppText
+          <HTML source={{ html: listing.transcript }} contentWidth={"100%"} />
+          {/* <AppText
             style={{
               fontSize: fontSize,
               lineHeight: fontSize * 2,
               marginVertical: 15,
             }}
           >
-            {listing.content}
-          </AppText>
+            {listing.transcript}
+          </AppText> */}
           <View
             style={{
               height: 800,
@@ -52,11 +62,15 @@ function ListingDetailsScreen({ route }) {
 
 const styles = StyleSheet.create({
   detailsContainer: {
+    backgroundColor: colors.light,
     padding: 30,
   },
   image: {
-    width: "100%",
-    height: 300,
+    alignSelf: "center",
+    aspectRatio: 1.2,
+    backgroundColor: "green",
+    width: "60%",
+    height: undefined,
   },
   scripture: {
     color: colors.secondary,
@@ -69,6 +83,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   userContainer: {
+    backgroundColor: colors.white,
     // marginVertical: 40,
   },
 });

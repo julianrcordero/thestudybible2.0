@@ -34,14 +34,15 @@ function ListingsScreen({ navigation }) {
       <Indicator animating={getListingsApi.loading} size={"large"} />
       <FlatList
         data={getListingsApi.data}
+        // getItemLayout={(data, index) => ({ length: 200 })}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
             title={item.title}
             subTitle={item.scripture}
-            imageUrl={item.images[0].url}
+            // imageUrl={item.images[0].url}
             onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-            thumbnailUrl={item.imageUrl}
+            // thumbnailUrl={item.imageUrl}
           />
         )}
       />
@@ -51,7 +52,7 @@ function ListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 20,
+    // padding: 20,
     backgroundColor: colors.light,
   },
 });

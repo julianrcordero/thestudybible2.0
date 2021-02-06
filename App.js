@@ -4,8 +4,6 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 
-import Slider from "@react-native-community/slider";
-
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
@@ -27,6 +25,7 @@ import Constants from "expo-constants";
 import { createStackNavigator } from "@react-navigation/stack";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import SearchHistory from "./app/components/SearchHistory";
+import SettingsScreen from "./app/screens/SettingsScreen";
 const Stack = createStackNavigator();
 const { height, width } = Dimensions.get("window");
 
@@ -37,9 +36,8 @@ export default function App() {
   const verseCardReferenceHeight = 50;
 
   const [fontSize, setFontSize] = useState(16);
-  const crossrefSize = 12; //fontSize * 0.6;
+  const crossrefSize = 12;
   const titleSize = fontSize * 1.5;
-  const handleSlide = (value) => setFontSize(value);
 
   const topPanel = React.useRef();
 
@@ -518,6 +516,8 @@ export default function App() {
   const [] = useState(1);
   const [] = useState(1);
 
+  const paragraphBibleRef = React.useRef();
+
   const bottomSheetRef = React.useRef(null);
 
   const [user, setUser] = useState();
@@ -545,86 +545,7 @@ export default function App() {
   );
 
   const renderSettingsContent = () => (
-    <View
-      style={{
-        backgroundColor: colors.light,
-        height: top - bottomSheetHeaderHeight,
-        borderTopWidth: 0.2,
-        // alignItems: "center",
-        // justifyContent: "center",
-        paddingHorizontal: 50,
-      }}
-    >
-      <View style={styles.settings}>
-        <Text>{"Text Size: " + fontSize + "pt"}</Text>
-        <Slider
-          minimumValue={12}
-          maximumValue={24}
-          minimumTrackTintColor={colors.medium}
-          maximumTrackTintColor={colors.primary}
-          onSlidingComplete={handleSlide}
-          step={2}
-          value={fontSize}
-          // vertical
-        />
-      </View>
-      <View style={styles.settings}>
-        <Text style={styles.title}>{"Font"}</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            width: "100%",
-          }}
-        >
-          <Text style={styles.button}>Sans Serif</Text>
-          <Text style={styles.button}>Serif</Text>
-          <Text style={styles.button}>Slab Serif</Text>
-        </View>
-      </View>
-      <View style={styles.settings}>
-        <Text style={styles.title}>{"Formatting"}</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            width: "100%",
-          }}
-        >
-          <Text style={styles.button}>Default</Text>
-          <Text style={styles.button}>Study</Text>
-          <Text style={styles.button}>Reader</Text>
-        </View>
-      </View>
-      <View
-        style={[
-          styles.settings,
-          { flexDirection: "row", justifyContent: "space-between" },
-        ]}
-      >
-        <Text style={styles.title}>{"Show Cross References"}</Text>
-        <Switch
-          trackColor={{ false: colors.medium, true: colors.primary }}
-          // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          // onValueChange={toggleSwitch}
-          // value={isEnabled}
-        />
-      </View>
-      <View
-        style={[
-          styles.settings,
-          { flexDirection: "row", justifyContent: "space-between" },
-        ]}
-      >
-        <Text style={styles.title}>{"Dark Mode"}</Text>
-        <Switch
-          trackColor={{ false: colors.medium, true: colors.primary }}
-          // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          // onValueChange={toggleSwitch}
-          // value={isEnabled}
-        />
-      </View>
-    </View>
+    <SettingsScreen top={top} paragraphBibleRef={paragraphBibleRef} />
   );
 
   const renderBibleHeader = () => (
@@ -710,6 +631,7 @@ export default function App() {
     <>
       <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
         <TopSheetNavigation
+          books={books}
           ref={topPanel}
           height={top - getBottomSpace()}
           width={width}
@@ -726,6 +648,7 @@ export default function App() {
                 currentBook={currentBook}
                 fontSize={fontSize}
                 crossrefSize={crossrefSize}
+                paragraphBibleRef={paragraphBibleRef}
                 titleSize={titleSize}
                 searchHistoryRef={searchHistoryRef}
                 setSettingsMode={setSettingsMode}
@@ -757,10 +680,6 @@ export default function App() {
 }
 
 const styles = {
-  settings: {
-    marginTop: 25,
-    width: "100%",
-  },
   header: {
     alignItems: "center",
     backgroundColor: colors.light,
@@ -772,18 +691,22 @@ const styles = {
     paddingHorizontal: 15,
     width: "100%",
   },
-  button: {
-    alignItems: "center",
-    backgroundColor: colors.white,
-    borderWidth: 0.5,
-    borderColor: colors.medium,
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 6,
-    paddingVertical: 6,
-    textAlign: "center",
-  },
-  title: {
-    marginVertical: 6,
-  },
+  // button: {
+  //   alignItems: "center",
+  //   backgroundColor: colors.white,
+  //   borderWidth: 0.5,
+  //   borderColor: colors.medium,
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   marginHorizontal: 6,
+  //   paddingVertical: 6,
+  //   textAlign: "center",
+  // },
+  // settings: {
+  //   marginTop: 25,
+  //   width: "100%",
+  // },
+  // title: {
+  //   marginVertical: 6,
+  // },
 };

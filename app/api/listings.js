@@ -1,6 +1,6 @@
 import client from "./client";
 
-const endpoint = "/getdashboard";
+const endpoint = "/getdevotionals";
 
 const getListings = () => client.get(endpoint);
 

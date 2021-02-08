@@ -40,7 +40,7 @@ function ListingDetailsScreen({ route }) {
             />
           </View>
           <Text style={styles.transcript}>
-            <HTML source={{ html: listing.transcript }} contentWidth={"100%"} />
+            <HTML source={{ html: listing.transcript }} />
           </Text>
           {/* <AppText
             style={{

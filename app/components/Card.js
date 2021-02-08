@@ -11,7 +11,15 @@ import Text from "./Text";
 import colors from "../config/colors";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
-function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
+function Card({
+  category,
+  title,
+  scripture,
+  imageUrl,
+  itemDate,
+  onPress,
+  thumbnailUrl,
+}) {
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.card}>
@@ -32,9 +40,18 @@ function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
-          <Text style={styles.subTitle} numberOfLines={2}>
-            {subTitle}
-          </Text>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={styles.scripture} numberOfLines={2}>
+              {scripture}
+            </Text>
+            <Text style={styles.date}>{itemDate}</Text>
+          </View>
         </View>
       </View>
     </TouchableHighlight>
@@ -43,14 +60,21 @@ function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
 
 const styles = StyleSheet.create({
   card: {
+    borderWidth: 0.2,
     borderRadius: 10,
     backgroundColor: colors.white,
     marginVertical: 10,
     overflow: "hidden",
   },
+  date: {
+    // backgroundColor: "green",
+    color: colors.secondary,
+    fontSize: 12,
+    fontStyle: "italic",
+  },
   detailsContainer: {
     backgroundColor: colors.primary,
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
     paddingVertical: 10,
   },
   image: {
@@ -60,12 +84,17 @@ const styles = StyleSheet.create({
     width: "60%",
     height: undefined,
   },
-  subTitle: {
+  scripture: {
     color: colors.secondary,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   title: {
-    marginBottom: 7,
+    color: colors.secondary,
+    flex: 1,
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingBottom: 5,
+    // marginBottom: 7,
   },
 });
 

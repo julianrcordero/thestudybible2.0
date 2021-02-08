@@ -39,7 +39,9 @@ function ListingDetailsScreen({ route }) {
               subTitle="5 Listings"
             />
           </View>
-          <HTML source={{ html: listing.transcript }} contentWidth={"100%"} />
+          <Text style={styles.transcript}>
+            <HTML source={{ html: listing.transcript }} contentWidth={"100%"} />
+          </Text>
           {/* <AppText
             style={{
               fontSize: fontSize,
@@ -63,7 +65,7 @@ function ListingDetailsScreen({ route }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     backgroundColor: colors.light,
-    padding: 30,
+    padding: 25,
   },
   image: {
     alignSelf: "center",
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "500",
+  },
+  transcript: {
+    fontSize: 20,
   },
   userContainer: {
     backgroundColor: colors.white,

@@ -29,8 +29,18 @@ function ListingDetailsScreen({ route }) {
         />
       )}
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{listing.title}</Text>
-        <Text style={styles.scripture}>{listing.scripture}</Text>
+        <View
+          style={{
+            alignItems: "flex-start",
+            justifyContent: "center",
+            marginVertical: 15,
+          }}
+        >
+          <Text style={styles.title}>{listing.title}</Text>
+          {listing.scripture != "" && (
+            <Text style={styles.scripture}>{listing.scripture}</Text>
+          )}
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.userContainer}>
             <ListItem
@@ -40,7 +50,20 @@ function ListingDetailsScreen({ route }) {
             />
           </View>
           <Text style={styles.transcript}>
-            <HTML source={{ html: listing.transcript }} />
+            {/* <HTML source={{ html: listing.transcript }} /> */}
+            <HTML
+              source={{
+                html: listing.transcript,
+              }}
+              tagsStyles={{
+                strong: { fontSize: 16, lineHeight: 36 },
+                li: { fontSize: 16, lineHeight: 36 },
+                h4: { fontSize: 16, lineHeight: 36 },
+                em: { fontSize: 16, lineHeight: 36 },
+                p: { fontSize: 16, lineHeight: 36 },
+              }}
+              // contentWidth={100}
+            />
           </Text>
           {/* <AppText
             style={{
@@ -65,7 +88,7 @@ function ListingDetailsScreen({ route }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     backgroundColor: colors.light,
-    padding: 25,
+    paddingHorizontal: 25,
   },
   image: {
     alignSelf: "center",
@@ -77,11 +100,10 @@ const styles = StyleSheet.create({
   scripture: {
     color: colors.secondary,
     fontWeight: "bold",
-    fontSize: 20,
-    marginVertical: 10,
+    fontSize: 18,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "500",
   },
   transcript: {
@@ -89,7 +111,7 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     backgroundColor: colors.white,
-    // marginVertical: 40,
+    marginBottom: 15,
   },
 });
 

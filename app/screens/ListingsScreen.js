@@ -1,12 +1,14 @@
-import React, { useState, useEffect, PureComponent } from "react";
+import React, { useCallback, useState, useEffect, PureComponent } from "react";
 import {
   ActivityIndicator as Indicator,
   Button,
   FlatList,
+  RefreshControl,
   StyleSheet,
   View,
   TouchableOpacity,
 } from "react-native";
+import Animated from "react-native-reanimated";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 // import Button from "../components/Button";
@@ -45,9 +47,6 @@ class MarkupItem extends PureComponent {
           color={colors.black}
           size={38}
         />
-        {/* <View style={{ backgroundColor: "red", height: 30 }}>
-          <Button title={this.props.title}></Button>
-        </View> */}
         <AppText
           style={{
             color: "cornflowerblue",
@@ -63,50 +62,33 @@ class MarkupItem extends PureComponent {
   }
 }
 
-function ListingsScreen({ navigation }) {
-  const getListingsApi = useApi(listingsApi.getListings);
-  const { user } = useAuth();
-  useEffect(() => {
-    getListingsApi.request();
-  }, []);
+class ResourceSection extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  var today = new Date(),
-    date = monthNames[today.getMonth()] + " " + today.getDate();
+  render() {
+    const { data, navigation, showDate, title } = this.props;
 
-  return (
-    <Screen style={styles.screen}>
-      <ScrollView style={{ paddingHorizontal: 15 }}>
-        {getListingsApi.error && (
-          <>
-            <AppText>Couldn't retrieve the listings.</AppText>
-            <Button title="Retry" onPress={getListingsApi.request} />
-          </>
-        )}
-        <ActivityIndicator visible={getListingsApi.loading} />
-        {getListingsApi.loading ? (
-          <Indicator animating={getListingsApi.loading} size={"large"} />
-        ) : (
-          <AppText style={{ fontSize: 24, margin: 10 }}>
-            {"Good Morning"}
-            {user ? ", " + user.name.substr(0, user.name.indexOf(" ")) : null}
-            {"."}
-          </AppText>
-        )}
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var today = new Date(),
+      date = monthNames[today.getMonth()] + " " + today.getDate();
 
+    return (
+      <>
         <View
           style={{
             alignItems: "center",
@@ -117,14 +99,16 @@ function ListingsScreen({ navigation }) {
           <AppText
             style={{ fontWeight: "bold", fontSize: 16, paddingVertical: 15 }}
           >
-            DEVOTIONALS
+            {title}
           </AppText>
-          <AppText style={{ fontSize: 18, fontStyle: "italic" }}>
-            {date}
-          </AppText>
+          {showDate ? (
+            <AppText style={{ fontSize: 18, fontStyle: "italic" }}>
+              {date}
+            </AppText>
+          ) : null}
         </View>
         <FlatList
-          data={getListingsApi.data}
+          data={data}
           horizontal
           getItemLayout={(data, index) => ({
             length: 500,
@@ -140,23 +124,120 @@ function ListingsScreen({ navigation }) {
           )}
           style={{ flexGrow: 0 }}
         />
-        {/* 
-      <FlatList
-        data={getListingsApi.data}
-        // getItemLayout={(data, index) => ({ length: 200 })}
-        keyExtractor={(listing) => listing.id.toString()}
-        renderItem={({ item }) => (
-          <Card
-            title={item.title}
-            scripture={item.scripture}
-            // imageUrl={item.images[0].url}
-            onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-            itemDate={item.itemDate}
-            category={item.category}
-            // thumbnailUrl={item.imageUrl}
-          />
-        )}
+      </>
+    );
+  }
+}
+
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+function ListingsScreen({ navigation, scrollY }) {
+  const getDevotionalsApi = useApi(listingsApi.getDevotionals);
+  const getResourcesApi = useApi(listingsApi.getResources);
+
+  const [blogs, setBlogs] = useState([]);
+  const [qnas, setQnas] = useState([]);
+
+  const getResources = () => {
+    getResourcesApi.request();
+
+    setBlogs(getResourcesApi.data.filter((d) => d.category == "blog"));
+    setQnas(
+      getResourcesApi.data.filter((d) => d.category == "bibleqnas-library")
+    );
+  };
+
+  const requestAll = () => {
+    getDevotionalsApi.request();
+    getResources();
+  };
+
+  const { user } = useAuth();
+  useEffect(() => {
+    requestAll();
+  }, []);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    requestAll();
+    wait(2000).then(() => setRefreshing(false));
+  });
+
+  var timeOfDay = new Date(),
+    hour = timeOfDay.getHours();
+  // console.log(hour);
+
+  return (
+    <Screen style={styles.screen}>
+      {/* <AnimatedFlatList
+        bounces={false}
+        data={sections}
+        extra={this.state.fontSize}
+        // initialNumToRender={20}
+        keyExtractor={(item) => item.chapterNum.toString()}
+        onScroll={Animated.event([
+          {
+            nativeEvent: { contentOffset: { y: scrollY } },
+          },
+        ])}
+        renderItem={this.renderParagraphItem}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        style={[
+          styles.bibleTextView,
+          { paddingTop: HEADER_HEIGHT, paddingBottom: HEADER_HEIGHT + 300 },
+        ]}
       /> */}
+      <ScrollView
+        // bounces={false}
+        // onScroll={Animated.event([
+        //   {
+        //     nativeEvent: { contentOffset: { y: scrollY } },
+        //   },
+        // ])}
+        style={{ paddingHorizontal: 15, paddingBottom: 70 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {/* <ActivityIndicator visible={getDevotionalsApi.loading} /> */}
+        {refreshing ? null : ( // <Indicator animating={getDevotionalsApi.loading} size={"large"} />
+          <AppText style={{ fontSize: 24, margin: 10 }}>
+            {"Good "}
+            {hour > 11 ? "afternoon" : "morning"}
+            {user ? ", " + user.name.substr(0, user.name.indexOf(" ")) : null}
+            {"."}
+          </AppText>
+        )}
+
+        <ResourceSection
+          title={"DEVOTIONALS"}
+          showDate={true}
+          data={getDevotionalsApi.data}
+          navigation={navigation}
+        />
+
+        {(getDevotionalsApi.data.length == 0 || getDevotionalsApi.error) &&
+          !refreshing && (
+            <View
+              style={{
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <AppText>Couldn't retrieve the listings.</AppText>
+              <Button title="Retry" onPress={getDevotionalsApi.request} />
+            </View>
+          )}
+        {/* <Indicator animating={getDevotionalsApi.loading} size={"large"} /> */}
+
         <View
           style={{
             alignSelf: "center",
@@ -175,6 +256,19 @@ function ListingsScreen({ navigation }) {
             <MarkupItem icon={"format-color-highlight"} title={"HIGHLIGHTS"} />
           </View>
         </View>
+
+        <ResourceSection
+          title={"QUESTIONS & ANSWERS"}
+          showDate={false}
+          data={qnas}
+          navigation={navigation}
+        />
+        <ResourceSection
+          title={"BLOGS"}
+          showDate={false}
+          data={blogs}
+          navigation={navigation}
+        />
       </ScrollView>
     </Screen>
   );
@@ -182,9 +276,28 @@ function ListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    // paddingHorizontal: 25,
-    backgroundColor: colors.white,
+    backgroundColor: colors.white, // "cornflowerblue",
   },
 });
 
 export default ListingsScreen;
+
+{
+  /* 
+      <FlatList
+        data={getDevotionalsApi.data}
+        // getItemLayout={(data, index) => ({ length: 200 })}
+        keyExtractor={(listing) => listing.id.toString()}
+        renderItem={({ item }) => (
+          <Card
+            title={item.title}
+            scripture={item.scripture}
+            // imageUrl={item.images[0].url}
+            onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+            itemDate={item.itemDate}
+            category={item.category}
+            // thumbnailUrl={item.imageUrl}
+          />
+        )}
+      /> */
+}

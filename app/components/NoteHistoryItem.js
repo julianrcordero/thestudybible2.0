@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   container: {
     // alignItems: "center",
     // backgroundColor: "green",
-    // borderWidth: 0.2,
+    // borderWidth: 0.3,
     borderColor: colors.medium,
     // flex: 1,
     flexDirection: "row",

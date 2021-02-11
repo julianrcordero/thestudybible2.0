@@ -37,7 +37,7 @@ export default class SettingsScreen extends PureComponent {
         style={{
           backgroundColor: colors.light,
           height: top - 50,
-          borderTopWidth: 0.2,
+          borderTopWidth: 0.3,
           paddingHorizontal: 50,
         }}
       >
@@ -119,7 +119,7 @@ const styles = {
     alignItems: "center",
     backgroundColor: colors.light,
     borderColor: colors.medium,
-    borderTopWidth: 0.2,
+    borderTopWidth: 0.3,
     flexDirection: "row",
     height: 50,
     justifyContent: "space-between",

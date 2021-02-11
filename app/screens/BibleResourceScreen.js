@@ -5,7 +5,7 @@ import AppText from "../components/Text";
 import ListItem from "../components/lists/BibleListItem";
 import colors from "../config/colors";
 
-function BibleListingDetailsScreen(props) {
+function BibleResourceScreen(props) {
   return (
     <View style={{ flex: 1 }}>
       <Image style={styles.image} source={require("../assets/gtylogo.jpg")} />
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BibleListingDetailsScreen;
+export default BibleResourceScreen;

@@ -25,7 +25,9 @@ function ListItem({
       <TouchableOpacity underlayColor={colors.light} onPress={onPress}>
         <View style={styles.container}>
           {IconComponent}
-          {image && <Image style={styles.image} source={image} />}
+          {image && (
+            <Image style={styles.image} source={image} resizeMode="contain" />
+          )}
           <View style={styles.detailsContainer}>
             <Text style={styles.title} numberOfLines={1}>
               {title}
@@ -50,27 +52,30 @@ function ListItem({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    borderWidth: 0.2,
-    borderColor: colors.light,
+    borderColor: colors.secondary,
+    borderRadius: 10,
+    borderWidth: 0.3,
     flexDirection: "row",
-    height: 50,
-    padding: 5,
+    height: 70,
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
     // backgroundColor: colors.white,
   },
   detailsContainer: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 15,
     justifyContent: "center",
   },
   image: {
-    width: 70,
-    height: 70,
+    width: 69,
     borderRadius: 35,
+    // borderWidth: 0.3,
   },
   subTitle: {
     color: colors.medium,
   },
   title: {
+    fontSize: 18,
     fontWeight: "500",
   },
 });

@@ -70,7 +70,7 @@ class BiblePicker extends PureComponent {
         style={{
           backgroundColor: colors.light,
           borderColor: colors.medium,
-          borderBottomWidth: 0.2,
+          borderBottomWidth: 0.3,
           flexDirection: "row",
           height: HEADER_HEIGHT,
           flex: 1,
@@ -92,7 +92,7 @@ class BiblePicker extends PureComponent {
                   backgroundColor: "#fff",
                   borderColor: "#000",
                   borderRadius: 10,
-                  borderWidth: 0.2,
+                  borderWidth: 0.3,
                 }
               : null,
           ]}
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   titleCard: {},
   translationText: {
     borderRadius: 4,
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     borderColor: colors.medium,
     fontSize: 12,
     paddingHorizontal: 6,

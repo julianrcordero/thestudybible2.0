@@ -60,7 +60,7 @@ function Card({
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     borderRadius: 10,
     backgroundColor: colors.white,
     marginVertical: 10,

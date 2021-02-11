@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 
 import AppNavigator from "./app/navigation/AppNavigator";
-import AuthNavigator from "./app/navigation/AuthNavigator";
+// import AuthNavigator from "./app/navigation/AuthNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
@@ -599,12 +599,6 @@ export default function App() {
         style={{
           backgroundColor: colors.white,
         }}
-        // onViewableItemsChanged={onViewRef.current}
-        // viewabilityConfig={viewConfigRef.current}
-        // onViewableItemsChanged={onViewableItemsChanged}
-        // viewabilityConfig={{
-        //   itemVisiblePercentThreshold: 50,
-        // }}
       />
 
       {/* NOT SURE WHY */}
@@ -641,25 +635,25 @@ export default function App() {
       <Screen>
         <NavigationContainer ref={navigationRef}>
           <AuthContext.Provider value={{ user, setUser }}>
-            {user ? (
-              <AppNavigator
-                bottomSheetRef={bottomSheetRef}
-                carousel={carousel}
-                currentBook={currentBook}
-                fontSize={fontSize}
-                crossrefSize={crossrefSize}
-                paragraphBibleRef={paragraphBibleRef}
-                titleSize={titleSize}
-                searchHistoryRef={searchHistoryRef}
-                setSettingsMode={setSettingsMode}
-                setVerseList={setVerseList}
-                setCurrentBook={setCurrentBook}
-                topPanel={topPanel}
-                verseList={verseList}
-              />
-            ) : (
+            {/* {user ? ( */}
+            <AppNavigator
+              bottomSheetRef={bottomSheetRef}
+              carousel={carousel}
+              currentBook={currentBook}
+              fontSize={fontSize}
+              crossrefSize={crossrefSize}
+              paragraphBibleRef={paragraphBibleRef}
+              titleSize={titleSize}
+              searchHistoryRef={searchHistoryRef}
+              setSettingsMode={setSettingsMode}
+              setVerseList={setVerseList}
+              setCurrentBook={setCurrentBook}
+              topPanel={topPanel}
+              verseList={verseList}
+            />
+            {/* ) : (
               <AuthNavigator />
-            )}
+            )} */}
           </AuthContext.Provider>
         </NavigationContainer>
       </Screen>
@@ -684,7 +678,7 @@ const styles = {
     alignItems: "center",
     backgroundColor: colors.light,
     borderColor: colors.medium,
-    borderTopWidth: 0.2,
+    borderTopWidth: 0.3,
     flexDirection: "row",
     height: 50,
     justifyContent: "space-between",

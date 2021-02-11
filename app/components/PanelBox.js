@@ -27,7 +27,7 @@ class ResourceBox extends PureComponent {
         style={{
           // backgroundColor: "pink",
           borderColor: colors.medium,
-          borderWidth: 0.2,
+          borderWidth: 0.3,
           marginVertical: 10,
           padding: 10,
           width: "100%",

@@ -31,7 +31,7 @@ function BibleListingsScreen({ navigation }) {
             title={item.title}
             subTitle={item.description}
             image={item.image}
-            onPress={() => navigation.navigate("BibleListingDetails")}
+            onPress={() => navigation.navigate("BibleResource")}
           />
         )}
       />

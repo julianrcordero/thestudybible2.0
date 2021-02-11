@@ -58,10 +58,10 @@ function RegisterScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Image
+        {/* <Image
           style={styles.logo}
           source={require("../../assets/gtylogo.jpg")}
-        />
+        /> */}
         <Form
           initialValues={{
             name: "",
@@ -106,10 +106,21 @@ function RegisterScreen({ navigation }) {
             placeholder="Phone"
             textContentType="telephoneNumber"
           />
-          <SubmitButton
-            title="Register"
-            onPress={() => navigation.navigate("ConfirmRegister")}
-          />
+          <View
+            style={{
+              // backgroundColor: "green",
+              alignItems: "flex-end",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              paddingVertical: 15,
+              // width: "50%",
+            }}
+          >
+            <SubmitButton
+              title="Register"
+              onPress={() => navigation.navigate("ConfirmRegister")}
+            />
+          </View>
         </Form>
       </View>
       <ActivityIndicator visible={registerApi.loading} />
@@ -120,8 +131,8 @@ function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    flex: 1,
-    padding: 10,
+    // flex: 1 / 2,
+    paddingVertical: 10,
   },
   logo: {
     width: 80,

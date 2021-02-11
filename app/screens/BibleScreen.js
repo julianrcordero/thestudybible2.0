@@ -74,7 +74,7 @@ export default function BibleScreen({
 }) {
   useEffect(() => {
     changeBibleBook({
-      label: "Genesis",
+      label: "I John",
       value: 1,
       backgroundColor: "#345171",
       icon: "apps",

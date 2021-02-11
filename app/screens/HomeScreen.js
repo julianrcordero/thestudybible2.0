@@ -3,6 +3,7 @@ import {
   ActivityIndicator as Indicator,
   Button,
   FlatList,
+  Image,
   RefreshControl,
   StyleSheet,
   View,
@@ -15,7 +16,6 @@ import ActivityIndicator from "../components/ActivityIndicator";
 import Card from "../components/Card";
 import colors from "../config/colors";
 import listingsApi from "../api/listings";
-import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import AppText from "../components/Text";
 import useApi from "../hooks/useApi";
@@ -23,6 +23,25 @@ import ContentCard from "../components/ContentCard";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useAuth from "../auth/useAuth";
+
+function LogoTitle() {
+  return (
+    <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
+      <Image
+        style={{
+          aspectRatio: 1,
+          width: 30,
+          marginRight: 15,
+        }}
+        source={require("../assets/StudyBibleApp_Logo_black.png")}
+      ></Image>
+
+      <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
+        {"The Study Bible"}
+      </AppText>
+    </View>
+  );
+}
 
 class MarkupItem extends PureComponent {
   constructor(props) {
@@ -34,9 +53,10 @@ class MarkupItem extends PureComponent {
       <TouchableOpacity
         style={{
           alignItems: "center",
-          borderWidth: 0.2,
+          borderWidth: 0.3,
           borderColor: colors.secondary,
           flex: 1 / 2,
+          height: 150,
           justifyContent: "center",
           paddingTop: 30,
         }}
@@ -88,7 +108,7 @@ class ResourceSection extends PureComponent {
       date = monthNames[today.getMonth()] + " " + today.getDate();
 
     return (
-      <>
+      <View style={{ marginBottom: 15 }}>
         <View
           style={{
             alignItems: "center",
@@ -119,12 +139,16 @@ class ResourceSection extends PureComponent {
           renderItem={({ item }) => (
             <ContentCard
               item={item}
-              onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+              date={date}
+              navigation={navigation}
+              // onPress={() =>
+              //   navigation.navigate(routes.LISTING_DETAILS, { item, date })
+              // }
             />
           )}
           style={{ flexGrow: 0 }}
         />
-      </>
+      </View>
     );
   }
 }
@@ -135,7 +159,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-function ListingsScreen({ navigation, scrollY }) {
+function HomeScreen({ HEADER_HEIGHT, navigation, scrollY }) {
   const getDevotionalsApi = useApi(listingsApi.getDevotionals);
   const getResourcesApi = useApi(listingsApi.getResources);
 
@@ -152,21 +176,22 @@ function ListingsScreen({ navigation, scrollY }) {
   };
 
   const requestAll = () => {
+    setRefreshing(true);
     getDevotionalsApi.request();
     getResources();
+    wait(4000).then(() => setRefreshing(false));
   };
 
   const { user } = useAuth();
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
   useEffect(() => {
     requestAll();
   }, []);
 
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
+  const refreshAll = useCallback(() => {
     requestAll();
-    wait(2000).then(() => setRefreshing(false));
   });
 
   var timeOfDay = new Date(),
@@ -174,36 +199,15 @@ function ListingsScreen({ navigation, scrollY }) {
   // console.log(hour);
 
   return (
-    <Screen style={styles.screen}>
-      {/* <AnimatedFlatList
-        bounces={false}
-        data={sections}
-        extra={this.state.fontSize}
-        // initialNumToRender={20}
-        keyExtractor={(item) => item.chapterNum.toString()}
-        onScroll={Animated.event([
-          {
-            nativeEvent: { contentOffset: { y: scrollY } },
-          },
-        ])}
-        renderItem={this.renderParagraphItem}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        style={[
-          styles.bibleTextView,
-          { paddingTop: HEADER_HEIGHT, paddingBottom: HEADER_HEIGHT + 300 },
-        ]}
-      /> */}
+    <View style={{ flex: 1, paddingBottom: 70 }}>
       <ScrollView
-        // bounces={false}
-        // onScroll={Animated.event([
-        //   {
-        //     nativeEvent: { contentOffset: { y: scrollY } },
-        //   },
-        // ])}
-        style={{ paddingHorizontal: 15, paddingBottom: 70 }}
+        style={{
+          backgroundColor: colors.white,
+          paddingHorizontal: 15,
+          flex: 1,
+        }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl refreshing={refreshing} onRefresh={refreshAll} />
         }
       >
         {/* <ActivityIndicator visible={getDevotionalsApi.loading} /> */}
@@ -241,8 +245,7 @@ function ListingsScreen({ navigation, scrollY }) {
         <View
           style={{
             alignSelf: "center",
-            aspectRatio: 1.1,
-            // borderWidth: 1,
+            // aspectRatio: 1.1,
             marginVertical: 15,
             width: "100%",
           }}
@@ -270,7 +273,7 @@ function ListingsScreen({ navigation, scrollY }) {
           navigation={navigation}
         />
       </ScrollView>
-    </Screen>
+    </View>
   );
 }
 
@@ -280,7 +283,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListingsScreen;
+export default HomeScreen;
 
 {
   /* 

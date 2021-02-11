@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Alert, Button, Image, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import * as yup from "yup";
 
 import TextInput from "../../components/TextInput";
@@ -14,6 +21,7 @@ import authApi from "../../api/auth";
 import colors from "../../config/colors";
 import { Formik } from "formik";
 import useAuth from "../../auth/useAuth";
+import AppText from "../../components/Text";
 
 const validationSchema = yup.object().shape({
   email: yup.string().required().email().label("Email"),
@@ -42,37 +50,11 @@ function LoginScreen({ navigation }) {
         result.data.body.data.AuthenticationResult.AccessToken
       );
     }
-
-    // return setLoginFailed(true);
-
-    // }
   };
-
-  // const auth = useAuth();
-  // const [loginFailed, setLoginFailed] = useState(false);
-
-  // const handleSubmit = async ({ email, password }) => {
-  //   const result = await authApi.signin(email, password);
-
-  //   if (!result.ok) {
-  //     return setLoginFailed(true);
-  //   } else if (result.data.statusCode !== 200) {
-  //     Alert.alert("Error", result.data.body.message, [
-  //       { text: "OK", onPress: () => console.log("") },
-  //       // { text: "No", onPress: () => console.log("No") },
-  //     ]);
-  //   } else {
-  //     setLoginFailed(false);
-  //     auth.logIn(
-  //       result.data.body.data.AuthenticationResult.IdToken,
-  //       result.data.body.data.AuthenticationResult.AccessToken
-  //     );
-  //   }
-  // };
 
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require("../../assets/gtylogo.jpg")} />
+      {/* <Image style={styles.logo} source={require("../../assets/gtylogo.jpg")} /> */}
       <AppForm
         initialValues={{ email: "", password: "" }}
         onSubmit={handleSubmit}
@@ -97,16 +79,42 @@ function LoginScreen({ navigation }) {
           secureTextEntry={true}
           textContentType="password"
         />
-        <SubmitButton
-          title="Login"
-          // onPress={() => navigation.navigate("Account")}
-        />
+        <View
+          style={{
+            // backgroundColor: "green",
+            flexDirection: "row",
+            paddingVertical: 15,
+          }}
+        >
+          {/* <Button
+            // style={{ width: 40 }}
+            a
+            title={"Forgot Password"}
+            onPress={() => navigation.navigate("ForgotPassword")}
+          ></Button> */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
+            <AppText
+              style={{
+                color: colors.black,
+                fontWeight: "bold",
+                marginVertical: 5,
+                fontSize: 16,
+                textDecorationLine: "underline",
+                // textAlign: "center",
+              }}
+            >
+              {"Forgot Password?"}
+            </AppText>
+          </TouchableOpacity>
+          <SubmitButton
+            title="LOG IN"
+            // onPress={() => navigation.navigate("Account")}
+          />
+        </View>
       </AppForm>
-      <Button
-        // style={{width: 3}}
-        title={"Forgot Password"}
-        onPress={() => navigation.navigate("ForgotPassword")}
-      ></Button>
     </View>
   );
 
@@ -125,8 +133,8 @@ function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    flex: 1,
-    padding: 10,
+    // flex: 1,
+    paddingVertical: 10,
   },
   logo: {
     width: 80,

@@ -6,7 +6,7 @@ export default {
   colors,
   bibleText: {
     color: colors.medium, //cau
-    // fontSize: 20,
+    fontSize: 16,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     // lineHeight: 32,
     // textAlign: "justify",

@@ -1,80 +1,128 @@
-import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React, { useState } from "react";
+import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+const Stack2 = createStackNavigator();
+const Stack3 = createStackNavigator();
 
-import ListItem from "../../components/lists/ListItem";
-import ListItemSeparator from "../../components/lists/ListItemSeparator";
+import AppButton from "../../components/Button";
+import SegmentedControl from "@react-native-community/segmented-control";
+import LoginScreen from "./LoginScreen";
+import RegisterScreen from "./RegisterScreen";
+
+import ConfirmRegisterScreen from "./ConfirmRegisterScreen";
+import ForgotPasswordScreen from "./ForgotPasswordScreen";
+import ResetPasswordScreen from "./ResetPasswordScreen";
 import colors from "../../config/colors";
-import Icon from "../../components/Icon";
-import routes from "../../navigation/routes";
-import Screen from "../../components/Screen";
-import useAuth from "../../auth/useAuth";
-
-const menuItems = [
-  {
-    title: "My Listings",
-    icon: {
-      name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-      targetScreen: routes.LISTING_DETAILS,
-    },
-  },
-  {
-    title: "My Messages",
-    icon: {
-      name: "email",
-      backgroundColor: colors.secondary,
-    },
-    targetScreen: routes.MESSAGES,
-  },
-];
+import AppText from "../../components/Text";
 
 function AccountScreen({ navigation }) {
-  //navigation}){
-  const { user, logOut } = useAuth();
+  const [pickerType, setPickerType] = useState(0);
+
+  const selectedPicker = () => {
+    switch (pickerType) {
+      case 0:
+        return (
+          <NavigationContainer independent={true}>
+            <Stack2.Navigator screenOptions={{ headerShown: false }}>
+              <Stack2.Screen name="Login" component={LoginScreen} />
+              <Stack2.Screen
+                name="ForgotPassword"
+                component={ForgotPasswordScreen}
+              />
+              <Stack2.Screen
+                name="ResetPassword"
+                component={ResetPasswordScreen}
+              />
+            </Stack2.Navigator>
+          </NavigationContainer>
+        );
+      case 1:
+        // return <RegisterScreen />;
+        return (
+          <NavigationContainer independent={true}>
+            <Stack3.Navigator screenOptions={{ headerShown: false }}>
+              <Stack3.Screen name="Register" component={RegisterScreen} />
+              <Stack3.Screen
+                name="ConfirmRegister"
+                component={ConfirmRegisterScreen}
+              />
+            </Stack3.Navigator>
+          </NavigationContainer>
+        );
+      case 2:
+        return <View />;
+      default:
+        break;
+    }
+  };
 
   return (
-    <Screen style={styles.screen}>
-      <View style={styles.container}>
-        <ListItem
-          title={user.name}
-          subTitle={user.email}
-          image={require("../../assets/gtylogo.jpg")}
-        />
-      </View>
-      <View style={styles.container}>
-        <FlatList
-          data={menuItems}
-          keyExtractor={(menuItem) => menuItem.title}
-          ItemSeparatorComponent={ListItemSeparator}
-          renderItem={({ item }) => (
-            <ListItem
-              title={item.title}
-              IconComponent={
-                <Icon
-                  name={item.icon.name}
-                  backgroundColor={item.icon.backgroundColor}
-                />
-              }
-              onPress={() => navigation.navigate(item.targetScreen)}
-            />
-          )}
-        />
-      </View>
-      <ListItem
-        title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-        onPress={() => logOut()}
+    <View
+      style={{
+        backgroundColor: colors.white,
+        flex: 1,
+        paddingHorizontal: 25,
+      }}
+    >
+      <SegmentedControl
+        values={["Log In", "Register"]}
+        selectedIndex={pickerType}
+        onChange={(event) => {
+          setPickerType(event.nativeEvent.selectedSegmentIndex);
+        }}
+        style={{ backgroundColor: colors.white, height: 50 }}
       />
-    </Screen>
+      {selectedPicker()}
+    </View>
+    // <ImageBackground
+    //   // blurRadius={3}
+    //   style={styles.background}
+    //   source={require("../../assets/studyBibleAccountScreen.png")}
+    // >
+    //   <View style={styles.buttonsContainer}>
+    //     <AppButton
+    //       title="Login"
+    //       onPress={() => navigation.navigate("Login")}
+    //     ></AppButton>
+    //     <AppButton
+    //       title="Register"
+    //       color="secondary"
+    //       onPress={() => navigation.navigate("Register")}
+    //     ></AppButton>
+    //   </View>
+    // </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: colors.light,
+  background: {
+    flex: 1,
+    // height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  container: {
-    marginVertical: 20,
+  buttonsContainer: {
+    flexDirection: "row",
+    padding: 20,
+    width: "100%",
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  logoContainer: {
+    position: "absolute",
+    top: 70,
+    alignItems: "center",
+  },
+  sectionTitle: {
+    fontSize: 16,
+  },
+  tagline: {
+    fontSize: 20,
+    fontWeight: "600",
+    // paddingVertical: 15,
   },
 });
 

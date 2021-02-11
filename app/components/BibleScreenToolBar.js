@@ -48,7 +48,7 @@ export default function BibleScreenToolBar(props) {
               paddingHorizontal: 15,
             },
             historyVisible
-              ? { paddingVertical: 5, borderBottomWidth: 0.2 }
+              ? { paddingVertical: 5, borderBottomWidth: 0.3 }
               : {
                   borderBottomWidth: 0,
                   height: 0,

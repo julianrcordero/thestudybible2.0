@@ -8,7 +8,10 @@ import Collapsible from "react-native-collapsible";
 
 import AccountNavigator from "./AccountNavigator";
 import FeedNavigator from "./FeedNavigator";
+import HomeScreen from "../screens/HomeScreen";
 import ListingEditScreen from "../screens/ListingEditScreen";
+
+import AccountScreen from "../screens/account/AccountScreen";
 import BibleScreen from "../screens/BibleScreen";
 
 import NewListingButton from "./NewListingButton";
@@ -16,6 +19,7 @@ import useNotifications from "../hooks/useNotifications";
 import Animated from "react-native-reanimated";
 import MenuButton from "../components/MenuButton";
 import colors from "../config/colors";
+// import AuthNavigator from "./AuthNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +32,25 @@ const headerY = Animated.interpolate(diffClampScrollY, {
 });
 const navigationY = Animated.multiply(headerY, -1);
 
+function LogoTitle() {
+  return (
+    <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
+      <Image
+        style={{
+          aspectRatio: 1,
+          width: 30,
+          marginRight: 15,
+        }}
+        source={require("../assets/StudyBibleApp_Logo_black.png")}
+      ></Image>
+
+      <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
+        {"The Study Bible"}
+      </AppText>
+    </View>
+  );
+}
+
 const AppNavigator = (props) =>
   // { user }
   {
@@ -35,7 +58,7 @@ const AppNavigator = (props) =>
 
     return (
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="More"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{}}
@@ -47,6 +70,7 @@ const AppNavigator = (props) =>
             tabBarIcon: "home",
           }}
         />
+
         <Tab.Screen
           name="Bible"
           children={() => (
@@ -77,7 +101,7 @@ const AppNavigator = (props) =>
           name="John's Notes"
           component={ListingEditScreen}
           options={{
-            tabBarIcon: "library-books",
+            tabBarIcon: "book-variant-multiple",
           }}
         />
         <Tab.Screen
@@ -96,7 +120,7 @@ function MyTabBar({ state, descriptors, navigation }) {
     <Animated.View
       style={{
         borderColor: colors.medium,
-        borderTopWidth: 0.2,
+        borderTopWidth: 0.3,
         flexDirection: "row",
         position: "absolute",
         left: 0,

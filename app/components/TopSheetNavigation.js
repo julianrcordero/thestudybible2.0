@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   titleCard: {},
   translationText: {
     borderRadius: 4,
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     borderColor: colors.medium,
     fontSize: 12,
     paddingHorizontal: 6,

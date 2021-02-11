@@ -16,21 +16,25 @@ function AppButton({ title, onPress, color = "primary", ...otherProps }) {
 
 const styles = StyleSheet.create({
   button: {
+    alignItems: "center",
+    // flex: 1,
     flexDirection: "row",
     backgroundColor: colors.primary,
-    borderRadius: 10,
+    borderRadius: 5,
+    height: 40,
     justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    // width: "100%",
-    marginLeft: 5,
+    // paddingVertical: 8,
+    // paddingHorizontal: 16,
+    width: "50%",
+    // marginLeft: 5,
   },
   text: {
     // backgroundColor: "green",
     color: colors.white,
-    fontSize: 14,
+    fontSize: 16,
     textTransform: "uppercase",
     fontWeight: "bold",
+    textAlign: "center",
     // flex: 0.8,
   },
 });

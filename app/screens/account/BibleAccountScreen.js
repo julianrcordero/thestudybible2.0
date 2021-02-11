@@ -23,7 +23,7 @@ const menuItems = [
   },
 ];
 
-function BibleAccountScreen({ route, navigation }) {
+function BibleMoreScreen({ route, navigation }) {
   const { AccessToken } = route.params;
 
   return (
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BibleAccountScreen;
+export default BibleMoreScreen;

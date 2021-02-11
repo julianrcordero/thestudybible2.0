@@ -1,22 +1,18 @@
 import React from "react";
 import {
-  Button,
   View,
   Image as RNImage,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
-import { Image } from "react-native-expo-image-cache";
+import routes from "../navigation/routes";
 
 import Text from "./Text";
 import colors from "../config/colors";
-import { TouchableHighlight } from "react-native-gesture-handler";
 import HTML from "react-native-render-html";
-import AppButton from "./Button";
 import AppText from "./Text";
 
-function ContentCard({ item, onPress }) {
+function ContentCard({ date, item, navigation }) {
   const firstTwo = item.id.substring(0, 2);
   var imageSource = "";
   var scripture = item.scripture;
@@ -60,11 +56,16 @@ function ContentCard({ item, onPress }) {
         0,
         item.transcript.indexOf("</p>")
       );
+      date = "";
       break;
   }
 
+  const openResource = (imageSource) => {
+    navigation.navigate(routes.LISTING_DETAILS, { item, date, imageSource });
+  };
+
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={() => openResource(imageSource)}>
       <View style={styles.contentCard}>
         <View style={styles.imageContainer}>
           {imageSource ? (
@@ -136,7 +137,7 @@ function ContentCard({ item, onPress }) {
 const styles = StyleSheet.create({
   contentCard: {
     borderColor: colors.secondary,
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     flexDirection: "row",
     aspectRatio: 1.7,
     height: 200,

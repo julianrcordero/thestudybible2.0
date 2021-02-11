@@ -46,7 +46,7 @@
             style={{
               backgroundColor: colors.white,
               borderRadius: 4,
-              borderWidth: 0.2,
+              borderWidth: 0.3,
               borderColor: colors.medium,
               flex: 1,
               height: HEADER_HEIGHT,

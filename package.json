@@ -60,6 +60,7 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "^2.17.1",
     "react-native-static-safe-area-insets": "^2.1.1",
+    "react-native-stretchy": "^4.0.0",
     "react-native-swipe-up-down": "^1.0.7",
     "react-native-vertical-slider-smartlife": "^1.0.9",
     "react-native-web": "^0.0.25",

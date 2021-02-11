@@ -2,10 +2,9 @@ import React from "react";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import ListingsScreen from "../screens/ListingsScreen";
-import ListingDetailsScreen from "../screens/ListingDetailsScreen";
+import HomeScreen from "../screens/HomeScreen";
+import ResourceScreen from "../screens/ResourceScreen";
 import BibleListingsScreen from "../screens/BibleListingsScreen";
-import BibleListingDetailsScreen from "../screens/BibleListingDetailsScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import AppText from "../components/Text";
 import colors from "../config/colors";
@@ -32,10 +31,10 @@ function LogoTitle() {
 }
 
 const FeedNavigator = () => (
-  <Stack.Navigator mode="modal">
+  <Stack.Navigator mode="card">
     <Stack.Screen
-      name="Listings"
-      component={ListingsScreen}
+      name="Home"
+      component={HomeScreen}
       options={{
         headerLeft: (props) => <LogoTitle {...props} />,
         // title: "The Study Bible",
@@ -47,23 +46,36 @@ const FeedNavigator = () => (
         // headerTitleStyle: { fontSize: 20, fontWeight: "bold" },
       }}
     />
-    <Stack.Screen
-      name="ListingDetails"
-      component={ListingDetailsScreen}
-      options={{ headerShown: false }}
-    />
-    {/* <Stack.Screen name="BibleListings" component={BibleListingsScreen} />
-    <Stack.Screen
-      name="BibleListingDetails"
-      component={BibleListingDetailsScreen}
+    {/* <Stack.Screen
+      name="Resource"
+      component={ResourceScreen}
+      // options={{ headerShown: false }}
     /> */}
+    <Stack.Screen
+      name="Resource"
+      component={ResourceScreen}
+      options={({ route }) => ({
+        // headerBackTitleStyle: { paddingHorizontal: 15 },
+        headerBackTitle: "Home",
+        headerRight: () => (
+          <AppText style={styles.sectionTitle}>
+            {route.params.item.category ?? "Devotionals"}
+          </AppText>
+        ),
+        headerStyle: {
+          height: 55,
+        },
+        headerTitle: "",
+      })}
+    />
   </Stack.Navigator>
 );
 
 const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    paddingHorizontal: 20,
   },
 });
 

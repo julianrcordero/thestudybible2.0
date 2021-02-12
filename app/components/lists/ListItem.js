@@ -13,23 +13,28 @@ import Text from "../Text";
 import colors from "../../config/colors";
 
 function ListItem({
+  height = 70,
   title,
   subTitle,
   image,
   IconComponent,
   onPress,
   renderRightActions,
+  titleSize = 14,
 }) {
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity underlayColor={colors.light} onPress={onPress}>
-        <View style={styles.container}>
+        <View style={[styles.container, { height }]}>
           {IconComponent}
           {image && (
             <Image style={styles.image} source={image} resizeMode="contain" />
           )}
           <View style={styles.detailsContainer}>
-            <Text style={styles.title} numberOfLines={1}>
+            <Text
+              style={[styles.title, { fontSize: titleSize }]}
+              numberOfLines={1}
+            >
               {title}
             </Text>
             {subTitle && (
@@ -39,7 +44,7 @@ function ListItem({
             )}
           </View>
           <MaterialCommunityIcons
-            color={colors.medium}
+            color={"cornflowerblue"}
             name="chevron-right"
             size={25}
           />
@@ -54,29 +59,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: colors.secondary,
     borderRadius: 10,
-    borderWidth: 0.3,
+    borderBottomWidth: 0.3,
     flexDirection: "row",
-    height: 70,
     justifyContent: "space-between",
     paddingHorizontal: 15,
     // backgroundColor: colors.white,
   },
   detailsContainer: {
     flex: 1,
-    marginLeft: 15,
+    marginLeft: 20,
     justifyContent: "center",
   },
   image: {
-    width: 69,
+    width: 50,
+    borderColor: colors.secondary,
     borderRadius: 35,
-    // borderWidth: 0.3,
+    borderWidth: 0.3,
   },
   subTitle: {
     color: colors.medium,
+    fontSize: 12,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "500",
+    color: "cornflowerblue",
+    fontWeight: "bold",
   },
 });
 

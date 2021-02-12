@@ -8,10 +8,11 @@ import BibleListingsScreen from "../screens/BibleListingsScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import AppText from "../components/Text";
 import colors from "../config/colors";
+// import LogoTitle from "../components/LogoTitle";
 
 const Stack = createStackNavigator();
 
-function LogoTitle() {
+const LogoTitle = () => {
   return (
     <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
       <Image
@@ -28,7 +29,7 @@ function LogoTitle() {
       </AppText>
     </View>
   );
-}
+};
 
 const FeedNavigator = () => (
   <Stack.Navigator mode="card">

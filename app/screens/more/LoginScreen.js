@@ -35,6 +35,7 @@ function LoginScreen({ navigation }) {
   const handleSubmit = async ({ email, password }) => {
     const result = await authApi.signin(email, password);
 
+    console.log(result);
     if (!result.ok) {
       if (result.data) setLoginFailed(result.data.message);
       else {
@@ -49,6 +50,7 @@ function LoginScreen({ navigation }) {
         result.data.body.data.AuthenticationResult.IdToken,
         result.data.body.data.AuthenticationResult.AccessToken
       );
+      navigation.navigate("More");
     }
   };
 

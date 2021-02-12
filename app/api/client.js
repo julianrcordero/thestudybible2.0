@@ -6,7 +6,7 @@ const apiClient = create({
   // baseURL: "http://192.168.1.181:9000/api",
   // baseURL: "http://192.168.254.65:9000/api", //AT HOME
   // baseURL: "http://10.101.5.246:9000/api", //AT GTY
-  baseURL: "https://apibeta.gty.org/api/values",
+  baseURL: "https://apitest.gty.org/api/values",
   // baseURL: "https://localhost:44364/api/values",
 });
 

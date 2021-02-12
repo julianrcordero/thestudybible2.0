@@ -15,8 +15,13 @@ import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
 import colors from "../../config/colors";
 import AppText from "../../components/Text";
+import useAuth from "../../auth/useAuth";
+import ListItem from "../../components/lists/ListItem";
+import Icon from "../../components/Icon";
+import { SubmitButton } from "../../components/forms/Index";
 
 function AccountScreen({ navigation }) {
+  const { user, logOut } = useAuth();
   const [pickerType, setPickerType] = useState(0);
 
   const selectedPicker = () => {
@@ -50,8 +55,6 @@ function AccountScreen({ navigation }) {
             </Stack3.Navigator>
           </NavigationContainer>
         );
-      case 2:
-        return <View />;
       default:
         break;
     }
@@ -65,15 +68,34 @@ function AccountScreen({ navigation }) {
         paddingHorizontal: 25,
       }}
     >
-      <SegmentedControl
-        values={["Log In", "Register"]}
-        selectedIndex={pickerType}
-        onChange={(event) => {
-          setPickerType(event.nativeEvent.selectedSegmentIndex);
-        }}
-        style={{ backgroundColor: colors.white, height: 50 }}
-      />
-      {selectedPicker()}
+      {user ? (
+        <View
+          style={{
+            backgroundColor: "red",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          {/* <ListItem
+            title="Log Out"
+            IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+            onPress={() => logOut()}
+          /> */}
+          <AppButton title="LOG OUT" onPress={() => logOut()} />
+        </View>
+      ) : (
+        <>
+          <SegmentedControl
+            values={["Log In", "Register"]}
+            selectedIndex={pickerType}
+            onChange={(event) => {
+              setPickerType(event.nativeEvent.selectedSegmentIndex);
+            }}
+            style={{ backgroundColor: colors.white, height: 50 }}
+          />
+          {selectedPicker()}
+        </>
+      )}
     </View>
     // <ImageBackground
     //   // blurRadius={3}

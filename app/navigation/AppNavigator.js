@@ -11,8 +11,9 @@ import FeedNavigator from "./FeedNavigator";
 import HomeScreen from "../screens/HomeScreen";
 import ListingEditScreen from "../screens/ListingEditScreen";
 
-import AccountScreen from "../screens/account/AccountScreen";
 import BibleScreen from "../screens/BibleScreen";
+
+import LogoTitle from "../components/LogoTitle";
 
 import NewListingButton from "./NewListingButton";
 import useNotifications from "../hooks/useNotifications";
@@ -32,24 +33,24 @@ const headerY = Animated.interpolate(diffClampScrollY, {
 });
 const navigationY = Animated.multiply(headerY, -1);
 
-function LogoTitle() {
-  return (
-    <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
-      <Image
-        style={{
-          aspectRatio: 1,
-          width: 30,
-          marginRight: 15,
-        }}
-        source={require("../assets/StudyBibleApp_Logo_black.png")}
-      ></Image>
+// function LogoTitle() {
+//   return (
+//     <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
+//       <Image
+//         style={{
+//           aspectRatio: 1,
+//           width: 30,
+//           marginRight: 15,
+//         }}
+//         source={require("../assets/StudyBibleApp_Logo_black.png")}
+//       ></Image>
 
-      <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
-        {"The Study Bible"}
-      </AppText>
-    </View>
-  );
-}
+//       <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
+//         {"The Study Bible"}
+//       </AppText>
+//     </View>
+//   );
+// }
 
 const AppNavigator = (props) =>
   // { user }

@@ -6,12 +6,11 @@ import ListItemSeparator from "../../components/lists/ListItemSeparator";
 import colors from "../../config/colors";
 import Icon from "../../components/Icon";
 import routes from "../../navigation/routes";
-import Screen from "../../components/Screen";
 import useAuth from "../../auth/useAuth";
 
 function MoreScreen({ navigation }) {
   //navigation}){
-  const { user, logOut } = useAuth();
+  const { user } = useAuth();
 
   //   <ListItem
   //   title={user.name}
@@ -36,7 +35,7 @@ function MoreScreen({ navigation }) {
         name: "bell-outline",
         backgroundColor: colors.primary,
       },
-      targetScreen: routes.LISTING_DETAILS,
+      targetScreen: routes.NOTIFICATIONS,
     },
     {
       title: "ABOUT",
@@ -119,11 +118,6 @@ function MoreScreen({ navigation }) {
           )}
         />
       </View>
-      {/* <ListItem
-        title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-        onPress={() => logOut()}
-      /> */}
     </View>
   );
 }

@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   detailsContainer: {
-    // backgroundColor: colors.light,
     flex: 2,
     justifyContent: "space-between",
   },

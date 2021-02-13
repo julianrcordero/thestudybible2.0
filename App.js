@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 
 import AppNavigator from "./app/navigation/AppNavigator";
-// import AuthNavigator from "./app/navigation/AuthNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
@@ -48,7 +47,6 @@ export default function App() {
   const carousel = React.useRef();
 
   const books = [
-    ////
     {
       label: "Genesis",
       short: "Ge",

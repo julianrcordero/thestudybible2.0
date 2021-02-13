@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
+import {
+  Alert,
+  ImageBackground,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack2 = createStackNavigator();
@@ -10,6 +17,7 @@ import SegmentedControl from "@react-native-community/segmented-control";
 import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
 
+import TextInput from "../../components/TextInput";
 import ConfirmRegisterScreen from "./ConfirmRegisterScreen";
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
@@ -19,6 +27,7 @@ import useAuth from "../../auth/useAuth";
 import ListItem from "../../components/lists/ListItem";
 import Icon from "../../components/Icon";
 import { SubmitButton } from "../../components/forms/Index";
+import AccountEditScreen from "./AccountEditScreen";
 
 function AccountScreen({ navigation }) {
   const { user, logOut } = useAuth();
@@ -69,20 +78,7 @@ function AccountScreen({ navigation }) {
       }}
     >
       {user ? (
-        <View
-          style={{
-            backgroundColor: "red",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          }}
-        >
-          {/* <ListItem
-            title="Log Out"
-            IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-            onPress={() => logOut()}
-          /> */}
-          <AppButton title="LOG OUT" onPress={() => logOut()} />
-        </View>
+        <AccountEditScreen user={user} logOut={logOut} />
       ) : (
         <>
           <SegmentedControl

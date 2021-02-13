@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSafeArea } from "react-native-safe-area-context";
 import Collapsible from "react-native-collapsible";
 
-import AccountNavigator from "./AccountNavigator";
+import MoreNavigator from "./MoreNavigator";
 import FeedNavigator from "./FeedNavigator";
 import HomeScreen from "../screens/HomeScreen";
 import ListingEditScreen from "../screens/ListingEditScreen";
@@ -107,7 +107,7 @@ const AppNavigator = (props) =>
         />
         <Tab.Screen
           name="More"
-          component={AccountNavigator}
+          component={MoreNavigator}
           options={{
             tabBarIcon: "menu",
           }}

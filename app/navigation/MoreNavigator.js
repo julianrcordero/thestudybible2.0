@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MoreScreen from "../screens/more/MoreScreen";
-import MessagesScreen from "../screens/more/MessagesScreen";
+import NotificationsScreen from "../screens/more/NotificationsScreen";
 import AccountScreen from "../screens/more/AccountScreen";
 import AppText from "../components/Text";
 import colors from "../config/colors";
@@ -36,7 +36,7 @@ const LogoTitle = () => {
   );
 };
 
-const AccountNavigator = () => (
+const MoreNavigator = () => (
   <>
     <LogoTitle />
     <Stack.Navigator initialRouteName="More" mode="card">
@@ -59,6 +59,7 @@ const AccountNavigator = () => (
         name="Account"
         component={AccountScreen}
         options={() => ({
+          headerBackTitle: "More",
           headerRight: () => (
             <AppText style={styles.sectionTitle}>{"Account"}</AppText>
           ),
@@ -69,7 +70,20 @@ const AccountNavigator = () => (
         })}
       />
       {/* <Stack.Screen name="Resource" component={ResourceScreen} /> */}
-      <Stack.Screen name="Messages" component={MessagesScreen} />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={() => ({
+          headerBackTitle: "More",
+          headerRight: () => (
+            <AppText style={styles.sectionTitle}>{"Notifications"}</AppText>
+          ),
+          headerStyle: {
+            height: 55,
+          },
+          headerTitle: "",
+        })}
+      />
     </Stack.Navigator>
   </>
 );
@@ -81,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountNavigator;
+export default MoreNavigator;

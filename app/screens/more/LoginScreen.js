@@ -50,7 +50,7 @@ function LoginScreen({ navigation }) {
         result.data.body.data.AuthenticationResult.IdToken,
         result.data.body.data.AuthenticationResult.AccessToken
       );
-      navigation.navigate("More");
+      // navigation.navigate("More");
     }
   };
 

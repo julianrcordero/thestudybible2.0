@@ -59,6 +59,7 @@ class BiblePicker extends PureComponent {
   render() {
     const {
       currentBook,
+      fontFamily,
       fontSize,
       HEADER_HEIGHT,
       paragraphBibleRef,
@@ -150,7 +151,10 @@ class BiblePicker extends PureComponent {
               >
                 {currentBook ? (
                   <AppText
-                    style={[styles.referenceText, { fontSize: fontSize }]}
+                    style={[
+                      styles.referenceText,
+                      { fontFamily: fontFamily, fontSize: fontSize },
+                    ]}
                   >
                     {
                       // currentBook.label + " " + currentChapter // +" : " +currentVerse

@@ -37,20 +37,20 @@ export default class ParagraphBible extends PureComponent {
     super(props);
   }
 
-  state = { fontFamily: this.props.fontFamily };
+  // state = { fontFamily: this.props.fontFamily };
 
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
       <AnimatedSectionHeader
         title={item.title}
-        titleSize={this.props.titleSize}
+        titleSize={this.props.fontSize * 1.5}
       />
       <Paragraph
         key={i}
         chapterNum={item.chapterNum}
         crossrefSize={this.props.crossrefSize}
         // focusedVerse={focusedVerse}
-        fontFamily={this.state.fontFamily}
+        fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}
         section={item}
         // searchWords={searchWords}

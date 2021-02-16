@@ -37,7 +37,6 @@ export default function App() {
   const [fontSize, setFontSize] = useState(16);
   const [fontFamily, setFontFamily] = useState("Avenir");
   const crossrefSize = 12;
-  const titleSize = fontSize * 1.5;
 
   const topPanel = React.useRef();
 
@@ -548,6 +547,7 @@ export default function App() {
       top={top}
       paragraphBibleRef={paragraphBibleRef}
       setFontSize={setFontSize}
+      setFontFamily={setFontFamily}
     />
   );
 
@@ -638,7 +638,6 @@ export default function App() {
       <Screen>
         <NavigationContainer ref={navigationRef}>
           <AuthContext.Provider value={{ user, setUser }}>
-            {/* {user ? ( */}
             <AppNavigator
               bottomSheetRef={bottomSheetRef}
               carousel={carousel}
@@ -651,13 +650,9 @@ export default function App() {
               setSettingsMode={setSettingsMode}
               setVerseList={setVerseList}
               setCurrentBook={setCurrentBook}
-              titleSize={titleSize}
               topPanel={topPanel}
               verseList={verseList}
             />
-            {/* ) : (
-              <AuthNavigator />
-            )} */}
           </AuthContext.Provider>
         </NavigationContainer>
       </Screen>

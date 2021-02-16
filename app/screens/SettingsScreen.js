@@ -35,7 +35,8 @@ export default class SettingsScreen extends PureComponent {
   };
 
   handleFont = (value) => {
-    this.props.paragraphBibleRef.current.setState({ fontFamily: value });
+    this.props.setFontFamily(value);
+    // this.props.paragraphBibleRef.current.setState({ fontFamily: value });
     this.setState({ font: value });
   };
 

@@ -42,7 +42,7 @@ export default class VerseByVerseBible extends PureComponent {
   //     <React.Fragment key={i}>
   //       <AnimatedSectionHeader
   //         title={item.title}
-  //         titleSize={this.props.titleSize}
+  //         titleSize={this.props.fontSize * 1.5}
   //       />
   //       <Paragraph
   //         key={i}
@@ -96,7 +96,7 @@ export default class VerseByVerseBible extends PureComponent {
           </Text>
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <AnimatedSectionHeader title={title} titleSize={titleSize} />
+          <AnimatedSectionHeader title={title} titleSize={fontSize * 2} />
         )}
         scrollEventThrottle={16}
         sections={sections}

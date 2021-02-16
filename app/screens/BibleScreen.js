@@ -1,58 +1,18 @@
-import React, { PureComponent, useState, useEffect } from "react";
-import {
-  FlatList,
-  InteractionManager,
-  SectionList,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-} from "react-native";
-import Animated from "react-native-reanimated";
+import React, { useState, useEffect } from "react";
+import { InteractionManager, StyleSheet, Text, Dimensions } from "react-native";
 import Constants from "expo-constants";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 
-import BottomSheet from "reanimated-bottom-sheet";
 import reactStringReplace from "react-string-replace";
 
 // import * as IJohn from "../json/bible/I John.json";
 import bookPaths from "../json/bible/Bible";
-import VerseCard from "../components/VerseCard";
-import Paragraph from "../components/Paragraph";
-import Verse from "../components/Verse";
-import BottomSheetToolBar from "../components/BottomSheetToolBar";
 
-import defaultStyles from "../config/styles";
 import colors from "../config/colors";
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import verseFormatted from "../components/VerseFormatted";
 import ParagraphBible from "../components/ParagraphBible";
 import VerseByVerseBible from "../components/VerseByVerseBible";
-
-class SectionHeader extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <Text
-        style={[
-          defaultStyles.bibleText,
-          {
-            fontSize: this.props.titleSize,
-            backgroundColor: colors.white,
-            // borderBottomColor: "#345171",
-          },
-        ]}
-      >
-        {this.props.title}
-      </Text>
-    );
-  }
-}
-const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
-const AnimatedSectionHeader = Animated.createAnimatedComponent(SectionHeader);
 
 export default function BibleScreen({
   carousel,
@@ -63,7 +23,6 @@ export default function BibleScreen({
   fontFamily,
   fontSize,
   crossrefSize,
-  titleSize,
   bottomSheetRef,
   paragraphBibleRef,
   searchHistoryRef,
@@ -91,7 +50,7 @@ export default function BibleScreen({
   )["book"];
 
   const [sections, setSections] = useState([]);
-  const [searchWords] = useState([]);
+  const [] = useState([]);
   // const [currentBook, setCurrentBook] = useState(books[0]);
   const [currentChapter] = useState(1);
   const [currentVerse] = useState(1);
@@ -101,8 +60,7 @@ export default function BibleScreen({
 
   // const { landscape } = useDeviceOrientation();
   const [] = useState(true);
-  const { height, width } = Dimensions.get("window");
-  const top = height - Constants.statusBarHeight - getBottomSpace();
+  const { height } = Dimensions.get("window");
   // const paragraphBibleRef = React.useRef();
   // const [verseList, setVerseList] = useState([]);
   // const [focusedVerse, setFocusedVerse] = useState(null);
@@ -223,7 +181,6 @@ export default function BibleScreen({
       ref={paragraphBibleRef}
       sections={sections}
       scrollY={scrollY}
-      titleSize={titleSize}
       toggleSlideView={toggleSlideView}
     />
   );
@@ -236,7 +193,6 @@ export default function BibleScreen({
       // ref={paragraphBibleRef}
       sections={sections}
       scrollY={scrollY}
-      titleSize={titleSize}
       toggleSlideView={toggleSlideView}
     />
   );
@@ -250,6 +206,7 @@ export default function BibleScreen({
         currentChapter={currentChapter}
         currentVerse={currentVerse}
         changeBibleBook={changeBibleBook}
+        fontFamily={fontFamily}
         fontSize={fontSize}
         // setFontSize={setFontSize}
         toggleParagraphMode={toggleParagraphMode}

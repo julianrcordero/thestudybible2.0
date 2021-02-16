@@ -9,7 +9,7 @@ export default class Verse extends PureComponent {
     super(props);
 
     this.state = {
-      backgroundColor: "white",
+      backgroundColor: "transparent",
       // textDecorationLine: "none",
     };
   }
@@ -18,7 +18,7 @@ export default class Verse extends PureComponent {
     if (this.state.backgroundColor === "white") {
       this.setState({ backgroundColor: "#FFFB79" });
     } else {
-      this.setState({ backgroundColor: "white" });
+      this.setState({ backgroundColor: "transparent" });
     }
   };
 

@@ -1,21 +1,27 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View } from "react-native";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 import colors from "../config/colors";
 
 function Screen({ children, style }) {
-  // const insets = useSafeArea();
-  // console.log(insets);
-
-  return <SafeAreaView style={[styles.screen, style]}>{children}</SafeAreaView>;
+  return (
+    <View
+      style={[styles.screen, style, { paddingTop: useSafeAreaInsets().top }]}
+    >
+      {children}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.medium,
+    backgroundColor: colors.primary,
     flex: 1,
-    // margin: 10,
-    // paddingTop: Constants.statusBarHeight,
   },
 });
 

@@ -40,8 +40,9 @@ export default class SettingsScreen extends PureComponent {
     this.setState({ font: value });
   };
 
-  handleFormat = (index) => {
-    this.setState({ formatting: index });
+  handleFormat = (value) => {
+    this.props.setFormatting(value);
+    this.setState({ formatting: value });
   };
 
   handleCrossReferences = () => {
@@ -49,7 +50,9 @@ export default class SettingsScreen extends PureComponent {
   };
 
   handleDarkMode = () => {
-    this.setState({ darkMode: !this.state.darkMode });
+    const toggled = !this.state.darkMode;
+    this.props.setDarkMode(toggled);
+    this.setState({ darkMode: toggled });
   };
 
   render() {

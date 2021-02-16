@@ -10,6 +10,7 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import colors from "./app/config/colors";
 
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import Screen from "./app/components/Screen";
 import BottomSheetToolBar from "./app/components/BottomSheetToolBar";
 import VerseCard from "./app/components/VerseCard";
@@ -36,6 +37,8 @@ export default function App() {
 
   const [fontSize, setFontSize] = useState(16);
   const [fontFamily, setFontFamily] = useState("Avenir");
+  const [formatting, setFormatting] = useState("Default");
+  const [darkMode, setDarkMode] = useState(false);
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -548,6 +551,8 @@ export default function App() {
       paragraphBibleRef={paragraphBibleRef}
       setFontSize={setFontSize}
       setFontFamily={setFontFamily}
+      setFormatting={setFormatting}
+      setDarkMode={setDarkMode}
     />
   );
 
@@ -590,7 +595,7 @@ export default function App() {
           index,
         })}
         horizontal={true}
-        initialNumToRender={5}
+        // initialNumToRender={5}
         keyExtractor={(item, index) => item + index}
         onStartShouldSetResponderCapture={() => console.log("Vertical Scroll")}
         ref={carousel}
@@ -625,7 +630,7 @@ export default function App() {
     );
 
   return (
-    <>
+    <SafeAreaProvider>
       <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
         <TopSheetNavigation
           books={books}
@@ -635,14 +640,17 @@ export default function App() {
           searchHistoryRef={searchHistoryRef}
         />
       </Screen>
-      <Screen>
-        <NavigationContainer ref={navigationRef}>
+
+      <NavigationContainer ref={navigationRef}>
+        <Screen>
           <AuthContext.Provider value={{ user, setUser }}>
             <AppNavigator
+              formatting={formatting}
               bottomSheetRef={bottomSheetRef}
               carousel={carousel}
               crossrefSize={crossrefSize}
               currentBook={currentBook}
+              darkMode={darkMode}
               fontFamily={fontFamily}
               fontSize={fontSize}
               paragraphBibleRef={paragraphBibleRef}
@@ -654,8 +662,8 @@ export default function App() {
               verseList={verseList}
             />
           </AuthContext.Provider>
-        </NavigationContainer>
-      </Screen>
+        </Screen>
+      </NavigationContainer>
 
       <BottomSheet
         ref={bottomSheetRef}
@@ -668,7 +676,7 @@ export default function App() {
         }
         // onCloseEnd={() => setFocusedVerse(null)}
       />
-    </>
+    </SafeAreaProvider>
   );
 }
 

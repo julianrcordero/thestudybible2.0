@@ -76,7 +76,6 @@ class BiblePicker extends PureComponent {
           flexDirection: "row",
           height: HEADER_HEIGHT,
           flex: 1,
-          zIndex: 1,
           width: "100%",
         }}
       >

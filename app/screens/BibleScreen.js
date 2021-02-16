@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { InteractionManager, StyleSheet, Text, Dimensions } from "react-native";
+import {
+  InteractionManager,
+  StyleSheet,
+  Text,
+  Dimensions,
+  View,
+} from "react-native";
 import Constants from "expo-constants";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 
@@ -15,8 +21,10 @@ import ParagraphBible from "../components/ParagraphBible";
 import VerseByVerseBible from "../components/VerseByVerseBible";
 
 export default function BibleScreen({
+  formatting,
   carousel,
   currentBook,
+  darkMode,
   HEADER_HEIGHT,
   scrollY,
   headerY,
@@ -55,7 +63,6 @@ export default function BibleScreen({
   const [currentChapter] = useState(1);
   const [currentVerse] = useState(1);
   // const [bookNotes, setBookNotes] = useState([]);
-  const [paragraphMode, setParagraphMode] = useState(true);
   const [] = useState(false);
 
   // const { landscape } = useDeviceOrientation();
@@ -154,10 +161,6 @@ export default function BibleScreen({
     setVerseList(verses);
   };
 
-  const toggleParagraphMode = () => {
-    setParagraphMode(!paragraphMode);
-  };
-
   const toggleSlideView = (chapter, verse) => {
     setSettingsMode(false);
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
@@ -174,7 +177,9 @@ export default function BibleScreen({
 
   let paragraphBible = (
     <ParagraphBible
+      formatting={formatting}
       crossrefSize={crossrefSize}
+      darkMode={darkMode}
       fontFamily={fontFamily}
       fontSize={fontSize}
       HEADER_HEIGHT={HEADER_HEIGHT}
@@ -185,20 +190,20 @@ export default function BibleScreen({
     />
   );
 
-  let verseByVerseBible = (
-    <VerseByVerseBible
-      crossrefSize={crossrefSize}
-      // fontSize={fontSize}
-      HEADER_HEIGHT={HEADER_HEIGHT}
-      // ref={paragraphBibleRef}
-      sections={sections}
-      scrollY={scrollY}
-      toggleSlideView={toggleSlideView}
-    />
-  );
+  // let verseByVerseBible = (
+  //   <VerseByVerseBible
+  //     crossrefSize={crossrefSize}
+  //     // fontSize={fontSize}
+  //     HEADER_HEIGHT={HEADER_HEIGHT}
+  //     // ref={paragraphBibleRef}
+  //     sections={sections}
+  //     scrollY={scrollY}
+  //     toggleSlideView={toggleSlideView}
+  //   />
+  // );
 
   return (
-    <>
+    <View style={{ backgroundColor: "red" }}>
       <BibleScreenToolBar
         HEADER_HEIGHT={HEADER_HEIGHT}
         headerY={headerY}
@@ -209,13 +214,11 @@ export default function BibleScreen({
         fontFamily={fontFamily}
         fontSize={fontSize}
         // setFontSize={setFontSize}
-        toggleParagraphMode={toggleParagraphMode}
         bottomSheetRef={bottomSheetRef}
         paragraphBibleRef={paragraphBibleRef}
         setSettingsMode={setSettingsMode}
         topPanel={topPanel}
         searchHistoryRef={searchHistoryRef}
-        style={styles.toolBar}
       />
 
       {/* <TextInput
@@ -223,17 +226,7 @@ export default function BibleScreen({
         placeholder="TYPE HERE"
         onChangeText={(text) => setSearchWords([text])}
       /> */}
-      {paragraphMode ? paragraphBible : verseByVerseBible}
-    </>
+      {paragraphBible}
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  bibleTextView: {
-    backgroundColor: colors.white,
-    paddingHorizontal: 25,
-  },
-  toolBar: {
-    paddingHorizontal: 100,
-  },
-});

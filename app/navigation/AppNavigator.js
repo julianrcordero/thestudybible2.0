@@ -1,21 +1,14 @@
-import React, { useState } from "react";
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import SegmentedControl from "@react-native-community/segmented-control";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSafeArea } from "react-native-safe-area-context";
-import Collapsible from "react-native-collapsible";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import MoreNavigator from "./MoreNavigator";
 import FeedNavigator from "./FeedNavigator";
-import HomeScreen from "../screens/HomeScreen";
 import ListingEditScreen from "../screens/ListingEditScreen";
 
 import BibleScreen from "../screens/BibleScreen";
 
-import LogoTitle from "../components/LogoTitle";
-
-import NewListingButton from "./NewListingButton";
 import useNotifications from "../hooks/useNotifications";
 import Animated from "react-native-reanimated";
 import MenuButton from "../components/MenuButton";
@@ -43,7 +36,11 @@ const AppNavigator = (props) =>
         initialRouteName="Bible"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
-        tabBarOptions={{}}
+        tabBarOptions={
+          {
+            // safeAreaInsets: { bottom: useSafeAreaInsets().bottom },
+          }
+        }
       >
         <Tab.Screen
           name="Home"
@@ -57,10 +54,12 @@ const AppNavigator = (props) =>
           name="Bible"
           children={() => (
             <BibleScreen
+              formatting={props.formatting}
               bottomSheetRef={props.bottomSheetRef}
               carousel={props.carousel}
               crossrefSize={props.crossrefSize}
               currentBook={props.currentBook}
+              darkMode={props.darkMode}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
               fontFamily={props.fontFamily}
@@ -100,64 +99,65 @@ const AppNavigator = (props) =>
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
-    <Animated.View
-      style={{
-        borderColor: colors.medium,
-        borderTopWidth: 0.3,
-        flexDirection: "row",
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 70,
-        backgroundColor: colors.secondary,
-        transform: [{ translateY: navigationY }],
-        // alignItems: "center",
-        // justifyContent: "center",
-      }}
-    >
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+    <>
+      <Animated.View
+        style={{
+          borderColor: colors.medium,
+          borderTopWidth: 0.3,
+          // flex: 1,
+          flexDirection: "row",
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: useSafeAreaInsets().bottom,
+          height: 70,
+          backgroundColor: colors.secondary,
+          transform: [{ translateY: navigationY }],
+          zIndex: 0,
+        }}
+      >
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+              ? options.title
+              : route.name;
 
-        const icon = options.tabBarIcon;
+          const icon = options.tabBarIcon;
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
-
-        return (
-          <MenuButton
-            key={route.key}
-            title={label}
-            icon={icon} //{require("./app/assets/home.png")}
-            onPress={onPress}
-            color={isFocused ? colors.medium : colors.black}
-          ></MenuButton>
-        );
-      })}
-    </Animated.View>
+          return (
+            <MenuButton
+              key={route.key}
+              title={label}
+              icon={icon} //{require("./app/assets/home.png")}
+              onPress={onPress}
+              color={isFocused ? colors.medium : colors.black}
+            ></MenuButton>
+          );
+        })}
+      </Animated.View>
+      <View
+        style={{
+          backgroundColor: colors.primary,
+          height: useSafeAreaInsets().bottom,
+        }}
+      ></View>
+    </>
   );
 }
 

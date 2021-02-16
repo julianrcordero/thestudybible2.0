@@ -17,8 +17,8 @@ class SectionHeader extends PureComponent {
         style={[
           defaultStyles.bibleText,
           {
+            color: this.props.darkMode ? colors.light : colors.dark,
             fontSize: this.props.titleSize,
-            backgroundColor: colors.white,
             // borderBottomColor: "#345171",
           },
         ]}
@@ -42,13 +42,16 @@ export default class ParagraphBible extends PureComponent {
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
       <AnimatedSectionHeader
+        darkMode={this.props.darkMode}
         title={item.title}
         titleSize={this.props.fontSize * 1.5}
       />
       <Paragraph
+        formatting={this.props.formatting}
         key={i}
         chapterNum={item.chapterNum}
         crossrefSize={this.props.crossrefSize}
+        darkMode={this.props.darkMode}
         // focusedVerse={focusedVerse}
         fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}
@@ -60,7 +63,7 @@ export default class ParagraphBible extends PureComponent {
   );
 
   render() {
-    const { HEADER_HEIGHT, sections, scrollY, top } = this.props;
+    const { darkMode, HEADER_HEIGHT, sections, scrollY, top } = this.props;
 
     return (
       <AnimatedFlatList
@@ -79,7 +82,11 @@ export default class ParagraphBible extends PureComponent {
         showsVerticalScrollIndicator={false}
         style={[
           styles.bibleTextView,
-          { paddingTop: HEADER_HEIGHT, paddingBottom: HEADER_HEIGHT + 300 },
+          {
+            backgroundColor: darkMode ? colors.primary : colors.white,
+            paddingTop: HEADER_HEIGHT,
+            paddingBottom: HEADER_HEIGHT + 300,
+          },
         ]}
       />
     );
@@ -88,7 +95,7 @@ export default class ParagraphBible extends PureComponent {
 
 const styles = {
   bibleTextView: {
-    backgroundColor: colors.white,
+    // backgroundColor: "red", //colors.white,
     paddingHorizontal: 25,
   },
 };

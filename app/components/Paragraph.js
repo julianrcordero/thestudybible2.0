@@ -2,16 +2,21 @@ import React, { PureComponent } from "react";
 import { Text } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
+import colors from "../config/colors";
 
 export default class Paragraph extends PureComponent {
   constructor(props) {
     super(props);
   }
 
+  ConditionalWrapper = ({ wrapper, children }) =>
+    this.props.formatting == "Default" ? wrapper(children) : children;
+
   render() {
     const {
       chapterNum,
       crossrefSize,
+      darkMode,
       // focusedVerse,
       fontFamily,
       fontSize,
@@ -21,12 +26,7 @@ export default class Paragraph extends PureComponent {
     } = this.props;
 
     return (
-      //   <ConditionalWrapper
-      //     condition={paragraphMode}
-      //     wrapper={(children) => <Text>{children}</Text>}
-      //   >
-      //   </ConditionalWrapper>
-      <Text style={[defaultStyles.bibleText]}>
+      <this.ConditionalWrapper wrapper={(children) => <Text>{children}</Text>}>
         {section.data.map((data, j) => (
           <Verse
             key={j}
@@ -39,6 +39,7 @@ export default class Paragraph extends PureComponent {
             style={[
               defaultStyles.bibleText,
               {
+                color: darkMode ? colors.light : colors.dark,
                 fontSize: fontSize,
                 lineHeight: fontSize * 2,
                 fontFamily: fontFamily,
@@ -46,7 +47,7 @@ export default class Paragraph extends PureComponent {
             ]}
           />
         ))}
-      </Text>
+      </this.ConditionalWrapper>
     );
   }
 }

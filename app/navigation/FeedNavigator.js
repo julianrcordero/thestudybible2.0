@@ -14,7 +14,15 @@ const Stack = createStackNavigator();
 
 const LogoTitle = () => {
   return (
-    <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
+    <View
+      style={{
+        alignItems: "center",
+        backgroundColor: "yellow",
+        flexDirection: "row",
+        marginHorizontal: 20,
+        marginVertical: 15,
+      }}
+    >
       <Image
         style={{
           aspectRatio: 1,
@@ -40,18 +48,14 @@ const FeedNavigator = () => (
         headerLeft: (props) => <LogoTitle {...props} />,
         // title: "The Study Bible",
         headerStyle: {
-          backgroundColor: colors.light,
+          backgroundColor: "green", //colors.light,
           height: 55,
         },
         headerTitle: "",
         // headerTitleStyle: { fontSize: 20, fontWeight: "bold" },
       }}
     />
-    {/* <Stack.Screen
-      name="Resource"
-      component={ResourceScreen}
-      // options={{ headerShown: false }}
-    /> */}
+
     <Stack.Screen
       name="Resource"
       component={ResourceScreen}

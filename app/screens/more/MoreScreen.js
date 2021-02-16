@@ -43,7 +43,7 @@ function MoreScreen({ navigation }) {
         name: "information-outline",
         backgroundColor: colors.primary,
       },
-      targetScreen: routes.LISTING_DETAILS,
+      targetScreen: routes.ABOUT,
     },
     {
       title: "APP TOUR",

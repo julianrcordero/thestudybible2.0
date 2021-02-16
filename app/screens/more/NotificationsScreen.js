@@ -1,39 +1,14 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  ImageBackground,
-  StyleSheet,
-  View,
-  Image,
-  Switch,
-  Text,
-} from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-const Stack2 = createStackNavigator();
-const Stack3 = createStackNavigator();
+import { StyleSheet, View, Switch } from "react-native";
 
-import AppButton from "../../components/Button";
-import SegmentedControl from "@react-native-community/segmented-control";
-import LoginScreen from "./LoginScreen";
-import RegisterScreen from "./RegisterScreen";
-
-import TextInput from "../../components/TextInput";
-import ConfirmRegisterScreen from "./ConfirmRegisterScreen";
-import ForgotPasswordScreen from "./ForgotPasswordScreen";
-import ResetPasswordScreen from "./ResetPasswordScreen";
 import colors from "../../config/colors";
 import AppText from "../../components/Text";
-import useAuth from "../../auth/useAuth";
-import ListItem from "../../components/lists/ListItem";
-import Icon from "../../components/Icon";
-import { SubmitButton } from "../../components/forms/Index";
-import AccountEditScreen from "./AccountEditScreen";
 import defaultStyles from "../../config/styles";
 
-export default function NotificationsScreen({ navigation }) {
-  const { user, logOut } = useAuth();
-  const [pickerType, setPickerType] = useState(0);
+export default function NotificationsScreen({}) {
+  const [generalUpdates, setGeneralUpdates] = useState(false);
+  const [resourceUpdates, setResourceUpdates] = useState(false);
+  const [devotionalAlarm, setDevotionalAlarm] = useState(false);
 
   return (
     <View>
@@ -48,6 +23,8 @@ export default function NotificationsScreen({ navigation }) {
         </View>
         <Switch
           trackColor={{ false: colors.medium, true: colors.primary }}
+          onValueChange={() => setGeneralUpdates(!generalUpdates)}
+          value={generalUpdates}
           // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
           // onValueChange={toggleSwitch}
           // value={isEnabled}
@@ -62,6 +39,8 @@ export default function NotificationsScreen({ navigation }) {
         </View>
         <Switch
           trackColor={{ false: colors.medium, true: colors.primary }}
+          onValueChange={() => setResourceUpdates(!resourceUpdates)}
+          value={resourceUpdates}
           // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
           // onValueChange={toggleSwitch}
           // value={isEnabled}
@@ -78,6 +57,8 @@ export default function NotificationsScreen({ navigation }) {
         </View>
         <Switch
           trackColor={{ false: colors.medium, true: colors.primary }}
+          onValueChange={() => setDevotionalAlarm(!devotionalAlarm)}
+          value={devotionalAlarm}
           // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
           // onValueChange={toggleSwitch}
           // value={isEnabled}

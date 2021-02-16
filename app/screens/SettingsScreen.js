@@ -21,16 +21,47 @@ export default class SettingsScreen extends PureComponent {
     super(props);
   }
 
-  state = { fontSize: 16 };
+  state = {
+    fontSize: 16,
+    font: "Sans Serif",
+    formatting: "Default",
+    showCrossReferences: false,
+    darkMode: false,
+  };
 
   handleSlide = (value) => {
-    // console.log(this.props.paragraphBibleRef.current.state);
-    this.props.paragraphBibleRef.current.setState({ fontSize: value });
+    this.props.setFontSize(value);
     this.setState({ fontSize: value });
+  };
+
+  handleFont = (value) => {
+    this.props.paragraphBibleRef.current.setState({ fontFamily: value });
+    this.setState({ font: value });
+  };
+
+  handleFormat = (index) => {
+    this.setState({ formatting: index });
+  };
+
+  handleCrossReferences = () => {
+    this.setState({ showCrossReferences: !this.state.showCrossReferences });
+  };
+
+  handleDarkMode = () => {
+    this.setState({ darkMode: !this.state.darkMode });
   };
 
   render() {
     const { paragraphBibleRef, top } = this.props;
+
+    const fonts = ["Avenir", "Avenir Next Condensed", "Avenir-Oblique"]; //["Sans Serif", "Serif", "Slab Serif"];
+    const formats = ["Default", "Study", "Reader"];
+
+    const button = (text) => (
+      <TouchableOpacity style={styles.button}>
+        <Text>{text}</Text>
+      </TouchableOpacity>
+    );
 
     return (
       <View
@@ -41,49 +72,63 @@ export default class SettingsScreen extends PureComponent {
           paddingHorizontal: 50,
         }}
       >
-        <View style={styles.settings}>
+        <View style={styles.buttonSection}>
           <Text>{"Text Size: " + this.state.fontSize + "pt"}</Text>
           <Slider
             minimumValue={12}
             maximumValue={24}
-            minimumTrackTintColor={colors.medium}
-            maximumTrackTintColor={colors.primary}
+            minimumTrackTintColor={colors.primary}
+            maximumTrackTintColor={colors.medium}
             onSlidingComplete={this.handleSlide}
             step={2}
             value={this.state.fontSize}
           />
         </View>
-        <View style={styles.settings}>
+        <View style={styles.buttonSection}>
           <Text style={styles.title}>{"Font"}</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              width: "100%",
-            }}
-          >
-            <Text style={styles.button}>Sans Serif</Text>
-            <Text style={styles.button}>Serif</Text>
-            <Text style={styles.button}>Slab Serif</Text>
+          <View style={styles.buttons}>
+            {fonts.map((font, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor:
+                      this.state.font == font ? colors.primary : colors.white,
+                  },
+                ]}
+                onPress={() => this.handleFont(font)}
+              >
+                <Text>{font}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
-        <View style={styles.settings}>
+        <View style={styles.buttonSection}>
           <Text style={styles.title}>{"Formatting"}</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              width: "100%",
-            }}
-          >
-            <Text style={styles.button}>Default</Text>
-            <Text style={styles.button}>Study</Text>
-            <Text style={styles.button}>Reader</Text>
+          <View style={styles.buttons}>
+            {formats.map((format, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor:
+                      this.state.formatting == format
+                        ? colors.primary
+                        : colors.white,
+                  },
+                ]}
+                onPress={() => this.handleFormat(format)}
+              >
+                <Text>{format}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
         <View
           style={[
-            styles.settings,
+            styles.buttonSection,
             { flexDirection: "row", justifyContent: "space-between" },
           ]}
         >
@@ -91,13 +136,13 @@ export default class SettingsScreen extends PureComponent {
           <Switch
             trackColor={{ false: colors.medium, true: colors.primary }}
             // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-            // onValueChange={toggleSwitch}
-            // value={isEnabled}
+            onValueChange={this.handleCrossReferences}
+            value={this.state.showCrossReferences}
           />
         </View>
         <View
           style={[
-            styles.settings,
+            styles.buttonSection,
             { flexDirection: "row", justifyContent: "space-between" },
           ]}
         >
@@ -105,8 +150,8 @@ export default class SettingsScreen extends PureComponent {
           <Switch
             trackColor={{ false: colors.medium, true: colors.primary }}
             // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-            // onValueChange={toggleSwitch}
-            // value={isEnabled}
+            onValueChange={this.handleDarkMode}
+            value={this.state.darkMode}
           />
         </View>
       </View>
@@ -115,6 +160,11 @@ export default class SettingsScreen extends PureComponent {
 }
 
 const styles = {
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
+  },
   header: {
     alignItems: "center",
     backgroundColor: colors.light,
@@ -137,7 +187,7 @@ const styles = {
     paddingVertical: 6,
     textAlign: "center",
   },
-  settings: {
+  buttonSection: {
     marginTop: 25,
     width: "100%",
   },

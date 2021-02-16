@@ -35,6 +35,7 @@ export default function App() {
   const verseCardReferenceHeight = 50;
 
   const [fontSize, setFontSize] = useState(16);
+  const [fontFamily, setFontFamily] = useState("Avenir");
   const crossrefSize = 12;
   const titleSize = fontSize * 1.5;
 
@@ -543,7 +544,11 @@ export default function App() {
   );
 
   const renderSettingsContent = () => (
-    <SettingsScreen top={top} paragraphBibleRef={paragraphBibleRef} />
+    <SettingsScreen
+      top={top}
+      paragraphBibleRef={paragraphBibleRef}
+      setFontSize={setFontSize}
+    />
   );
 
   const renderBibleHeader = () => (
@@ -637,15 +642,16 @@ export default function App() {
             <AppNavigator
               bottomSheetRef={bottomSheetRef}
               carousel={carousel}
-              currentBook={currentBook}
-              fontSize={fontSize}
               crossrefSize={crossrefSize}
+              currentBook={currentBook}
+              fontFamily={fontFamily}
+              fontSize={fontSize}
               paragraphBibleRef={paragraphBibleRef}
-              titleSize={titleSize}
               searchHistoryRef={searchHistoryRef}
               setSettingsMode={setSettingsMode}
               setVerseList={setVerseList}
               setCurrentBook={setCurrentBook}
+              titleSize={titleSize}
               topPanel={topPanel}
               verseList={verseList}
             />

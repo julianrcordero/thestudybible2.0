@@ -3,6 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MoreScreen from "../screens/more/MoreScreen";
 import NotificationsScreen from "../screens/more/NotificationsScreen";
+import AboutScreen from "../screens/more/AboutScreen";
 import AccountScreen from "../screens/more/AccountScreen";
 import AppText from "../components/Text";
 import colors from "../config/colors";
@@ -77,6 +78,20 @@ const MoreNavigator = () => (
           headerBackTitle: "More",
           headerRight: () => (
             <AppText style={styles.sectionTitle}>{"Notifications"}</AppText>
+          ),
+          headerStyle: {
+            height: 55,
+          },
+          headerTitle: "",
+        })}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={() => ({
+          headerBackTitle: "More",
+          headerRight: () => (
+            <AppText style={styles.sectionTitle}>{"About"}</AppText>
           ),
           headerStyle: {
             height: 55,

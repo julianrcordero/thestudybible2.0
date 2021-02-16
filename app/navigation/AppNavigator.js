@@ -33,25 +33,6 @@ const headerY = Animated.interpolate(diffClampScrollY, {
 });
 const navigationY = Animated.multiply(headerY, -1);
 
-// function LogoTitle() {
-//   return (
-//     <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
-//       <Image
-//         style={{
-//           aspectRatio: 1,
-//           width: 30,
-//           marginRight: 15,
-//         }}
-//         source={require("../assets/StudyBibleApp_Logo_black.png")}
-//       ></Image>
-
-//       <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
-//         {"The Study Bible"}
-//       </AppText>
-//     </View>
-//   );
-// }
-
 const AppNavigator = (props) =>
   // { user }
   {
@@ -59,7 +40,7 @@ const AppNavigator = (props) =>
 
     return (
       <Tab.Navigator
-        initialRouteName="More"
+        initialRouteName="Bible"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{}}
@@ -82,6 +63,7 @@ const AppNavigator = (props) =>
               currentBook={props.currentBook}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
+              fontFamily={props.fontFamily}
               fontSize={props.fontSize}
               paragraphBibleRef={props.paragraphBibleRef}
               scrollY={scrollY}

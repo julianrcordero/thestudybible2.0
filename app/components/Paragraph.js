@@ -13,6 +13,7 @@ export default class Paragraph extends PureComponent {
       chapterNum,
       crossrefSize,
       // focusedVerse,
+      fontFamily,
       fontSize,
       section,
       searchWords,
@@ -40,6 +41,7 @@ export default class Paragraph extends PureComponent {
               {
                 fontSize: fontSize,
                 lineHeight: fontSize * 2,
+                fontFamily: fontFamily,
               },
             ]}
           />

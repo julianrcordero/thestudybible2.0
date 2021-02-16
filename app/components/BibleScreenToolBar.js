@@ -32,6 +32,7 @@ export default function BibleScreenToolBar(props) {
         // onSelectItem={(item) => props.changeBibleBook(item)}
         fontSize={props.fontSize}
         HEADER_HEIGHT={props.HEADER_HEIGHT}
+        paragraphBibleRef={props.paragraphBibleRef}
         // placeholder="Category"
         PickerItemComponent={BiblePickerItem}
         bottomSheetRef={props.bottomSheetRef}

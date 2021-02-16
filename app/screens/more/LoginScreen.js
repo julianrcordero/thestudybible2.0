@@ -35,7 +35,7 @@ function LoginScreen({ navigation }) {
   const handleSubmit = async ({ email, password }) => {
     const result = await authApi.signin(email, password);
 
-    console.log(result);
+    // console.log(result);
     if (!result.ok) {
       if (result.data) setLoginFailed(result.data.message);
       else {

@@ -60,6 +60,7 @@ export default function BibleScreen({
   HEADER_HEIGHT,
   scrollY,
   headerY,
+  fontFamily,
   fontSize,
   crossrefSize,
   titleSize,
@@ -200,13 +201,13 @@ export default function BibleScreen({
   };
 
   const toggleSlideView = (chapter, verse) => {
-    bottomSheetRef.current.snapTo(0);
+    setSettingsMode(false);
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       let myIndex = verseList.findIndex(
         (obj) => obj.chapter === chapter && obj.title === verse
       );
       setTimeout(() => {
-        setSettingsMode(false);
+        bottomSheetRef.current.snapTo(0);
         carousel.current.scrollToIndex({ animated: false, index: myIndex });
       });
     });
@@ -216,6 +217,7 @@ export default function BibleScreen({
   let paragraphBible = (
     <ParagraphBible
       crossrefSize={crossrefSize}
+      fontFamily={fontFamily}
       fontSize={fontSize}
       HEADER_HEIGHT={HEADER_HEIGHT}
       ref={paragraphBibleRef}
@@ -229,7 +231,7 @@ export default function BibleScreen({
   let verseByVerseBible = (
     <VerseByVerseBible
       crossrefSize={crossrefSize}
-      fontSize={fontSize}
+      // fontSize={fontSize}
       HEADER_HEIGHT={HEADER_HEIGHT}
       // ref={paragraphBibleRef}
       sections={sections}
@@ -252,6 +254,7 @@ export default function BibleScreen({
         // setFontSize={setFontSize}
         toggleParagraphMode={toggleParagraphMode}
         bottomSheetRef={bottomSheetRef}
+        paragraphBibleRef={paragraphBibleRef}
         setSettingsMode={setSettingsMode}
         topPanel={topPanel}
         searchHistoryRef={searchHistoryRef}

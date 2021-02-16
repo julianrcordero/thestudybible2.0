@@ -28,13 +28,13 @@ class BiblePicker extends PureComponent {
   };
 
   _toggleSettings = () => {
-    this.props.bottomSheetRef.current.snapTo(1);
+    this.props.setSettingsMode(true);
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       // let myIndex = verseList.findIndex(
       //   (obj) => obj.chapter === chapter && obj.title === verse
       // );
       setTimeout(() => {
-        this.props.setSettingsMode(true);
+        this.props.bottomSheetRef.current.snapTo(1);
         // carousel.current.scrollToIndex({ animated: false, index: myIndex });
       });
     });
@@ -61,6 +61,7 @@ class BiblePicker extends PureComponent {
       currentBook,
       fontSize,
       HEADER_HEIGHT,
+      paragraphBibleRef,
       placeholder,
       topPanel,
     } = this.props;
@@ -147,18 +148,18 @@ class BiblePicker extends PureComponent {
                 onPress={() => topPanel.current.setState({ collapsed: false })}
                 style={styles.reference}
               >
-                <Text style={{ fontSize: fontSize }}>
-                  {currentBook ? (
-                    <AppText style={styles.referenceText}>
-                      {
-                        // currentBook.label + " " + currentChapter // +" : " +currentVerse
-                        "Song of Solomon 1"
-                      }
-                    </AppText>
-                  ) : (
-                    <AppText style={styles.placeholder}>{placeholder}</AppText>
-                  )}
-                </Text>
+                {currentBook ? (
+                  <AppText
+                    style={[styles.referenceText, { fontSize: fontSize }]}
+                  >
+                    {
+                      // currentBook.label + " " + currentChapter // +" : " +currentVerse
+                      "Song of Solomon 1"
+                    }
+                  </AppText>
+                ) : (
+                  <AppText style={styles.placeholder}>{placeholder}</AppText>
+                )}
                 <MaterialCommunityIcons
                   name="chevron-down"
                   size={24}
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   referenceText: {
-    flex: 1,
+    // flex: 1,
     color: colors.black,
     fontWeight: "bold",
   },

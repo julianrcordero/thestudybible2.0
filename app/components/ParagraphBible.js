@@ -37,7 +37,7 @@ export default class ParagraphBible extends PureComponent {
     super(props);
   }
 
-  state = { fontSize: this.props.fontSize };
+  state = { fontFamily: this.props.fontFamily };
 
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
@@ -50,7 +50,8 @@ export default class ParagraphBible extends PureComponent {
         chapterNum={item.chapterNum}
         crossrefSize={this.props.crossrefSize}
         // focusedVerse={focusedVerse}
-        fontSize={this.state.fontSize}
+        fontFamily={this.state.fontFamily}
+        fontSize={this.props.fontSize}
         section={item}
         // searchWords={searchWords}
         onPress={this.props.toggleSlideView}
@@ -65,7 +66,7 @@ export default class ParagraphBible extends PureComponent {
       <AnimatedFlatList
         bounces={false}
         data={sections}
-        extra={this.state.fontSize}
+        // extra={this.props.fontSize}
         // initialNumToRender={20}
         keyExtractor={(item) => item.chapterNum.toString()}
         onScroll={Animated.event([

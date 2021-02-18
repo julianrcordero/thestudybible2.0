@@ -1,11 +1,9 @@
 import React from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "../screens/HomeScreen";
 import ResourceScreen from "../screens/ResourceScreen";
-import BibleListingsScreen from "../screens/BibleListingsScreen";
-import DashboardScreen from "../screens/DashboardScreen";
 import AppText from "../components/Text";
 import colors from "../config/colors";
 // import LogoTitle from "../components/LogoTitle";
@@ -17,10 +15,10 @@ const LogoTitle = () => {
     <View
       style={{
         alignItems: "center",
-        backgroundColor: "yellow",
+        // backgroundColor: "yellow",
         flexDirection: "row",
         marginHorizontal: 20,
-        marginVertical: 15,
+        // marginVertical: 15,
       }}
     >
       <Image
@@ -48,7 +46,7 @@ const FeedNavigator = () => (
         headerLeft: (props) => <LogoTitle {...props} />,
         // title: "The Study Bible",
         headerStyle: {
-          backgroundColor: "green", //colors.light,
+          backgroundColor: colors.light,
           height: 55,
         },
         headerTitle: "",
@@ -61,7 +59,7 @@ const FeedNavigator = () => (
       component={ResourceScreen}
       options={({ route }) => ({
         // headerBackTitleStyle: { paddingHorizontal: 15 },
-        headerBackTitle: "Home",
+        // headerBackTitle: "Home",
         headerRight: () => (
           <AppText style={styles.sectionTitle}>
             {route.params.item.category ?? "Devotionals"}

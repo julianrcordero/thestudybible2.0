@@ -42,7 +42,6 @@ class ChaptersGridScreen extends PureComponent {
           width: "14.2857%",
         }}
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.white }}
       />
     );
   }

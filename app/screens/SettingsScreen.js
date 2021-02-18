@@ -26,7 +26,7 @@ export default class SettingsScreen extends PureComponent {
     font: "Sans Serif",
     formatting: "Default",
     showCrossReferences: false,
-    darkMode: false,
+    darkMode: true,
   };
 
   handleSlide = (value) => {

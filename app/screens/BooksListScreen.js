@@ -600,7 +600,7 @@ class BooksListScreen extends PureComponent {
     };
 
     return (
-      <View style={{ backgroundColor: colors.white, height: "100%" }}>
+      <View style={{ height: "100%" }}>
         <View
           style={{
             alignItems: "center",

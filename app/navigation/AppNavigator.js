@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+// import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 import MoreNavigator from "./MoreNavigator";
 import FeedNavigator from "./FeedNavigator";
@@ -36,11 +37,9 @@ const AppNavigator = (props) =>
         initialRouteName="Bible"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
-        tabBarOptions={
-          {
-            // safeAreaInsets: { bottom: useSafeAreaInsets().bottom },
-          }
-        }
+        tabBarOptions={{
+          darkMode: props.darkMode,
+        }}
       >
         <Tab.Screen
           name="Home"
@@ -97,67 +96,57 @@ const AppNavigator = (props) =>
     );
   };
 
-function MyTabBar({ state, descriptors, navigation }) {
+function MyTabBar({ state, descriptors, navigation, darkMode }) {
   return (
-    <>
-      <Animated.View
-        style={{
-          borderColor: colors.medium,
-          borderTopWidth: 0.3,
-          // flex: 1,
-          flexDirection: "row",
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: useSafeAreaInsets().bottom,
-          height: 70,
-          backgroundColor: colors.secondary,
-          transform: [{ translateY: navigationY }],
-          zIndex: 0,
-        }}
-      >
-        {state.routes.map((route, index) => {
-          const { options } = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
+    <Animated.View
+      style={{
+        borderColor: colors.medium,
+        borderTopWidth: 0.3,
+        flexDirection: "row",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: 70,
+        transform: [{ translateY: navigationY }],
+        zIndex: 0,
+      }}
+    >
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
 
-          const icon = options.tabBarIcon;
+        const icon = options.tabBarIcon;
 
-          const isFocused = state.index === index;
+        const isFocused = state.index === index;
 
-          const onPress = () => {
-            const event = navigation.emit({
-              type: "tabPress",
-              target: route.key,
-            });
+        const onPress = () => {
+          const event = navigation.emit({
+            type: "tabPress",
+            target: route.key,
+          });
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
 
-          return (
-            <MenuButton
-              key={route.key}
-              title={label}
-              icon={icon} //{require("./app/assets/home.png")}
-              onPress={onPress}
-              color={isFocused ? colors.medium : colors.black}
-            ></MenuButton>
-          );
-        })}
-      </Animated.View>
-      <View
-        style={{
-          backgroundColor: colors.primary,
-          height: useSafeAreaInsets().bottom,
-        }}
-      ></View>
-    </>
+        return (
+          <MenuButton
+            darkMode={darkMode}
+            key={route.key}
+            title={label}
+            icon={icon} //{require("./app/assets/home.png")}
+            onPress={onPress}
+          ></MenuButton>
+        );
+      })}
+    </Animated.View>
   );
 }
 

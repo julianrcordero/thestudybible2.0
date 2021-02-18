@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import AppText from "./Text";
 import colors from "../config/colors";
 import Collapsible from "react-native-collapsible";
@@ -12,7 +12,7 @@ import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer } from "@react-navigation/native";
 import SearchHistory from "./SearchHistory";
 
-export default class TopSheetNavigation extends PureComponent {
+class TopSheetNavigation extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -21,6 +21,8 @@ export default class TopSheetNavigation extends PureComponent {
     pickerType: 0,
     collapsed: true,
   };
+
+  close = () => this.setState({ collapsed: true });
 
   selectedPicker = () => {
     switch (this.state.pickerType) {
@@ -31,23 +33,47 @@ export default class TopSheetNavigation extends PureComponent {
               <Stack.Screen
                 name="Books"
                 component={BooksGridScreen}
-                options={{ headerShown: false, title: "Books" }}
+                options={{
+                  headerShown: false,
+                  title: "Books",
+                  cardStyle: {
+                    backgroundColor: this.props.darkMode
+                      ? colors.medium
+                      : colors.light,
+                  },
+                }}
               />
 
               <Stack.Screen
                 name="Chapters"
                 component={ChaptersGridScreen}
                 options={({ route }) => ({
+                  cardStyle: {
+                    backgroundColor: this.props.darkMode
+                      ? colors.medium
+                      : colors.light,
+                  },
                   headerRight: () => (
                     <AppText style={styles.sectionTitle}>
                       {route.params.title}
                     </AppText>
                   ),
+                  headerRightContainerStyle: {
+                    color: this.props.darkMode ? colors.medium : colors.light,
+                  },
                   headerStyle: {
+                    backgroundColor: this.props.darkMode
+                      ? colors.medium
+                      : colors.light,
+
                     height: 55,
                   },
                   headerTitle: "",
                 })}
+                initialParams={{
+                  // darkMode: this.props.darkMode,
+                  topPanel: this.close,
+                }}
               />
             </Stack.Navigator>
           </NavigationContainer>
@@ -58,13 +84,21 @@ export default class TopSheetNavigation extends PureComponent {
             <Stack.Navigator screenOptions={{ headerShown: true }}>
               <Stack.Screen
                 name="BooksList"
-                options={{ headerShown: false, title: "Books" }}
+                options={{
+                  headerShown: false,
+                  title: "Books",
+                  cardStyle: {
+                    backgroundColor: this.props.darkMode
+                      ? colors.medium
+                      : colors.light,
+                  },
+                }}
               >
                 {() => (
                   <BooksListScreen
                     books={this.props.books}
                     changeBibleBook={this.props.changeBibleBook}
-                    close={() => this.setState({ collapsed: true })}
+                    close={this.close}
                     width={this.props.width - 30}
                   />
                 )}
@@ -84,13 +118,15 @@ export default class TopSheetNavigation extends PureComponent {
   };
 
   render() {
+    const { darkMode, height } = this.props;
+
     return (
       <Collapsible
         align={"center"}
         collapsed={this.state.collapsed}
         style={{
-          backgroundColor: colors.white,
-          height: this.props.height,
+          backgroundColor: darkMode ? colors.medium : colors.white,
+          height: height,
           paddingHorizontal: 15,
         }}
       >
@@ -98,19 +134,22 @@ export default class TopSheetNavigation extends PureComponent {
           <View
             style={{
               alignItems: "center",
-              backgroundColor: colors.white,
+              backgroundColor: darkMode ? colors.medium : colors.white,
               height: 70,
               justifyContent: "space-between",
               flexDirection: "row",
             }}
           >
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            <AppText
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                color: darkMode ? colors.light : colors.dark,
+              }}
+            >
               Select a Passage
-            </Text>
-            <Button
-              title={"Cancel"}
-              onPress={() => this.setState({ collapsed: true })}
-            ></Button>
+            </AppText>
+            <Button title={"Cancel"} onPress={this.close}></Button>
           </View>
           <SegmentedControl
             values={["GRID", "LIST", "RECENT"]}
@@ -120,7 +159,10 @@ export default class TopSheetNavigation extends PureComponent {
                 pickerType: event.nativeEvent.selectedSegmentIndex,
               });
             }}
-            style={{ backgroundColor: colors.light, height: 45 }}
+            style={{
+              backgroundColor: darkMode ? colors.secondary : colors.light,
+              height: 45,
+            }}
           />
         </View>
         {this.selectedPicker()}
@@ -172,3 +214,5 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
 });
+
+export default TopSheetNavigation;

@@ -29,6 +29,7 @@ export default function BibleScreenToolBar(props) {
         currentChapter={props.currentChapter}
         currentVerse={props.currentVerse}
         changeBibleBook={props.changeBibleBook}
+        darkMode={props.darkMode}
         // onSelectItem={(item) => props.changeBibleBook(item)}
         fontFamily={props.fontFamily}
         fontSize={props.fontSize}

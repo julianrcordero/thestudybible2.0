@@ -18,7 +18,11 @@ class BooksGridScreen extends PureComponent {
   }
 
   render() {
-    const { navigation, changeBibleBook, close } = this.props;
+    const {
+      navigation,
+      darkMode,
+      // changeBibleBook, close
+    } = this.props;
 
     const books = [
       ////
@@ -555,7 +559,7 @@ class BooksGridScreen extends PureComponent {
     return (
       <View
         style={{
-          backgroundColor: colors.white,
+          // backgroundColor: darkMode ? colors.medium : colors.white,
           height: "100%",
         }}
       >

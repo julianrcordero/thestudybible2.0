@@ -3,22 +3,29 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../config/colors";
 
-function MenuButton({ title, icon, onPress, color = "primary" }) {
+function MenuButton({ title, icon, onPress, darkMode }) {
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        // { backgroundColor: colors[color] }
+        { backgroundColor: darkMode ? colors.medium : colors.light },
       ]}
       onPress={onPress}
     >
       <MaterialCommunityIcons
         name={icon}
         size={24}
-        color={colors.black}
+        color={darkMode ? colors.secondary : colors.dark}
         style={styles.image}
       ></MaterialCommunityIcons>
-      <Text style={styles.text}>{title}</Text>
+      <Text
+        style={[
+          styles.text,
+          { color: darkMode ? colors.secondary : colors.dark },
+        ]}
+      >
+        {title}
+      </Text>
       {/* <Image resizeMode="contain" style={styles.image} source={icon}></Image>
        */}
     </TouchableOpacity>
@@ -51,7 +58,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   text: {
-    color: colors.black,
     fontSize: 10,
     textTransform: "uppercase",
     fontWeight: "normal",

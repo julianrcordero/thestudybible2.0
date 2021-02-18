@@ -10,7 +10,10 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import colors from "./app/config/colors";
 
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import Screen from "./app/components/Screen";
 import BottomSheetToolBar from "./app/components/BottomSheetToolBar";
 import VerseCard from "./app/components/VerseCard";
@@ -38,7 +41,7 @@ export default function App() {
   const [fontSize, setFontSize] = useState(16);
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -630,20 +633,21 @@ export default function App() {
     );
 
   return (
-    <SafeAreaProvider>
-      <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
-        <TopSheetNavigation
-          books={books}
-          ref={topPanel}
-          height={top - getBottomSpace()}
-          width={width}
-          searchHistoryRef={searchHistoryRef}
-        />
-      </Screen>
+    <>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
+          <TopSheetNavigation
+            books={books}
+            darkMode={darkMode}
+            ref={topPanel}
+            height={top - getBottomSpace()}
+            width={width}
+            searchHistoryRef={searchHistoryRef}
+          />
+        </Screen>
 
-      <NavigationContainer ref={navigationRef}>
         <Screen>
-          <AuthContext.Provider value={{ user, setUser }}>
+          <NavigationContainer ref={navigationRef}>
             <AppNavigator
               formatting={formatting}
               bottomSheetRef={bottomSheetRef}
@@ -661,9 +665,17 @@ export default function App() {
               topPanel={topPanel}
               verseList={verseList}
             />
-          </AuthContext.Provider>
+          </NavigationContainer>
         </Screen>
-      </NavigationContainer>
+        {/* <View
+          style={{
+            backgroundColor: colors.light,
+            bottom: -useSafeAreaInsets().bottom,
+            height: useSafeAreaInsets().bottom,
+            position: "relative",
+          }}
+        ></View> */}
+      </AuthContext.Provider>
 
       <BottomSheet
         ref={bottomSheetRef}
@@ -676,7 +688,7 @@ export default function App() {
         }
         // onCloseEnd={() => setFocusedVerse(null)}
       />
-    </SafeAreaProvider>
+    </>
   );
 }
 
@@ -692,22 +704,4 @@ const styles = {
     paddingHorizontal: 15,
     width: "100%",
   },
-  // button: {
-  //   alignItems: "center",
-  //   backgroundColor: colors.white,
-  //   borderWidth: 0.5,
-  //   borderColor: colors.medium,
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   marginHorizontal: 6,
-  //   paddingVertical: 6,
-  //   textAlign: "center",
-  // },
-  // settings: {
-  //   marginTop: 25,
-  //   width: "100%",
-  // },
-  // title: {
-  //   marginVertical: 6,
-  // },
 };

@@ -203,7 +203,7 @@ export default function BibleScreen({
   // );
 
   return (
-    <View style={{ backgroundColor: "red" }}>
+    <>
       <BibleScreenToolBar
         HEADER_HEIGHT={HEADER_HEIGHT}
         headerY={headerY}
@@ -211,6 +211,7 @@ export default function BibleScreen({
         currentChapter={currentChapter}
         currentVerse={currentVerse}
         changeBibleBook={changeBibleBook}
+        darkMode={darkMode}
         fontFamily={fontFamily}
         fontSize={fontSize}
         // setFontSize={setFontSize}
@@ -227,6 +228,6 @@ export default function BibleScreen({
         onChangeText={(text) => setSearchWords([text])}
       /> */}
       {paragraphBible}
-    </View>
+    </>
   );
 }

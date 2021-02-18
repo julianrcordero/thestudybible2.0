@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import AppText from "./Text";
 import Icon from "./Icon";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 //PickerItem
 function CategoryPickerItem({ item, onPress }) {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: "#345171",
-    borderColor: colors.white,
+    // borderColor: colors.white,
     borderWidth: 0.5,
     height: 55,
     justifyContent: "center",

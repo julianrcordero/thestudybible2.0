@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 function MenuButton({ title, icon, onPress, darkMode }) {
   return (
@@ -45,8 +45,8 @@ function MenuButton({ title, icon, onPress, darkMode }) {
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
-    backgroundColor: colors.light,
-    borderColor: colors.medium,
+    // backgroundColor: colors.light,
+    // borderColor: colors.medium,
     // borderWidth: 0.3,
     flex: 1,
     // height: 70,

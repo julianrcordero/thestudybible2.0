@@ -4,7 +4,8 @@ import Animated from "react-native-reanimated";
 
 import BiblePicker from "../components/BiblePicker";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import BiblePickerItem from "./BiblePickerItem";
 import AppText from "./Text";
 import SearchHistory from "./SearchHistory";
@@ -13,6 +14,8 @@ export default function BibleScreenToolBar(props) {
   // const [sliderVisible, setSliderVisible] = useState(false);
   // const handleFontSize = () => setSliderVisible(!sliderVisible);
   const [historyVisible, setHistoryVisible] = useState(false);
+
+  const { colors, isDark } = useTheme();
 
   return (
     <Animated.View

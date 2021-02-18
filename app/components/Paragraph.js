@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Text } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 export default class Paragraph extends PureComponent {
   constructor(props) {
@@ -16,7 +16,6 @@ export default class Paragraph extends PureComponent {
     const {
       chapterNum,
       crossrefSize,
-      darkMode,
       // focusedVerse,
       fontFamily,
       fontSize,
@@ -39,7 +38,6 @@ export default class Paragraph extends PureComponent {
             style={[
               defaultStyles.bibleText,
               {
-                color: darkMode ? colors.light : colors.dark,
                 fontSize: fontSize,
                 lineHeight: fontSize * 2,
                 fontFamily: fontFamily,

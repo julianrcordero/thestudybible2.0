@@ -12,7 +12,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../config/styles";
 import AppText from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -69,11 +69,13 @@ class BiblePicker extends PureComponent {
       topPanel,
     } = this.props;
 
+    // const { colors, isDark } = useTheme();
+
     return (
       <View
         style={{
-          backgroundColor: darkMode ? colors.medium : colors.light,
-          borderColor: colors.medium,
+          // backgroundColor: darkMode ? colors.medium : colors.light,
+          // borderColor: colors.medium,
           borderBottomWidth: 0.3,
           flexDirection: "row",
           height: HEADER_HEIGHT,
@@ -103,7 +105,7 @@ class BiblePicker extends PureComponent {
           <TouchableOpacity style={styles.search} onPress={this.toggleSearch}>
             <MaterialCommunityIcons
               name="magnify"
-              color={darkMode ? colors.secondary : colors.black}
+              // color={darkMode ? colors.secondary : colors.black}
               size={26}
             />
           </TouchableOpacity>
@@ -139,7 +141,7 @@ class BiblePicker extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name="close-circle"
-                  color={colors.black}
+                  // color={colors.black}
                   size={16}
                 />
               </TouchableOpacity>
@@ -153,7 +155,7 @@ class BiblePicker extends PureComponent {
                 {currentBook ? (
                   <AppText
                     style={{
-                      color: darkMode ? colors.secondary : colors.medium,
+                      // color: darkMode ? colors.secondary : colors.medium,
                       fontFamily: fontFamily,
                       fontSize: fontSize,
                       fontWeight: "bold",
@@ -170,14 +172,14 @@ class BiblePicker extends PureComponent {
                 <MaterialCommunityIcons
                   name="chevron-down"
                   size={24}
-                  color={darkMode ? colors.secondary : colors.medium}
+                  // color={darkMode ? colors.secondary : colors.medium}
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.icon}>
                 <Text
                   style={[
                     styles.translationText,
-                    { color: darkMode ? colors.secondary : colors.medium },
+                    // { color: darkMode ? colors.secondary : colors.medium },
                   ]}
                 >
                   NASB
@@ -203,7 +205,7 @@ class BiblePicker extends PureComponent {
               <TouchableOpacity style={styles.icon}>
                 <MaterialCommunityIcons
                   name="speaker"
-                  color={darkMode ? colors.secondary : colors.medium}
+                  // color={darkMode ? colors.secondary : colors.medium}
                   size={24}
                 />
               </TouchableOpacity>
@@ -213,7 +215,7 @@ class BiblePicker extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name="format-letter-case"
-                  color={darkMode ? colors.secondary : colors.medium}
+                  // color={darkMode ? colors.secondary : colors.medium}
                   size={24}
                 />
               </TouchableOpacity>
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   placeholder: {
-    color: defaultStyles.colors.medium,
+    // color: colors.medium,
     flex: 1,
   },
   reference: {
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
   translationText: {
     borderRadius: 4,
     borderWidth: 0.3,
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     fontSize: 12,
     paddingHorizontal: 6,
     paddingVertical: 4,

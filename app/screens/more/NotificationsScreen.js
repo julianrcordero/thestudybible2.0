@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Switch } from "react-native";
 
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import AppText from "../../components/Text";
 import defaultStyles from "../../config/styles";
 
@@ -70,7 +71,7 @@ export default function NotificationsScreen({}) {
 
 const styles = StyleSheet.create({
   settings: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     paddingHorizontal: 25,
     paddingVertical: 15,
     // width: "100%",

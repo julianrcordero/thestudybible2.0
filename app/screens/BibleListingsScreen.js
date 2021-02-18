@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import BibleCard from "../components/BibleCard";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 const listings = [
   {
@@ -41,7 +41,7 @@ function BibleListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.light,
+    // backgroundColor: colors.light,
     flex: 1,
     padding: 20,
   },

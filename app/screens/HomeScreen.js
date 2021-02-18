@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect, PureComponent } from "react";
 import {
-  ActivityIndicator as Indicator,
   Button,
   FlatList,
   Image,
@@ -11,37 +10,15 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import ActivityIndicator from "../components/ActivityIndicator";
-// import Button from "../components/Button";
-import Card from "../components/Card";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import listingsApi from "../api/listings";
-import Screen from "../components/Screen";
 import AppText from "../components/Text";
 import useApi from "../hooks/useApi";
 import ContentCard from "../components/ContentCard";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useAuth from "../auth/useAuth";
-
-function LogoTitle() {
-  return (
-    <View style={{ alignItems: "center", flexDirection: "row", margin: 20 }}>
-      <Image
-        style={{
-          aspectRatio: 1,
-          width: 30,
-          marginRight: 15,
-        }}
-        source={require("../assets/StudyBibleApp_Logo_black.png")}
-      ></Image>
-
-      <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
-        {"The Study Bible"}
-      </AppText>
-    </View>
-  );
-}
 
 class MarkupItem extends PureComponent {
   constructor(props) {
@@ -153,13 +130,11 @@ class ResourceSection extends PureComponent {
   }
 }
 
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-function HomeScreen({ HEADER_HEIGHT, navigation, scrollY }) {
+function HomeScreen({ navigation, darkMode }) {
   const getDevotionalsApi = useApi(listingsApi.getDevotionals);
   const getResourcesApi = useApi(listingsApi.getResources);
 
@@ -202,7 +177,7 @@ function HomeScreen({ HEADER_HEIGHT, navigation, scrollY }) {
     <View style={{ flex: 1, paddingBottom: 70 }}>
       <ScrollView
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: darkMode ? colors.primary : colors.white,
           paddingHorizontal: 15,
           flex: 1,
         }}
@@ -276,12 +251,6 @@ function HomeScreen({ HEADER_HEIGHT, navigation, scrollY }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: colors.white, // "cornflowerblue",
-  },
-});
 
 export default HomeScreen;
 

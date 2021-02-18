@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import { FlatList, Text } from "react-native";
 import Animated from "react-native-reanimated";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import defaultStyles from "../config/styles";
 import Paragraph from "./Paragraph";
 import Verse from "./Verse";
@@ -110,7 +111,7 @@ export default class VerseByVerseBible extends PureComponent {
 
 const styles = {
   bibleTextView: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     paddingHorizontal: 25,
   },
 };

@@ -9,7 +9,8 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import AppText from "../components/Text";
 
 import ResourcesScreen from "../screens/ResourcesScreen";
@@ -109,18 +110,18 @@ function VerseBody({ landscape }) {
 
 const styles = StyleSheet.create({
   macArthurBox: {
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     borderWidth: 1,
     marginVertical: 5,
     padding: 10,
   },
   macArthurText: {
-    color: colors.medium,
+    // color: colors.medium,
     fontSize: 13,
     fontFamily: Platform.OS === "android" ? "normal" : "Georgia-Italic",
   },
   myNoteText: {
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     borderWidth: 1,
     backgroundColor: "#f2f2f2",
     fontSize: 13,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   relatedResourcesBox: {
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     borderWidth: 1,
     marginVertical: 5,
     padding: 10,

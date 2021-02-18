@@ -3,6 +3,7 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import reactStringReplace from "react-string-replace";
 import verseFormatted from "./VerseFormatted";
+import { DarkTheme } from "@react-navigation/native";
 
 export default class Verse extends PureComponent {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class Verse extends PureComponent {
   }
 
   _toggleHighlight = () => {
-    if (this.state.backgroundColor === "white") {
+    if (this.state.backgroundColor != "#FFFB79") {
       this.setState({ backgroundColor: "#FFFB79" });
     } else {
       this.setState({ backgroundColor: "transparent" });
@@ -47,14 +48,7 @@ export default class Verse extends PureComponent {
 
     return (
       <Text
-        style={[
-          style,
-          {
-            backgroundColor: this.state.backgroundColor,
-            // textDecorationLine: this.state.textDecorationLine,
-            // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
-          },
-        ]}
+        style={[style]}
         onPress={onPress}
         onLongPress={this._toggleHighlight}
       >
@@ -68,7 +62,16 @@ export default class Verse extends PureComponent {
           {verse["_num"]}{" "}
         </Text>
 
-        {parsedVerse}
+        <Text
+          style={{
+            backgroundColor: this.state.backgroundColor,
+            color: DarkTheme,
+            // textDecorationLine: this.state.textDecorationLine,
+            // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
+          }}
+        >
+          {parsedVerse}
+        </Text>
         {/* <HighlightComponent
           highlightStyle={{ backgroundColor: "red" }}
           searchWords={searchWords}

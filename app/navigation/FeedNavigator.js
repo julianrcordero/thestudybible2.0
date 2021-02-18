@@ -5,12 +5,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import ResourceScreen from "../screens/ResourceScreen";
 import AppText from "../components/Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 // import LogoTitle from "../components/LogoTitle";
 
 const Stack = createStackNavigator();
 
-const LogoTitle = () => {
+const LogoTitle = ({ darkMode }) => {
   return (
     <View
       style={{
@@ -27,7 +28,11 @@ const LogoTitle = () => {
           width: 30,
           marginRight: 15,
         }}
-        source={require("../assets/StudyBibleApp_Logo_black.png")}
+        source={
+          darkMode
+            ? require("../assets/studyBibleAppLogo.jpg")
+            : require("../assets/StudyBibleApp_Logo_black.png")
+        }
       ></Image>
 
       <AppText style={{ fontSize: 18, fontWeight: "bold" }}>
@@ -37,16 +42,17 @@ const LogoTitle = () => {
   );
 };
 
-const FeedNavigator = () => (
+const FeedNavigator = ({ darkMode }) => (
   <Stack.Navigator mode="card">
     <Stack.Screen
       name="Home"
-      component={HomeScreen}
+      // component={HomeScreen}
+      children={() => <HomeScreen darkMode={darkMode} />}
       options={{
-        headerLeft: (props) => <LogoTitle {...props} />,
+        headerLeft: (props) => <LogoTitle {...props} darkMode={darkMode} />,
         // title: "The Study Bible",
         headerStyle: {
-          backgroundColor: colors.light,
+          backgroundColor: darkMode ? colors.medium : colors.light,
           height: 55,
         },
         headerTitle: "",

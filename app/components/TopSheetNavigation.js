@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import AppText from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import Collapsible from "react-native-collapsible";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   searchBar: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     marginRight: 5,
     marginVertical: 15,
     paddingHorizontal: 10,
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   },
   referenceText: {
     flex: 1,
-    color: colors.black,
+    // color: colors.black,
     fontWeight: "bold",
   },
   sectionTitle: {
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
   translationText: {
     borderRadius: 4,
     borderWidth: 0.3,
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     fontSize: 12,
     paddingHorizontal: 6,
     paddingVertical: 4,

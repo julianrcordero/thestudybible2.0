@@ -13,7 +13,7 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../../components/forms/Index";
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
 
 const validationSchema = yup.object().shape({
   code: yup
@@ -93,7 +93,7 @@ function ConfirmRegisterScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     flex: 1,
     padding: 10,
   },

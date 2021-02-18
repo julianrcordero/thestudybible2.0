@@ -21,7 +21,8 @@ import TextInput from "../../components/TextInput";
 import ConfirmRegisterScreen from "./ConfirmRegisterScreen";
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import AppText from "../../components/Text";
 import useAuth from "../../auth/useAuth";
 import ListItem from "../../components/lists/ListItem";

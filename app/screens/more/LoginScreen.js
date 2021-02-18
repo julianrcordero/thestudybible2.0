@@ -18,7 +18,8 @@ import {
 } from "../../components/forms/Index";
 import authApi from "../../api/auth";
 
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import { Formik } from "formik";
 import useAuth from "../../auth/useAuth";
 import AppText from "../../components/Text";
@@ -134,7 +135,7 @@ function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     // flex: 1,
     paddingVertical: 10,
   },

@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
   Switch,
-  Text,
 } from "react-native";
 
-import colors from "../config/colors";
-import AppText from "../components/Text";
+import { useTheme } from "../config/ThemeContext";
+
+import Text from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
 
 import Slider from "@react-native-community/slider";
@@ -70,14 +70,18 @@ export default class SettingsScreen extends PureComponent {
     return (
       <View
         style={{
-          backgroundColor: colors.light,
+          backgroundColor: this.state.darkMode ? colors.medium : colors.light,
           height: top - 50,
           borderTopWidth: 0.3,
           paddingHorizontal: 50,
         }}
       >
         <View style={styles.buttonSection}>
-          <Text>{"Text Size: " + this.state.fontSize + "pt"}</Text>
+          <Text
+            style={{ color: this.state.darkMode ? colors.light : colors.dark }}
+          >
+            {"Text Size: " + this.state.fontSize + "pt"}
+          </Text>
           <Slider
             minimumValue={12}
             maximumValue={24}
@@ -89,43 +93,85 @@ export default class SettingsScreen extends PureComponent {
           />
         </View>
         <View style={styles.buttonSection}>
-          <Text style={styles.title}>{"Font"}</Text>
+          <Text
+            style={[
+              styles.title,
+              { color: this.state.darkMode ? colors.light : colors.dark },
+            ]}
+          >
+            {"Font"}
+          </Text>
           <View style={styles.buttons}>
             {fonts.map((font, index) => (
               <TouchableOpacity
                 key={index}
                 style={[
                   styles.button,
-                  {
-                    backgroundColor:
-                      this.state.font == font ? colors.primary : colors.white,
-                  },
+                  this.state.darkMode
+                    ? {
+                        backgroundColor:
+                          this.state.font == font
+                            ? colors.primary
+                            : colors.secondary,
+                      }
+                    : {
+                        backgroundColor:
+                          this.state.font == font
+                            ? colors.primary
+                            : colors.white,
+                      },
                 ]}
                 onPress={() => this.handleFont(font)}
               >
-                <Text>{font}</Text>
+                <Text
+                  style={{
+                    color: this.state.darkMode ? colors.light : colors.dark,
+                  }}
+                >
+                  {font}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
         </View>
         <View style={styles.buttonSection}>
-          <Text style={styles.title}>{"Formatting"}</Text>
+          <Text
+            style={[
+              styles.title,
+              { color: this.state.darkMode ? colors.light : colors.dark },
+            ]}
+          >
+            {"Formatting"}
+          </Text>
           <View style={styles.buttons}>
             {formats.map((format, index) => (
               <TouchableOpacity
                 key={index}
                 style={[
                   styles.button,
-                  {
-                    backgroundColor:
-                      this.state.formatting == format
-                        ? colors.primary
-                        : colors.white,
-                  },
+                  this.state.darkMode
+                    ? {
+                        backgroundColor:
+                          this.state.formatting == format
+                            ? colors.primary
+                            : colors.secondary,
+                      }
+                    : {
+                        backgroundColor:
+                          this.state.formatting == format
+                            ? colors.primary
+                            : colors.white,
+                      },
                 ]}
                 onPress={() => this.handleFormat(format)}
               >
-                <Text>{format}</Text>
+                <Text
+                  style={{
+                    color: this.state.darkMode ? colors.light : colors.dark,
+                  }}
+                >
+                  {format}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -136,7 +182,14 @@ export default class SettingsScreen extends PureComponent {
             { flexDirection: "row", justifyContent: "space-between" },
           ]}
         >
-          <Text style={styles.title}>{"Show Cross References"}</Text>
+          <Text
+            style={[
+              styles.title,
+              { color: this.state.darkMode ? colors.light : colors.dark },
+            ]}
+          >
+            {"Show Cross References"}
+          </Text>
           <Switch
             trackColor={{ false: colors.medium, true: colors.primary }}
             // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -150,7 +203,14 @@ export default class SettingsScreen extends PureComponent {
             { flexDirection: "row", justifyContent: "space-between" },
           ]}
         >
-          <Text style={styles.title}>{"Dark Mode"}</Text>
+          <Text
+            style={[
+              styles.title,
+              { color: this.state.darkMode ? colors.light : colors.dark },
+            ]}
+          >
+            {"Dark Mode"}
+          </Text>
           <Switch
             trackColor={{ false: colors.medium, true: colors.primary }}
             // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -171,8 +231,8 @@ const styles = {
   },
   header: {
     alignItems: "center",
-    backgroundColor: colors.light,
-    borderColor: colors.medium,
+    // backgroundColor: colors.light,
+    // borderColor: colors.medium,
     borderTopWidth: 0.3,
     flexDirection: "row",
     height: 50,
@@ -182,9 +242,9 @@ const styles = {
   },
   button: {
     alignItems: "center",
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     borderWidth: 0.5,
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 6,

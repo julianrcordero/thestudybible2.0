@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Button, TouchableOpacity, View } from "react-native";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default class Verse extends PureComponent {

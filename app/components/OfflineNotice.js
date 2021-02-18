@@ -4,7 +4,7 @@ import Constants from "expo-constants";
 import { useNetInfo } from "@react-native-community/netinfo";
 
 import Text from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 function OfflineNotice(props) {
   const netInfo = useNetInfo();
@@ -23,7 +23,7 @@ function OfflineNotice(props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: colors.primary,
+    // backgroundColor: colors.primary,
     height: 50,
     justifyContent: "center",
     position: "absolute",
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   text: {
-    color: colors.white,
+    // color: colors.white,
   },
 });
 

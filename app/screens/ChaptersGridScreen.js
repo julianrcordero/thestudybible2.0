@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "react-native-animatable";
 
 import BiblePickerItem from "../components/BiblePickerItem";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 class ChaptersGridScreen extends PureComponent {
   constructor(props) {

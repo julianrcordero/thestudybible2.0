@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 function AppButton({ title, onPress, color = "primary", ...otherProps }) {
   return (
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // flex: 1,
     flexDirection: "row",
-    backgroundColor: colors.primary,
+    // backgroundColor: colors.primary,
     borderRadius: 5,
     height: 40,
     justifyContent: "center",
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   text: {
     // backgroundColor: "green",
-    color: colors.white,
+    // color: colors.white,
     fontSize: 16,
     textTransform: "uppercase",
     fontWeight: "bold",

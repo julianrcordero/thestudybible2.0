@@ -8,7 +8,8 @@ import {
 import { Image } from "react-native-expo-image-cache";
 
 import Text from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import { TouchableHighlight } from "react-native-gesture-handler";
 
 function Card({
@@ -62,18 +63,18 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 0.3,
     borderRadius: 10,
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     marginVertical: 10,
     overflow: "hidden",
   },
   date: {
     // backgroundColor: "green",
-    color: colors.secondary,
+    // color: colors.secondary,
     fontSize: 12,
     fontStyle: "italic",
   },
   detailsContainer: {
-    backgroundColor: colors.primary,
+    // backgroundColor: colors.primary,
     paddingHorizontal: 15,
     paddingVertical: 10,
   },
@@ -85,11 +86,11 @@ const styles = StyleSheet.create({
     height: undefined,
   },
   scripture: {
-    color: colors.secondary,
+    // color: colors.secondary,
     // fontWeight: "bold",
   },
   title: {
-    color: colors.secondary,
+    // color: colors.secondary,
     flex: 1,
     fontSize: 18,
     fontWeight: "bold",

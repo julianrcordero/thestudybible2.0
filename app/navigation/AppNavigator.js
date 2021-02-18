@@ -13,7 +13,8 @@ import BibleScreen from "../screens/BibleScreen";
 import useNotifications from "../hooks/useNotifications";
 import Animated from "react-native-reanimated";
 import MenuButton from "../components/MenuButton";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 // import AuthNavigator from "./AuthNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -32,18 +33,38 @@ const AppNavigator = (props) =>
   {
     useNotifications();
 
+    const {
+      bottomSheetRef,
+      carousel,
+      crossrefSize,
+      currentBook,
+      darkMode,
+      fontFamily,
+      fontSize,
+      formatting,
+      paragraphBibleRef,
+      searchHistoryRef,
+      setCurrentBook,
+      setSettingsMode,
+      setVerseList,
+      titleSize,
+      topPanel,
+      verseList,
+    } = props;
+
     return (
       <Tab.Navigator
         initialRouteName="Bible"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{
-          darkMode: props.darkMode,
+          darkMode: darkMode,
         }}
       >
         <Tab.Screen
           name="Home"
-          component={FeedNavigator}
+          // component={FeedNavigator}
+          children={() => <FeedNavigator darkMode={darkMode} />}
           options={{
             tabBarIcon: "home",
           }}
@@ -53,25 +74,25 @@ const AppNavigator = (props) =>
           name="Bible"
           children={() => (
             <BibleScreen
-              formatting={props.formatting}
-              bottomSheetRef={props.bottomSheetRef}
-              carousel={props.carousel}
-              crossrefSize={props.crossrefSize}
-              currentBook={props.currentBook}
-              darkMode={props.darkMode}
+              formatting={formatting}
+              bottomSheetRef={bottomSheetRef}
+              carousel={carousel}
+              crossrefSize={crossrefSize}
+              currentBook={currentBook}
+              darkMode={darkMode}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
-              fontFamily={props.fontFamily}
-              fontSize={props.fontSize}
-              paragraphBibleRef={props.paragraphBibleRef}
+              fontFamily={fontFamily}
+              fontSize={fontSize}
+              paragraphBibleRef={paragraphBibleRef}
               scrollY={scrollY}
-              searchHistoryRef={props.searchHistoryRef}
-              setCurrentBook={props.setCurrentBook}
-              setSettingsMode={props.setSettingsMode}
-              setVerseList={props.setVerseList}
-              titleSize={props.titleSize}
-              topPanel={props.topPanel}
-              verseList={props.verseList}
+              searchHistoryRef={searchHistoryRef}
+              setCurrentBook={setCurrentBook}
+              setSettingsMode={setSettingsMode}
+              setVerseList={setVerseList}
+              titleSize={titleSize}
+              topPanel={topPanel}
+              verseList={verseList}
             />
           )}
           options={{
@@ -97,6 +118,8 @@ const AppNavigator = (props) =>
   };
 
 function MyTabBar({ state, descriptors, navigation, darkMode }) {
+  const { colors, isDark } = useTheme();
+
   return (
     <Animated.View
       style={{

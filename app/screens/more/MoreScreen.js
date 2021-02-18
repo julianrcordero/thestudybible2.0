@@ -3,7 +3,8 @@ import { StyleSheet, View, FlatList } from "react-native";
 
 import ListItem from "../../components/lists/ListItem";
 import ListItemSeparator from "../../components/lists/ListItemSeparator";
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import Icon from "../../components/Icon";
 import routes from "../../navigation/routes";
 import useAuth from "../../auth/useAuth";
@@ -124,7 +125,7 @@ function MoreScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     flex: 1,
     padding: 20,
   },

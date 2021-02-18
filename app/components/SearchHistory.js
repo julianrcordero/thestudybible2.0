@@ -10,7 +10,8 @@ import {
 import defaultStyles from "../config/styles";
 import AppText from "./Text";
 import Screen from "./Screen";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import Collapsible from "react-native-collapsible";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";

@@ -8,7 +8,8 @@ import {
 import routes from "../navigation/routes";
 
 import Text from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import HTML from "react-native-render-html";
 import AppText from "./Text";
 
@@ -136,7 +137,7 @@ function ContentCard({ date, item, navigation }) {
 
 const styles = StyleSheet.create({
   contentCard: {
-    borderColor: colors.secondary,
+    // borderColor: colors.secondary,
     borderWidth: 0.3,
     flexDirection: "row",
     aspectRatio: 1.7,
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     // width: "100%",
   },
   date: {
-    color: colors.secondary,
+    // color: colors.secondary,
     fontSize: 12,
     fontStyle: "italic",
   },
@@ -165,12 +166,12 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   scripture: {
-    color: colors.medium,
+    // color: colors.medium,
     fontSize: 12,
     lineHeight: 22,
   },
   title: {
-    color: colors.black,
+    // color: colors.black,
     fontSize: 15,
     fontWeight: "bold",
     textAlign: "left",

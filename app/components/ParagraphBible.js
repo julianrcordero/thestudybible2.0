@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import { FlatList, Text } from "react-native";
 import Animated from "react-native-reanimated";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import defaultStyles from "../config/styles";
 import Paragraph from "./Paragraph";
 
@@ -12,12 +13,13 @@ class SectionHeader extends PureComponent {
   }
 
   render() {
+    // const { colors, isDark } = useTheme();
     return (
       <Text
         style={[
           defaultStyles.bibleText,
           {
-            color: this.props.darkMode ? colors.light : colors.dark,
+            // color: this.props.darkMode ? colors.light : colors.dark,
             fontSize: this.props.titleSize,
             // borderBottomColor: "#345171",
           },
@@ -51,7 +53,6 @@ export default class ParagraphBible extends PureComponent {
         key={i}
         chapterNum={item.chapterNum}
         crossrefSize={this.props.crossrefSize}
-        darkMode={this.props.darkMode}
         // focusedVerse={focusedVerse}
         fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}
@@ -83,7 +84,7 @@ export default class ParagraphBible extends PureComponent {
         style={[
           styles.bibleTextView,
           {
-            backgroundColor: darkMode ? colors.primary : colors.white,
+            // backgroundColor: darkMode ? colors.primary : colors.white,
             paddingTop: HEADER_HEIGHT,
             paddingBottom: HEADER_HEIGHT + 300,
           },

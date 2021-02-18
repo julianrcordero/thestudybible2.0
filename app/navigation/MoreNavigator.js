@@ -6,7 +6,8 @@ import NotificationsScreen from "../screens/more/NotificationsScreen";
 import AboutScreen from "../screens/more/AboutScreen";
 import AccountScreen from "../screens/more/AccountScreen";
 import AppText from "../components/Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 // import LogoTitle from "../components/LogoTitle";
 
 const Stack = createStackNavigator();

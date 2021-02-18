@@ -10,7 +10,8 @@ import {
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import AppText from "../components/Text";
 import defaultStyles from "../config/styles";
 import NoteHistory from "./NoteHistory";
@@ -197,14 +198,14 @@ export default class PanelBox extends PureComponent {
 const styles = StyleSheet.create({
   macArthurBox: {
     height: "100%",
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     borderWidth: 1,
     marginVertical: 5,
     padding: 10,
   },
 
   relatedResourcesBox: {
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     borderWidth: 1,
     marginVertical: 5,
     padding: 10,

@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import Text from "../Text";
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
 
 function ListItem({
   height = 70,
@@ -22,13 +22,21 @@ function ListItem({
   renderRightActions,
   titleSize = 14,
 }) {
+  const { colors, isDark } = useTheme();
+
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity underlayColor={colors.light} onPress={onPress}>
-        <View style={[styles.container, { height }]}>
+        <View
+          style={[styles.container, { height, borderColor: colors.secondary }]}
+        >
           {IconComponent}
           {image && (
-            <Image style={styles.image} source={image} resizeMode="contain" />
+            <Image
+              style={[styles.image, { borderColor: colors.secondary }]}
+              source={image}
+              resizeMode="contain"
+            />
           )}
           <View style={styles.detailsContainer}>
             <Text
@@ -57,7 +65,7 @@ function ListItem({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    borderColor: colors.secondary,
+    // borderColor: colors.secondary,
     borderRadius: 10,
     borderBottomWidth: 0.3,
     flexDirection: "row",
@@ -72,12 +80,12 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 50,
-    borderColor: colors.secondary,
+    // borderColor: colors.secondary,
     borderRadius: 35,
     borderWidth: 0.3,
   },
   subTitle: {
-    color: colors.medium,
+    // color: colors.medium,
     fontSize: 12,
   },
   title: {

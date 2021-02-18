@@ -4,7 +4,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import AppText from "../Text";
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import Collapse from "accordion-collapse-react-native/build/components/Collapse";
 import CollapseHeader from "accordion-collapse-react-native/build/components/CollapseHeader";
 import CollapseBody from "accordion-collapse-react-native/build/components/CollapseBody";
@@ -63,10 +64,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     padding: 10,
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
   },
   description: {
-    color: colors.gray,
+    // color: colors.gray,
     fontSize: 12,
   },
   detailsContainer: {

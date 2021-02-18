@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import PanelBox from "../components/PanelBox";
 import AppText from "../components/Text";
 

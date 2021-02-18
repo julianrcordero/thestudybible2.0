@@ -3,7 +3,8 @@ import { View, Image as RNImage, ScrollView, StyleSheet } from "react-native";
 import { StretchyScrollView } from "react-native-stretchy";
 import { Image } from "react-native-expo-image-cache";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 import AppText from "../components/Text";
@@ -76,8 +77,8 @@ function ResourceScreen({ route }) {
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    backgroundColor: colors.white,
-    borderColor: colors.light,
+    // backgroundColor: colors.white,
+    // borderColor: colors.light,
     borderWidth: 0.3,
     paddingHorizontal: 25,
   },
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     // marginVertical: 10,
   },
   scripture: {
-    color: colors.secondary,
+    // color: colors.secondary,
     fontWeight: "bold",
     fontSize: 18,
   },
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     // fontSize: 20,
   },
   userContainer: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     marginVertical: 15,
   },
 });

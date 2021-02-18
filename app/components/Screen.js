@@ -6,7 +6,7 @@ import { StyleSheet, SafeAreaView } from "react-native";
 //   useSafeAreaInsets,
 // } from "react-native-safe-area-context";
 import { getBottomSpace } from "react-native-iphone-x-helper";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 function Screen({ children, style }) {
   return (
@@ -24,7 +24,7 @@ function Screen({ children, style }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.primary,
+    // backgroundColor: colors.primary,
     flex: 1,
     paddingTop: Constants.statusBarHeight,
   },

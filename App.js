@@ -3,17 +3,15 @@ import { Button, Dimensions, FlatList, View, Switch, Text } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
+import { AppearanceProvider } from "react-native-appearance";
+import { ThemeProvider } from "./app/config/ThemeContext";
+import { useTheme } from "./app/config/ThemeContext";
 
 import AppNavigator from "./app/navigation/AppNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
-import colors from "./app/config/colors";
 
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
 import Screen from "./app/components/Screen";
 import BottomSheetToolBar from "./app/components/BottomSheetToolBar";
 import VerseCard from "./app/components/VerseCard";
@@ -42,6 +40,7 @@ export default function App() {
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
+  const { colors, isDark } = useTheme();
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -537,7 +536,12 @@ export default function App() {
   };
 
   const renderSettingsHeader = () => (
-    <View style={[styles.header, { backgroundColor: colors.light }]}>
+    <View
+      style={[
+        styles.header,
+        { backgroundColor: darkMode ? colors.secondary : colors.light },
+      ]}
+    >
       <Text style={{ fontSize: 20, fontWeight: "bold" }}>Text Settings</Text>
 
       <Button
@@ -633,41 +637,42 @@ export default function App() {
     );
 
   return (
-    <>
-      <AuthContext.Provider value={{ user, setUser }}>
-        <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
-          <TopSheetNavigation
-            books={books}
-            darkMode={darkMode}
-            ref={topPanel}
-            height={top - getBottomSpace()}
-            width={width}
-            searchHistoryRef={searchHistoryRef}
-          />
-        </Screen>
-
-        <Screen>
-          <NavigationContainer ref={navigationRef}>
-            <AppNavigator
-              formatting={formatting}
-              bottomSheetRef={bottomSheetRef}
-              carousel={carousel}
-              crossrefSize={crossrefSize}
-              currentBook={currentBook}
+    <AppearanceProvider>
+      <ThemeProvider>
+        <AuthContext.Provider value={{ user, setUser }}>
+          <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
+            <TopSheetNavigation
+              books={books}
               darkMode={darkMode}
-              fontFamily={fontFamily}
-              fontSize={fontSize}
-              paragraphBibleRef={paragraphBibleRef}
+              ref={topPanel}
+              height={top - getBottomSpace()}
+              width={width}
               searchHistoryRef={searchHistoryRef}
-              setSettingsMode={setSettingsMode}
-              setVerseList={setVerseList}
-              setCurrentBook={setCurrentBook}
-              topPanel={topPanel}
-              verseList={verseList}
             />
-          </NavigationContainer>
-        </Screen>
-        {/* <View
+          </Screen>
+
+          <Screen>
+            <NavigationContainer ref={navigationRef}>
+              <AppNavigator
+                formatting={formatting}
+                bottomSheetRef={bottomSheetRef}
+                carousel={carousel}
+                crossrefSize={crossrefSize}
+                currentBook={currentBook}
+                darkMode={darkMode}
+                fontFamily={fontFamily}
+                fontSize={fontSize}
+                paragraphBibleRef={paragraphBibleRef}
+                searchHistoryRef={searchHistoryRef}
+                setSettingsMode={setSettingsMode}
+                setVerseList={setVerseList}
+                setCurrentBook={setCurrentBook}
+                topPanel={topPanel}
+                verseList={verseList}
+              />
+            </NavigationContainer>
+          </Screen>
+          {/* <View
           style={{
             backgroundColor: colors.light,
             bottom: -useSafeAreaInsets().bottom,
@@ -675,28 +680,29 @@ export default function App() {
             position: "relative",
           }}
         ></View> */}
-      </AuthContext.Provider>
+        </AuthContext.Provider>
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={[top, "50%", "0%"]}
-        initialSnap={2}
-        onStartShouldSetResponderCapture={() => console.log("ScrollView")}
-        renderHeader={settingsMode ? renderSettingsHeader : renderBibleHeader}
-        renderContent={
-          settingsMode ? renderSettingsContent : renderBibleContent
-        }
-        // onCloseEnd={() => setFocusedVerse(null)}
-      />
-    </>
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={[top, "50%", "0%"]}
+          initialSnap={2}
+          onStartShouldSetResponderCapture={() => console.log("ScrollView")}
+          renderHeader={settingsMode ? renderSettingsHeader : renderBibleHeader}
+          renderContent={
+            settingsMode ? renderSettingsContent : renderBibleContent
+          }
+          // onCloseEnd={() => setFocusedVerse(null)}
+        />
+      </ThemeProvider>
+    </AppearanceProvider>
   );
 }
 
 const styles = {
   header: {
     alignItems: "center",
-    backgroundColor: colors.light,
-    borderColor: colors.medium,
+    // backgroundColor: colors.light,
+    // borderColor: colors.medium,
     borderTopWidth: 0.3,
     flexDirection: "row",
     height: 50,

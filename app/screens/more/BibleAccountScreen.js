@@ -3,7 +3,8 @@ import { StyleSheet, View, FlatList } from "react-native";
 import Icon from "../../components/Icon";
 import ListItem from "../../components/lists/BibleListItem";
 
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import ListItemSeparatorComponent from "../../components/lists/ListItemSeparator";
 
 const menuItems = [

@@ -14,7 +14,8 @@ import reactStringReplace from "react-string-replace";
 // import * as IJohn from "../json/bible/I John.json";
 import bookPaths from "../json/bible/Bible";
 
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import verseFormatted from "../components/VerseFormatted";
 import ParagraphBible from "../components/ParagraphBible";

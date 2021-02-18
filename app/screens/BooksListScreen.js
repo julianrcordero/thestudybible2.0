@@ -5,7 +5,7 @@ import AppText from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
 import ChaptersGridScreen from "./ChaptersGridScreen";
 import { AccordionList } from "accordion-collapse-react-native";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 class BooksListScreen extends PureComponent {
   constructor(props) {

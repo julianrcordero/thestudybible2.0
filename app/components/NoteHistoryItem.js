@@ -10,7 +10,7 @@ import {
 
 import Button from "./Button";
 import Text from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 export default class NoteHistoryItem extends PureComponent {
   constructor(props) {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // backgroundColor: "green",
     // borderWidth: 0.3,
-    borderColor: colors.medium,
+    // borderColor: colors.medium,
     // flex: 1,
     flexDirection: "row",
     // height: 50,
@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   subTitle: {
-    color: colors.dark,
+    // color: colors.dark,
   },
   date: {
-    color: colors.medium,
+    // color: colors.medium,
     fontSize: 12,
     fontWeight: "100",
   },

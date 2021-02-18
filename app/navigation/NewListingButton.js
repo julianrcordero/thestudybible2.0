@@ -1,7 +1,8 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import { color } from "react-native-reanimated";
 
 function NewListingButton({ onPress }) {
@@ -21,8 +22,8 @@ function NewListingButton({ onPress }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: colors.primary,
-    borderColor: colors.white,
+    // backgroundColor: colors.primary,
+    // borderColor: colors.white,
     borderRadius: 40,
     borderWidth: 10,
     bottom: 20,

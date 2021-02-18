@@ -4,7 +4,7 @@ export default {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: colors.primary,
-    background: colors.white,
+    // primary: colors.primary,
+    // background: colors.white,
   },
 };

@@ -8,7 +8,8 @@ import {
 import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/Button";
 import Card from "../components/Card";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
+
 import dashboardApi from "../api/dashboard";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
@@ -63,7 +64,7 @@ function DashboardScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.light,
+    // backgroundColor: colors.light,
   },
 });
 

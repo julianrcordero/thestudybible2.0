@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AppText from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 export default class VerseBox extends PureComponent {
   constructor(props) {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     // marginBottom: 1,
     overflow: "hidden",
     // borderWidth: 1,
-    borderColor: colors.light,
+    // borderColor: colors.light,
     flex: 1,
     paddingHorizontal: 25,
     // backgroundColor: colors.white,

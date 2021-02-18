@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import AppText from "./Text";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 function BibleCard({ content, title, subTitle, image, onPress }) {
   return (
@@ -21,7 +21,7 @@ function BibleCard({ content, title, subTitle, image, onPress }) {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 15,
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     marginBottom: 20,
     overflow: "hidden",
   },
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: 200,
   },
   subTitle: {
-    color: colors.secondary,
+    // color: colors.secondary,
     fontWeight: "bold",
   },
   title: {

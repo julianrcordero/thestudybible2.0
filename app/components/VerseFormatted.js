@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 
 import reactStringReplace from "react-string-replace";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 const verseFormatted = (verse, crossrefSize) => {
   return "The quick brown fox jumps over the lazy dog. The darkness did not comprehend it.";

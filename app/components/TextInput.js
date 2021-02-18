@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../config/styles";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
   return (
@@ -16,7 +16,7 @@ function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
         <MaterialCommunityIcons
           name={icon}
           size={20}
-          color={defaultStyles.colors.dark}
+          color={colors.dark}
           style={styles.icon}
         />
       )}
@@ -24,7 +24,7 @@ function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
         // multiline
         editable={editable}
         numberOfLines={4}
-        placeholderTextColor={defaultStyles.colors.medium}
+        placeholderTextColor={colors.medium}
         style={[defaultStyles.bibleText, { flex: 1 }]}
         {...otherProps}
       />
@@ -35,8 +35,8 @@ function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
 const styles = StyleSheet.create({
   container: {
     // alignItems: "center",
-    backgroundColor: defaultStyles.colors.white,
-    borderColor: defaultStyles.colors.secondary,
+    // backgroundColor: colors.white,
+    // borderColor: colors.secondary,
     borderRadius: 5,
     borderWidth: 0.3,
     // flex: 1,

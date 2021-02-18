@@ -3,7 +3,7 @@ import { View, Image, StyleSheet } from "react-native";
 import AppText from "../components/Text";
 
 import ListItem from "../components/lists/BibleListItem";
-import colors from "../config/colors";
+import { useTheme } from "../config/ThemeContext";
 
 export default function SingleVerseScreen(props) {
   return (
@@ -28,7 +28,7 @@ export default function SingleVerseScreen(props) {
 
 const styles = StyleSheet.create({
   description: {
-    color: colors.secondary,
+    // color: colors.secondary,
     fontWeight: "bold",
     fontSize: 20,
   },

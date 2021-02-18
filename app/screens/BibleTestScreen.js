@@ -23,7 +23,7 @@
 // import * as Bible from "../json/bible/Bible";
 // import VerseBox from "../components/VerseBox";
 // import defaultStyles from "../config/styles";
-// import colors from "../config/colors";
+// import {useTheme} from "../config/ThemeContext"
 
 // import BiblePicker from "../components/BiblePicker";
 // import CategoryPickerItem from "../components/CategoryPickerItem";

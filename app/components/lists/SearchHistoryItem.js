@@ -4,10 +4,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import Text from "../Text";
-import colors from "../../config/colors";
+import { useTheme } from "../../config/ThemeContext";
+
 import AppText from "../Text";
 
 function SearchHistoryItem({ title, onPress, renderRightActions }) {
+  const { colors, isDark } = useTheme();
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity
@@ -31,9 +33,9 @@ function SearchHistoryItem({ title, onPress, renderRightActions }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     borderWidth: 0.3,
-    borderColor: colors.light,
+    // borderColor: colors.light,
     flexDirection: "row",
     height: 60,
     justifyContent: "space-between",

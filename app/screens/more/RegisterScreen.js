@@ -55,6 +55,21 @@ function RegisterScreen({ navigation }) {
     });
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.white,
+      // flex: 1 / 2,
+      paddingVertical: 10,
+    },
+    logo: {
+      width: 80,
+      height: 80,
+      alignSelf: "center",
+      marginTop: 50,
+      marginBottom: 20,
+    },
+  });
+
   return (
     <>
       <View style={styles.container}>
@@ -108,7 +123,7 @@ function RegisterScreen({ navigation }) {
           />
           <View
             style={{
-              // backgroundColor: "green",
+              backgroundColor: "green",
               alignItems: "flex-end",
               flexDirection: "row",
               justifyContent: "flex-end",
@@ -127,21 +142,6 @@ function RegisterScreen({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: colors.white,
-    // flex: 1 / 2,
-    paddingVertical: 10,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    alignSelf: "center",
-    marginTop: 50,
-    marginBottom: 20,
-  },
-});
 
 export default RegisterScreen;
 

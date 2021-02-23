@@ -19,6 +19,38 @@ function BibleListItem({
   onPress,
   renderRightActions,
 }) {
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      flexDirection: "row",
+      padding: 10,
+      backgroundColor: colors.white,
+    },
+    description: {
+      color: colors.gray,
+      fontSize: 12,
+    },
+    detailsContainer: {
+      flex: 1,
+      marginLeft: 10,
+      justifyContent: "center",
+    },
+    image: {
+      width: 30,
+      height: 30,
+      // borderRadius: 25,
+    },
+    title: {
+      fontWeight: "500",
+      fontSize: 15,
+      color: "#53A7F2",
+    },
+    type: {
+      fontWeight: "500",
+      fontSize: 10,
+    },
+  });
+
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
@@ -58,37 +90,5 @@ function BibleListItem({
     </Swipeable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    // backgroundColor: colors.white,
-  },
-  description: {
-    // color: colors.gray,
-    fontSize: 12,
-  },
-  detailsContainer: {
-    flex: 1,
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-  image: {
-    width: 30,
-    height: 30,
-    // borderRadius: 25,
-  },
-  title: {
-    fontWeight: "500",
-    fontSize: 15,
-    color: "#53A7F2",
-  },
-  type: {
-    fontWeight: "500",
-    fontSize: 10,
-  },
-});
 
 export default BibleListItem;

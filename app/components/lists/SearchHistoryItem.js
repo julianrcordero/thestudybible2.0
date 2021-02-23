@@ -10,6 +10,24 @@ import AppText from "../Text";
 
 function SearchHistoryItem({ title, onPress, renderRightActions }) {
   const { colors, isDark } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: colors.white,
+      borderWidth: 0.3,
+      // borderColor: colors.light,
+      flexDirection: "row",
+      height: 60,
+      justifyContent: "space-between",
+      paddingHorizontal: 20,
+    },
+
+    title: {
+      fontSize: 14,
+      // fontWeight: "500",
+    },
+  });
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity
@@ -29,23 +47,5 @@ function SearchHistoryItem({ title, onPress, renderRightActions }) {
     </Swipeable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    // backgroundColor: colors.white,
-    borderWidth: 0.3,
-    // borderColor: colors.light,
-    flexDirection: "row",
-    height: 60,
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-  },
-
-  title: {
-    fontSize: 14,
-    // fontWeight: "500",
-  },
-});
 
 export default SearchHistoryItem;

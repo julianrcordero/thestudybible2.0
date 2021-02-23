@@ -4,6 +4,30 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../config/ThemeContext";
 
 function MenuButton({ title, icon, onPress, darkMode }) {
+  const { colors, isDark } = useTheme();
+  const styles = StyleSheet.create({
+    button: {
+      alignItems: "center",
+      backgroundColor: colors.light,
+      // borderColor: colors.medium,
+      // borderWidth: 0.3,
+      flex: 1,
+      // height: 70,
+      justifyContent: "center",
+      // paddingBottom: 10,
+      // paddingTop: 12,
+    },
+    image: {
+      paddingBottom: 5,
+    },
+    text: {
+      fontSize: 10,
+      textTransform: "uppercase",
+      fontWeight: "normal",
+      paddingTop: 5,
+    },
+  });
+
   return (
     <TouchableOpacity
       style={[
@@ -41,28 +65,5 @@ function MenuButton({ title, icon, onPress, darkMode }) {
     </TouchableWithoutFeedback> */
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    // backgroundColor: colors.light,
-    // borderColor: colors.medium,
-    // borderWidth: 0.3,
-    flex: 1,
-    // height: 70,
-    justifyContent: "center",
-    // paddingBottom: 10,
-    // paddingTop: 12,
-  },
-  image: {
-    paddingBottom: 5,
-  },
-  text: {
-    fontSize: 10,
-    textTransform: "uppercase",
-    fontWeight: "normal",
-    paddingTop: 5,
-  },
-});
 
 export default MenuButton;

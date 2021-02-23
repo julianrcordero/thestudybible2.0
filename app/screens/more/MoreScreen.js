@@ -13,6 +13,13 @@ function MoreScreen({ navigation }) {
   //navigation}){
   const { user } = useAuth();
 
+  const styles = StyleSheet.create({
+    screen: {
+      backgroundColor: colors.white,
+      flex: 1,
+      padding: 20,
+    },
+  });
   //   <ListItem
   //   title={user.name}
   //   subTitle={user.email}
@@ -122,17 +129,5 @@ function MoreScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    // backgroundColor: colors.white,
-    flex: 1,
-    padding: 20,
-  },
-
-  container: {
-    // marginVertical: 25,
-  },
-});
 
 export default MoreScreen;

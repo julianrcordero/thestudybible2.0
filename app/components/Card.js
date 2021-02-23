@@ -21,6 +21,48 @@ function Card({
   onPress,
   thumbnailUrl,
 }) {
+  const { colors, isDark } = useTheme();
+
+  const styles = StyleSheet.create({
+    card: {
+      borderWidth: 0.3,
+      borderRadius: 10,
+      backgroundColor: colors.white,
+      marginVertical: 10,
+      overflow: "hidden",
+    },
+    date: {
+      backgroundColor: "green",
+      color: colors.secondary,
+      fontSize: 12,
+      fontStyle: "italic",
+    },
+    detailsContainer: {
+      backgroundColor: colors.primary,
+      paddingHorizontal: 15,
+      paddingVertical: 10,
+    },
+    image: {
+      alignSelf: "center",
+      aspectRatio: 1.2,
+      backgroundColor: "green",
+      width: "60%",
+      height: undefined,
+    },
+    scripture: {
+      color: colors.secondary,
+      // fontWeight: "bold",
+    },
+    title: {
+      color: colors.secondary,
+      flex: 1,
+      fontSize: 18,
+      fontWeight: "bold",
+      paddingBottom: 5,
+      // marginBottom: 7,
+    },
+  });
+
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.card}>
@@ -58,45 +100,5 @@ function Card({
     </TouchableHighlight>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    borderWidth: 0.3,
-    borderRadius: 10,
-    // backgroundColor: colors.white,
-    marginVertical: 10,
-    overflow: "hidden",
-  },
-  date: {
-    // backgroundColor: "green",
-    // color: colors.secondary,
-    fontSize: 12,
-    fontStyle: "italic",
-  },
-  detailsContainer: {
-    // backgroundColor: colors.primary,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-  },
-  image: {
-    alignSelf: "center",
-    aspectRatio: 1.2,
-    backgroundColor: "green",
-    width: "60%",
-    height: undefined,
-  },
-  scripture: {
-    // color: colors.secondary,
-    // fontWeight: "bold",
-  },
-  title: {
-    // color: colors.secondary,
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "bold",
-    paddingBottom: 5,
-    // marginBottom: 7,
-  },
-});
 
 export default Card;

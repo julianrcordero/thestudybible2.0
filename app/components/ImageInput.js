@@ -16,6 +16,8 @@ function ImageInput({ imageUri, onChangeImage }) {
     requestPermission();
   }, []);
 
+  const { colors, isDark } = useTheme();
+
   const requestPermission = async () => {
     // const result = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.LOCATION);
     // result.granted
@@ -45,6 +47,22 @@ function ImageInput({ imageUri, onChangeImage }) {
     }
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: colors.light,
+      borderRadius: 15,
+      height: 100,
+      justifyContent: "center",
+      overflow: "hidden",
+      width: 100,
+    },
+    image: {
+      height: "100%",
+      width: "100%",
+    },
+  });
+
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
@@ -60,21 +78,5 @@ function ImageInput({ imageUri, onChangeImage }) {
     </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    // backgroundColor: colors.light,
-    borderRadius: 15,
-    height: 100,
-    justifyContent: "center",
-    overflow: "hidden",
-    width: 100,
-  },
-  image: {
-    height: "100%",
-    width: "100%",
-  },
-});
 
 export default ImageInput;

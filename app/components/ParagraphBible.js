@@ -13,13 +13,13 @@ class SectionHeader extends PureComponent {
   }
 
   render() {
-    // const { colors, isDark } = useTheme();
+    const { colors, isDark } = useTheme();
     return (
       <Text
         style={[
           defaultStyles.bibleText,
           {
-            // color: this.props.darkMode ? colors.light : colors.dark,
+            color: this.props.darkMode ? colors.light : colors.dark,
             fontSize: this.props.titleSize,
             // borderBottomColor: "#345171",
           },
@@ -66,6 +66,8 @@ export default class ParagraphBible extends PureComponent {
   render() {
     const { darkMode, HEADER_HEIGHT, sections, scrollY, top } = this.props;
 
+    const { colors, isDark } = useTheme();
+
     return (
       <AnimatedFlatList
         bounces={false}
@@ -84,7 +86,7 @@ export default class ParagraphBible extends PureComponent {
         style={[
           styles.bibleTextView,
           {
-            // backgroundColor: darkMode ? colors.primary : colors.white,
+            backgroundColor: darkMode ? colors.primary : colors.white,
             paddingTop: HEADER_HEIGHT,
             paddingBottom: HEADER_HEIGHT + 300,
           },
@@ -96,7 +98,7 @@ export default class ParagraphBible extends PureComponent {
 
 const styles = {
   bibleTextView: {
-    // backgroundColor: "red", //colors.white,
+    backgroundColor: "red", //colors.white,
     paddingHorizontal: 25,
   },
 };

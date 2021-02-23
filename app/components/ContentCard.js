@@ -19,6 +19,8 @@ function ContentCard({ date, item, navigation }) {
   var scripture = item.scripture;
   var transcript = item.transcript;
 
+  const { colors, isDark } = useTheme();
+
   switch (firstTwo) {
     case "ST":
       imageSource = require("../assets/StrengthForToday.jpg");
@@ -65,6 +67,49 @@ function ContentCard({ date, item, navigation }) {
     navigation.navigate(routes.LISTING_DETAILS, { item, date, imageSource });
   };
 
+  const styles = StyleSheet.create({
+    contentCard: {
+      // borderColor: colors.secondary,
+      borderWidth: 0.3,
+      flexDirection: "row",
+      aspectRatio: 1.7,
+      height: 200,
+      marginHorizontal: 10,
+      paddingHorizontal: 5,
+      paddingVertical: 10,
+      // width: "100%",
+    },
+    date: {
+      color: colors.secondary,
+      fontSize: 12,
+      fontStyle: "italic",
+    },
+    detailsContainer: {
+      flex: 2,
+      justifyContent: "space-between",
+    },
+    image: {
+      width: "100%",
+    },
+    imageContainer: {
+      alignItems: "center",
+      flex: 1,
+      justifyContent: "center",
+      paddingRight: 10,
+    },
+    scripture: {
+      color: colors.medium,
+      fontSize: 12,
+      lineHeight: 22,
+    },
+    title: {
+      color: colors.black,
+      fontSize: 15,
+      fontWeight: "bold",
+      textAlign: "left",
+    },
+  });
+
   return (
     <TouchableOpacity onPress={() => openResource(imageSource)}>
       <View style={styles.contentCard}>
@@ -97,7 +142,7 @@ function ContentCard({ date, item, navigation }) {
           </View>
           <View
             style={{
-              // backgroundColor: "green",
+              backgroundColor: "green",
               flexGrow: 1,
               flexShrink: 1,
               justifyContent: "flex-start",
@@ -134,48 +179,5 @@ function ContentCard({ date, item, navigation }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  contentCard: {
-    // borderColor: colors.secondary,
-    borderWidth: 0.3,
-    flexDirection: "row",
-    aspectRatio: 1.7,
-    height: 200,
-    marginHorizontal: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    // width: "100%",
-  },
-  date: {
-    // color: colors.secondary,
-    fontSize: 12,
-    fontStyle: "italic",
-  },
-  detailsContainer: {
-    flex: 2,
-    justifyContent: "space-between",
-  },
-  image: {
-    width: "100%",
-  },
-  imageContainer: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-    paddingRight: 10,
-  },
-  scripture: {
-    // color: colors.medium,
-    fontSize: 12,
-    lineHeight: 22,
-  },
-  title: {
-    // color: colors.black,
-    fontSize: 15,
-    fontWeight: "bold",
-    textAlign: "left",
-  },
-});
 
 export default ContentCard;

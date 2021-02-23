@@ -6,6 +6,20 @@ import { useTheme } from "../config/ThemeContext";
 import { color } from "react-native-reanimated";
 
 function NewListingButton({ onPress }) {
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: colors.primary,
+      // borderColor: colors.white,
+      borderRadius: 40,
+      borderWidth: 10,
+      bottom: 20,
+      height: 80,
+      justifyContent: "center",
+      width: 80,
+    },
+  });
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
@@ -18,19 +32,5 @@ function NewListingButton({ onPress }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    // backgroundColor: colors.primary,
-    // borderColor: colors.white,
-    borderRadius: 40,
-    borderWidth: 10,
-    bottom: 20,
-    height: 80,
-    justifyContent: "center",
-    width: 80,
-  },
-});
 
 export default NewListingButton;

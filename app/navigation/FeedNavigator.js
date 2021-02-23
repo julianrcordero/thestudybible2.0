@@ -16,7 +16,7 @@ const LogoTitle = ({ darkMode }) => {
     <View
       style={{
         alignItems: "center",
-        // backgroundColor: "yellow",
+        backgroundColor: "yellow",
         flexDirection: "row",
         marginHorizontal: 20,
         // marginVertical: 15,

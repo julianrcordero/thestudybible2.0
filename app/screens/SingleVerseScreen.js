@@ -6,6 +6,28 @@ import ListItem from "../components/lists/BibleListItem";
 import { useTheme } from "../config/ThemeContext";
 
 export default function SingleVerseScreen(props) {
+  const styles = StyleSheet.create({
+    description: {
+      color: colors.secondary,
+      fontWeight: "bold",
+      fontSize: 20,
+    },
+    detailsContainer: {
+      padding: 20,
+    },
+    image: {
+      width: "100%",
+      height: 300,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "500",
+    },
+    userContainer: {
+      marginVertical: 40,
+    },
+  });
+
   return (
     <View style={{ flex: 1 }}>
       <Image style={styles.image} source={require("../assets/gtylogo.jpg")} />
@@ -25,25 +47,3 @@ export default function SingleVerseScreen(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  description: {
-    // color: colors.secondary,
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  detailsContainer: {
-    padding: 20,
-  },
-  image: {
-    width: "100%",
-    height: 300,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "500",
-  },
-  userContainer: {
-    marginVertical: 40,
-  },
-});

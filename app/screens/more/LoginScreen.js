@@ -55,6 +55,21 @@ function LoginScreen({ navigation }) {
     }
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.white,
+      // flex: 1,
+      paddingVertical: 10,
+    },
+    logo: {
+      width: 80,
+      height: 80,
+      alignSelf: "center",
+      marginTop: 50,
+      marginBottom: 20,
+    },
+  });
+
   return (
     <View style={styles.container}>
       {/* <Image style={styles.logo} source={require("../../assets/gtylogo.jpg")} /> */}
@@ -84,7 +99,7 @@ function LoginScreen({ navigation }) {
         />
         <View
           style={{
-            // backgroundColor: "green",
+            backgroundColor: "green",
             flexDirection: "row",
             paddingVertical: 15,
           }}
@@ -132,21 +147,6 @@ function LoginScreen({ navigation }) {
   //   }
   // };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: colors.white,
-    // flex: 1,
-    paddingVertical: 10,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    alignSelf: "center",
-    marginTop: 50,
-    marginBottom: 20,
-  },
-});
 
 export default LoginScreen;
 

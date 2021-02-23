@@ -560,7 +560,7 @@ class BooksGridScreen extends PureComponent {
     return (
       <View
         style={{
-          // backgroundColor: darkMode ? colors.medium : colors.white,
+          backgroundColor: darkMode ? colors.medium : colors.white,
           height: "100%",
         }}
       >

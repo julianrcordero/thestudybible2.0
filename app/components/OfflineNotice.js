@@ -9,6 +9,24 @@ import { useTheme } from "../config/ThemeContext";
 function OfflineNotice(props) {
   const netInfo = useNetInfo();
 
+  const { colors, isDark } = useTheme();
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: colors.primary,
+      height: 50,
+      justifyContent: "center",
+      position: "absolute",
+      top: Constants.statusBarHeight,
+      width: "100%",
+      zIndex: 1,
+    },
+    text: {
+      color: colors.white,
+    },
+  });
+
   if (netInfo.type !== "unknown" && netInfo.isInternetReachable === false) {
     return (
       <View style={styles.container}>
@@ -19,21 +37,5 @@ function OfflineNotice(props) {
 
   return null;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    // backgroundColor: colors.primary,
-    height: 50,
-    justifyContent: "center",
-    position: "absolute",
-    top: Constants.statusBarHeight,
-    width: "100%",
-    zIndex: 1,
-  },
-  text: {
-    // color: colors.white,
-  },
-});
 
 export default OfflineNotice;

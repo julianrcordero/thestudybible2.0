@@ -24,6 +24,38 @@ function ListItem({
 }) {
   const { colors, isDark } = useTheme();
 
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      // borderColor: colors.secondary,
+      borderRadius: 10,
+      borderBottomWidth: 0.3,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingHorizontal: 15,
+      backgroundColor: colors.white,
+    },
+    detailsContainer: {
+      flex: 1,
+      marginLeft: 20,
+      justifyContent: "center",
+    },
+    image: {
+      width: 50,
+      // borderColor: colors.secondary,
+      borderRadius: 35,
+      borderWidth: 0.3,
+    },
+    subTitle: {
+      color: colors.medium,
+      fontSize: 12,
+    },
+    title: {
+      color: "cornflowerblue",
+      fontWeight: "bold",
+    },
+  });
+
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity underlayColor={colors.light} onPress={onPress}>
@@ -61,37 +93,5 @@ function ListItem({
     </Swipeable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    // borderColor: colors.secondary,
-    borderRadius: 10,
-    borderBottomWidth: 0.3,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    // backgroundColor: colors.white,
-  },
-  detailsContainer: {
-    flex: 1,
-    marginLeft: 20,
-    justifyContent: "center",
-  },
-  image: {
-    width: 50,
-    // borderColor: colors.secondary,
-    borderRadius: 35,
-    borderWidth: 0.3,
-  },
-  subTitle: {
-    // color: colors.medium,
-    fontSize: 12,
-  },
-  title: {
-    color: "cornflowerblue",
-    fontWeight: "bold",
-  },
-});
 
 export default ListItem;

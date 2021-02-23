@@ -9,6 +9,15 @@ import { getBottomSpace } from "react-native-iphone-x-helper";
 import { useTheme } from "../config/ThemeContext";
 
 function Screen({ children, style }) {
+  const { colors, isDark } = useTheme();
+  const styles = StyleSheet.create({
+    screen: {
+      backgroundColor: colors.primary,
+      flex: 1,
+      paddingTop: Constants.statusBarHeight,
+    },
+  });
+
   return (
     <SafeAreaView
       style={[
@@ -21,13 +30,5 @@ function Screen({ children, style }) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    // backgroundColor: colors.primary,
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-  },
-});
 
 export default Screen;

@@ -67,6 +67,43 @@ export default class SettingsScreen extends PureComponent {
       </TouchableOpacity>
     );
 
+    const styles = {
+      buttons: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        width: "100%",
+      },
+      header: {
+        alignItems: "center",
+        backgroundColor: colors.light,
+        // borderColor: colors.medium,
+        borderTopWidth: 0.3,
+        flexDirection: "row",
+        height: 50,
+        justifyContent: "space-between",
+        paddingHorizontal: 15,
+        width: "100%",
+      },
+      button: {
+        alignItems: "center",
+        backgroundColor: colors.white,
+        borderWidth: 0.5,
+        // borderColor: colors.medium,
+        flex: 1,
+        justifyContent: "center",
+        marginHorizontal: 6,
+        paddingVertical: 6,
+        textAlign: "center",
+      },
+      buttonSection: {
+        marginTop: 25,
+        width: "100%",
+      },
+      title: {
+        marginVertical: 6,
+      },
+    };
+
     return (
       <View
         style={{
@@ -222,40 +259,3 @@ export default class SettingsScreen extends PureComponent {
     );
   }
 }
-
-const styles = {
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    width: "100%",
-  },
-  header: {
-    alignItems: "center",
-    // backgroundColor: colors.light,
-    // borderColor: colors.medium,
-    borderTopWidth: 0.3,
-    flexDirection: "row",
-    height: 50,
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    width: "100%",
-  },
-  button: {
-    alignItems: "center",
-    // backgroundColor: colors.white,
-    borderWidth: 0.5,
-    // borderColor: colors.medium,
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 6,
-    paddingVertical: 6,
-    textAlign: "center",
-  },
-  buttonSection: {
-    marginTop: 25,
-    width: "100%",
-  },
-  title: {
-    marginVertical: 6,
-  },
-};

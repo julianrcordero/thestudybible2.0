@@ -48,7 +48,7 @@ export default class VerseCard extends PureComponent {
         <View
           style={{
             alignItems: "center",
-            // backgroundColor: "green",
+            backgroundColor: "green",
             height: 50,
             flexDirection: "row",
             justifyContent: "flex-start",

@@ -11,6 +11,25 @@ export default function NotificationsScreen({}) {
   const [resourceUpdates, setResourceUpdates] = useState(false);
   const [devotionalAlarm, setDevotionalAlarm] = useState(false);
 
+  const styles = StyleSheet.create({
+    settings: {
+      backgroundColor: colors.white,
+      paddingHorizontal: 25,
+      paddingVertical: 15,
+      // width: "100%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    title: {
+      fontWeight: "bold",
+      marginVertical: 6,
+    },
+    subTitle: {
+      fontSize: 14,
+      width: "70%",
+    },
+  });
+
   return (
     <View>
       <View style={styles.settings}>
@@ -68,22 +87,3 @@ export default function NotificationsScreen({}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  settings: {
-    // backgroundColor: colors.white,
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    // width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  title: {
-    fontWeight: "bold",
-    marginVertical: 6,
-  },
-  subTitle: {
-    fontSize: 14,
-    width: "70%",
-  },
-});

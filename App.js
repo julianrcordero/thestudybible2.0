@@ -535,6 +535,20 @@ export default function App() {
     bottomSheetRef.current.snapTo(2);
   };
 
+  const styles = {
+    header: {
+      alignItems: "center",
+      backgroundColor: colors.light,
+      // borderColor: colors.medium,
+      borderTopWidth: 0.3,
+      flexDirection: "row",
+      height: 50,
+      justifyContent: "space-between",
+      paddingHorizontal: 15,
+      width: "100%",
+    },
+  };
+
   const renderSettingsHeader = () => (
     <View
       style={[
@@ -697,17 +711,3 @@ export default function App() {
     </AppearanceProvider>
   );
 }
-
-const styles = {
-  header: {
-    alignItems: "center",
-    // backgroundColor: colors.light,
-    // borderColor: colors.medium,
-    borderTopWidth: 0.3,
-    flexDirection: "row",
-    height: 50,
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    width: "100%",
-  },
-};

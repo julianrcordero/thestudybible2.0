@@ -4,14 +4,14 @@ import { useTheme } from "./ThemeContext";
 
 export default {
   bibleText: {
-    // color: colors.medium, //cau
+    color: "darkslategrey", //colors.medium, //cau
     fontSize: 16,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     // lineHeight: 32,
     // textAlign: "justify",
   },
   macArthurText: {
-    // color: colors.medium,
+    color: "darkslategrey",
     // fontSize: 13,
     fontFamily: Platform.OS === "android" ? "normal" : "Georgia-Italic",
   },

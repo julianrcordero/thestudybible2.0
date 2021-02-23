@@ -47,6 +47,14 @@ function ResourcesScreen(props) {
     setMessages(messages.filter((m) => m.id !== message.id));
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: "red",
+      // height: 200,
+      // flex: 1,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -80,13 +88,5 @@ function ResourcesScreen(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: "red",
-    // height: 200,
-    // flex: 1,
-  },
-});
 
 export default ResourcesScreen;

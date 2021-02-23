@@ -23,6 +23,13 @@ function DashboardScreen({ navigation }) {
     getDashboardApi.request();
   }, []);
 
+  const styles = StyleSheet.create({
+    screen: {
+      padding: 20,
+      backgroundColor: colors.light,
+    },
+  });
+
   return (
     <Screen style={styles.screen}>
       {getDashboardApi.error && (
@@ -60,12 +67,5 @@ function DashboardScreen({ navigation }) {
     </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    padding: 20,
-    // backgroundColor: colors.light,
-  },
-});
 
 export default DashboardScreen;

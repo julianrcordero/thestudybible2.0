@@ -28,13 +28,13 @@ export default class VerseBox extends PureComponent {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 5,
-    // backgroundColor: colors.white,
+    backgroundColor: colors.white,
     // marginBottom: 1,
     overflow: "hidden",
     // borderWidth: 1,
     // borderColor: colors.light,
     flex: 1,
     paddingHorizontal: 25,
-    // backgroundColor: colors.white,
+    backgroundColor: colors.white,
   },
 });

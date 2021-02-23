@@ -5,6 +5,28 @@ import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeContext";
 
 function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
+  const styles = StyleSheet.create({
+    container: {
+      // alignItems: "center",
+      backgroundColor: colors.white,
+      // borderColor: colors.secondary,
+      borderRadius: 5,
+      borderWidth: 0.3,
+      // flex: 1,
+      flexDirection: "row",
+      height: 50,
+      // width: "100%",
+      // padding: 15,
+      marginVertical: 10,
+    },
+    icon: {
+      backgroundColor: "red",
+      alignSelf: "center",
+      // flex: 1,
+      marginHorizontal: 10,
+    },
+  });
+
   return (
     <View
       style={[
@@ -31,27 +53,5 @@ function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // alignItems: "center",
-    // backgroundColor: colors.white,
-    // borderColor: colors.secondary,
-    borderRadius: 5,
-    borderWidth: 0.3,
-    // flex: 1,
-    flexDirection: "row",
-    height: 50,
-    // width: "100%",
-    // padding: 15,
-    marginVertical: 10,
-  },
-  icon: {
-    // backgroundColor: "red",
-    alignSelf: "center",
-    // flex: 1,
-    marginHorizontal: 10,
-  },
-});
 
 export default AppTextInput;

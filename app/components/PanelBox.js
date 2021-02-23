@@ -26,7 +26,7 @@ class ResourceBox extends PureComponent {
     return (
       <View
         style={{
-          // backgroundColor: "pink",
+          backgroundColor: "pink",
           borderColor: colors.medium,
           borderWidth: 0.3,
           marginVertical: 10,
@@ -36,7 +36,7 @@ class ResourceBox extends PureComponent {
       >
         <View
           style={{
-            // backgroundColor: "orange",
+            backgroundColor: "orange",
             flexDirection: "row",
             height: 40,
             alignItems: "center",
@@ -143,6 +143,33 @@ export default class PanelBox extends PureComponent {
     });
   };
 
+  styles = StyleSheet.create({
+    macArthurBox: {
+      height: "100%",
+      borderColor: colors.medium,
+      borderWidth: 1,
+      marginVertical: 5,
+      padding: 10,
+    },
+
+    relatedResourcesBox: {
+      borderColor: colors.medium,
+      borderWidth: 1,
+      marginVertical: 5,
+      padding: 10,
+    },
+
+    titleText: {
+      fontWeight: "bold",
+      fontSize: 16,
+      // paddingHorizontal: 10,
+    },
+
+    verseLink: {
+      color: "#00aeef",
+    },
+  });
+
   render() {
     const {
       carousel,
@@ -194,30 +221,3 @@ export default class PanelBox extends PureComponent {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  macArthurBox: {
-    height: "100%",
-    // borderColor: colors.medium,
-    borderWidth: 1,
-    marginVertical: 5,
-    padding: 10,
-  },
-
-  relatedResourcesBox: {
-    // borderColor: colors.medium,
-    borderWidth: 1,
-    marginVertical: 5,
-    padding: 10,
-  },
-
-  titleText: {
-    fontWeight: "bold",
-    fontSize: 16,
-    // paddingHorizontal: 10,
-  },
-
-  verseLink: {
-    color: "#00aeef",
-  },
-});

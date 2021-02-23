@@ -25,6 +25,26 @@ function AppPicker({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.medium,
+      borderRadius: 25,
+      flexDirection: "row",
+      padding: 15,
+      marginVertical: 10,
+    },
+    icon: {
+      marginRight: 10,
+    },
+    placeholder: {
+      color: colors.medium,
+      flex: 1,
+    },
+    text: {
+      flex: 1,
+    },
+  });
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
@@ -73,25 +93,5 @@ function AppPicker({
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: colors.medium,
-    borderRadius: 25,
-    flexDirection: "row",
-    padding: 15,
-    marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  placeholder: {
-    // color: colors.medium,
-    flex: 1,
-  },
-  text: {
-    flex: 1,
-  },
-});
 
 export default AppPicker;

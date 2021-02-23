@@ -118,6 +118,50 @@ class TopSheetNavigation extends PureComponent {
     }
   };
 
+  styles = StyleSheet.create({
+    search: {
+      alignItems: "center",
+      aspectRatio: 0.8,
+      justifyContent: "center",
+    },
+    searchBar: {
+      backgroundColor: colors.white,
+      marginRight: 5,
+      marginVertical: 15,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+    },
+    icon: {
+      alignItems: "center",
+      flex: 1,
+      justifyContent: "center",
+    },
+
+    reference: {
+      alignItems: "center",
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "center",
+    },
+    referenceText: {
+      flex: 1,
+      color: colors.black,
+      fontWeight: "bold",
+    },
+    sectionTitle: {
+      fontSize: 20,
+    },
+    titleCard: {},
+    translationText: {
+      borderRadius: 4,
+      borderWidth: 0.3,
+      // borderColor: colors.medium,
+      fontSize: 12,
+      paddingHorizontal: 6,
+      paddingVertical: 4,
+    },
+  });
+
   render() {
     const { darkMode, height } = this.props;
 
@@ -171,49 +215,5 @@ class TopSheetNavigation extends PureComponent {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  search: {
-    alignItems: "center",
-    aspectRatio: 0.8,
-    justifyContent: "center",
-  },
-  searchBar: {
-    // backgroundColor: colors.white,
-    marginRight: 5,
-    marginVertical: 15,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-  },
-  icon: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-
-  reference: {
-    alignItems: "center",
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  referenceText: {
-    flex: 1,
-    // color: colors.black,
-    fontWeight: "bold",
-  },
-  sectionTitle: {
-    fontSize: 20,
-  },
-  titleCard: {},
-  translationText: {
-    borderRadius: 4,
-    borderWidth: 0.3,
-    // borderColor: colors.medium,
-    fontSize: 12,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-  },
-});
 
 export default TopSheetNavigation;

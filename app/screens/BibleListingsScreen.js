@@ -20,6 +20,14 @@ const listings = [
 ];
 
 function BibleListingsScreen({ navigation }) {
+  const styles = StyleSheet.create({
+    screen: {
+      backgroundColor: colors.light,
+      flex: 1,
+      padding: 20,
+    },
+  });
+
   return (
     <View style={styles.screen}>
       <FlatList
@@ -38,13 +46,5 @@ function BibleListingsScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    // backgroundColor: colors.light,
-    flex: 1,
-    padding: 20,
-  },
-});
 
 export default BibleListingsScreen;

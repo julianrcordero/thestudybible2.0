@@ -53,6 +53,21 @@ function ConfirmRegisterScreen({ route, navigation }) {
     );
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.white,
+      flex: 1,
+      padding: 10,
+    },
+    logo: {
+      width: 80,
+      height: 80,
+      alignSelf: "center",
+      marginTop: 50,
+      marginBottom: 20,
+    },
+  });
+
   return (
     <>
       <View style={styles.container}>
@@ -90,21 +105,6 @@ function ConfirmRegisterScreen({ route, navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: colors.white,
-    flex: 1,
-    padding: 10,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    alignSelf: "center",
-    marginTop: 50,
-    marginBottom: 20,
-  },
-});
 
 export default ConfirmRegisterScreen;
 

@@ -5,6 +5,17 @@ import { View, StyleSheet } from "react-native";
 function ActivityIndicator({ visible = false }) {
   if (!visible) return null;
 
+  const styles = StyleSheet.create({
+    overlay: {
+      backgroundColor: "white",
+      height: "100%",
+      opacity: 0.8,
+      position: "absolute",
+      width: "100%",
+      zIndex: 1,
+    },
+  });
+
   return (
     <View style={styles.overlay}>
       <LottieView
@@ -15,16 +26,5 @@ function ActivityIndicator({ visible = false }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: "white",
-    height: "100%",
-    opacity: 0.8,
-    position: "absolute",
-    width: "100%",
-    zIndex: 1,
-  },
-});
 
 export default ActivityIndicator;

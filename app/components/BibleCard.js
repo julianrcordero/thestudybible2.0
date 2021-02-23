@@ -4,6 +4,30 @@ import AppText from "./Text";
 import { useTheme } from "../config/ThemeContext";
 
 function BibleCard({ content, title, subTitle, image, onPress }) {
+  const { colors, isDark } = useTheme();
+  const styles = StyleSheet.create({
+    card: {
+      borderRadius: 15,
+      backgroundColor: colors.white,
+      marginBottom: 20,
+      overflow: "hidden",
+    },
+    detailsContainer: {
+      padding: 20,
+    },
+    image: {
+      width: "100%",
+      height: 200,
+    },
+    subTitle: {
+      color: colors.secondary,
+      fontWeight: "bold",
+    },
+    title: {
+      marginBottom: 7,
+    },
+  });
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.card}>
@@ -17,28 +41,5 @@ function BibleCard({ content, title, subTitle, image, onPress }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: 15,
-    // backgroundColor: colors.white,
-    marginBottom: 20,
-    overflow: "hidden",
-  },
-  detailsContainer: {
-    padding: 20,
-  },
-  image: {
-    width: "100%",
-    height: 200,
-  },
-  subTitle: {
-    // color: colors.secondary,
-    fontWeight: "bold",
-  },
-  title: {
-    marginBottom: 7,
-  },
-});
 
 export default BibleCard;

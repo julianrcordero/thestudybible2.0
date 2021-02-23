@@ -16,6 +16,53 @@ function ResourceScreen({ route }) {
   const { item, date, imageSource } = route.params;
   const fontSize = 16;
 
+  const styles = StyleSheet.create({
+    detailsContainer: {
+      backgroundColor: colors.white,
+      // borderColor: colors.light,
+      borderWidth: 0.3,
+      paddingHorizontal: 25,
+    },
+    image: {
+      alignSelf: "center",
+      // aspectRatio: 1.2,
+      backgroundColor: "green",
+      width: "60%",
+      height: 400,
+    },
+
+    date: {
+      backgroundColor: "yellow",
+      fontSize: 18,
+      fontStyle: "italic",
+      textAlign: "right",
+      paddingTop: 15,
+    },
+    header: {
+      // alignItems: "flex-start",
+      backgroundColor: "orange",
+      // justifyContent: "center",
+      // marginVertical: 10,
+    },
+    scripture: {
+      color: colors.secondary,
+      fontWeight: "bold",
+      fontSize: 18,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: "bold",
+      // paddingVertical: 10,
+    },
+    transcript: {
+      // fontSize: 20,
+    },
+    userContainer: {
+      backgroundColor: colors.white,
+      marginVertical: 15,
+    },
+  });
+
   return (
     <StretchyScrollView
       backgroundColor={colors.white}
@@ -74,52 +121,5 @@ function ResourceScreen({ route }) {
     </StretchyScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  detailsContainer: {
-    // backgroundColor: colors.white,
-    // borderColor: colors.light,
-    borderWidth: 0.3,
-    paddingHorizontal: 25,
-  },
-  image: {
-    alignSelf: "center",
-    // aspectRatio: 1.2,
-    backgroundColor: "green",
-    width: "60%",
-    height: 400,
-  },
-
-  date: {
-    // backgroundColor: "yellow",
-    fontSize: 18,
-    fontStyle: "italic",
-    textAlign: "right",
-    paddingTop: 15,
-  },
-  header: {
-    // alignItems: "flex-start",
-    // backgroundColor: "orange",
-    // justifyContent: "center",
-    // marginVertical: 10,
-  },
-  scripture: {
-    // color: colors.secondary,
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    // paddingVertical: 10,
-  },
-  transcript: {
-    // fontSize: 20,
-  },
-  userContainer: {
-    // backgroundColor: colors.white,
-    marginVertical: 15,
-  },
-});
 
 export default ResourceScreen;

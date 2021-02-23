@@ -56,6 +56,57 @@ class BiblePicker extends PureComponent {
     currentSearchHistory.setState({ searchHistory: newSearchHistory });
   };
 
+  styles = StyleSheet.create({
+    cancel: {
+      alignItems: "center",
+      aspectRatio: 0.75,
+      justifyContent: "center",
+    },
+    icon: {
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    placeholder: {
+      color: colors.medium,
+      flex: 1,
+    },
+    reference: {
+      alignItems: "center",
+      flex: 5.5,
+      flexDirection: "row",
+      justifyContent: "center",
+    },
+
+    rightButtons: {
+      backgroundColor: "purple",
+      // flexDirection: "row",
+      flex: 3,
+      justifyContent: "center",
+      marginRight: 15,
+    },
+    search: {
+      alignItems: "center",
+      backgroundColor: "yellow",
+      aspectRatio: 1,
+      justifyContent: "center",
+    },
+    searchBar: {
+      flex: 1,
+    },
+    sectionTitle: {
+      fontSize: 20,
+    },
+    titleCard: {},
+    translationText: {
+      borderRadius: 4,
+      borderWidth: 0.3,
+      // borderColor: colors.medium,
+      fontSize: 12,
+      paddingHorizontal: 6,
+      paddingVertical: 4,
+    },
+  });
+
   render() {
     const {
       currentBook,
@@ -74,7 +125,7 @@ class BiblePicker extends PureComponent {
     return (
       <View
         style={{
-          // backgroundColor: darkMode ? colors.medium : colors.light,
+          backgroundColor: darkMode ? colors.medium : colors.light,
           // borderColor: colors.medium,
           borderBottomWidth: 0.3,
           flexDirection: "row",
@@ -105,7 +156,7 @@ class BiblePicker extends PureComponent {
           <TouchableOpacity style={styles.search} onPress={this.toggleSearch}>
             <MaterialCommunityIcons
               name="magnify"
-              // color={darkMode ? colors.secondary : colors.black}
+              color={darkMode ? colors.secondary : colors.black}
               size={26}
             />
           </TouchableOpacity>
@@ -141,7 +192,7 @@ class BiblePicker extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name="close-circle"
-                  // color={colors.black}
+                  color={colors.black}
                   size={16}
                 />
               </TouchableOpacity>
@@ -155,7 +206,7 @@ class BiblePicker extends PureComponent {
                 {currentBook ? (
                   <AppText
                     style={{
-                      // color: darkMode ? colors.secondary : colors.medium,
+                      color: darkMode ? colors.secondary : colors.medium,
                       fontFamily: fontFamily,
                       fontSize: fontSize,
                       fontWeight: "bold",
@@ -172,7 +223,7 @@ class BiblePicker extends PureComponent {
                 <MaterialCommunityIcons
                   name="chevron-down"
                   size={24}
-                  // color={darkMode ? colors.secondary : colors.medium}
+                  color={darkMode ? colors.secondary : colors.medium}
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.icon}>
@@ -205,7 +256,7 @@ class BiblePicker extends PureComponent {
               <TouchableOpacity style={styles.icon}>
                 <MaterialCommunityIcons
                   name="speaker"
-                  // color={darkMode ? colors.secondary : colors.medium}
+                  color={darkMode ? colors.secondary : colors.medium}
                   size={24}
                 />
               </TouchableOpacity>
@@ -215,7 +266,7 @@ class BiblePicker extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name="format-letter-case"
-                  // color={darkMode ? colors.secondary : colors.medium}
+                  color={darkMode ? colors.secondary : colors.medium}
                   size={24}
                 />
               </TouchableOpacity>
@@ -226,56 +277,5 @@ class BiblePicker extends PureComponent {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  cancel: {
-    alignItems: "center",
-    aspectRatio: 0.75,
-    justifyContent: "center",
-  },
-  icon: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  placeholder: {
-    // color: colors.medium,
-    flex: 1,
-  },
-  reference: {
-    alignItems: "center",
-    flex: 5.5,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-
-  rightButtons: {
-    // backgroundColor: "purple",
-    // flexDirection: "row",
-    flex: 3,
-    justifyContent: "center",
-    marginRight: 15,
-  },
-  search: {
-    alignItems: "center",
-    // backgroundColor: "yellow",
-    aspectRatio: 1,
-    justifyContent: "center",
-  },
-  searchBar: {
-    flex: 1,
-  },
-  sectionTitle: {
-    fontSize: 20,
-  },
-  titleCard: {},
-  translationText: {
-    borderRadius: 4,
-    borderWidth: 0.3,
-    // borderColor: colors.medium,
-    fontSize: 12,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-  },
-});
 
 export default BiblePicker;

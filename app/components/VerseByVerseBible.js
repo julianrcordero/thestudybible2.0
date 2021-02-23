@@ -57,6 +57,12 @@ export default class VerseByVerseBible extends PureComponent {
   //       />
   //     </React.Fragment>
   //   );
+  styles = {
+    bibleTextView: {
+      backgroundColor: colors.white,
+      paddingHorizontal: 25,
+    },
+  };
 
   render() {
     const {
@@ -108,10 +114,3 @@ export default class VerseByVerseBible extends PureComponent {
     );
   }
 }
-
-const styles = {
-  bibleTextView: {
-    // backgroundColor: colors.white,
-    paddingHorizontal: 25,
-  },
-};

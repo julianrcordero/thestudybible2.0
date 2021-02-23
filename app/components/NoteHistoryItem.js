@@ -67,6 +67,40 @@ export default class NoteHistoryItem extends PureComponent {
     this.setState({ oldNoteText: this.state.noteText });
   };
 
+  styles = StyleSheet.create({
+    container: {
+      // alignItems: "center",
+      backgroundColor: "green",
+      // borderWidth: 0.3,
+      // borderColor: colors.medium,
+      // flex: 1,
+      flexDirection: "row",
+      // height: 50,
+      justifyContent: "flex-end",
+      padding: 5,
+      backgroundColor: colors.white,
+    },
+    dateContainer: {
+      backgroundColor: "yellow",
+      // flex: 1,
+      // marginLeft: 10,
+      justifyContent: "flex-end",
+    },
+    image: {
+      width: 70,
+      height: 70,
+      borderRadius: 35,
+    },
+    subTitle: {
+      color: colors.dark,
+    },
+    date: {
+      color: colors.medium,
+      fontSize: 12,
+      fontWeight: "100",
+    },
+  });
+
   render() {
     const { carousel, date } = this.props;
 
@@ -136,37 +170,3 @@ export default class NoteHistoryItem extends PureComponent {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // alignItems: "center",
-    // backgroundColor: "green",
-    // borderWidth: 0.3,
-    // borderColor: colors.medium,
-    // flex: 1,
-    flexDirection: "row",
-    // height: 50,
-    justifyContent: "flex-end",
-    padding: 5,
-    // backgroundColor: colors.white,
-  },
-  dateContainer: {
-    backgroundColor: "yellow",
-    // flex: 1,
-    // marginLeft: 10,
-    justifyContent: "flex-end",
-  },
-  image: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-  },
-  subTitle: {
-    // color: colors.dark,
-  },
-  date: {
-    // color: colors.medium,
-    fontSize: 12,
-    fontWeight: "100",
-  },
-});

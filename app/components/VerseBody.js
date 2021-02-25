@@ -16,6 +16,7 @@ import AppText from "../components/Text";
 import ResourcesScreen from "../screens/ResourcesScreen";
 
 function VerseBody({ landscape }) {
+  const { colors, isDark } = useTheme();
   const styles = StyleSheet.create({
     macArthurBox: {
       // borderColor: colors.medium,

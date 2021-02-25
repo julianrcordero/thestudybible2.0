@@ -52,7 +52,7 @@ const FeedNavigator = ({ darkMode }) => (
         headerLeft: (props) => <LogoTitle {...props} darkMode={darkMode} />,
         // title: "The Study Bible",
         headerStyle: {
-          backgroundColor: darkMode ? colors.medium : colors.light,
+          // backgroundColor: darkMode ? colors.medium : colors.light,
           height: 55,
         },
         headerTitle: "",

@@ -65,7 +65,7 @@ export default class Verse extends PureComponent {
         <Text
           style={{
             backgroundColor: this.state.backgroundColor,
-            color: DarkTheme,
+            // color: DarkTheme,
             // textDecorationLine: this.state.textDecorationLine,
             // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
           }}

@@ -30,6 +30,7 @@ const validationSchema = yup.object().shape({
 });
 
 function LoginScreen({ navigation }) {
+  const { colors, isDark } = useTheme();
   const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
 

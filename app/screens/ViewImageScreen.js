@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../config/ThemeContext";
 
 function ViewImageScreen(props) {
+  const { colors, isDark } = useTheme();
   const styles = StyleSheet.create({
     closeIcon: {
       position: "absolute",

@@ -27,6 +27,7 @@ const validationSchema = yup.object().shape({
 });
 
 function ResetPasswordScreen({ route, navigation }) {
+  const { colors, isDark } = useTheme();
   const { email } = route.params;
   const confirmforgotpasswordApi = useApi(authApi.confirmforgotpassword);
 

@@ -50,7 +50,7 @@ const MoreNavigator = () => (
           headerLeft: (props) => <LogoTitle {...props} />,
           // title: "The Study Bible",
           headerStyle: {
-            backgroundColor: colors.light,
+            // backgroundColor: colors.light,
             height: 55,
           },
           headerTitle: "",

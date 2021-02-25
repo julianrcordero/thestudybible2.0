@@ -24,6 +24,7 @@ const validationSchema = yup.object().shape({
 });
 
 function ConfirmRegisterScreen({ route, navigation }) {
+  const { colors, isDark } = useTheme();
   const confirmsignupApi = useApi(authApi.confirmsignup);
   const loginApi = useApi(authApi.signin);
   const auth = useAuth();

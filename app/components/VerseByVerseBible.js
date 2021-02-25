@@ -20,7 +20,7 @@ class SectionHeader extends PureComponent {
           defaultStyles.bibleText,
           {
             fontSize: this.props.titleSize,
-            backgroundColor: colors.white,
+            // backgroundColor: colors.white,
             // borderBottomColor: "#345171",
           },
         ]}
@@ -59,7 +59,7 @@ export default class VerseByVerseBible extends PureComponent {
   //   );
   styles = {
     bibleTextView: {
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
       paddingHorizontal: 25,
     },
   };

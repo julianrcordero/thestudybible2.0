@@ -7,6 +7,7 @@ import AppText from "../../components/Text";
 import defaultStyles from "../../config/styles";
 
 export default function NotificationsScreen({}) {
+  const { colors, isDark } = useTheme();
   const [generalUpdates, setGeneralUpdates] = useState(false);
   const [resourceUpdates, setResourceUpdates] = useState(false);
   const [devotionalAlarm, setDevotionalAlarm] = useState(false);

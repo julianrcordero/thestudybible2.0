@@ -78,7 +78,7 @@ export default class NoteHistoryItem extends PureComponent {
       // height: 50,
       justifyContent: "flex-end",
       padding: 5,
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
     },
     dateContainer: {
       backgroundColor: "yellow",
@@ -92,10 +92,10 @@ export default class NoteHistoryItem extends PureComponent {
       borderRadius: 35,
     },
     subTitle: {
-      color: colors.dark,
+      // color: colors.dark,
     },
     date: {
-      color: colors.medium,
+      // color: colors.medium,
       fontSize: 12,
       fontWeight: "100",
     },
@@ -134,7 +134,7 @@ export default class NoteHistoryItem extends PureComponent {
                 placeholder={"Your note here"}
                 style={[
                   {
-                    borderColor: colors.medium,
+                    // borderColor: colors.medium,
                     marginHorizontal: 10,
                     padding: 5,
                   },

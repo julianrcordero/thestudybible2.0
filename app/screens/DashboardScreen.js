@@ -19,6 +19,8 @@ import useApi from "../hooks/useApi";
 function DashboardScreen({ navigation }) {
   const getDashboardApi = useApi(dashboardApi.getDashboard);
 
+  const { colors, isDark } = useTheme();
+
   useEffect(() => {
     getDashboardApi.request();
   }, []);

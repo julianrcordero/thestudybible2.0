@@ -19,6 +19,8 @@ function BibleListItem({
   onPress,
   renderRightActions,
 }) {
+  const { colors, isDark } = useTheme();
+
   const styles = StyleSheet.create({
     container: {
       alignItems: "center",

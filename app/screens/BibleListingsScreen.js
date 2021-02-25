@@ -20,6 +20,7 @@ const listings = [
 ];
 
 function BibleListingsScreen({ navigation }) {
+  const { colors, isDark } = useTheme();
   const styles = StyleSheet.create({
     screen: {
       backgroundColor: colors.light,

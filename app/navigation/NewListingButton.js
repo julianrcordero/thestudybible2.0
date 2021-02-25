@@ -6,6 +6,7 @@ import { useTheme } from "../config/ThemeContext";
 import { color } from "react-native-reanimated";
 
 function NewListingButton({ onPress }) {
+  const { colors, isDark } = useTheme();
   const styles = StyleSheet.create({
     container: {
       alignItems: "center",

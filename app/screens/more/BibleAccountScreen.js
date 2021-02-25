@@ -25,6 +25,7 @@ const menuItems = [
 ];
 
 function BibleMoreScreen({ route, navigation }) {
+  const { colors, isDark } = useTheme();
   const { AccessToken } = route.params;
 
   return (

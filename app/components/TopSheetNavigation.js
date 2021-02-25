@@ -38,9 +38,9 @@ class TopSheetNavigation extends PureComponent {
                   headerShown: false,
                   title: "Books",
                   cardStyle: {
-                    backgroundColor: this.props.darkMode
-                      ? colors.medium
-                      : colors.light,
+                    // backgroundColor: this.props.darkMode
+                    //   ? colors.medium
+                    //   : colors.light,
                   },
                 }}
               />
@@ -50,9 +50,9 @@ class TopSheetNavigation extends PureComponent {
                 component={ChaptersGridScreen}
                 options={({ route }) => ({
                   cardStyle: {
-                    backgroundColor: this.props.darkMode
-                      ? colors.medium
-                      : colors.light,
+                    // backgroundColor: this.props.darkMode
+                    //   ? colors.medium
+                    //   : colors.light,
                   },
                   headerRight: () => (
                     <AppText style={styles.sectionTitle}>
@@ -60,12 +60,12 @@ class TopSheetNavigation extends PureComponent {
                     </AppText>
                   ),
                   headerRightContainerStyle: {
-                    color: this.props.darkMode ? colors.medium : colors.light,
+                    // color: this.props.darkMode ? colors.medium : colors.light,
                   },
                   headerStyle: {
-                    backgroundColor: this.props.darkMode
-                      ? colors.medium
-                      : colors.light,
+                    // backgroundColor: this.props.darkMode
+                    //   ? colors.medium
+                    //   : colors.light,
 
                     height: 55,
                   },
@@ -89,9 +89,9 @@ class TopSheetNavigation extends PureComponent {
                   headerShown: false,
                   title: "Books",
                   cardStyle: {
-                    backgroundColor: this.props.darkMode
-                      ? colors.medium
-                      : colors.light,
+                    // backgroundColor: this.props.darkMode
+                    //   ? colors.medium
+                    //   : colors.light,
                   },
                 }}
               >
@@ -125,7 +125,7 @@ class TopSheetNavigation extends PureComponent {
       justifyContent: "center",
     },
     searchBar: {
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
       marginRight: 5,
       marginVertical: 15,
       paddingHorizontal: 10,
@@ -145,7 +145,7 @@ class TopSheetNavigation extends PureComponent {
     },
     referenceText: {
       flex: 1,
-      color: colors.black,
+      // color: colors.black,
       fontWeight: "bold",
     },
     sectionTitle: {
@@ -170,7 +170,7 @@ class TopSheetNavigation extends PureComponent {
         align={"center"}
         collapsed={this.state.collapsed}
         style={{
-          backgroundColor: darkMode ? colors.medium : colors.white,
+          // backgroundColor: darkMode ? colors.medium : colors.white,
           height: height,
           paddingHorizontal: 15,
         }}
@@ -179,7 +179,7 @@ class TopSheetNavigation extends PureComponent {
           <View
             style={{
               alignItems: "center",
-              backgroundColor: darkMode ? colors.medium : colors.white,
+              // backgroundColor: darkMode ? colors.medium : colors.white,
               height: 70,
               justifyContent: "space-between",
               flexDirection: "row",
@@ -189,7 +189,7 @@ class TopSheetNavigation extends PureComponent {
               style={{
                 fontSize: 20,
                 fontWeight: "bold",
-                color: darkMode ? colors.light : colors.dark,
+                // color: darkMode ? colors.light : colors.dark,
               }}
             >
               Select a Passage
@@ -205,7 +205,7 @@ class TopSheetNavigation extends PureComponent {
               });
             }}
             style={{
-              backgroundColor: darkMode ? colors.secondary : colors.light,
+              // backgroundColor: darkMode ? colors.secondary : colors.light,
               height: 45,
             }}
           />

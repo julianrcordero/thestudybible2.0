@@ -41,6 +41,8 @@ export default function BibleScreen({
   topPanel,
   verseList,
 }) {
+  const { colors, isDark } = useTheme();
+
   useEffect(() => {
     changeBibleBook({
       label: "I John",
@@ -178,6 +180,7 @@ export default function BibleScreen({
 
   let paragraphBible = (
     <ParagraphBible
+      colors={colors}
       formatting={formatting}
       crossrefSize={crossrefSize}
       darkMode={darkMode}

@@ -12,6 +12,7 @@ import defaultStyles from "../config/styles";
 import AppText from "./Text";
 import Screen from "./Screen";
 import PickerItem from "./PickerItem";
+import { useTheme } from "../config/ThemeContext";
 
 function AppPicker({
   icon,
@@ -24,6 +25,8 @@ function AppPicker({
   width = "100%",
 }) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const { colors, isDark } = useTheme();
 
   const styles = StyleSheet.create({
     container: {

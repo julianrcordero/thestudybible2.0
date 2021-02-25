@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { useTheme } from "../../config/ThemeContext";
 
 function ListItemSeparator(props) {
+  const { colors, isDark } = useTheme();
   const styles = StyleSheet.create({
     separator: {
       width: "100%",

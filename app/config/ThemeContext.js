@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { useColorScheme } from "react-native-appearance";
 import { lightColors, darkColors } from "./colorThemes";
 
@@ -16,10 +16,10 @@ export const ThemeProvider = (props) => {
    * To enable changing the app theme dynamicly in the app (run-time)
    * we're gonna use useState so we can override the default device theme
    */
-  const [isDark, setIsDark] = React.useState(colorScheme === "dark");
+  const [isDark, setIsDark] = useState(colorScheme === "dark");
 
   // Listening to changes of device appearance while in run-time
-  React.useEffect(() => {
+  useEffect(() => {
     setIsDark(colorScheme === "dark");
   }, [colorScheme]);
 

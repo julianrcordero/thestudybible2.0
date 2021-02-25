@@ -6,6 +6,7 @@ import ListItem from "../components/lists/BibleListItem";
 import { useTheme } from "../config/ThemeContext";
 
 function BibleResourceScreen(props) {
+  const { colors, isDark } = useTheme();
   const styles = StyleSheet.create({
     description: {
       color: colors.secondary,

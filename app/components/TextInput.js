@@ -5,6 +5,8 @@ import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeContext";
 
 function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
+  const { colors, isDark } = useTheme();
+
   const styles = StyleSheet.create({
     container: {
       // alignItems: "center",

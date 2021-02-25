@@ -15,6 +15,7 @@ import HTML from "react-native-render-html";
 function ResourceScreen({ route }) {
   const { item, date, imageSource } = route.params;
   const fontSize = 16;
+  const { colors, isDark } = useTheme();
 
   const styles = StyleSheet.create({
     detailsContainer: {

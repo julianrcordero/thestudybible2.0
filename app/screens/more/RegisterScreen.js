@@ -30,6 +30,7 @@ function RegisterScreen({ navigation }) {
   const [error, setError] = useState();
 
   const handleSubmit = async ({ name, email, password, phone_number }) => {
+    const { colors, isDark } = useTheme();
     const result = await registerApi.cognitorequest(
       name,
       email,

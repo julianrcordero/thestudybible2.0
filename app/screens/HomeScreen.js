@@ -31,7 +31,7 @@ class MarkupItem extends PureComponent {
         style={{
           alignItems: "center",
           borderWidth: 0.3,
-          borderColor: colors.secondary,
+          // borderColor: colors.secondary,
           flex: 1 / 2,
           height: 150,
           justifyContent: "center",
@@ -41,7 +41,7 @@ class MarkupItem extends PureComponent {
         <MaterialCommunityIcons
           style={{}}
           name={this.props.icon}
-          color={colors.black}
+          // color={colors.black}
           size={38}
         />
         <AppText
@@ -135,6 +135,7 @@ const wait = (timeout) => {
 };
 
 function HomeScreen({ navigation, darkMode }) {
+  const { colors, isDark } = useTheme();
   const getDevotionalsApi = useApi(listingsApi.getDevotionals);
   const getResourcesApi = useApi(listingsApi.getResources);
 

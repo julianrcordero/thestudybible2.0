@@ -7,6 +7,7 @@ import Text from "../components/Text";
 import { useTheme } from "../config/ThemeContext";
 
 function UploadScreen({ onDone, progress = 0, visible = false }) {
+  const { colors, isDark } = useTheme();
   return (
     <Modal visible={visible}>
       <View style={styles.container}>

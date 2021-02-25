@@ -40,7 +40,8 @@ export default function App() {
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
-  const { colors, isDark } = useTheme();
+  const { setScheme, isDark } = useTheme();
+  // const { colors, isDark } = useTheme();
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -538,7 +539,7 @@ export default function App() {
   const styles = {
     header: {
       alignItems: "center",
-      backgroundColor: colors.light,
+      // backgroundColor: colors.light,
       // borderColor: colors.medium,
       borderTopWidth: 0.3,
       flexDirection: "row",
@@ -553,7 +554,7 @@ export default function App() {
     <View
       style={[
         styles.header,
-        { backgroundColor: darkMode ? colors.secondary : colors.light },
+        // { backgroundColor: darkMode ? colors.secondary : colors.light },
       ]}
     >
       <Text style={{ fontSize: 20, fontWeight: "bold" }}>Text Settings</Text>
@@ -574,11 +575,18 @@ export default function App() {
       setFontFamily={setFontFamily}
       setFormatting={setFormatting}
       setDarkMode={setDarkMode}
+      isDark={isDark}
+      setScheme={setScheme}
     />
   );
 
   const renderBibleHeader = () => (
-    <View style={[styles.header, { backgroundColor: colors.white }]}>
+    <View
+      style={[
+        styles.header,
+        // { backgroundColor: colors.white }
+      ]}
+    >
       <BottomSheetToolBar />
       <Button
         title="Done"
@@ -625,15 +633,15 @@ export default function App() {
         showsHorizontalScrollIndicator={false}
         snapToAlignment={"start"}
         snapToInterval={width}
-        style={{
-          backgroundColor: colors.white,
-        }}
+        // style={{
+        //   backgroundColor: colors.white,
+        // }}
       />
 
       {/* NOT SURE WHY */}
       <View
         style={{
-          backgroundColor: colors.light,
+          // backgroundColor: colors.light,
           height: 500,
           position: "relative",
         }}

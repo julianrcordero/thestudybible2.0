@@ -10,6 +10,7 @@ import routes from "../../navigation/routes";
 import useAuth from "../../auth/useAuth";
 
 function MoreScreen({ navigation }) {
+  const { colors, isDark } = useTheme();
   //navigation}){
   const { user } = useAuth();
 

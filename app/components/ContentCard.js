@@ -69,7 +69,7 @@ function ContentCard({ date, item, navigation }) {
 
   const styles = StyleSheet.create({
     contentCard: {
-      // borderColor: colors.secondary,
+      borderColor: colors.secondary,
       borderWidth: 0.3,
       flexDirection: "row",
       aspectRatio: 1.7,

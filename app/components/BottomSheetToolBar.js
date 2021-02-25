@@ -4,7 +4,7 @@ import { useTheme } from "../config/ThemeContext";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default class Verse extends PureComponent {
+export default class BottomSheetToolBar extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -40,16 +40,12 @@ export default class Verse extends PureComponent {
         }}
       >
         <TouchableOpacity>
-          <MaterialCommunityIcons
-            name="marker"
-            color={colors.black}
-            size={22}
-          />
+          <MaterialCommunityIcons name="marker" color={"black"} size={22} />
         </TouchableOpacity>
         <TouchableOpacity onPress={this._toggleBookmarked}>
           <MaterialCommunityIcons
             name={this.state.bookmarked ? "bookmark" : "bookmark-outline"}
-            color={this.state.bookmarked ? "red" : colors.black}
+            color={this.state.bookmarked ? "red" : "black"}
             size={22}
           />
         </TouchableOpacity>
@@ -65,14 +61,14 @@ export default class Verse extends PureComponent {
         <TouchableOpacity>
           <MaterialCommunityIcons
             name="file-multiple"
-            color={colors.black}
+            color={"black"}
             size={22}
           />
         </TouchableOpacity>
         <TouchableOpacity>
           <MaterialCommunityIcons
             name="file-upload-outline"
-            color={colors.black}
+            color={"black"}
             size={22}
           />
         </TouchableOpacity>

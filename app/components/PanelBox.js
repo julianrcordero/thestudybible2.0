@@ -27,7 +27,7 @@ class ResourceBox extends PureComponent {
       <View
         style={{
           backgroundColor: "pink",
-          borderColor: colors.medium,
+          // borderColor: colors.medium,
           borderWidth: 0.3,
           marginVertical: 10,
           padding: 10,
@@ -71,7 +71,7 @@ class ResourceBox extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name={this.props.topRightIcon}
-                  color={colors.black}
+                  // color={colors.black}
                   size={22}
                 />
               </TouchableOpacity>
@@ -146,14 +146,14 @@ export default class PanelBox extends PureComponent {
   styles = StyleSheet.create({
     macArthurBox: {
       height: "100%",
-      borderColor: colors.medium,
+      // borderColor: colors.medium,
       borderWidth: 1,
       marginVertical: 5,
       padding: 10,
     },
 
     relatedResourcesBox: {
-      borderColor: colors.medium,
+      // borderColor: colors.medium,
       borderWidth: 1,
       marginVertical: 5,
       padding: 10,

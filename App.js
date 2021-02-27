@@ -13,7 +13,6 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 
 import Screen from "./app/components/Screen";
-import BottomSheetToolBar from "./app/components/BottomSheetToolBar";
 import VerseCard from "./app/components/VerseCard";
 
 import BottomSheet from "reanimated-bottom-sheet";
@@ -27,6 +26,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import SearchHistory from "./app/components/SearchHistory";
 import SettingsScreen from "./app/screens/SettingsScreen";
+import StudyScreen from "./app/screens/StudyScreen";
+import BibleHeader from "./app/components/BibleHeader";
+import SettingsHeader from "./app/components/SettingsHeader";
 const Stack = createStackNavigator();
 const { height, width } = Dimensions.get("window");
 
@@ -40,8 +42,7 @@ export default function App() {
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
-  const { setScheme, isDark } = useTheme();
-  // const { colors, isDark } = useTheme();
+  const { colors, isDark } = useTheme();
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -536,117 +537,35 @@ export default function App() {
     bottomSheetRef.current.snapTo(2);
   };
 
-  const styles = {
-    header: {
-      alignItems: "center",
-      // backgroundColor: colors.light,
-      // borderColor: colors.medium,
-      borderTopWidth: 0.3,
-      flexDirection: "row",
-      height: 50,
-      justifyContent: "space-between",
-      paddingHorizontal: 15,
-      width: "100%",
-    },
-  };
-
-  const renderSettingsHeader = () => (
-    <View
-      style={[
-        styles.header,
-        // { backgroundColor: darkMode ? colors.secondary : colors.light },
-      ]}
-    >
-      <Text style={{ fontSize: 20, fontWeight: "bold" }}>Text Settings</Text>
-
-      <Button
-        title="Done"
-        onPress={snapToHalf}
-        style={{ textAlign: "center" }}
-      />
-    </View>
-  );
+  const renderSettingsHeader = () => <SettingsHeader snapToHalf={snapToHalf} />;
 
   const renderSettingsContent = () => (
     <SettingsScreen
+      fontFamily={fontFamily}
+      fontSize={fontSize}
+      formatting={formatting}
       top={top}
       paragraphBibleRef={paragraphBibleRef}
       setFontSize={setFontSize}
       setFontFamily={setFontFamily}
       setFormatting={setFormatting}
       setDarkMode={setDarkMode}
-      isDark={isDark}
-      setScheme={setScheme}
     />
   );
 
-  const renderBibleHeader = () => (
-    <View
-      style={[
-        styles.header,
-        // { backgroundColor: colors.white }
-      ]}
-    >
-      <BottomSheetToolBar />
-      <Button
-        title="Done"
-        onPress={snapToHalf}
-        style={{ textAlign: "center" }}
-      />
-    </View>
-  );
+  const renderStudyHeader = () => <BibleHeader snapToHalf={snapToHalf} />;
 
-  const renderVerseCardItem = ({ item, index }) => {
-    return (
-      <VerseCard
-        key={index}
-        carousel={carousel}
-        currentBook={currentBook}
-        item={item}
-        crossrefSize={crossrefSize}
-        fontSize={fontSize}
-        bottomSheetRef={bottomSheetRef}
-        style={{ borderWidth: 0.5, paddingHorizontal: 30, width: width }}
-        verseCardReferenceHeight={verseCardReferenceHeight}
-      />
-    );
-  };
-
-  const renderBibleContent = () => (
-    <View onStartShouldSetResponderCapture={() => console.log("")}>
-      <FlatList
-        bounces={false}
-        data={verseList}
-        decelerationRate={"fast"}
-        getItemLayout={(data, index) => ({
-          length: width,
-          offset: width * index,
-          index,
-        })}
-        horizontal={true}
-        // initialNumToRender={5}
-        keyExtractor={(item, index) => item + index}
-        onStartShouldSetResponderCapture={() => console.log("Vertical Scroll")}
-        ref={carousel}
-        renderItem={renderVerseCardItem}
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        snapToAlignment={"start"}
-        snapToInterval={width}
-        // style={{
-        //   backgroundColor: colors.white,
-        // }}
-      />
-
-      {/* NOT SURE WHY */}
-      <View
-        style={{
-          // backgroundColor: colors.light,
-          height: 500,
-          position: "relative",
-        }}
-      ></View>
-    </View>
+  const renderStudyContent = () => (
+    <StudyScreen
+      bottomSheetRef={bottomSheetRef}
+      carousel={carousel}
+      crossrefSize={crossrefSize}
+      currentBook={currentBook}
+      fontSize={fontSize}
+      verseCardReferenceHeight={verseCardReferenceHeight}
+      verseList={verseList}
+      width={width}
+    />
   );
 
   if (!isReady)
@@ -665,7 +584,7 @@ export default function App() {
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
               books={books}
-              darkMode={darkMode}
+              colors={colors}
               ref={topPanel}
               height={top - getBottomSpace()}
               width={width}
@@ -709,9 +628,9 @@ export default function App() {
           snapPoints={[top, "50%", "0%"]}
           initialSnap={2}
           onStartShouldSetResponderCapture={() => console.log("ScrollView")}
-          renderHeader={settingsMode ? renderSettingsHeader : renderBibleHeader}
+          renderHeader={settingsMode ? renderSettingsHeader : renderStudyHeader}
           renderContent={
-            settingsMode ? renderSettingsContent : renderBibleContent
+            settingsMode ? renderSettingsContent : renderStudyContent
           }
           // onCloseEnd={() => setFocusedVerse(null)}
         />

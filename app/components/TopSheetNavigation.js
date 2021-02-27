@@ -37,11 +37,9 @@ class TopSheetNavigation extends PureComponent {
                 options={{
                   headerShown: false,
                   title: "Books",
-                  cardStyle: {
-                    // backgroundColor: this.props.darkMode
-                    //   ? colors.medium
-                    //   : colors.light,
-                  },
+                  // cardStyle: {
+                  //   backgroundColor: this.props.colors.background,
+                  // },
                 }}
               />
 
@@ -163,14 +161,14 @@ class TopSheetNavigation extends PureComponent {
   });
 
   render() {
-    const { darkMode, height } = this.props;
+    const { colors, height } = this.props;
 
     return (
       <Collapsible
         align={"center"}
         collapsed={this.state.collapsed}
         style={{
-          // backgroundColor: darkMode ? colors.medium : colors.white,
+          backgroundColor: colors.background,
           height: height,
           paddingHorizontal: 15,
         }}

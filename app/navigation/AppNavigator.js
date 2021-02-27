@@ -123,6 +123,7 @@ function MyTabBar({ state, descriptors, navigation, darkMode }) {
   return (
     <Animated.View
       style={{
+        backgroundColor: colors.background,
         borderColor: colors.medium,
         borderTopWidth: 0.3,
         flexDirection: "row",
@@ -161,7 +162,6 @@ function MyTabBar({ state, descriptors, navigation, darkMode }) {
 
         return (
           <MenuButton
-            darkMode={darkMode}
             key={route.key}
             title={label}
             icon={icon} //{require("./app/assets/home.png")}

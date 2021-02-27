@@ -58,6 +58,7 @@ class BiblePicker extends PureComponent {
 
   render() {
     const {
+      colors,
       currentBook,
       currentChapter,
       darkMode,
@@ -93,7 +94,7 @@ class BiblePicker extends PureComponent {
       },
 
       rightButtons: {
-        backgroundColor: "purple",
+        // backgroundColor: "purple",
         // flexDirection: "row",
         flex: 3,
         justifyContent: "center",
@@ -101,7 +102,7 @@ class BiblePicker extends PureComponent {
       },
       search: {
         alignItems: "center",
-        backgroundColor: "yellow",
+        // backgroundColor: "yellow",
         aspectRatio: 1,
         justifyContent: "center",
       },
@@ -125,7 +126,7 @@ class BiblePicker extends PureComponent {
     return (
       <View
         style={{
-          // backgroundColor: darkMode ? colors.medium : colors.light,
+          backgroundColor: colors.background,
           // borderColor: colors.medium,
           borderBottomWidth: 0.3,
           flexDirection: "row",
@@ -145,7 +146,7 @@ class BiblePicker extends PureComponent {
             },
             this.state.searchOn
               ? {
-                  backgroundColor: "#fff",
+                  backgroundColor: colors.background,
                   borderColor: "#000",
                   borderRadius: 10,
                   borderWidth: 0.3,
@@ -156,7 +157,7 @@ class BiblePicker extends PureComponent {
           <TouchableOpacity style={styles.search} onPress={this.toggleSearch}>
             <MaterialCommunityIcons
               name="magnify"
-              // color={darkMode ? colors.secondary : colors.black}
+              color={colors.icon}
               size={26}
             />
           </TouchableOpacity>
@@ -192,7 +193,7 @@ class BiblePicker extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name="close-circle"
-                  // color={colors.black}
+                  color={colors.icon}
                   size={16}
                 />
               </TouchableOpacity>
@@ -206,7 +207,7 @@ class BiblePicker extends PureComponent {
                 {currentBook ? (
                   <AppText
                     style={{
-                      // color: darkMode ? colors.secondary : colors.medium,
+                      color: colors.icon,
                       fontFamily: fontFamily,
                       fontSize: fontSize,
                       fontWeight: "bold",
@@ -223,14 +224,14 @@ class BiblePicker extends PureComponent {
                 <MaterialCommunityIcons
                   name="chevron-down"
                   size={24}
-                  // color={darkMode ? colors.secondary : colors.medium}
+                  color={colors.icon}
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.icon}>
                 <Text
                   style={[
                     styles.translationText,
-                    // { color: darkMode ? colors.secondary : colors.medium },
+                    { borderColor: colors.icon, color: colors.icon },
                   ]}
                 >
                   NASB
@@ -256,7 +257,7 @@ class BiblePicker extends PureComponent {
               <TouchableOpacity style={styles.icon}>
                 <MaterialCommunityIcons
                   name="speaker"
-                  // color={darkMode ? colors.secondary : colors.medium}
+                  color={colors.icon}
                   size={24}
                 />
               </TouchableOpacity>
@@ -266,7 +267,7 @@ class BiblePicker extends PureComponent {
               >
                 <MaterialCommunityIcons
                   name="format-letter-case"
-                  // color={darkMode ? colors.secondary : colors.medium}
+                  color={colors.icon}
                   size={24}
                 />
               </TouchableOpacity>

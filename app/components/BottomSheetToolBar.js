@@ -29,23 +29,24 @@ export default class BottomSheetToolBar extends PureComponent {
   };
 
   render() {
+    const { colors } = this.props;
+
     return (
       <View
         style={{
           alignItems: "flex-start",
           flex: 0.75,
           flexDirection: "row",
-          backgroundColor: "white",
           justifyContent: "space-evenly",
         }}
       >
         <TouchableOpacity>
-          <MaterialCommunityIcons name="marker" color={"black"} size={22} />
+          <MaterialCommunityIcons name="marker" color={colors.icon} size={22} />
         </TouchableOpacity>
         <TouchableOpacity onPress={this._toggleBookmarked}>
           <MaterialCommunityIcons
             name={this.state.bookmarked ? "bookmark" : "bookmark-outline"}
-            color={this.state.bookmarked ? "red" : "black"}
+            color={colors.icon} //this.state.bookmarked ? "red" : "black"}
             size={22}
           />
         </TouchableOpacity>
@@ -53,7 +54,7 @@ export default class BottomSheetToolBar extends PureComponent {
           {
             <MaterialCommunityIcons
               name={this.state.loved ? "heart" : "heart-outline"}
-              color={this.state.loved ? "red" : "black"}
+              color={colors.icon} //this.state.loved ? "red" : "black"}
               size={22}
             />
           }
@@ -61,14 +62,14 @@ export default class BottomSheetToolBar extends PureComponent {
         <TouchableOpacity>
           <MaterialCommunityIcons
             name="file-multiple"
-            color={"black"}
+            color={colors.icon}
             size={22}
           />
         </TouchableOpacity>
         <TouchableOpacity>
           <MaterialCommunityIcons
             name="file-upload-outline"
-            color={"black"}
+            color={colors.icon}
             size={22}
           />
         </TouchableOpacity>

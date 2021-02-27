@@ -4,12 +4,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import ListItem from "../components/lists/BibleListItem";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
-import {
-  Collapse,
-  CollapseHeader,
-  CollapseBody,
-  AccordionList,
-} from "accordion-collapse-react-native";
+import { useTheme } from "../config/ThemeContext";
 
 const initialMessages = [
   {
@@ -42,50 +37,42 @@ function ResourcesScreen(props) {
   const [messages, setMessages] = useState(initialMessages);
   const [refreshing, setFreshing] = useState(false);
 
+  const { isDark, colors } = useTheme();
+
   const handleDelete = (message) => {
     //Delete the message from messages
     setMessages(messages.filter((m) => m.id !== message.id));
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "red",
-      // height: 200,
-      // flex: 1,
-    },
-  });
-
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        keyExtractor={(message) => message.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.title}
-            type={item.type}
-            description={item.description}
-            image={item.image}
-            onPress={() => console.log("Message selected", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
-            )}
-          />
-        )}
-        ItemSeparatorComponent={ListItemSeparator}
-        refreshing={refreshing}
-        // onRefresh={() => {
-        //   setMessages([
-        //     {
-        //       id: 2,
-        //       title: "T2",
-        //       description: "D2",
-        //       image: require("../assets/macarthurProfile.jpg"),
-        //     },
-        //   ]);
-        // }}
-      />
-    </View>
+    <FlatList
+      data={messages}
+      keyExtractor={(message) => message.id.toString()}
+      renderItem={({ item }) => (
+        <ListItem
+          title={item.title}
+          type={item.type}
+          description={item.description}
+          image={item.image}
+          onPress={() => console.log("Message selected", item)}
+          renderRightActions={() => (
+            <ListItemDeleteAction onPress={() => handleDelete(item)} />
+          )}
+        />
+      )}
+      ItemSeparatorComponent={ListItemSeparator}
+      refreshing={refreshing}
+      // onRefresh={() => {
+      //   setMessages([
+      //     {
+      //       id: 2,
+      //       title: "T2",
+      //       description: "D2",
+      //       image: require("../assets/macarthurProfile.jpg"),
+      //     },
+      //   ]);
+      // }}
+    />
   );
 }
 

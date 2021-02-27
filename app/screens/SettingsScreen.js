@@ -17,43 +17,29 @@ import BiblePickerItem from "../components/BiblePickerItem";
 import Slider from "@react-native-community/slider";
 
 export default function SettingsScreen({
-  // setFontSize,
-  // setFontFamily,
-  // setFormatting,
+  fontFamily,
+  fontSize,
+  formatting,
+  setFontFamily,
+  setFontSize,
+  setFormatting,
   // paragraphBibleRef,
   top,
 }) {
-  // constructor(props) {
-  //   super(props);
-  // }
-
-  // state = {
-  //   fontSize: 16,
-  //   font: "Sans Serif",
-  //   formatting: "Default",
-  //   showCrossReferences: false,
-  //   darkMode: false,
-  // };
-  const { setScheme, isDark } = useTheme();
-  const [fontSize, setFontSize] = useState(16);
-  const [font, setFont] = useState("Sans Serif");
-  const [formatting, setFormatting] = useState("Default");
+  const { setScheme, isDark, colors } = useTheme();
   const [showCrossReferences, setShowCrossReferences] = useState(false);
 
   const handleSlide = (value) => {
     setFontSize(value);
-    // setState({ fontSize: value });
   };
 
   const handleFont = (value) => {
-    setFont(value);
+    setFontFamily(value);
     // paragraphBibleRef.current.setState({ fontFamily: value });
-    // setState({ font: value });
   };
 
   const handleFormat = (value) => {
     setFormatting(value);
-    // setState({ formatting: value });
   };
 
   const handleCrossReferences = () => {
@@ -118,65 +104,45 @@ export default function SettingsScreen({
   return (
     <View
       style={{
-        // backgroundColor: darkMode ? colors.medium : colors.light,
+        backgroundColor: colors.background,
         height: top - 50,
         borderTopWidth: 0.3,
         paddingHorizontal: 50,
       }}
     >
       <View style={styles.buttonSection}>
-        <Text
-        // style={{ color: darkMode ? colors.light : colors.dark }}
-        >
+        <Text style={{ color: colors.text }}>
           {"Text Size: " + fontSize + "pt"}
         </Text>
         <Slider
           minimumValue={12}
           maximumValue={24}
-          // minimumTrackTintColor={colors.primary}
-          // maximumTrackTintColor={colors.medium}
+          minimumTrackTintColor={colors.primary}
+          maximumTrackTintColor={colors.secondary}
           onSlidingComplete={handleSlide}
           step={2}
           value={fontSize}
         />
       </View>
       <View style={styles.buttonSection}>
-        <Text
-          style={[
-            styles.title,
-            // { color: darkMode ? colors.light : colors.dark },
-          ]}
-        >
-          {"Font"}
-        </Text>
+        <Text style={[styles.title, { color: colors.text }]}>{"Font"}</Text>
         <View style={styles.buttons}>
           {fonts.map((font, index) => (
             <TouchableOpacity
               key={index}
               style={[
                 styles.button,
-                // darkMode
-                //   ? {
-                //       backgroundColor:
-                //         font == font
-                //           ? colors.primary
-                //           : colors.secondary,
-                //     }
-                //   : {
-                //       backgroundColor:
-                //         font == font
-                //           ? colors.primary
-                //           : colors.white,
-                //     },
+                {
+                  backgroundColor:
+                    font == fontFamily ? colors.primary : colors.background,
+                },
               ]}
               onPress={() => handleFont(font)}
             >
               <Text
-                style={
-                  {
-                    // color: darkMode ? colors.light : colors.dark,
-                  }
-                }
+                style={{
+                  color: colors.text,
+                }}
               >
                 {font}
               </Text>
@@ -185,12 +151,7 @@ export default function SettingsScreen({
         </View>
       </View>
       <View style={styles.buttonSection}>
-        <Text
-          style={[
-            styles.title,
-            // { color: darkMode ? colors.light : colors.dark },
-          ]}
-        >
+        <Text style={[styles.title, { color: colors.text }]}>
           {"Formatting"}
         </Text>
         <View style={styles.buttons}>
@@ -199,28 +160,17 @@ export default function SettingsScreen({
               key={index}
               style={[
                 styles.button,
-                // darkMode
-                //   ? {
-                //       backgroundColor:
-                //         formatting == format
-                //           ? colors.primary
-                //           : colors.secondary,
-                //     }
-                //   : {
-                //       backgroundColor:
-                //         formatting == format
-                //           ? colors.primary
-                //           : colors.white,
-                //     },
+                {
+                  backgroundColor:
+                    formatting == format ? colors.primary : colors.background,
+                },
               ]}
               onPress={() => handleFormat(format)}
             >
               <Text
-                style={
-                  {
-                    // color: darkMode ? colors.light : colors.dark,
-                  }
-                }
+                style={{
+                  color: colors.text,
+                }}
               >
                 {format}
               </Text>
@@ -234,12 +184,7 @@ export default function SettingsScreen({
           { flexDirection: "row", justifyContent: "space-between" },
         ]}
       >
-        <Text
-          style={[
-            styles.title,
-            // { color: darkMode ? colors.light : colors.dark },
-          ]}
-        >
+        <Text style={[styles.title, { color: colors.text }]}>
           {"Show Cross References"}
         </Text>
         <Switch
@@ -255,16 +200,11 @@ export default function SettingsScreen({
           { flexDirection: "row", justifyContent: "space-between" },
         ]}
       >
-        <Text
-          style={[
-            styles.title,
-            // { color: darkMode ? colors.light : colors.dark },
-          ]}
-        >
+        <Text style={[styles.title, { color: colors.text }]}>
           {"Dark Mode"}
         </Text>
         <Switch
-          // trackColor={{ false: colors.medium, true: colors.primary }}
+          trackColor={{ false: colors.secondary, true: colors.primary }}
           // thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
           onValueChange={handleDarkMode}
           value={isDark}

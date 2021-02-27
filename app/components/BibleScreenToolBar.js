@@ -28,6 +28,7 @@ export default function BibleScreenToolBar(props) {
       }}
     >
       <BiblePicker
+        colors={colors}
         currentBook={props.currentBook}
         currentChapter={props.currentChapter}
         currentVerse={props.currentVerse}
@@ -50,7 +51,7 @@ export default function BibleScreenToolBar(props) {
         <View
           style={[
             {
-              backgroundColor: colors.white,
+              backgroundColor: colors.secondary,
               paddingHorizontal: 15,
             },
             historyVisible

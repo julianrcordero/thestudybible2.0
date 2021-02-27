@@ -8,9 +8,10 @@ function ListItemDeleteAction({ onPress }) {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: colors.danger,
+      aspectRatio: 1,
+      backgroundColor: colors.primary,
       width: 70,
-      height: "100%",
+      // height: "100%",
       justifyContent: "center",
       alignItems: "center",
     },
@@ -22,7 +23,7 @@ function ListItemDeleteAction({ onPress }) {
         <MaterialCommunityIcons
           name="trash-can"
           size={35}
-          color={colors.white}
+          color={colors.error}
         ></MaterialCommunityIcons>
       </View>
     </TouchableWithoutFeedback>

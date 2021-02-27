@@ -8,7 +8,7 @@ function MenuButton({ title, icon, onPress, darkMode }) {
   const styles = StyleSheet.create({
     button: {
       alignItems: "center",
-      backgroundColor: colors.light,
+      // backgroundColor: colors.secondary,
       // borderColor: colors.medium,
       // borderWidth: 0.3,
       flex: 1,
@@ -39,17 +39,10 @@ function MenuButton({ title, icon, onPress, darkMode }) {
       <MaterialCommunityIcons
         name={icon}
         size={24}
-        color={darkMode ? colors.secondary : colors.dark}
+        color={colors.icon}
         style={styles.image}
       ></MaterialCommunityIcons>
-      <Text
-        style={[
-          styles.text,
-          { color: darkMode ? colors.secondary : colors.dark },
-        ]}
-      >
-        {title}
-      </Text>
+      <Text style={[styles.text, { color: colors.text }]}>{title}</Text>
       {/* <Image resizeMode="contain" style={styles.image} source={icon}></Image>
        */}
     </TouchableOpacity>

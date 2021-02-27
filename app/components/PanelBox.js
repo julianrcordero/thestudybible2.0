@@ -17,71 +17,73 @@ import defaultStyles from "../config/styles";
 import NoteHistory from "./NoteHistory";
 import ResourcesScreen from "../screens/ResourcesScreen";
 
-class ResourceBox extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+function ResourceBox({
+  children,
+  image,
+  text,
+  title,
+  topRightButton,
+  topRightIcon,
+  topRightOnPress,
+}) {
+  const { colors, isDark } = useTheme();
 
-  render() {
-    return (
+  return (
+    <View
+      style={{
+        // borderColor: colors.medium,
+        borderWidth: 0.3,
+        marginVertical: 10,
+        padding: 10,
+        width: "100%",
+      }}
+    >
       <View
         style={{
-          backgroundColor: "pink",
-          // borderColor: colors.medium,
-          borderWidth: 0.3,
-          marginVertical: 10,
-          padding: 10,
-          width: "100%",
+          flexDirection: "row",
+          height: 40,
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 5,
+          // marginBottom: 5,
         }}
       >
-        <View
-          style={{
-            backgroundColor: "orange",
-            flexDirection: "row",
-            height: 40,
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingHorizontal: 5,
-            // marginBottom: 5,
-          }}
+        {image ? (
+          <Image
+            style={{
+              aspectRatio: 1,
+              // backgroundColor: "red",
+              marginRight: 5,
+              width: 30,
+            }}
+            source={image}
+          ></Image>
+        ) : null}
+        <AppText
+          style={[
+            styles.titleText,
+            defaultStyles.bibleText,
+            { color: colors.text },
+          ]}
         >
-          {this.props.image ? (
-            <Image
-              style={{
-                aspectRatio: 1,
-                backgroundColor: "red",
-                marginRight: 5,
-                width: 30,
-              }}
-              source={this.props.image}
-            ></Image>
-          ) : null}
-          <AppText style={[styles.titleText, defaultStyles.bibleText]}>
-            {this.props.title}
-          </AppText>
-          {this.props.topRightButton ? (
-            <View style={{ alignItems: "center", flexDirection: "row" }}>
-              <Button
-                title={this.props.topRightButton}
-                onPress={this.props.topRightOnPress}
+          {title}
+        </AppText>
+        {topRightButton ? (
+          <View style={{ alignItems: "center", flexDirection: "row" }}>
+            <Button title={topRightButton} onPress={topRightOnPress} />
+            <TouchableOpacity style={styles.search} onPress={topRightOnPress}>
+              <MaterialCommunityIcons
+                name={topRightIcon}
+                color={colors.icon}
+                size={22}
               />
-              <TouchableOpacity
-                style={styles.search}
-                onPress={this.props.topRightOnPress}
-              >
-                <MaterialCommunityIcons
-                  name={this.props.topRightIcon}
-                  // color={colors.black}
-                  size={22}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : null}
-        </View>
-        {this.props.children}
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
-    );
-  }
+      {children}
+    </View>
+  );
 }
 
 export default class PanelBox extends PureComponent {
@@ -112,14 +114,6 @@ export default class PanelBox extends PureComponent {
     ],
   };
 
-  renderResourceGroup = ({ item, index, separators }) => {
-    return (
-      <ResourceBox title={item.title} image={item.image}>
-        {item.child}
-      </ResourceBox>
-    );
-  };
-
   addANote = () => {
     const newNoteHistory = [
       {
@@ -143,36 +137,10 @@ export default class PanelBox extends PureComponent {
     });
   };
 
-  styles = StyleSheet.create({
-    macArthurBox: {
-      height: "100%",
-      // borderColor: colors.medium,
-      borderWidth: 1,
-      marginVertical: 5,
-      padding: 10,
-    },
-
-    relatedResourcesBox: {
-      // borderColor: colors.medium,
-      borderWidth: 1,
-      marginVertical: 5,
-      padding: 10,
-    },
-
-    titleText: {
-      fontWeight: "bold",
-      fontSize: 16,
-      // paddingHorizontal: 10,
-    },
-
-    verseLink: {
-      color: "#00aeef",
-    },
-  });
-
   render() {
     const {
       carousel,
+      // colors,
       fontSize,
       johnsNote,
       // paragraphBibleRef,
@@ -185,6 +153,7 @@ export default class PanelBox extends PureComponent {
     return (
       <View>
         <ResourceBox
+          colors={this.props.colors}
           title={"My Notes"}
           topRightButton={"Add a note"}
           topRightIcon={"pencil-plus-outline"}
@@ -204,7 +173,11 @@ export default class PanelBox extends PureComponent {
           <Text
             style={[
               defaultStyles.macArthurText,
-              { fontSize: macarthurText, lineHeight: macarthurLineHeight },
+              {
+                color: this.props.colors.text,
+                fontSize: macarthurText,
+                lineHeight: macarthurLineHeight,
+              },
             ]}
           >
             {johnsNote}
@@ -221,3 +194,31 @@ export default class PanelBox extends PureComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  macArthurBox: {
+    height: "100%",
+    // borderColor: colors.medium,
+    borderWidth: 1,
+    marginVertical: 5,
+    padding: 10,
+  },
+
+  relatedResourcesBox: {
+    // borderColor: colors.medium,
+    borderWidth: 1,
+    marginVertical: 5,
+    padding: 10,
+  },
+
+  titleText: {
+    // color: props.colors.text,
+    fontWeight: "bold",
+    fontSize: 16,
+    // paddingHorizontal: 10,
+  },
+
+  verseLink: {
+    color: "#00aeef",
+  },
+});

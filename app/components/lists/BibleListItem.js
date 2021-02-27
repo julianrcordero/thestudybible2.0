@@ -29,7 +29,7 @@ function BibleListItem({
       backgroundColor: colors.white,
     },
     description: {
-      color: colors.gray,
+      color: colors.text,
       fontSize: 12,
     },
     detailsContainer: {
@@ -45,9 +45,10 @@ function BibleListItem({
     title: {
       fontWeight: "500",
       fontSize: 15,
-      color: "#53A7F2",
+      color: colors.text,
     },
     type: {
+      color: colors.secondary,
       fontWeight: "500",
       fontSize: 10,
     },
@@ -72,7 +73,7 @@ function BibleListItem({
                 )}
               </View>
               <MaterialCommunityIcons
-                color={colors.medium}
+                color={colors.primary}
                 name="chevron-right"
                 size={25}
               />

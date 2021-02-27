@@ -15,6 +15,7 @@ export default class Paragraph extends PureComponent {
   render() {
     const {
       chapterNum,
+      colors,
       crossrefSize,
       // focusedVerse,
       fontFamily,
@@ -38,6 +39,7 @@ export default class Paragraph extends PureComponent {
             style={[
               defaultStyles.bibleText,
               {
+                color: colors.text,
                 fontSize: fontSize,
                 lineHeight: fontSize * 2,
                 fontFamily: fontFamily,

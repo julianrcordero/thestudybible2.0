@@ -19,7 +19,7 @@ class SectionHeader extends PureComponent {
         style={[
           defaultStyles.bibleText,
           {
-            // color: this.props.darkMode ? colors.light : colors.dark,
+            color: this.props.colors.primary,
             fontSize: this.props.titleSize,
             // borderBottomColor: "#345171",
           },
@@ -44,11 +44,12 @@ export default class ParagraphBible extends PureComponent {
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
       <AnimatedSectionHeader
-        darkMode={this.props.darkMode}
+        colors={this.props.colors}
         title={item.title}
         titleSize={this.props.fontSize * 1.5}
       />
       <Paragraph
+        colors={this.props.colors}
         formatting={this.props.formatting}
         key={i}
         chapterNum={item.chapterNum}

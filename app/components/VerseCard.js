@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-
-import { useTheme } from "../config/ThemeContext";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import PanelBox from "../components/PanelBox";
 import AppText from "../components/Text";
@@ -20,6 +18,7 @@ export default class VerseCard extends PureComponent {
   render() {
     const {
       carousel,
+      colors,
       currentBook,
       item,
       fontSize,
@@ -48,7 +47,6 @@ export default class VerseCard extends PureComponent {
         <View
           style={{
             alignItems: "center",
-            backgroundColor: "green",
             height: 50,
             flexDirection: "row",
             justifyContent: "flex-start",
@@ -57,6 +55,7 @@ export default class VerseCard extends PureComponent {
           <View style={{ alignContent: "flex-start", flexDirection: "column" }}>
             <AppText
               style={{
+                color: colors.text,
                 fontSize: fontSize,
                 fontWeight: "bold",
                 textAlign: "left",
@@ -72,6 +71,7 @@ export default class VerseCard extends PureComponent {
 
         <AppText
           style={{
+            color: colors.text,
             fontSize: fontSize,
             lineHeight: fontSize * 2,
           }}
@@ -81,7 +81,7 @@ export default class VerseCard extends PureComponent {
         <View style={{ marginBottom: 20 }}>
           {Array.isArray(item.crossrefs) ? (
             item.crossrefs.map((crossref) => (
-              <AppText key={crossref["id"]}>
+              <AppText key={crossref["id"]} style={{ color: colors.text }}>
                 {"\n" + crossref["title"] + "\t"}
                 {Array.isArray(crossref["refs"]["ref"]) ? (
                   crossref["refs"]["ref"].map((cr) => (
@@ -96,7 +96,7 @@ export default class VerseCard extends PureComponent {
               </AppText>
             ))
           ) : item.crossrefs["title"] == "" ? null : (
-            <AppText>
+            <AppText style={{ color: colors.text }}>
               {"\n" + item.crossrefs["title"] + "\t"}
               {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
                 item.crossrefs["refs"]["ref"].map((cr) => (
@@ -114,6 +114,7 @@ export default class VerseCard extends PureComponent {
 
         <PanelBox
           carousel={carousel}
+          colors={colors}
           fontSize={fontSize}
           johnsNote={item.johnsNote}
           crossRefSize={crossRefSize}

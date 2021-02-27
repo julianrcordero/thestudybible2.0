@@ -70,7 +70,6 @@ export default class NoteHistoryItem extends PureComponent {
   styles = StyleSheet.create({
     container: {
       // alignItems: "center",
-      backgroundColor: "green",
       // borderWidth: 0.3,
       // borderColor: colors.medium,
       // flex: 1,
@@ -78,7 +77,6 @@ export default class NoteHistoryItem extends PureComponent {
       // height: 50,
       justifyContent: "flex-end",
       padding: 5,
-      // backgroundColor: colors.white,
     },
     dateContainer: {
       backgroundColor: "yellow",
@@ -99,10 +97,13 @@ export default class NoteHistoryItem extends PureComponent {
       fontSize: 12,
       fontWeight: "100",
     },
+    text: {
+      color: this.props.colors.text,
+    },
   });
 
   render() {
-    const { carousel, date } = this.props;
+    const { carousel, colors, date } = this.props;
 
     const DismissKeyboard = ({ children }) => (
       <TouchableWithoutFeedback onPress={this.notFinishedAlert}>
@@ -113,7 +114,10 @@ export default class NoteHistoryItem extends PureComponent {
     return (
       <View style={{ marginVertical: 15 }}>
         <View style={styles.container}>
-          <Text style={styles.date} numberOfLines={1}>
+          <Text
+            style={[styles.date, { color: colors.primary }]}
+            numberOfLines={1}
+          >
             {date}
           </Text>
         </View>
@@ -134,6 +138,7 @@ export default class NoteHistoryItem extends PureComponent {
                 placeholder={"Your note here"}
                 style={[
                   {
+                    color: colors.text,
                     // borderColor: colors.medium,
                     marginHorizontal: 10,
                     padding: 5,
@@ -156,14 +161,16 @@ export default class NoteHistoryItem extends PureComponent {
                   ></Button>
                 )}
                 <Button
-                  color={this.state.noteText == "" ? "secondary" : "danger"}
+                  color={this.state.noteText == "" ? "secondary" : "error"}
                   title={this.state.noteText == "" ? "Cancel" : "Delete"}
                   onPress={this.notFinishedAlert} //API CALL
                 ></Button>
               </View>
             </>
           ) : (
-            <Text onPress={this.setFocusedTrue}>{this.state.oldNoteText}</Text>
+            <Text onPress={this.setFocusedTrue} style={{ color: colors.text }}>
+              {this.state.oldNoteText}
+            </Text>
           )}
         </View>
       </View>

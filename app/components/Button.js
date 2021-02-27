@@ -20,8 +20,8 @@ function AppButton({ title, onPress, color = "primary", ...otherProps }) {
       // marginLeft: 5,
     },
     text: {
-      backgroundColor: "green",
-      color: colors.white,
+      // backgroundColor: "green",
+      color: colors.text,
       fontSize: 16,
       textTransform: "uppercase",
       fontWeight: "bold",

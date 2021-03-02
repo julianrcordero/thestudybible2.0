@@ -2,7 +2,7 @@ import React from "react";
 import { Button, View, Text } from "react-native";
 import { useTheme } from "../config/ThemeContext";
 
-export default function SettingsHeader({ snapToHalf }) {
+export default function SettingsHeader({ snapToZero }) {
   const { colors, isDark } = useTheme();
 
   const styles = {
@@ -26,7 +26,7 @@ export default function SettingsHeader({ snapToHalf }) {
 
       <Button
         title="Done"
-        onPress={snapToHalf}
+        onPress={snapToZero}
         style={{ textAlign: "center" }}
       />
     </View>

@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, View, Text } from "react-native";
 import { useTheme } from "../config/ThemeContext";
-import BottomSheetToolBar from "./BottomSheetToolBar";
+import StudyToolBar from "./StudyToolBar";
+import { PureComponent } from "react";
 
-export default function BibleHeader({ snapToHalf }) {
+export default function StudyHeader({ bottomSheetRef }) {
   const { colors, isDark } = useTheme();
-
   const styles = {
     header: {
       alignItems: "center",
@@ -20,11 +20,11 @@ export default function BibleHeader({ snapToHalf }) {
   };
 
   return (
-    <View style={[styles.header, { backgroundColor: colors.background }]}>
-      <BottomSheetToolBar colors={colors} />
+    <View style={[styles.header]}>
+      <StudyToolBar colors={colors} />
       <Button
         title="Done"
-        onPress={snapToHalf}
+        onPress={() => bottomSheetRef.current.snapTo(2)}
         style={{ textAlign: "center" }}
       />
     </View>

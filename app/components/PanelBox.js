@@ -153,7 +153,7 @@ export default class PanelBox extends PureComponent {
     return (
       <View>
         <ResourceBox
-          colors={this.props.colors}
+          // colors={this.props.colors}
           title={"My Notes"}
           topRightButton={"Add a note"}
           topRightIcon={"pencil-plus-outline"}
@@ -174,7 +174,7 @@ export default class PanelBox extends PureComponent {
             style={[
               defaultStyles.macArthurText,
               {
-                color: this.props.colors.text,
+                // color: this.props.colors.text,
                 fontSize: macarthurText,
                 lineHeight: macarthurLineHeight,
               },
@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    // color: props.colors.text,
     fontWeight: "bold",
     fontSize: 16,
     // paddingHorizontal: 10,

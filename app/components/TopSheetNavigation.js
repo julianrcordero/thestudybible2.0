@@ -48,9 +48,7 @@ class TopSheetNavigation extends PureComponent {
                 component={ChaptersGridScreen}
                 options={({ route }) => ({
                   cardStyle: {
-                    // backgroundColor: this.props.darkMode
-                    //   ? colors.medium
-                    //   : colors.light,
+                    backgroundColor: "transparent",
                   },
                   headerRight: () => (
                     <AppText style={styles.sectionTitle}>
@@ -61,10 +59,7 @@ class TopSheetNavigation extends PureComponent {
                     // color: this.props.darkMode ? colors.medium : colors.light,
                   },
                   headerStyle: {
-                    // backgroundColor: this.props.darkMode
-                    //   ? colors.medium
-                    //   : colors.light,
-
+                    backgroundColor: "transparent",
                     height: 55,
                   },
                   headerTitle: "",
@@ -168,7 +163,7 @@ class TopSheetNavigation extends PureComponent {
         align={"center"}
         collapsed={this.state.collapsed}
         style={{
-          backgroundColor: colors.background,
+          // backgroundColor: colors.background,
           height: height,
           paddingHorizontal: 15,
         }}
@@ -197,13 +192,13 @@ class TopSheetNavigation extends PureComponent {
           <SegmentedControl
             values={["GRID", "LIST", "RECENT"]}
             selectedIndex={this.state.pickerType}
+            // tintColor={"green"}
             onChange={(event) => {
               this.setState({
                 pickerType: event.nativeEvent.selectedSegmentIndex,
               });
             }}
             style={{
-              // backgroundColor: darkMode ? colors.secondary : colors.light,
               height: 45,
             }}
           />

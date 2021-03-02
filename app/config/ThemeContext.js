@@ -8,6 +8,9 @@ export const ThemeContext = React.createContext({
   setScheme: () => {},
 });
 
+// Custom hook to get the theme object returns {isDark, colors, setScheme}
+export const useTheme = () => React.useContext(ThemeContext);
+
 export const ThemeProvider = (props) => {
   // Getting the device color theme, this will also work with react-native-web
   const colorScheme = useColorScheme(); // Can be dark | light | no-preference
@@ -37,6 +40,3 @@ export const ThemeProvider = (props) => {
     </ThemeContext.Provider>
   );
 };
-
-// Custom hook to get the theme object returns {isDark, colors, setScheme}
-export const useTheme = () => React.useContext(ThemeContext);

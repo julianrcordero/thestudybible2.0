@@ -5,29 +5,25 @@ import { View } from "react-native-animatable";
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeContext";
 
-class ChaptersGridScreen extends PureComponent {
-  constructor(props) {
-    super(props);
+export default function ChaptersGridScreen({ close, chapters, route }) {
+  const { colors, isDark } = useTheme();
+
+  const { gridChapters } = route ? route.params : 0;
+
+  const chapterNum = gridChapters ?? chapters;
+  const DATA = [];
+
+  for (let i = 0; i < chapterNum; i++) {
+    DATA.push({
+      id: i,
+      backgroundColor: "#FFFB79",
+      title: i + 1,
+      short: i + 1,
+    });
   }
 
-  render() {
-    const { close, chapters, route } = this.props;
-
-    const { gridChapters } = route ? route.params : 0;
-
-    const chapterNum = gridChapters ?? chapters;
-    const DATA = [];
-
-    for (let i = 0; i < chapterNum; i++) {
-      DATA.push({
-        id: i,
-        backgroundColor: "#FFFB79",
-        title: i + 1,
-        short: i + 1,
-      });
-    }
-
-    return (
+  return (
+    <View style={{ backgroundColor: colors.background }}>
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}
@@ -43,8 +39,6 @@ class ChaptersGridScreen extends PureComponent {
         }}
         showsVerticalScrollIndicator={false}
       />
-    );
-  }
+    </View>
+  );
 }
-
-export default ChaptersGridScreen;

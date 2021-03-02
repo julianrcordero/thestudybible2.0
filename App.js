@@ -27,7 +27,7 @@ import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import SearchHistory from "./app/components/SearchHistory";
 import SettingsScreen from "./app/screens/SettingsScreen";
 import StudyScreen from "./app/screens/StudyScreen";
-import BibleHeader from "./app/components/BibleHeader";
+import StudyHeader from "./app/components/StudyHeader";
 import SettingsHeader from "./app/components/SettingsHeader";
 const Stack = createStackNavigator();
 const { height, width } = Dimensions.get("window");
@@ -46,6 +46,7 @@ export default function App() {
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
+  const [topPanelCollapsed, setTopPanelCollapsed] = useState(true);
 
   const searchHistoryRef = React.useRef();
 
@@ -533,11 +534,11 @@ export default function App() {
     if (user) setUser(user);
   };
 
-  const snapToHalf = () => {
+  const snapToZero = () => {
     bottomSheetRef.current.snapTo(2);
   };
 
-  const renderSettingsHeader = () => <SettingsHeader snapToHalf={snapToHalf} />;
+  const renderSettingsHeader = () => <SettingsHeader snapToZero={snapToZero} />;
 
   const renderSettingsContent = () => (
     <SettingsScreen
@@ -553,19 +554,25 @@ export default function App() {
     />
   );
 
-  const renderStudyHeader = () => <BibleHeader snapToHalf={snapToHalf} />;
+  const renderStudyHeader = () => (
+    <StudyHeader bottomSheetRef={bottomSheetRef} />
+  );
 
   const renderStudyContent = () => (
-    <StudyScreen
-      bottomSheetRef={bottomSheetRef}
-      carousel={carousel}
-      crossrefSize={crossrefSize}
-      currentBook={currentBook}
-      fontSize={fontSize}
-      verseCardReferenceHeight={verseCardReferenceHeight}
-      verseList={verseList}
-      width={width}
-    />
+    // <View style={{ backgroundColor: "green" }}>
+    <Screen flex={0}>
+      <StudyScreen
+        bottomSheetRef={bottomSheetRef}
+        carousel={carousel}
+        crossrefSize={crossrefSize}
+        currentBook={currentBook}
+        fontSize={fontSize}
+        verseCardReferenceHeight={verseCardReferenceHeight}
+        verseList={verseList}
+        width={width}
+      />
+    </Screen>
+    // </View>
   );
 
   if (!isReady)
@@ -584,7 +591,6 @@ export default function App() {
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
               books={books}
-              colors={colors}
               ref={topPanel}
               height={top - getBottomSpace()}
               width={width}

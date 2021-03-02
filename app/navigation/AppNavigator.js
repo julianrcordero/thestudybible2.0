@@ -46,6 +46,7 @@ const AppNavigator = (props) =>
       searchHistoryRef,
       setCurrentBook,
       setSettingsMode,
+      setTopPanelCollapsed,
       setVerseList,
       titleSize,
       topPanel,

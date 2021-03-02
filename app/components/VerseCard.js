@@ -18,7 +18,7 @@ export default class VerseCard extends PureComponent {
   render() {
     const {
       carousel,
-      colors,
+      // colors,
       currentBook,
       item,
       fontSize,
@@ -55,7 +55,7 @@ export default class VerseCard extends PureComponent {
           <View style={{ alignContent: "flex-start", flexDirection: "column" }}>
             <AppText
               style={{
-                color: colors.text,
+                // color: colors.text,
                 fontSize: fontSize,
                 fontWeight: "bold",
                 textAlign: "left",
@@ -71,7 +71,7 @@ export default class VerseCard extends PureComponent {
 
         <AppText
           style={{
-            color: colors.text,
+            // color: colors.text,
             fontSize: fontSize,
             lineHeight: fontSize * 2,
           }}
@@ -81,7 +81,10 @@ export default class VerseCard extends PureComponent {
         <View style={{ marginBottom: 20 }}>
           {Array.isArray(item.crossrefs) ? (
             item.crossrefs.map((crossref) => (
-              <AppText key={crossref["id"]} style={{ color: colors.text }}>
+              <AppText
+                key={crossref["id"]}
+                // style={{ color: colors.text }}
+              >
                 {"\n" + crossref["title"] + "\t"}
                 {Array.isArray(crossref["refs"]["ref"]) ? (
                   crossref["refs"]["ref"].map((cr) => (
@@ -96,7 +99,9 @@ export default class VerseCard extends PureComponent {
               </AppText>
             ))
           ) : item.crossrefs["title"] == "" ? null : (
-            <AppText style={{ color: colors.text }}>
+            <AppText
+            // style={{ color: colors.text }}
+            >
               {"\n" + item.crossrefs["title"] + "\t"}
               {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
                 item.crossrefs["refs"]["ref"].map((cr) => (
@@ -114,7 +119,7 @@ export default class VerseCard extends PureComponent {
 
         <PanelBox
           carousel={carousel}
-          colors={colors}
+          // colors={colors}
           fontSize={fontSize}
           johnsNote={item.johnsNote}
           crossRefSize={crossRefSize}

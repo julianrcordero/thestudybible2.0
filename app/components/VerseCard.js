@@ -5,25 +5,30 @@ import PanelBox from "../components/PanelBox";
 import AppText from "../components/Text";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Component } from "react";
 
-export default class VerseCard extends PureComponent {
+export default class VerseCard extends Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = {
-      loved: false,
-    };
+  state = {
+    loved: false,
+  };
+
+  shouldComponentUpdate(nextProps) {
+    const { item } = this.props;
+    return item.content !== nextProps.item.content;
   }
 
   render() {
     const {
       carousel,
-      // colors,
+      colors,
       currentBook,
       item,
       fontSize,
       crossRefSize,
-      // paragraphBibleRef,
       bottomSheetRef,
       style,
     } = this.props;
@@ -55,7 +60,7 @@ export default class VerseCard extends PureComponent {
           <View style={{ alignContent: "flex-start", flexDirection: "column" }}>
             <AppText
               style={{
-                // color: colors.text,
+                color: colors.text,
                 fontSize: fontSize,
                 fontWeight: "bold",
                 textAlign: "left",
@@ -71,7 +76,7 @@ export default class VerseCard extends PureComponent {
 
         <AppText
           style={{
-            // color: colors.text,
+            color: colors.text,
             fontSize: fontSize,
             lineHeight: fontSize * 2,
           }}

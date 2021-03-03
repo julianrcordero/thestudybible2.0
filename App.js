@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { AppearanceProvider } from "react-native-appearance";
 import { ThemeProvider } from "./app/config/ThemeContext";
+import { useTheme } from "./app/config/ThemeContext";
 
 import AppNavigator from "./app/navigation/AppNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
@@ -35,6 +36,7 @@ export default function App() {
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
+  const { colors, isDark } = useTheme();
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -558,6 +560,7 @@ export default function App() {
         <StudyScreen
           bottomSheetRef={bottomSheetRef}
           carousel={carousel}
+          colors={colors}
           crossrefSize={crossrefSize}
           currentBook={currentBook}
           fontSize={fontSize}

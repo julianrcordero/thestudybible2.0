@@ -35,7 +35,6 @@ export default function SettingsScreen({
 
   const handleFont = (value) => {
     setFontFamily(value);
-    // paragraphBibleRef.current.setState({ fontFamily: value });
   };
 
   const handleFormat = (value) => {
@@ -44,14 +43,9 @@ export default function SettingsScreen({
 
   const handleCrossReferences = () => {
     setShowCrossReferences(!showCrossReferences);
-    // setState({ showCrossReferences: !showCrossReferences });
   };
 
   const handleDarkMode = () => {
-    // const toggled = !darkMode;
-    // setDarkMode(toggled);
-    // setState({ darkMode: toggled });
-
     isDark ? setScheme("light") : setScheme("dark");
   };
 

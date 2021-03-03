@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Button, Dimensions, FlatList, View, Switch, Text } from "react-native";
+import { Dimensions } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { AppearanceProvider } from "react-native-appearance";
 import { ThemeProvider } from "./app/config/ThemeContext";
-import { useTheme } from "./app/config/ThemeContext";
 
 import AppNavigator from "./app/navigation/AppNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
@@ -13,40 +12,33 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 
 import Screen from "./app/components/Screen";
-import VerseCard from "./app/components/VerseCard";
 
 import BottomSheet from "reanimated-bottom-sheet";
 import { enableScreens } from "react-native-screens";
 enableScreens();
-import Collapsible from "react-native-collapsible";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import Constants from "expo-constants";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
-import SearchHistory from "./app/components/SearchHistory";
 import SettingsScreen from "./app/screens/SettingsScreen";
 import StudyScreen from "./app/screens/StudyScreen";
-import StudyHeader from "./app/components/StudyHeader";
-import SettingsHeader from "./app/components/SettingsHeader";
-const Stack = createStackNavigator();
+import BottomSheetHeader from "./app/components/BottomSheetHeader";
 const { height, width } = Dimensions.get("window");
 
 //View -> UIView
 export default function App() {
   const top = height - Constants.statusBarHeight;
-  const bottomSheetHeaderHeight = 50;
   const verseCardReferenceHeight = 50;
 
   const [fontSize, setFontSize] = useState(16);
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
-  const { colors, isDark } = useTheme();
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
-  const [topPanelCollapsed, setTopPanelCollapsed] = useState(true);
+  const [] = useState(true);
 
   const searchHistoryRef = React.useRef();
 
@@ -538,42 +530,52 @@ export default function App() {
     bottomSheetRef.current.snapTo(2);
   };
 
-  const renderSettingsHeader = () => <SettingsHeader snapToZero={snapToZero} />;
+  // const renderSettingsHeader = () => <SettingsHeader snapToZero={snapToZero} />;
 
-  const renderSettingsContent = () => (
-    <SettingsScreen
-      fontFamily={fontFamily}
-      fontSize={fontSize}
-      formatting={formatting}
-      top={top}
-      paragraphBibleRef={paragraphBibleRef}
-      setFontSize={setFontSize}
-      setFontFamily={setFontFamily}
-      setFormatting={setFormatting}
-      setDarkMode={setDarkMode}
-    />
+  // const renderStudyHeader = () => (
+  //   <StudyHeader bottomSheetRef={bottomSheetRef} />
+  // );
+
+  const bottomSheetHeader = () => (
+    <BottomSheetHeader snapToZero={snapToZero} settingsMode={settingsMode} />
   );
 
-  const renderStudyHeader = () => (
-    <StudyHeader bottomSheetRef={bottomSheetRef} />
-  );
-
-  const renderStudyContent = () => (
-    // <View style={{ backgroundColor: "green" }}>
+  const bottomSheetContent = () => (
     <Screen flex={0}>
-      <StudyScreen
-        bottomSheetRef={bottomSheetRef}
-        carousel={carousel}
-        crossrefSize={crossrefSize}
-        currentBook={currentBook}
-        fontSize={fontSize}
-        verseCardReferenceHeight={verseCardReferenceHeight}
-        verseList={verseList}
-        width={width}
-      />
+      {settingsMode ? (
+        <SettingsScreen
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          formatting={formatting}
+          top={top}
+          paragraphBibleRef={paragraphBibleRef}
+          setFontSize={setFontSize}
+          setFontFamily={setFontFamily}
+          setFormatting={setFormatting}
+          setDarkMode={setDarkMode}
+        />
+      ) : (
+        <StudyScreen
+          bottomSheetRef={bottomSheetRef}
+          carousel={carousel}
+          crossrefSize={crossrefSize}
+          currentBook={currentBook}
+          fontSize={fontSize}
+          verseCardReferenceHeight={verseCardReferenceHeight}
+          verseList={verseList}
+          width={width}
+        />
+      )}
     </Screen>
-    // </View>
   );
+
+  // const renderStudyContent = () => (
+  //   // <View style={{ backgroundColor: "green" }}>
+  //   <Screen flex={0}>
+
+  //   </Screen>
+  //   // </View>
+  // );
 
   if (!isReady)
     return (
@@ -634,10 +636,8 @@ export default function App() {
           snapPoints={[top, "50%", "0%"]}
           initialSnap={2}
           onStartShouldSetResponderCapture={() => console.log("ScrollView")}
-          renderHeader={settingsMode ? renderSettingsHeader : renderStudyHeader}
-          renderContent={
-            settingsMode ? renderSettingsContent : renderStudyContent
-          }
+          renderHeader={bottomSheetHeader}
+          renderContent={bottomSheetContent}
           // onCloseEnd={() => setFocusedVerse(null)}
         />
       </ThemeProvider>

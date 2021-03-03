@@ -80,8 +80,6 @@
 import React from "react";
 import { FlatList, View } from "react-native";
 
-import { useTheme } from "../config/ThemeContext";
-
 import VerseCard from "../components/VerseCard";
 import { PureComponent } from "react";
 
@@ -114,16 +112,7 @@ export default class StudyScreen extends PureComponent {
   };
 
   render() {
-    const {
-      bottomSheetRef,
-      carousel,
-      crossrefSize,
-      currentBook,
-      fontSize,
-      verseCardReferenceHeight,
-      verseList,
-      width,
-    } = this.props;
+    const { carousel, verseList, width } = this.props;
 
     return (
       <>

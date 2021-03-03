@@ -4,7 +4,7 @@ import { useTheme } from "../config/ThemeContext";
 import StudyToolBar from "./StudyToolBar";
 import { PureComponent } from "react";
 
-export default function StudyHeader({ bottomSheetRef }) {
+export default function BottomSheetHeader({ settingsMode, snapToZero }) {
   const { colors, isDark } = useTheme();
   const styles = {
     header: {
@@ -21,10 +21,16 @@ export default function StudyHeader({ bottomSheetRef }) {
 
   return (
     <View style={[styles.header]}>
-      <StudyToolBar colors={colors} />
+      {settingsMode ? (
+        <Text style={{ color: colors.text, fontSize: 20, fontWeight: "bold" }}>
+          Text Settings
+        </Text>
+      ) : (
+        <StudyToolBar colors={colors} />
+      )}
       <Button
         title="Done"
-        onPress={() => bottomSheetRef.current.snapTo(2)}
+        onPress={snapToZero}
         style={{ textAlign: "center" }}
       />
     </View>

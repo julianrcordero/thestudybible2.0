@@ -17,73 +17,146 @@ import defaultStyles from "../config/styles";
 import NoteHistory from "./NoteHistory";
 import ResourcesScreen from "../screens/ResourcesScreen";
 
-function ResourceBox({
-  children,
-  image,
-  text,
-  title,
-  topRightButton,
-  topRightIcon,
-  topRightOnPress,
-}) {
-  const { colors, isDark } = useTheme();
+// function ResourceBox({
+//   children,
+//   image,
+//   text,
+//   title,
+//   topRightButton,
+//   topRightIcon,
+//   topRightOnPress,
+// }) {
+//   const { colors, isDark } = useTheme();
 
-  return (
-    <View
-      style={{
-        // borderColor: colors.medium,
-        borderWidth: 0.3,
-        marginVertical: 10,
-        padding: 10,
-        width: "100%",
-      }}
-    >
+//   return (
+//     <View
+//       style={{
+//         // borderColor: colors.medium,
+//         borderWidth: 0.3,
+//         marginVertical: 10,
+//         padding: 10,
+//         width: "100%",
+//       }}
+//     >
+//       <View
+//         style={{
+//           flexDirection: "row",
+//           height: 40,
+//           alignItems: "center",
+//           justifyContent: "space-between",
+//           paddingHorizontal: 5,
+//           // marginBottom: 5,
+//         }}
+//       >
+//         {image ? (
+//           <Image
+//             style={{
+//               aspectRatio: 1,
+//               // backgroundColor: "red",
+//               marginRight: 5,
+//               width: 30,
+//             }}
+//             source={image}
+//           ></Image>
+//         ) : null}
+//         <AppText
+//           style={[
+//             styles.titleText,
+//             defaultStyles.bibleText,
+//             { color: colors.text },
+//           ]}
+//         >
+//           {title}
+//         </AppText>
+//         {topRightButton ? (
+//           <View style={{ alignItems: "center", flexDirection: "row" }}>
+//             <Button title={topRightButton} onPress={topRightOnPress} />
+//             <TouchableOpacity style={styles.search} onPress={topRightOnPress}>
+//               <MaterialCommunityIcons
+//                 name={topRightIcon}
+//                 color={colors.icon}
+//                 size={22}
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         ) : null}
+//       </View>
+//       {children}
+//     </View>
+//   );
+// }
+
+class ResourceBox extends PureComponent {
+  // const { colors, isDark } = useTheme();
+
+  render() {
+    const {
+      children,
+      image,
+      text,
+      title,
+      topRightButton,
+      topRightIcon,
+      topRightOnPress,
+    } = this.props;
+
+    return (
       <View
         style={{
-          flexDirection: "row",
-          height: 40,
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 5,
-          // marginBottom: 5,
+          // borderColor: colors.medium,
+          borderWidth: 0.3,
+          marginVertical: 10,
+          padding: 10,
+          width: "100%",
         }}
       >
-        {image ? (
-          <Image
-            style={{
-              aspectRatio: 1,
-              // backgroundColor: "red",
-              marginRight: 5,
-              width: 30,
-            }}
-            source={image}
-          ></Image>
-        ) : null}
-        <AppText
-          style={[
-            styles.titleText,
-            defaultStyles.bibleText,
-            { color: colors.text },
-          ]}
+        <View
+          style={{
+            flexDirection: "row",
+            height: 40,
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 5,
+            // marginBottom: 5,
+          }}
         >
-          {title}
-        </AppText>
-        {topRightButton ? (
-          <View style={{ alignItems: "center", flexDirection: "row" }}>
-            <Button title={topRightButton} onPress={topRightOnPress} />
-            <TouchableOpacity style={styles.search} onPress={topRightOnPress}>
-              <MaterialCommunityIcons
-                name={topRightIcon}
-                color={colors.icon}
-                size={22}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : null}
+          {image ? (
+            <Image
+              style={{
+                aspectRatio: 1,
+                // backgroundColor: "red",
+                marginRight: 5,
+                width: 30,
+              }}
+              source={image}
+            ></Image>
+          ) : null}
+          <AppText
+            style={[
+              styles.titleText,
+              defaultStyles.bibleText,
+              // { color: colors.text },
+            ]}
+          >
+            {title}
+          </AppText>
+          {topRightButton ? (
+            <View style={{ alignItems: "center", flexDirection: "row" }}>
+              <Button title={topRightButton} onPress={topRightOnPress} />
+              <TouchableOpacity style={styles.search} onPress={topRightOnPress}>
+                <MaterialCommunityIcons
+                  name={topRightIcon}
+                  // color={colors.icon}
+                  size={22}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : null}
+        </View>
+        {children}
       </View>
-      {children}
-    </View>
-  );
+    );
+  }
 }
 
 export default class PanelBox extends PureComponent {

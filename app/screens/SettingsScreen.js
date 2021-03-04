@@ -16,7 +16,7 @@ import BiblePickerItem from "../components/BiblePickerItem";
 
 import Slider from "@react-native-community/slider";
 
-export default function SettingsScreen({
+export const SettingsScreen = ({
   fontFamily,
   fontSize,
   formatting,
@@ -25,8 +25,9 @@ export default function SettingsScreen({
   setFormatting,
   // paragraphBibleRef,
   top,
-}) {
+}) => {
   const { setScheme, isDark, colors } = useTheme();
+
   const [showCrossReferences, setShowCrossReferences] = useState(false);
 
   const handleSlide = (value) => {
@@ -206,4 +207,4 @@ export default function SettingsScreen({
       </View>
     </View>
   );
-}
+};

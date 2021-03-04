@@ -22,7 +22,7 @@ import Constants from "expo-constants";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
-import SettingsScreen from "./app/screens/SettingsScreen";
+import { SettingsScreen } from "./app/screens/SettingsScreen";
 import StudyScreen from "./app/screens/StudyScreen";
 import BottomSheetHeader from "./app/components/BottomSheetHeader";
 const { height, width } = Dimensions.get("window");
@@ -560,7 +560,6 @@ export default function App() {
         <StudyScreen
           bottomSheetRef={bottomSheetRef}
           carousel={carousel}
-          colors={colors}
           crossrefSize={crossrefSize}
           currentBook={currentBook}
           fontSize={fontSize}
@@ -571,14 +570,6 @@ export default function App() {
       )}
     </Screen>
   );
-
-  // const renderStudyContent = () => (
-  //   // <View style={{ backgroundColor: "green" }}>
-  //   <Screen flex={0}>
-
-  //   </Screen>
-  //   // </View>
-  // );
 
   if (!isReady)
     return (

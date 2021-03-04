@@ -7,6 +7,66 @@ import AppText from "../components/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Component } from "react";
 
+function VerseHyperlink({ cr }) {
+  return (
+    <>
+      <TouchableOpacity
+        onPress={() => {
+          navigateBible(cr["for"]);
+        }}
+      >
+        <AppText style={styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
+      </TouchableOpacity>
+    </>
+  );
+}
+
+class CrossReferences extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { colors, item } = this.props;
+
+    return (
+      <View style={{ marginBottom: 20 }}>
+        {Array.isArray(item.crossrefs) ? (
+          item.crossrefs.map((crossref) => (
+            <AppText key={crossref["id"]} style={{ color: colors.text }}>
+              {"\n" + crossref["title"] + "\t"}
+              {Array.isArray(crossref["refs"]["ref"]) ? (
+                crossref["refs"]["ref"].map((cr) => (
+                  <VerseHyperlink key={cr["for"]} cr={cr} />
+                ))
+              ) : (
+                <VerseHyperlink
+                  key={crossref["for"]}
+                  cr={crossref["refs"]["ref"]}
+                />
+              )}
+            </AppText>
+          ))
+        ) : item.crossrefs["title"] == "" ? null : (
+          <AppText style={{ color: colors.text }}>
+            {"\n" + item.crossrefs["title"] + "\t"}
+            {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
+              item.crossrefs["refs"]["ref"].map((cr) => (
+                <VerseHyperlink key={cr["for"]} cr={cr} />
+              ))
+            ) : (
+              <VerseHyperlink
+                key={item.crossrefs["for"]}
+                cr={item.crossrefs["refs"]["ref"]}
+              />
+            )}
+          </AppText>
+        )}
+      </View>
+    );
+  }
+}
+
 export default class VerseCard extends Component {
   constructor(props) {
     super(props);
@@ -32,20 +92,6 @@ export default class VerseCard extends Component {
       bottomSheetRef,
       style,
     } = this.props;
-
-    function VerseHyperlink({ cr }) {
-      return (
-        <>
-          <TouchableOpacity
-            onPress={() => {
-              navigateBible(cr["for"]);
-            }}
-          >
-            <AppText style={styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
-          </TouchableOpacity>
-        </>
-      );
-    }
 
     return (
       <View style={style}>
@@ -83,46 +129,9 @@ export default class VerseCard extends Component {
         >
           {item.content}
         </AppText>
-        <View style={{ marginBottom: 20 }}>
-          {Array.isArray(item.crossrefs) ? (
-            item.crossrefs.map((crossref) => (
-              <AppText
-                key={crossref["id"]}
-                // style={{ color: colors.text }}
-              >
-                {"\n" + crossref["title"] + "\t"}
-                {Array.isArray(crossref["refs"]["ref"]) ? (
-                  crossref["refs"]["ref"].map((cr) => (
-                    <VerseHyperlink key={cr["for"]} cr={cr} />
-                  ))
-                ) : (
-                  <VerseHyperlink
-                    key={crossref["for"]}
-                    cr={crossref["refs"]["ref"]}
-                  />
-                )}
-              </AppText>
-            ))
-          ) : item.crossrefs["title"] == "" ? null : (
-            <AppText
-            // style={{ color: colors.text }}
-            >
-              {"\n" + item.crossrefs["title"] + "\t"}
-              {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
-                item.crossrefs["refs"]["ref"].map((cr) => (
-                  <VerseHyperlink key={cr["for"]} cr={cr} />
-                ))
-              ) : (
-                <VerseHyperlink
-                  key={item.crossrefs["for"]}
-                  cr={item.crossrefs["refs"]["ref"]}
-                />
-              )}
-            </AppText>
-          )}
-        </View>
+        <CrossReferences item={item} colors={colors} />
 
-        <PanelBox
+        {/* <PanelBox
           carousel={carousel}
           // colors={colors}
           fontSize={fontSize}
@@ -131,7 +140,7 @@ export default class VerseCard extends Component {
           // paragraphBibleRef={paragraphBibleRef}
           bottomSheetRef={bottomSheetRef}
           // landscape={landscape}
-        ></PanelBox>
+        ></PanelBox> */}
       </View>
     );
   }

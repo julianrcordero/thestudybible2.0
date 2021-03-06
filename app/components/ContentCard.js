@@ -12,6 +12,7 @@ import { useTheme } from "../config/ThemeContext";
 
 import HTML from "react-native-render-html";
 import AppText from "./Text";
+import defaultStyles from "../config/styles";
 
 function ContentCard({ date, item, navigation }) {
   const firstTwo = item.id.substring(0, 2);
@@ -19,7 +20,7 @@ function ContentCard({ date, item, navigation }) {
   var scripture = item.scripture;
   var transcript = item.transcript;
 
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   switch (firstTwo) {
     case "ST":
@@ -80,7 +81,7 @@ function ContentCard({ date, item, navigation }) {
       // width: "100%",
     },
     date: {
-      color: colors.secondary,
+      color: colors.text,
       fontSize: 12,
       fontStyle: "italic",
     },
@@ -98,12 +99,12 @@ function ContentCard({ date, item, navigation }) {
       paddingRight: 10,
     },
     scripture: {
-      color: colors.medium,
+      color: colors.text,
       fontSize: 12,
       lineHeight: 22,
     },
     title: {
-      color: colors.black,
+      color: colors.text,
       fontSize: 15,
       fontWeight: "bold",
       textAlign: "left",
@@ -142,7 +143,7 @@ function ContentCard({ date, item, navigation }) {
           </View>
           <View
             style={{
-              backgroundColor: "green",
+              // backgroundColor: "green",
               flexGrow: 1,
               flexShrink: 1,
               justifyContent: "flex-start",
@@ -150,15 +151,17 @@ function ContentCard({ date, item, navigation }) {
             }}
           >
             <HTML
+              color={colors.text}
               source={{
                 html: transcript,
               }}
+              baseFontStyle={defaultStyles.bibleText}
               tagsStyles={{
-                strong: { fontSize: 12, lineHeight: 20 },
-                li: { fontSize: 10, lineHeight: 15 },
-                h4: { fontSize: 11, lineHeight: 20 },
-                em: { fontSize: 11 },
-                p: { fontSize: 12, lineHeight: 20 },
+                strong: { color: colors.text, fontSize: 12, lineHeight: 20 },
+                li: { color: colors.text, fontSize: 10, lineHeight: 15 },
+                h4: { color: colors.text, fontSize: 11, lineHeight: 20 },
+                em: { color: colors.text, fontSize: 11 },
+                p: { color: colors.text, fontSize: 12, lineHeight: 20 },
               }}
               // contentWidth={100}
             />

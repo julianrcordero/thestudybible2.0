@@ -3,11 +3,7 @@ import cache from "../utility/cache";
 import authStorage from "../auth/storage";
 
 const apiClient = create({
-  // baseURL: "http://192.168.1.181:9000/api",
-  // baseURL: "http://192.168.254.65:9000/api", //AT HOME
-  // baseURL: "http://10.101.5.246:9000/api", //AT GTY
-  baseURL: "https://apibeta.gty.org/api/values",
-  // baseURL: "https://localhost:44364/api/values",
+  baseURL: "https://apitest.gty.org/api/values",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
@@ -23,11 +19,13 @@ apiClient.get = async (url, params, axiosConfig) => {
   // After
 
   if (response.ok) {
+    // console.log("storing this: ", url);
     cache.store(url, response.data);
 
     return response;
   }
 
+  // console.log("retrieving this: ", url);
   const obj = await cache.get(url);
   const data = Object.values(obj);
   return data ? { ok: true, data } : response;

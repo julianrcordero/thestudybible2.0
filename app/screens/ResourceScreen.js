@@ -15,11 +15,11 @@ import HTML from "react-native-render-html";
 function ResourceScreen({ route }) {
   const { item, date, imageSource } = route.params;
   const fontSize = 16;
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   const styles = StyleSheet.create({
     detailsContainer: {
-      backgroundColor: colors.white,
+      backgroundColor: colors.background,
       // borderColor: colors.light,
       borderWidth: 0.3,
       paddingHorizontal: 25,
@@ -33,7 +33,7 @@ function ResourceScreen({ route }) {
     },
 
     date: {
-      backgroundColor: "yellow",
+      // backgroundColor: "yellow",
       fontSize: 18,
       fontStyle: "italic",
       textAlign: "right",
@@ -41,16 +41,17 @@ function ResourceScreen({ route }) {
     },
     header: {
       // alignItems: "flex-start",
-      backgroundColor: "orange",
+      // backgroundColor: "orange",
       // justifyContent: "center",
       // marginVertical: 10,
     },
     scripture: {
-      color: colors.secondary,
+      color: colors.text,
       fontWeight: "bold",
       fontSize: 18,
     },
     title: {
+      color: colors.text,
       fontSize: 22,
       fontWeight: "bold",
       // paddingVertical: 10,
@@ -59,14 +60,14 @@ function ResourceScreen({ route }) {
       // fontSize: 20,
     },
     userContainer: {
-      backgroundColor: colors.white,
+      // backgroundColor: colors.background,
       marginVertical: 15,
     },
   });
 
   return (
     <StretchyScrollView
-      backgroundColor={colors.white}
+      backgroundColor={colors.background}
       // contentInsetAdjustmentBehavior={""}
       image={
         imageSource != "" ? imageSource : require("../assets/gtylogo.jpg")
@@ -100,7 +101,7 @@ function ResourceScreen({ route }) {
           source={{
             html: item.transcript,
           }}
-          baseFontStyle={defaultStyles.bibleText}
+          baseFontStyle={{ color: colors.text }}
           tagsStyles={
             {
               // strong: { fontSize: 16, lineHeight: 36 },

@@ -55,7 +55,7 @@ const AppNavigator = (props) =>
 
     return (
       <Tab.Navigator
-        initialRouteName="Bible"
+        initialRouteName="Home"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{

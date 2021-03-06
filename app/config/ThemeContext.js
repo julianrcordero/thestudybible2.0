@@ -8,9 +8,6 @@ export const ThemeContext = React.createContext({
   setScheme: () => {},
 });
 
-// Custom hook to get the theme object returns {isDark, colors, setScheme}
-export const useTheme = () => React.useContext(ThemeContext);
-
 export const ThemeProvider = (props) => {
   // Getting the device color theme, this will also work with react-native-web
   const colorScheme = useColorScheme(); // Can be dark | light | no-preference
@@ -19,6 +16,7 @@ export const ThemeProvider = (props) => {
    * To enable changing the app theme dynamicly in the app (run-time)
    * we're gonna use useState so we can override the default device theme
    */
+  console.log("Device is in", colorScheme, "mode");
   const [isDark, setIsDark] = useState(colorScheme === "dark");
 
   // Listening to changes of device appearance while in run-time
@@ -31,7 +29,10 @@ export const ThemeProvider = (props) => {
     // Chaning color schemes according to theme
     colors: isDark ? darkColors : lightColors,
     // Overrides the isDark value will cause re-render inside the context.
-    setScheme: (scheme) => setIsDark(scheme === "dark"),
+    setScheme: (scheme) => {
+      console.log("setting scheme from", scheme, "to the opposite");
+      setIsDark(scheme === "dark");
+    },
   };
 
   return (
@@ -40,3 +41,6 @@ export const ThemeProvider = (props) => {
     </ThemeContext.Provider>
   );
 };
+
+// Custom hook to get the theme object returns {isDark, colors, setScheme}
+export const useTheme = () => React.useContext(ThemeContext);

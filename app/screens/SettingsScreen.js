@@ -47,6 +47,7 @@ export const SettingsScreen = ({
   };
 
   const handleDarkMode = () => {
+    console.log("Settings Screen is in ", isDark, " mode");
     isDark ? setScheme("light") : setScheme("dark");
   };
 
@@ -136,7 +137,7 @@ export const SettingsScreen = ({
             >
               <Text
                 style={{
-                  color: colors.text,
+                  color: font == fontFamily ? colors.secondary : colors.text,
                 }}
               >
                 {font}
@@ -164,7 +165,7 @@ export const SettingsScreen = ({
             >
               <Text
                 style={{
-                  color: colors.text,
+                  color: formatting == format ? colors.secondary : colors.text,
                 }}
               >
                 {format}

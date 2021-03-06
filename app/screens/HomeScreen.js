@@ -1,4 +1,10 @@
-import React, { useCallback, useState, useEffect, PureComponent } from "react";
+import React, {
+  Component,
+  useCallback,
+  useState,
+  useEffect,
+  PureComponent,
+} from "react";
 import {
   Button,
   FlatList,
@@ -20,122 +26,161 @@ import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useAuth from "../auth/useAuth";
 
-class MarkupItem extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <TouchableOpacity
+function MarkupItem({ icon, title }) {
+  const { colors } = useTheme();
+  return (
+    <TouchableOpacity
+      style={{
+        alignItems: "center",
+        borderWidth: 0.3,
+        // borderColor: colors.secondary,
+        flex: 1 / 2,
+        height: 150,
+        justifyContent: "center",
+        paddingTop: 30,
+      }}
+    >
+      <MaterialCommunityIcons
+        style={{}}
+        name={icon}
+        color={colors.icon}
+        size={38}
+      />
+      <AppText
         style={{
-          alignItems: "center",
-          borderWidth: 0.3,
-          // borderColor: colors.secondary,
-          flex: 1 / 2,
-          height: 150,
-          justifyContent: "center",
-          paddingTop: 30,
+          color: "cornflowerblue",
+          fontWeight: "bold",
+          marginVertical: 15,
+          fontSize: 14,
         }}
       >
-        <MaterialCommunityIcons
-          style={{}}
-          name={this.props.icon}
-          // color={colors.black}
-          size={38}
-        />
-        <AppText
-          style={{
-            color: "cornflowerblue",
-            fontWeight: "bold",
-            marginVertical: 15,
-            fontSize: 14,
-          }}
-        >
-          {this.props.title}
-        </AppText>
-      </TouchableOpacity>
-    );
-  }
+        {title}
+      </AppText>
+    </TouchableOpacity>
+  );
 }
 
-class ResourceSection extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+function ResourceSection({ data, navigation, showDate, title }) {
+  const { colors } = useTheme();
 
-  render() {
-    const { data, navigation, showDate, title } = this.props;
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  var today = new Date(),
+    date = monthNames[today.getMonth()] + " " + today.getDate();
 
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    var today = new Date(),
-      date = monthNames[today.getMonth()] + " " + today.getDate();
+  const getItemLayout = (data, index) => ({
+    length: 500,
+    offset: 500 * index,
+    index,
+  });
 
-    return (
-      <View style={{ marginBottom: 15 }}>
-        <View
+  const keyExtractor = (listing) => listing.id.toString();
+
+  const renderItem = ({ item }) => (
+    <ContentCard
+      item={item}
+      date={date}
+      navigation={navigation}
+      // onPress={() =>
+      //   navigation.navigate(routes.LISTING_DETAILS, { item, date })
+      // }
+    />
+  );
+
+  const listEmptyComponent = () => {
+    return <View style={{ backgroundColor: "green" }}></View>;
+  };
+
+  return (
+    <View style={{ marginBottom: 15 }}>
+      <View
+        style={{
+          alignItems: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <AppText
           style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
+            color: colors.text,
+            fontWeight: "bold",
+            fontSize: 16,
+            paddingVertical: 15,
           }}
         >
+          {title}
+        </AppText>
+        {showDate ? (
           <AppText
-            style={{ fontWeight: "bold", fontSize: 16, paddingVertical: 15 }}
+            style={{ color: colors.text, fontSize: 18, fontStyle: "italic" }}
           >
-            {title}
+            {date}
           </AppText>
-          {showDate ? (
-            <AppText style={{ fontSize: 18, fontStyle: "italic" }}>
-              {date}
-            </AppText>
-          ) : null}
-        </View>
-        <FlatList
-          data={data}
-          horizontal
-          getItemLayout={(data, index) => ({
-            length: 500,
-            offset: 500 * index,
-            index,
-          })}
-          keyExtractor={(listing) => listing.id.toString()}
-          renderItem={({ item }) => (
-            <ContentCard
-              item={item}
-              date={date}
-              navigation={navigation}
-              // onPress={() =>
-              //   navigation.navigate(routes.LISTING_DETAILS, { item, date })
-              // }
-            />
-          )}
-          style={{ flexGrow: 0 }}
-        />
+        ) : null}
       </View>
-    );
-  }
+      <FlatList
+        // data={data}
+        // horizontal
+        // getItemLayout={(data, index) => ({
+        //   length: 500,
+        //   offset: 500 * index,
+        //   index,
+        // })}
+        // keyExtractor={(listing) => listing.id.toString()}
+        // renderItem={({ item }) => (
+        //   <ContentCard
+        //     item={item}
+        //     date={date}
+        //     navigation={navigation}
+        //     // onPress={() =>
+        //     //   navigation.navigate(routes.LISTING_DETAILS, { item, date })
+        //     // }
+        //   />
+        // )}
+        // style={{ flexGrow: 0 }}
+
+        bounces={false}
+        data={data}
+        decelerationRate={"fast"}
+        // extraData={this.state}
+        getItemLayout={getItemLayout}
+        horizontal
+        initialNumToRender={5}
+        keyExtractor={keyExtractor}
+        listEmptyComponent={listEmptyComponent}
+        // maxToRenderPerBatch={5}
+        onStartShouldSetResponderCapture={() => console.log("Vertical Scroll")}
+        // ref={carousel}
+        removeClippedSubviews
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        snapToAlignment={"start"}
+        // snapToInterval={width}
+        updateCellsBatchingPeriod={25}
+        windowSize={11}
+      />
+    </View>
+  );
 }
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-function HomeScreen({ navigation, darkMode }) {
-  const { colors, isDark } = useTheme();
+function HomeScreen({ navigation }) {
+  const { colors } = useTheme();
   const getDevotionalsApi = useApi(listingsApi.getDevotionals);
   const getResourcesApi = useApi(listingsApi.getResources);
 
@@ -145,17 +190,18 @@ function HomeScreen({ navigation, darkMode }) {
   const getResources = () => {
     getResourcesApi.request();
 
-    setBlogs(getResourcesApi.data.filter((d) => d.category == "blog"));
-    setQnas(
-      getResourcesApi.data.filter((d) => d.category == "bibleqnas-library")
-    );
+    // setBlogs(getResourcesApi.data.filter((d) => d.category == "blog"));
+    // setQnas(
+    //   getResourcesApi.data.filter((d) => d.category == "bibleqnas-library")
+    // );
   };
 
   const requestAll = () => {
     setRefreshing(true);
     getDevotionalsApi.request();
+    // getResourcesApi.request();
     getResources();
-    wait(4000).then(() => setRefreshing(false));
+    wait(6000).then(() => setRefreshing(false));
   };
 
   const { user } = useAuth();
@@ -163,7 +209,7 @@ function HomeScreen({ navigation, darkMode }) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
-    requestAll();
+    refreshAll();
   }, []);
 
   const refreshAll = useCallback(() => {
@@ -178,7 +224,7 @@ function HomeScreen({ navigation, darkMode }) {
     <View style={{ flex: 1, paddingBottom: 70 }}>
       <ScrollView
         style={{
-          backgroundColor: darkMode ? colors.primary : colors.white,
+          backgroundColor: colors.background,
           paddingHorizontal: 15,
           flex: 1,
         }}
@@ -188,7 +234,7 @@ function HomeScreen({ navigation, darkMode }) {
       >
         {/* <ActivityIndicator visible={getDevotionalsApi.loading} /> */}
         {refreshing ? null : ( // <Indicator animating={getDevotionalsApi.loading} size={"large"} />
-          <AppText style={{ fontSize: 24, margin: 10 }}>
+          <AppText style={{ color: colors.text, fontSize: 24, margin: 10 }}>
             {"Good "}
             {hour > 11 ? "afternoon" : "morning"}
             {user ? ", " + user.name.substr(0, user.name.indexOf(" ")) : null}
@@ -197,6 +243,7 @@ function HomeScreen({ navigation, darkMode }) {
         )}
 
         <ResourceSection
+          colors={colors}
           title={"DEVOTIONALS"}
           showDate={true}
           data={getDevotionalsApi.data}
@@ -212,7 +259,9 @@ function HomeScreen({ navigation, darkMode }) {
                 justifyContent: "center",
               }}
             >
-              <AppText>Couldn't retrieve the listings.</AppText>
+              <AppText style={{ color: colors.text }}>
+                Couldn't retrieve the listings.
+              </AppText>
               <Button title="Retry" onPress={getDevotionalsApi.request} />
             </View>
           )}
@@ -239,15 +288,48 @@ function HomeScreen({ navigation, darkMode }) {
         <ResourceSection
           title={"QUESTIONS & ANSWERS"}
           showDate={false}
-          data={qnas}
+          data={getResourcesApi.data.filter(
+            (d) => d.category == "bibleqnas-library"
+          )}
           navigation={navigation}
         />
+
+        {(getResourcesApi.data.length == 0 || getResourcesApi.error) &&
+          !refreshing && (
+            <View
+              style={{
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <AppText style={{ color: colors.text }}>
+                Couldn't retrieve the listings.
+              </AppText>
+              <Button title="Retry" onPress={getResources} />
+            </View>
+          )}
         <ResourceSection
           title={"BLOGS"}
           showDate={false}
-          data={blogs}
+          data={getResourcesApi.data.filter((d) => d.category == "blog")}
           navigation={navigation}
         />
+        {(getResourcesApi.data.length == 0 || getResourcesApi.error) &&
+          !refreshing && (
+            <View
+              style={{
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <AppText style={{ color: colors.text }}>
+                Couldn't retrieve the listings.
+              </AppText>
+              <Button title="Retry" onPress={getResources} />
+            </View>
+          )}
       </ScrollView>
     </View>
   );

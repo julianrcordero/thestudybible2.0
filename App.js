@@ -30,13 +30,11 @@ const { height, width } = Dimensions.get("window");
 //View -> UIView
 export default function App() {
   const top = height - Constants.statusBarHeight;
-  const verseCardReferenceHeight = 50;
 
   const [fontSize, setFontSize] = useState(16);
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
-  const { colors, isDark } = useTheme();
   const crossrefSize = 12;
 
   const topPanel = React.useRef();
@@ -563,7 +561,6 @@ export default function App() {
           crossrefSize={crossrefSize}
           currentBook={currentBook}
           fontSize={fontSize}
-          verseCardReferenceHeight={verseCardReferenceHeight}
           verseList={verseList}
           width={width}
         />

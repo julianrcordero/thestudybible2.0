@@ -22,7 +22,7 @@ function ListItem({
   renderRightActions,
   titleSize = 14,
 }) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
@@ -47,7 +47,7 @@ function ListItem({
       borderWidth: 0.3,
     },
     subTitle: {
-      color: colors.medium,
+      color: colors.text,
       fontSize: 12,
     },
     title: {

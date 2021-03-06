@@ -11,7 +11,6 @@ import { getBottomSpace } from "react-native-iphone-x-helper";
 
 import reactStringReplace from "react-string-replace";
 
-// import * as IJohn from "../json/bible/I John.json";
 import bookPaths from "../json/bible/Bible";
 
 import { useTheme } from "../config/ThemeContext";
@@ -45,7 +44,7 @@ export default function BibleScreen({
 
   useEffect(() => {
     changeBibleBook({
-      label: "I John",
+      label: "Genesis",
       value: 1,
       backgroundColor: "#345171",
       icon: "apps",
@@ -61,18 +60,14 @@ export default function BibleScreen({
   )["book"];
 
   const [sections, setSections] = useState([]);
-  const [] = useState([]);
   // const [currentBook, setCurrentBook] = useState(books[0]);
   const [currentChapter] = useState(1);
   const [currentVerse] = useState(1);
   // const [bookNotes, setBookNotes] = useState([]);
-  const [] = useState(false);
 
   // const { landscape } = useDeviceOrientation();
   const [] = useState(true);
   const { height } = Dimensions.get("window");
-  // const paragraphBibleRef = React.useRef();
-  // const [verseList, setVerseList] = useState([]);
   // const [focusedVerse, setFocusedVerse] = useState(null);
 
   const changeBibleBook = (newBook) => {

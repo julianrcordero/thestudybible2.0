@@ -1,66 +1,64 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import PanelBox from "../components/PanelBox";
 import AppText from "../components/Text";
+import { useTheme } from "../config/ThemeContext";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Component } from "react";
 
-function VerseHyperlink({ cr }) {
-  return (
-    <>
-      <TouchableOpacity
-        onPress={() => {
-          navigateBible(cr["for"]);
-        }}
-      >
-        <AppText style={styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
-      </TouchableOpacity>
-    </>
-  );
-}
+const goToVerse = () => {
+  navigateBible(cr["for"]);
+};
 
-class CrossReferences extends Component {
+class VerseHyperlink extends PureComponent {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { colors, item } = this.props;
+    const { cr } = this.props;
+    return (
+      <TouchableOpacity onPress={goToVerse}>
+        <AppText style={styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
+      </TouchableOpacity>
+    );
+  }
+}
+
+function CrossRef({ myObject }) {
+  const { colors } = useTheme();
+
+  return (
+    <AppText style={{ color: colors.text }}>
+      {"\n" + myObject["title"] + "\t"}
+      {Array.isArray(myObject["refs"]["ref"]) ? (
+        myObject["refs"]["ref"].map((cr) => (
+          <VerseHyperlink key={cr["for"]} cr={cr} />
+        ))
+      ) : (
+        <VerseHyperlink key={myObject["for"]} cr={myObject["refs"]["ref"]} />
+      )}
+    </AppText>
+  );
+}
+
+class CrossReferences extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { crossrefs } = this.props;
 
     return (
       <View style={{ marginBottom: 20 }}>
-        {Array.isArray(item.crossrefs) ? (
-          item.crossrefs.map((crossref) => (
-            <AppText key={crossref["id"]} style={{ color: colors.text }}>
-              {"\n" + crossref["title"] + "\t"}
-              {Array.isArray(crossref["refs"]["ref"]) ? (
-                crossref["refs"]["ref"].map((cr) => (
-                  <VerseHyperlink key={cr["for"]} cr={cr} />
-                ))
-              ) : (
-                <VerseHyperlink
-                  key={crossref["for"]}
-                  cr={crossref["refs"]["ref"]}
-                />
-              )}
-            </AppText>
+        {Array.isArray(crossrefs) ? (
+          crossrefs.map((crossref) => (
+            <CrossRef key={crossref["id"]} myObject={crossref} />
           ))
-        ) : item.crossrefs["title"] == "" ? null : (
-          <AppText style={{ color: colors.text }}>
-            {"\n" + item.crossrefs["title"] + "\t"}
-            {Array.isArray(item.crossrefs["refs"]["ref"]) ? (
-              item.crossrefs["refs"]["ref"].map((cr) => (
-                <VerseHyperlink key={cr["for"]} cr={cr} />
-              ))
-            ) : (
-              <VerseHyperlink
-                key={item.crossrefs["for"]}
-                cr={item.crossrefs["refs"]["ref"]}
-              />
-            )}
-          </AppText>
+        ) : crossrefs["title"] == "" ? null : (
+          <CrossRef myObject={crossrefs} />
         )}
       </View>
     );
@@ -77,20 +75,23 @@ export default class VerseCard extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { item } = this.props;
-    return item.content !== nextProps.item.content;
+    const { content } = this.props;
+    return content !== nextProps.content;
   }
 
   render() {
     const {
       carousel,
+      chapter,
       colors,
-      currentBook,
-      item,
-      fontSize,
+      content,
+      crossrefs,
       crossRefSize,
-      bottomSheetRef,
+      currentBook,
+      fontSize,
+      johnsNote,
       style,
+      title,
     } = this.props;
 
     return (
@@ -112,7 +113,7 @@ export default class VerseCard extends Component {
                 textAlign: "left",
               }}
             >
-              {currentBook.label + " " + item.chapter + " : " + item.title}
+              {currentBook.label + " " + chapter + " : " + title}
             </AppText>
             {this.state.loved ? (
               <MaterialCommunityIcons name="heart" color="red" size={22} />
@@ -127,20 +128,17 @@ export default class VerseCard extends Component {
             lineHeight: fontSize * 2,
           }}
         >
-          {item.content}
+          {content}
         </AppText>
-        <CrossReferences item={item} colors={colors} />
+        <CrossReferences crossrefs={crossrefs} />
 
-        {/* <PanelBox
+        <PanelBox
           carousel={carousel}
-          // colors={colors}
+          colors={colors}
           fontSize={fontSize}
-          johnsNote={item.johnsNote}
+          johnsNote={johnsNote}
           crossRefSize={crossRefSize}
-          // paragraphBibleRef={paragraphBibleRef}
-          bottomSheetRef={bottomSheetRef}
-          // landscape={landscape}
-        ></PanelBox> */}
+        ></PanelBox>
       </View>
     );
   }

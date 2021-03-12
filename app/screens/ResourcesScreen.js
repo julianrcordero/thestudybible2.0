@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import ListItem from "../components/lists/BibleListItem";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 const initialMessages = [
   {

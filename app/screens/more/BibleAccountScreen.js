@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import Icon from "../../components/Icon";
 import ListItem from "../../components/lists/BibleListItem";
 
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import ListItemSeparatorComponent from "../../components/lists/ListItemSeparator";
 

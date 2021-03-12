@@ -11,7 +11,7 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../../components/forms/Index";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 const validationSchema = yup.object().shape({
   code: yup

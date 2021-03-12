@@ -18,7 +18,7 @@ import {
 } from "../../components/forms/Index";
 import authApi from "../../api/auth";
 
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import { Formik } from "formik";
 import useAuth from "../../auth/useAuth";

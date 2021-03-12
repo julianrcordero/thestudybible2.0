@@ -1,8 +1,5 @@
 import React from "react";
-import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { getBottomSpace } from "react-native-iphone-x-helper";
 
 import MoreNavigator from "./MoreNavigator";
 import FeedNavigator from "./FeedNavigator";
@@ -13,7 +10,7 @@ import BibleScreen from "../screens/BibleScreen";
 import useNotifications from "../hooks/useNotifications";
 import Animated from "react-native-reanimated";
 import MenuButton from "../components/MenuButton";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 // import AuthNavigator from "./AuthNavigator";
 
@@ -22,10 +19,14 @@ const Tab = createBottomTabNavigator();
 const HEADER_HEIGHT = 70;
 const scrollY = new Animated.Value(0);
 const diffClampScrollY = Animated.diffClamp(scrollY, 0, HEADER_HEIGHT);
-const headerY = Animated.interpolate(diffClampScrollY, {
+const headerY = Animated.interpolateNode(diffClampScrollY, {
   inputRange: [0, HEADER_HEIGHT],
   outputRange: [0, -HEADER_HEIGHT],
 });
+// (diffClampScrollY, {
+//   inputRange: [0, HEADER_HEIGHT],
+//   outputRange: [0, -HEADER_HEIGHT],
+// });
 const navigationY = Animated.multiply(headerY, -1);
 
 const AppNavigator = (props) =>
@@ -46,7 +47,6 @@ const AppNavigator = (props) =>
       searchHistoryRef,
       setCurrentBook,
       setSettingsMode,
-      setTopPanelCollapsed,
       setVerseList,
       titleSize,
       topPanel,
@@ -118,8 +118,8 @@ const AppNavigator = (props) =>
     );
   };
 
-function MyTabBar({ state, descriptors, navigation, darkMode }) {
-  const { colors, isDark } = useTheme();
+function MyTabBar({ state, descriptors, navigation }) {
+  const { colors } = useTheme();
 
   return (
     <Animated.View

@@ -3,7 +3,6 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import reactStringReplace from "react-string-replace";
 import verseFormatted from "./VerseFormatted";
-// import { DarkTheme } from "@react-navigation/native";
 
 export default class Verse extends PureComponent {
   constructor(props) {

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 
 import NoteHistoryItem from "./NoteHistoryItem";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default function NoteHistory({ carousel, noteHistory, handleDelete }) {
   const { colors, isDark } = useTheme();

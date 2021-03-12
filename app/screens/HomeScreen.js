@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import listingsApi from "../api/listings";
 import AppText from "../components/Text";

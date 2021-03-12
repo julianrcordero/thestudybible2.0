@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function AppButton({ title, onPress, color = "primary", ...otherProps }) {
   const { colors, isDark } = useTheme();

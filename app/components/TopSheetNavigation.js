@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import AppText from "./Text";
-import { useTheme } from "../config/ThemeContext";
 
 import Collapsible from "react-native-collapsible";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -156,7 +155,7 @@ class TopSheetNavigation extends PureComponent {
   });
 
   render() {
-    const { colors, height } = this.props;
+    const { height } = this.props;
 
     return (
       <Collapsible

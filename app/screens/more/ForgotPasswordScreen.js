@@ -8,7 +8,7 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../../components/forms/Index";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import AppButton from "../../components/Button";
 import authApi from "../../api/auth";

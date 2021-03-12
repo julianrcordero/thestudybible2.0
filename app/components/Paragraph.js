@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Text } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default class Paragraph extends PureComponent {
   constructor(props) {

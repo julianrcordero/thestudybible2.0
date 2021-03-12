@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { FlatList, Text } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import defaultStyles from "../config/styles";
 import Paragraph from "./Paragraph";

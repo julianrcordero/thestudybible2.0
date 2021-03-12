@@ -1,28 +1,7 @@
 import React, { PureComponent } from "react";
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-} from "react-native";
-import defaultStyles from "../config/styles";
-import AppText from "./Text";
-import Screen from "./Screen";
-import { useTheme } from "../config/ThemeContext";
+import { FlatList, Text, View } from "react-native";
 
-import Collapsible from "react-native-collapsible";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { createStackNavigator } from "@react-navigation/stack";
-const Stack = createStackNavigator();
-import BooksGridScreen from "../screens/BooksGridScreen";
-import BooksListScreen from "../screens/BooksListScreen";
-import ChaptersGridScreen from "../screens/ChaptersGridScreen";
-import ListItem from "../components/lists/ListItem";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
-import SegmentedControl from "@react-native-community/segmented-control";
-import { NavigationContainer } from "@react-navigation/native";
 import SearchHistoryItem from "./lists/SearchHistoryItem";
 
 export default class SearchHistory extends PureComponent {
@@ -61,7 +40,7 @@ export default class SearchHistory extends PureComponent {
     </View>
   );
 
-  renderSearchItem = ({ item, index, separators }) => {
+  renderSearchItem = ({ item }) => {
     return (
       <SearchHistoryItem
         title={item.title}

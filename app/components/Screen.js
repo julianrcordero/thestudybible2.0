@@ -1,12 +1,7 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView } from "react-native";
-// import {
-//   SafeAreaView,
-//   useSafeAreaInsets,
-// } from "react-native-safe-area-context";
-import { getBottomSpace } from "react-native-iphone-x-helper";
-import { useTheme } from "../config/ThemeContext";
+import { StatusBar, StyleSheet, SafeAreaView } from "react-native";
+import { useTheme } from "../config/ThemeProvider";
 
 function Screen({ children, style, flex = 1 }) {
   const { colors, isDark } = useTheme();
@@ -19,15 +14,21 @@ function Screen({ children, style, flex = 1 }) {
   });
 
   return (
-    <SafeAreaView
-      style={[
-        styles.screen,
-        style,
-        // { paddingTop: useSafeAreaInsets().top }
-      ]}
-    >
-      {children}
-    </SafeAreaView>
+    <>
+      <StatusBar
+        animated
+        barStyle={isDark ? "light-content" : "dark-content"}
+      />
+      <SafeAreaView
+        style={[
+          styles.screen,
+          style,
+          // { paddingTop: useSafeAreaInsets().top }
+        ]}
+      >
+        {children}
+      </SafeAreaView>
+    </>
   );
 }
 

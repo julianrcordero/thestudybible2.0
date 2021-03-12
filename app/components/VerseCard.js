@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import PanelBox from "../components/PanelBox";
 import AppText from "../components/Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -65,7 +65,7 @@ class CrossReferences extends PureComponent {
   }
 }
 
-export default class VerseCard extends Component {
+export default class VerseCard extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -74,10 +74,53 @@ export default class VerseCard extends Component {
     loved: false,
   };
 
-  shouldComponentUpdate(nextProps) {
-    const { content } = this.props;
-    return content !== nextProps.content;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   const { content } = this.props;
+  //   return content !== nextProps.content;
+  // }
+
+  styles = StyleSheet.create({
+    basicTextStyle: {
+      color: this.props.colors.text,
+      fontSize: this.props.fontSize,
+    },
+  });
+
+  reference = (book, chapter, title) => (
+    <View
+      style={{
+        alignItems: "center",
+        height: 50,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+      }}
+    >
+      <AppText
+        style={[
+          styles.basicTextStyle,
+          {
+            fontWeight: "bold",
+            textAlign: "left",
+          },
+        ]}
+      >
+        {book + " " + chapter + " : " + title}
+      </AppText>
+    </View>
+  );
+
+  verse = (content) => (
+    <AppText
+      style={[
+        styles.basicTextStyle,
+        {
+          lineHeight: this.props.fontSize * 2,
+        },
+      ]}
+    >
+      {content}
+    </AppText>
+  );
 
   render() {
     const {
@@ -96,55 +139,69 @@ export default class VerseCard extends Component {
 
     return (
       <View style={style}>
-        <View
-          style={{
-            alignItems: "center",
-            height: 50,
-            flexDirection: "row",
-            justifyContent: "flex-start",
-          }}
-        >
-          <View style={{ alignContent: "flex-start", flexDirection: "column" }}>
-            <AppText
-              style={{
-                color: colors.text,
-                fontSize: fontSize,
-                fontWeight: "bold",
-                textAlign: "left",
-              }}
-            >
-              {currentBook.label + " " + chapter + " : " + title}
-            </AppText>
-            {this.state.loved ? (
-              <MaterialCommunityIcons name="heart" color="red" size={22} />
-            ) : null}
-          </View>
-        </View>
-
-        <AppText
+        {/* <AppText
           style={{
             color: colors.text,
             fontSize: fontSize,
-            lineHeight: fontSize * 2,
+            fontWeight: "bold",
+            textAlign: "left",
           }}
         >
-          {content}
-        </AppText>
-        <CrossReferences crossrefs={crossrefs} />
-
-        <PanelBox
-          carousel={carousel}
-          colors={colors}
-          fontSize={fontSize}
-          johnsNote={johnsNote}
-          crossRefSize={crossRefSize}
-        ></PanelBox>
+          {currentBook.label + " " + chapter + " : " + title}
+        </AppText> */}
+        {this.reference(currentBook.label, chapter, title)}
+        {this.verse(content)}
       </View>
+      // <View style={style}>
+      //   <View
+      //     style={{
+      //       alignItems: "center",
+      //       height: 50,
+      //       flexDirection: "row",
+      //       justifyContent: "flex-start",
+      //     }}
+      //   >
+      //     <View style={{ alignContent: "flex-start", flexDirection: "column" }}>
+      //       <AppText
+      //         style={{
+      //           color: colors.text,
+      //           fontSize: fontSize,
+      //           fontWeight: "bold",
+      //           textAlign: "left",
+      //         }}
+      //       >
+      //         {currentBook.label + " " + chapter + " : " + title}
+      //       </AppText>
+      //       {this.state.loved ? (
+      //         <MaterialCommunityIcons name="heart" color="red" size={22} />
+      //       ) : null}
+      //     </View>
+      //   </View>
+
+      //   <AppText
+      //     style={{
+      //       color: colors.text,
+      //       fontSize: fontSize,
+      //       lineHeight: fontSize * 2,
+      //     }}
+      //   >
+      //     {content}
+      //   </AppText>
+      //   <CrossReferences crossrefs={crossrefs} />
+
+      //   <PanelBox
+      //     carousel={carousel}
+      //     colors={colors}
+      //     fontSize={fontSize}
+      //     johnsNote={johnsNote}
+      //     crossRefSize={crossRefSize}
+      //   ></PanelBox>
+      // </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  verseLink: {
-    color: "#00aeef",
-  },
-});
+// const styles = StyleSheet.create({
+//   verseLink: {
+//     color: "#00aeef",
+//   },
+// });

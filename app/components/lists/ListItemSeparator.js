@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 function ListItemSeparator(props) {
   const { colors, isDark } = useTheme();

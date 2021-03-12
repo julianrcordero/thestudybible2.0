@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import ResourceScreen from "../screens/ResourceScreen";
 import AppText from "../components/Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 // import LogoTitle from "../components/LogoTitle";
 

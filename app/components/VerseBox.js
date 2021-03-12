@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AppText from "./Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default class VerseBox extends PureComponent {
   constructor(props) {

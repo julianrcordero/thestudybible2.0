@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "react-native-animatable";
 
 import BiblePickerItem from "../components/BiblePickerItem";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default function ChaptersGridScreen({ close, chapters, route }) {
   const { colors, isDark } = useTheme();

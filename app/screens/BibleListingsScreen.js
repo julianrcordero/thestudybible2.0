@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import BibleCard from "../components/BibleCard";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 const listings = [
   {

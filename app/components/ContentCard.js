@@ -8,7 +8,7 @@ import {
 import routes from "../navigation/routes";
 
 import Text from "./Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import HTML from "react-native-render-html";
 import AppText from "./Text";

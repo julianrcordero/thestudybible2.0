@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import { color } from "react-native-reanimated";
 

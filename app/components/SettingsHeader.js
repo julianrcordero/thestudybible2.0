@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, View, Text } from "react-native";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default function SettingsHeader({ snapToZero }) {
   const { colors, isDark } = useTheme();

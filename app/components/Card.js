@@ -8,7 +8,7 @@ import {
 import { Image } from "react-native-expo-image-cache";
 
 import Text from "./Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import { TouchableHighlight } from "react-native-gesture-handler";
 

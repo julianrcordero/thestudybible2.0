@@ -4,8 +4,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { AppearanceProvider } from "react-native-appearance";
-import { ThemeProvider } from "./app/config/ThemeContext";
-import { useTheme } from "./app/config/ThemeContext";
+import { ThemeProvider } from "./app/config/ThemeProvider";
 
 import AppNavigator from "./app/navigation/AppNavigator";
 import { navigationRef } from "./app/navigation/rootNavigation";
@@ -13,17 +12,16 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 
 import Screen from "./app/components/Screen";
+import StudyScreen from "./app/screens/StudyScreen";
 
-import BottomSheet from "reanimated-bottom-sheet";
+import ReanimatedBottomSheet from "reanimated-bottom-sheet";
 import { enableScreens } from "react-native-screens";
 enableScreens();
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import Constants from "expo-constants";
 
-import { createStackNavigator } from "@react-navigation/stack";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import { SettingsScreen } from "./app/screens/SettingsScreen";
-import StudyScreen from "./app/screens/StudyScreen";
 import BottomSheetHeader from "./app/components/BottomSheetHeader";
 const { height, width } = Dimensions.get("window");
 
@@ -526,15 +524,13 @@ export default function App() {
     if (user) setUser(user);
   };
 
+  ////////////
+
+  ////////////
+
   const snapToZero = () => {
     bottomSheetRef.current.snapTo(2);
   };
-
-  // const renderSettingsHeader = () => <SettingsHeader snapToZero={snapToZero} />;
-
-  // const renderStudyHeader = () => (
-  //   <StudyHeader bottomSheetRef={bottomSheetRef} />
-  // );
 
   const bottomSheetHeader = () => (
     <BottomSheetHeader snapToZero={snapToZero} settingsMode={settingsMode} />
@@ -542,7 +538,7 @@ export default function App() {
 
   const bottomSheetContent = () => (
     <Screen flex={0}>
-      {settingsMode ? (
+      {settingsMode && (
         <SettingsScreen
           fontFamily={fontFamily}
           fontSize={fontSize}
@@ -554,17 +550,16 @@ export default function App() {
           setFormatting={setFormatting}
           setDarkMode={setDarkMode}
         />
-      ) : (
-        <StudyScreen
-          bottomSheetRef={bottomSheetRef}
-          carousel={carousel}
-          crossrefSize={crossrefSize}
-          currentBook={currentBook}
-          fontSize={fontSize}
-          verseList={verseList}
-          width={width}
-        />
       )}
+      <StudyScreen
+        bottomSheetRef={bottomSheetRef}
+        carousel={carousel}
+        crossrefSize={crossrefSize}
+        currentBook={currentBook}
+        fontSize={fontSize}
+        verseList={verseList}
+        width={width}
+      />
     </Screen>
   );
 
@@ -622,7 +617,7 @@ export default function App() {
         ></View> */}
         </AuthContext.Provider>
 
-        <BottomSheet
+        <ReanimatedBottomSheet
           ref={bottomSheetRef}
           snapPoints={[top, "50%", "0%"]}
           initialSnap={2}

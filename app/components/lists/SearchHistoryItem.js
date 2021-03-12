@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import Text from "../Text";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import AppText from "../Text";
 

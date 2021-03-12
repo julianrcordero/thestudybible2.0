@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Switch } from "react-native";
 
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import AppText from "../../components/Text";
 import defaultStyles from "../../config/styles";

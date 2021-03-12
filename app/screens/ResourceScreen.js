@@ -3,7 +3,7 @@ import { View, Image as RNImage, ScrollView, StyleSheet } from "react-native";
 import { StretchyScrollView } from "react-native-stretchy";
 import { Image } from "react-native-expo-image-cache";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";

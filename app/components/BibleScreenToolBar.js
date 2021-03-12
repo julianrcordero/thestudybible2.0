@@ -4,7 +4,7 @@ import Animated from "react-native-reanimated";
 
 import BiblePicker from "../components/BiblePicker";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import BiblePickerItem from "./BiblePickerItem";
 import AppText from "./Text";

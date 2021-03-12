@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import AppText from "../components/Text";
 import defaultStyles from "../config/styles";

@@ -1,8 +1,9 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, Text } from "react-native";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 import VerseCard from "../components/VerseCard";
+import AppText from "../components/Text";
 
 export default function StudyScreen({
   bottomSheetRef,
@@ -21,6 +22,7 @@ export default function StudyScreen({
 
   const getItemLayout = (data, index) => ({
     length: width,
+    width: 350,
     offset: width * index,
     index,
   });
@@ -44,11 +46,11 @@ export default function StudyScreen({
         carousel={carousel}
         chapter={item.chapter}
         content={item.content}
-        crossrefs={item.crossrefs}
+        // crossrefs={item.crossrefs}
         currentBook={currentBook}
         crossrefSize={crossrefSize}
         fontSize={fontSize}
-        johnsNote={item.johnsNote}
+        // johnsNote={item.johnsNote}
         key={index}
         style={style}
         title={item.title}
@@ -57,40 +59,25 @@ export default function StudyScreen({
   };
 
   return (
-    <>
-      <FlatList
-        bounces={false}
-        data={verseList}
-        decelerationRate={"fast"}
-        // extraData={this.state}
-        getItemLayout={getItemLayout}
-        horizontal={true}
-        initialNumToRender={5}
-        keyExtractor={keyExtractor}
-        maxToRenderPerBatch={5}
-        onStartShouldSetResponderCapture={() => console.log("Vertical Scroll")}
-        ref={carousel}
-        removeClippedSubviews
-        renderItem={renderVerseCardItem}
-        // scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        snapToAlignment={"start"}
-        snapToInterval={width}
-        // style={{
-        //   backgroundColor: colors.white,
-        // }}
-        updateCellsBatchingPeriod={25}
-        windowSize={11}
-      />
-
-      {/* NOT SURE WHY */}
-      <View
-        style={{
-          // backgroundColor: colors.light,
-          height: 500,
-          position: "relative",
-        }}
-      ></View>
-    </>
+    <FlatList
+      bounces={false}
+      data={verseList}
+      decelerationRate={"fast"}
+      // extraData={this.state}
+      getItemLayout={getItemLayout}
+      horizontal={true}
+      initialNumToRender={5}
+      keyExtractor={keyExtractor}
+      maxToRenderPerBatch={3}
+      ref={carousel}
+      removeClippedSubviews
+      renderItem={renderVerseCardItem}
+      // scrollEventThrottle={16}
+      showsHorizontalScrollIndicator={false}
+      snapToAlignment={"start"}
+      snapToInterval={width}
+      updateCellsBatchingPeriod={25}
+      windowSize={11}
+    />
   );
 }

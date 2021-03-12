@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../config/styles";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
   const { colors, isDark } = useTheme();

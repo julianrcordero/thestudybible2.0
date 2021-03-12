@@ -1,12 +1,10 @@
 import React, { PureComponent } from "react";
-import { Alert, StyleSheet, View, TouchableOpacity } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { Alert, View, TouchableOpacity } from "react-native";
 
 import AppButton from "../../components/Button";
 
 import TextInput from "../../components/TextInput";
 import AppText from "../../components/Text";
-import useAuth from "../../auth/useAuth";
 
 export default class AccountEditScreen extends PureComponent {
   constructor(props) {
@@ -22,7 +20,7 @@ export default class AccountEditScreen extends PureComponent {
   };
 
   render() {
-    const { user, logOut } = this.props;
+    const { logOut } = this.props;
 
     const logOutConfirm = () => {
       Alert.alert("Confirm log out", "Are you sure you want to log out?", [

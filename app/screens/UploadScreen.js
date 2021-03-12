@@ -4,7 +4,7 @@ import * as Progress from "react-native-progress";
 import LottieView from "lottie-react-native";
 
 import Text from "../components/Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function UploadScreen({ onDone, progress = 0, visible = false }) {
   const { colors, isDark } = useTheme();

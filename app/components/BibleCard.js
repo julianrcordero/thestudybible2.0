@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import AppText from "./Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function BibleCard({ content, title, subTitle, image, onPress }) {
   const { colors, isDark } = useTheme();

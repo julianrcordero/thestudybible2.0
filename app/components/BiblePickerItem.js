@@ -1,9 +1,6 @@
 import React, { PureComponent } from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AppText from "./Text";
-import { useTheme } from "../config/ThemeContext";
-
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 class BiblePickerItem extends PureComponent {
   constructor(props) {
@@ -18,7 +15,6 @@ class BiblePickerItem extends PureComponent {
       height,
       item,
       label,
-      onPress,
       width = "100%",
     } = this.props;
 

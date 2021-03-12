@@ -4,19 +4,16 @@ import {
   Collapse,
   CollapseHeader,
   CollapseBody,
-  AccordionList,
 } from "accordion-collapse-react-native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useDeviceOrientation } from "@react-native-community/hooks";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import AppText from "../components/Text";
 
 import ResourcesScreen from "../screens/ResourcesScreen";
 
 function VerseBody({ landscape }) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const styles = StyleSheet.create({
     macArthurBox: {
       // borderColor: colors.medium,

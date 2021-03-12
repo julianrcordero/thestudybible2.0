@@ -79,7 +79,7 @@
 // }
 import React, { PureComponent } from "react";
 import { Button, TouchableOpacity, View } from "react-native";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 

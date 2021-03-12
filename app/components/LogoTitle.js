@@ -2,7 +2,7 @@ import React, { Image, PureComponent } from "react";
 import { View, StyleSheet } from "react-native";
 import defaultStyles from "../config/styles";
 import AppText from "./Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 // export default class LogoTitle extends PureComponent {
 //   constructor(props) {

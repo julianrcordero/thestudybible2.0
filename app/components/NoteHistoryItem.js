@@ -10,7 +10,7 @@ import {
 
 import Button from "./Button";
 import Text from "./Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default class NoteHistoryItem extends PureComponent {
   constructor(props) {

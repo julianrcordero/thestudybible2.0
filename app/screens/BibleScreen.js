@@ -13,7 +13,7 @@ import reactStringReplace from "react-string-replace";
 
 import bookPaths from "../json/bible/Bible";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import verseFormatted from "../components/VerseFormatted";
@@ -44,7 +44,7 @@ export default function BibleScreen({
 
   useEffect(() => {
     changeBibleBook({
-      label: "Genesis",
+      label: "I John",
       value: 1,
       backgroundColor: "#345171",
       icon: "apps",
@@ -137,9 +137,9 @@ export default function BibleScreen({
           chapter: Number(chapter["_num"]),
           title: Number(verse["_num"]),
           content: verseFormatted(verse, crossrefSize),
-          johnsNote: johnsNote,
-          loved: false,
-          crossrefs: crossrefs,
+          // johnsNote: johnsNote,
+          // loved: false,
+          // crossrefs: crossrefs,
         });
       });
 

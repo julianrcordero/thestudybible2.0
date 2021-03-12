@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "./ThemeProvider";
 
 export default {
   bibleText: {

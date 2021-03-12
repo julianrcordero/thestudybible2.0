@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function ViewImageScreen(props) {
   const { colors, isDark } = useTheme();

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import AppText from "./Text";
 import Icon from "./Icon";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 //PickerItem
 function CategoryPickerItem({ item, onPress }) {

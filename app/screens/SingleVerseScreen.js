@@ -3,7 +3,7 @@ import { View, Image, StyleSheet } from "react-native";
 import AppText from "../components/Text";
 
 import ListItem from "../components/lists/BibleListItem";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default function SingleVerseScreen(props) {
   const { colors, isDark } = useTheme();

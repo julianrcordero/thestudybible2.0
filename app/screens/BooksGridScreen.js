@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import AppText from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";

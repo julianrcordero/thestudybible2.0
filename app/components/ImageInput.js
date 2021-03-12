@@ -9,7 +9,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function ImageInput({ imageUri, onChangeImage }) {
   useEffect(() => {

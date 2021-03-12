@@ -12,7 +12,7 @@ import defaultStyles from "../config/styles";
 import AppText from "./Text";
 import Screen from "./Screen";
 import PickerItem from "./PickerItem";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 function AppPicker({
   icon,

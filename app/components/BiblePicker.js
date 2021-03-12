@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import {
-  Dimensions,
   View,
   StyleSheet,
   InteractionManager,
@@ -10,11 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import defaultStyles from "../config/styles";
 import AppText from "./Text";
-import { useTheme } from "../config/ThemeContext";
-
-import { createStackNavigator } from "@react-navigation/stack";
 
 class BiblePicker extends PureComponent {
   constructor(props) {
@@ -30,12 +25,8 @@ class BiblePicker extends PureComponent {
   _toggleSettings = () => {
     this.props.setSettingsMode(true);
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      // let myIndex = verseList.findIndex(
-      //   (obj) => obj.chapter === chapter && obj.title === verse
-      // );
       setTimeout(() => {
         this.props.bottomSheetRef.current.snapTo(1);
-        // carousel.current.scrollToIndex({ animated: false, index: myIndex });
       });
     });
     () => interactionPromise.cancel();
@@ -61,11 +52,9 @@ class BiblePicker extends PureComponent {
       colors,
       currentBook,
       currentChapter,
-      darkMode,
       fontFamily,
       fontSize,
       HEADER_HEIGHT,
-      paragraphBibleRef,
       placeholder,
       topPanel,
     } = this.props;

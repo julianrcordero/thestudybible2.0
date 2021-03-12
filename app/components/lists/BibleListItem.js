@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import AppText from "../Text";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import Collapse from "accordion-collapse-react-native/build/components/Collapse";
 import CollapseHeader from "accordion-collapse-react-native/build/components/CollapseHeader";

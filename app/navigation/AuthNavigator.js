@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AccountScreen from "../screens/more/AccountScreen";
 import LoginScreen from "../screens/more/LoginScreen";
-import RegisterScreen from "../screens/more/RegisterScreen";
 import ConfirmRegisterScreen from "../screens/more/ConfirmRegisterScreen";
 import ForgotPasswordScreen from "../screens/more/ForgotPasswordScreen";
 import ResetPasswordScreen from "../screens/more/ResetPasswordScreen";

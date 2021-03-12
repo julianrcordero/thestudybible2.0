@@ -8,7 +8,7 @@ import {
 import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/Button";
 import Card from "../components/Card";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import dashboardApi from "../api/dashboard";
 import routes from "../navigation/routes";

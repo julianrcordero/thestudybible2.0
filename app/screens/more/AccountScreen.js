@@ -10,7 +10,7 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack2 = createStackNavigator();
-const Stack3 = createStackNavigator();
+// const Stack3 = createStackNavigator();
 
 import AppButton from "../../components/Button";
 import SegmentedControl from "@react-native-community/segmented-control";
@@ -21,7 +21,7 @@ import TextInput from "../../components/TextInput";
 import ConfirmRegisterScreen from "./ConfirmRegisterScreen";
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../config/ThemeProvider";
 
 import AppText from "../../components/Text";
 import useAuth from "../../auth/useAuth";
@@ -53,17 +53,17 @@ function AccountScreen({ navigation }) {
           </NavigationContainer>
         );
       case 1:
-        // return <RegisterScreen />;
         return (
-          <NavigationContainer independent={true}>
-            <Stack3.Navigator screenOptions={{ headerShown: false }}>
-              <Stack3.Screen name="Register" component={RegisterScreen} />
-              <Stack3.Screen
-                name="ConfirmRegister"
-                component={ConfirmRegisterScreen}
-              />
-            </Stack3.Navigator>
-          </NavigationContainer>
+          <View></View>
+          // <NavigationContainer independent={true}>
+          //   <Stack3.Navigator screenOptions={{ headerShown: false }}>
+          //     <Stack3.Screen name="Register" component={RegisterScreen} />
+          //     <Stack3.Screen
+          //       name="ConfirmRegister"
+          //       component={ConfirmRegisterScreen}
+          //     />
+          //   </Stack3.Navigator>
+          // </NavigationContainer>
         );
       default:
         break;

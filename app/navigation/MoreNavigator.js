@@ -6,7 +6,7 @@ import NotificationsScreen from "../screens/more/NotificationsScreen";
 import AboutScreen from "../screens/more/AboutScreen";
 import AccountScreen from "../screens/more/AccountScreen";
 import AppText from "../components/Text";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 // import LogoTitle from "../components/LogoTitle";
 

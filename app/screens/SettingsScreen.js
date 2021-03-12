@@ -9,7 +9,7 @@ import {
   Switch,
 } from "react-native";
 
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 import Text from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
@@ -47,7 +47,7 @@ export const SettingsScreen = ({
   };
 
   const handleDarkMode = () => {
-    console.log("Settings Screen is in ", isDark, " mode");
+    // console.log("Settings Screen is in ", isDark, " mode");
     isDark ? setScheme("light") : setScheme("dark");
   };
 

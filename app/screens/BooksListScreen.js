@@ -5,7 +5,7 @@ import AppText from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
 import ChaptersGridScreen from "./ChaptersGridScreen";
 import { AccordionList } from "accordion-collapse-react-native";
-import { useTheme } from "../config/ThemeContext";
+import { useTheme } from "../config/ThemeProvider";
 
 export default function BooksListScreen({ width }) {
   const { colors, isDark } = useTheme();

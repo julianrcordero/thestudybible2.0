@@ -19,14 +19,10 @@ const Tab = createBottomTabNavigator();
 const HEADER_HEIGHT = 70;
 const scrollY = new Animated.Value(0);
 const diffClampScrollY = Animated.diffClamp(scrollY, 0, HEADER_HEIGHT);
-const headerY = Animated.interpolateNode(diffClampScrollY, {
+const headerY = Animated.interpolate(diffClampScrollY, {
   inputRange: [0, HEADER_HEIGHT],
   outputRange: [0, -HEADER_HEIGHT],
 });
-// (diffClampScrollY, {
-//   inputRange: [0, HEADER_HEIGHT],
-//   outputRange: [0, -HEADER_HEIGHT],
-// });
 const navigationY = Animated.multiply(headerY, -1);
 
 const AppNavigator = (props) =>
@@ -55,7 +51,7 @@ const AppNavigator = (props) =>
 
     return (
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Bible"
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{

@@ -139,7 +139,7 @@ export default function BibleScreen({
           content: verseFormatted(verse, crossrefSize),
           // johnsNote: johnsNote,
           // loved: false,
-          // crossrefs: crossrefs,
+          crossrefs: crossrefs,
         });
       });
 

@@ -3,7 +3,7 @@ import cache from "../utility/cache";
 import authStorage from "../auth/storage";
 
 const apiClient = create({
-  baseURL: "https://apitest.gty.org/api/values",
+  baseURL: "https://apibeta.gty.org/api/values",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {

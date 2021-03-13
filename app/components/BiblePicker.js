@@ -83,7 +83,6 @@ class BiblePicker extends PureComponent {
       },
 
       rightButtons: {
-        // backgroundColor: "purple",
         // flexDirection: "row",
         flex: 3,
         justifyContent: "center",
@@ -91,7 +90,6 @@ class BiblePicker extends PureComponent {
       },
       search: {
         alignItems: "center",
-        // backgroundColor: "yellow",
         aspectRatio: 1,
         justifyContent: "center",
       },

@@ -79,13 +79,6 @@ export default class VerseCard extends PureComponent {
   //   return content !== nextProps.content;
   // }
 
-  styles = StyleSheet.create({
-    basicTextStyle: {
-      color: this.props.colors.text,
-      fontSize: this.props.fontSize,
-    },
-  });
-
   reference = (book, chapter, title) => (
     <View
       style={{
@@ -97,7 +90,7 @@ export default class VerseCard extends PureComponent {
     >
       <AppText
         style={[
-          styles.basicTextStyle,
+          this.props.style,
           {
             fontWeight: "bold",
             textAlign: "left",
@@ -112,8 +105,9 @@ export default class VerseCard extends PureComponent {
   verse = (content) => (
     <AppText
       style={[
-        styles.basicTextStyle,
+        this.props.style,
         {
+          color: this.props.colors.text,
           lineHeight: this.props.fontSize * 2,
         },
       ]}
@@ -138,7 +132,7 @@ export default class VerseCard extends PureComponent {
     } = this.props;
 
     return (
-      <View style={style}>
+      <View>
         {/* <AppText
           style={{
             color: colors.text,
@@ -200,8 +194,3 @@ export default class VerseCard extends PureComponent {
     );
   }
 }
-// const styles = StyleSheet.create({
-//   verseLink: {
-//     color: "#00aeef",
-//   },
-// });

@@ -1,19 +1,13 @@
 import React, { PureComponent, useRef, useState } from "react";
-import {
-  FlatList,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
 import VerseCard from "../components/VerseCard";
 import AppText from "../components/Text";
+import PanelBox from "../components/PanelBox";
 
 const goToVerse = () => {
   console.log("goToVerse");
-  // navigateBible(cr["for"]);
 };
 
 class VerseHyperlink extends PureComponent {
@@ -21,17 +15,17 @@ class VerseHyperlink extends PureComponent {
     super(props);
   }
 
-  styles = StyleSheet.create({
+  styles = {
     verseLink: {
       color: "#00aeef",
     },
-  });
+  };
 
   render() {
     const { cr } = this.props;
     return (
       <TouchableOpacity onPress={goToVerse}>
-        <AppText style={styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
+        <AppText style={this.styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
       </TouchableOpacity>
     );
   }
@@ -41,20 +35,20 @@ function CrossRef({ myObject }) {
   const { colors } = useTheme();
 
   return (
-    <AppText
-      style={{
-        color: colors.text,
-      }}
-    >
-      {myObject["title"] + "\t"}
-      {Array.isArray(myObject["refs"]["ref"]) ? (
-        myObject["refs"]["ref"].map((cr) => (
-          <VerseHyperlink key={cr["for"]} cr={cr} />
-        ))
-      ) : (
-        <VerseHyperlink key={myObject["for"]} cr={myObject["refs"]["ref"]} />
-      )}
-    </AppText>
+    <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+      <AppText style={{ color: colors.text }}>
+        {myObject["title"] + "\t"}
+      </AppText>
+      <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+        {Array.isArray(myObject["refs"]["ref"]) ? (
+          myObject["refs"]["ref"].map((cr) => (
+            <VerseHyperlink key={cr["for"]} cr={cr} />
+          ))
+        ) : (
+          <VerseHyperlink key={myObject["for"]} cr={myObject["refs"]["ref"]} />
+        )}
+      </View>
+    </View>
   );
 }
 
@@ -62,8 +56,7 @@ function CrossReferences({ crossrefs }) {
   return (
     <View
       style={{
-        justifyContent: "space-around",
-        marginBottom: 20,
+        borderWidth: 0.5,
         paddingHorizontal: 30,
       }}
     >
@@ -89,10 +82,7 @@ export default function StudyScreen({
 }) {
   const { colors } = useTheme();
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
-
-  // const componentDidMount() {
-  //   console.log("componentDidMount StudyScreen");
-  // }
+  const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
 
   const getItemLayout = (data, index) => ({
     length: width,
@@ -103,40 +93,26 @@ export default function StudyScreen({
   const keyExtractor = (item, index) => item + index;
 
   const styles = StyleSheet.create({
-    // crossRefsBox: {flex: 1},
     verseTextBox: {
+      // backgroundColor: "orange",
       color: colors.text,
-      // flexGrow: 1,
-      // flexShrink: 1,
       fontSize: fontSize,
-      // height: 100,
       paddingHorizontal: 30,
       width: width,
     },
     studyScreenBox: {
       backgroundColor: colors.background,
-      borderWidth: 0.5,
-      flexGrow: 1,
-      // flex: 1,
-      // paddingHorizontal: 30,
-      // width: width,
     },
   });
 
   const renderVerseCardItem = ({ item, index }) => {
-    // console.log(item.chapter + " : " + item.title);
     return (
       <VerseCard
-        bottomSheetRef={bottomSheetRef}
         colors={colors}
-        carousel={carousel}
         chapter={item.chapter}
         content={item.content}
-        crossrefs={item.crossrefs}
         currentBook={currentBook}
-        crossrefSize={crossrefSize}
         fontSize={fontSize}
-        // johnsNote={item.johnsNote}
         key={index}
         style={styles.verseTextBox}
         title={item.title}
@@ -145,9 +121,10 @@ export default function StudyScreen({
   };
 
   const onViewRef = useRef((viewableItems) => {
-    // console.log("Visible items are", viewableItems.viewableItems[0]);
-    if (viewableItems.viewableItems[0])
+    if (viewableItems.viewableItems[0]) {
       setCurrentCrossrefs(viewableItems.viewableItems[0].item.crossrefs);
+      setCurrentJohnsNote(viewableItems.viewableItems[0].item.johnsNote);
+    }
     // Use viewable items in state or as intended
   });
   const viewConfigRef = useRef({
@@ -159,6 +136,7 @@ export default function StudyScreen({
 
   return (
     <View style={styles.studyScreenBox}>
+      {/* <View style={{ flexShrink: 1 }}> */}
       <FlatList
         bounces={false}
         data={verseList}
@@ -181,7 +159,13 @@ export default function StudyScreen({
         viewabilityConfig={viewConfigRef.current}
         windowSize={11}
       />
+      {/* </View> */}
       <CrossReferences crossrefs={currentCrossrefs} />
+      <PanelBox
+        colors={colors}
+        fontSize={fontSize}
+        johnsNote={currentJohnsNote}
+      ></PanelBox>
     </View>
   );
 }

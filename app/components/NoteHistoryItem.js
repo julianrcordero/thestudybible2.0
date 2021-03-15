@@ -43,12 +43,10 @@ export default class NoteHistoryItem extends PureComponent {
 
   setFocusedTrue = () => {
     this.setState({ isFocused: true });
-    this.props.carousel.current.setNativeProps({ scrollEnabled: false });
   };
 
   setFocusedFalse = () => {
     this.setState({ isFocused: false });
-    this.props.carousel.current.setNativeProps({ scrollEnabled: true });
   };
 
   cancel = () => {

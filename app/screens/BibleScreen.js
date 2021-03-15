@@ -137,7 +137,7 @@ export default function BibleScreen({
           chapter: Number(chapter["_num"]),
           title: Number(verse["_num"]),
           content: verseFormatted(verse, crossrefSize),
-          // johnsNote: johnsNote,
+          johnsNote: johnsNote,
           // loved: false,
           crossrefs: crossrefs,
         });

@@ -6,6 +6,7 @@ export const lightColors = {
   icon: "#0c0c0c",
   text: "#2f4f4f",
   error: "#D32F2F",
+  link: "#00aeef",
 };
 
 // Dark theme colors
@@ -16,4 +17,5 @@ export const darkColors = {
   icon: "#a5a5a5",
   text: "#dcdcdc",
   error: "#aa0000",
+  link: "#00aeef",
 };

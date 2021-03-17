@@ -21,9 +21,10 @@ export default class VerseCard extends PureComponent {
     <View
       style={{
         alignItems: "center",
-        height: 50,
+        // height: 50,
         flexDirection: "row",
         justifyContent: "flex-start",
+        paddingVertical: this.props.fontSize,
       }}
     >
       <AppText
@@ -58,7 +59,7 @@ export default class VerseCard extends PureComponent {
     const { chapter, content, currentBook, fontSize, title } = this.props;
 
     return (
-      <View style={{ paddingBottom: fontSize * 2 }}>
+      <View style={{ paddingBottom: fontSize }}>
         {this.reference(currentBook.label, chapter, title)}
         {this.verse(content)}
       </View>

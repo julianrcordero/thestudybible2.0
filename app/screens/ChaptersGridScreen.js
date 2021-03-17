@@ -1,5 +1,10 @@
 import React, { PureComponent } from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  InteractionManager,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { View } from "react-native-animatable";
 
 import BiblePickerItem from "../components/BiblePickerItem";
@@ -29,12 +34,18 @@ export default function ChaptersGridScreen({
 
   const changeBook = (book, chapter) => {
     close();
-    changeBibleBook({
-      label: book,
-      value: 1,
-      backgroundColor: "#345171",
-      icon: "apps",
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      setTimeout(() => {
+        changeBibleBook({
+          label: book,
+          value: 1,
+          backgroundColor: "#345171",
+          icon: "apps",
+        });
+      });
     });
+    () => interactionPromise.cancel();
+
     console.log(book, chapter);
   };
 

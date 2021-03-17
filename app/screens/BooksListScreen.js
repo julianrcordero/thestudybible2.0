@@ -7,7 +7,7 @@ import ChaptersGridScreen from "./ChaptersGridScreen";
 import { AccordionList } from "accordion-collapse-react-native";
 import { useTheme } from "../config/ThemeProvider";
 
-export default function BooksListScreen({ width, changeBibleBook }) {
+export default function BooksListScreen({ width }) {
   const { colors, isDark } = useTheme();
   const [rightOpen, setRightOpen] = useState(false);
   const headerHeight = 55;
@@ -588,10 +588,7 @@ export default function BooksListScreen({ width, changeBibleBook }) {
   const _renderContent = (section) => {
     return (
       <View style={{ width: width }}>
-        <ChaptersGridScreen
-          chapters={section.chapters}
-          changeBibleBook={changeBibleBook}
-        />
+        <ChaptersGridScreen chapters={section.chapters} />
       </View>
     );
   };

@@ -556,6 +556,7 @@ export default function App() {
         carousel={carousel}
         // crossrefSize={crossrefSize}
         currentBook={currentBook}
+        fontFamily={fontFamily}
         fontSize={fontSize}
         verseList={verseList}
         width={width}
@@ -579,6 +580,7 @@ export default function App() {
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
               books={books}
+              currentBook={currentBook}
               ref={topPanel}
               height={top - getBottomSpace()}
               width={width}

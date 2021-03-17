@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import { View } from "react-native";
 
-import AppText from "../components/Text";
+import VerseFormatted from "./VerseFormatted";
+import { Text } from "react-native";
 
 export default class VerseCard extends PureComponent {
   constructor(props) {
@@ -12,57 +12,13 @@ export default class VerseCard extends PureComponent {
     loved: false,
   };
 
-  // shouldComponentUpdate(nextProps) {
-  //   const { content } = this.props;
-  //   return content !== nextProps.content;
-  // }
-
-  reference = (book, chapter, title) => (
-    <View
-      style={{
-        alignItems: "center",
-        // height: 50,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        paddingVertical: this.props.fontSize,
-      }}
-    >
-      <AppText
-        style={[
-          this.props.style,
-          {
-            fontWeight: "bold",
-            textAlign: "left",
-          },
-        ]}
-      >
-        {book + " " + chapter + " : " + title}
-      </AppText>
-    </View>
-  );
-
-  verse = (content) => (
-    <AppText
-      style={[
-        this.props.style,
-        {
-          color: this.props.colors.text,
-          lineHeight: this.props.fontSize * 2,
-        },
-      ]}
-    >
-      {content}
-    </AppText>
-  );
-
   render() {
-    const { chapter, content, currentBook, fontSize, title } = this.props;
+    const { content, style } = this.props;
 
     return (
-      <View style={{ paddingBottom: fontSize }}>
-        {this.reference(currentBook.label, chapter, title)}
-        {this.verse(content)}
-      </View>
+      <Text style={style}>
+        <VerseFormatted verse={content} crossrefSize={12} />
+      </Text>
     );
   }
 }

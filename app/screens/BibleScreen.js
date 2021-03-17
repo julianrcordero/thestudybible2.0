@@ -1,24 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  InteractionManager,
-  StyleSheet,
-  Text,
-  Dimensions,
-  View,
-} from "react-native";
-import Constants from "expo-constants";
-import { getBottomSpace } from "react-native-iphone-x-helper";
-
-import reactStringReplace from "react-string-replace";
-
-import bookPaths from "../json/bible/Bible";
+import { InteractionManager, Dimensions } from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
 
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
-import verseFormatted from "../components/VerseFormatted";
 import ParagraphBible from "../components/ParagraphBible";
-import VerseByVerseBible from "../components/VerseByVerseBible";
 
 export default function BibleScreen({
   formatting,
@@ -35,9 +21,7 @@ export default function BibleScreen({
   paragraphBibleRef,
   searchHistoryRef,
   sections,
-  setCurrentBook,
   setSettingsMode,
-  setVerseList,
   topPanel,
   verseList,
 }) {
@@ -54,7 +38,6 @@ export default function BibleScreen({
 
   const [currentChapter] = useState(1);
   const [currentVerse] = useState(1);
-  const { height } = Dimensions.get("window");
 
   // const [focusedVerse, setFocusedVerse] = useState(null);
   // const [bookNotes, setBookNotes] = useState([]);

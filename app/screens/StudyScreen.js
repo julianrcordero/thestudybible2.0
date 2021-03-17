@@ -1,10 +1,17 @@
 import React, { PureComponent, useRef, useState } from "react";
-import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
 import VerseCard from "../components/VerseCard";
 import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
+import VerseFormatted from "../components/VerseFormatted";
 
 const goToVerse = () => {
   console.log("goToVerse");
@@ -73,16 +80,21 @@ function CrossReferences({ crossrefs }) {
   );
 }
 
+function Reference({ book, reference, fontSize, style }) {
+  return <AppText style={style}>{book + " " + reference}</AppText>;
+}
+
 export default function StudyScreen({
   bottomSheetRef,
   carousel,
   currentBook,
-  // crossrefSize,
+  fontFamily,
   fontSize,
   verseList,
   width,
 }) {
   const { colors } = useTheme();
+  const [currentReference, setCurrentReference] = useState([]);
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
 
@@ -94,36 +106,21 @@ export default function StudyScreen({
 
   const keyExtractor = (item, index) => item + index;
 
-  const styles = StyleSheet.create({
-    verseTextBox: {
-      // backgroundColor: "orange",
-      color: colors.text,
-      fontSize: fontSize,
-      paddingHorizontal: 30,
-      width: width,
-    },
-    studyScreenBox: {
-      backgroundColor: colors.background,
-    },
-  });
-
   const renderVerseCardItem = ({ item, index }) => {
     return (
-      <VerseCard
-        colors={colors}
-        chapter={item.chapter}
-        content={item.content}
-        currentBook={currentBook}
-        fontSize={fontSize}
-        key={index}
-        style={styles.verseTextBox}
-        title={item.title}
-      />
+      <Text style={styles.verseTextBox}>
+        <VerseFormatted verse={item.content} crossrefSize={12} />
+      </Text>
     );
   };
 
   const onViewRef = useRef((viewableItems) => {
     if (viewableItems.viewableItems[0]) {
+      setCurrentReference(
+        viewableItems.viewableItems[0].item.chapter +
+          " : " +
+          viewableItems.viewableItems[0].item.title
+      );
       setCurrentCrossrefs(viewableItems.viewableItems[0].item.crossrefs);
       setCurrentJohnsNote(viewableItems.viewableItems[0].item.johnsNote);
     }
@@ -136,9 +133,40 @@ export default function StudyScreen({
     itemVisiblePercentThreshold: 75,
   });
 
+  const styles = StyleSheet.create({
+    referenceBox: {
+      alignItems: "center",
+      color: colors.text,
+      fontFamily: fontFamily,
+      fontSize: fontSize * 1.1,
+      fontWeight: "bold",
+      paddingHorizontal: 30,
+      paddingVertical: fontSize,
+      textAlign: "left",
+      width: width,
+    },
+    verseTextBox: {
+      color: colors.text,
+      fontFamily: fontFamily,
+      fontSize: fontSize,
+      lineHeight: fontSize * 2,
+      paddingBottom: fontSize,
+      paddingHorizontal: 30,
+      width: width,
+    },
+    studyScreenBox: {
+      backgroundColor: colors.background,
+    },
+  });
+
   return (
     <View style={styles.studyScreenBox}>
-      {/* <View style={{ flexShrink: 1 }}> */}
+      <Reference
+        book={currentBook.label}
+        reference={currentReference}
+        fontSize={fontSize}
+        style={styles.referenceBox}
+      />
       <FlatList
         bounces={false}
         data={verseList}
@@ -161,7 +189,6 @@ export default function StudyScreen({
         viewabilityConfig={viewConfigRef.current}
         windowSize={11}
       />
-      {/* </View> */}
       <CrossReferences crossrefs={currentCrossrefs} />
       <PanelBox
         colors={colors}

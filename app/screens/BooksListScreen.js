@@ -7,7 +7,13 @@ import ChaptersGridScreen from "./ChaptersGridScreen";
 import { AccordionList } from "accordion-collapse-react-native";
 import { useTheme } from "../config/ThemeProvider";
 
-export default function BooksListScreen({ width }) {
+export default function BooksListScreen({
+  changeBibleBook,
+  close,
+  navigation,
+  route,
+  width,
+}) {
   const { colors, isDark } = useTheme();
   const [rightOpen, setRightOpen] = useState(false);
   const headerHeight = 55;
@@ -586,9 +592,17 @@ export default function BooksListScreen({ width }) {
   };
 
   const _renderContent = (section) => {
+    // console.log(section);
+
     return (
       <View style={{ width: width }}>
-        <ChaptersGridScreen chapters={section.chapters} />
+        <ChaptersGridScreen
+          changeBibleBook={changeBibleBook}
+          chapters={section.chapters}
+          close={close}
+          navigation={navigation}
+          route={route}
+        />
       </View>
     );
   };
@@ -606,6 +620,14 @@ export default function BooksListScreen({ width }) {
       flexGrow: 1,
     },
   });
+
+  const openChapters = (title, gridChapters) => {
+    console.log(title, gridChapters);
+    navigation.setParams({
+      title: title,
+      gridChapters: gridChapters,
+    });
+  };
 
   return (
     <View style={{ backgroundColor: colors.background, height: "100%" }}>
@@ -634,6 +656,9 @@ export default function BooksListScreen({ width }) {
             body={_renderContent}
             keyExtractor={(item) => `${item.value}`}
             showsVerticalScrollIndicator={false}
+            onToggle={(item, index, isExpanded) =>
+              openChapters(books[index].label, books[index].chapters)
+            }
           />
         </View>
         <View style={styles.column2}>
@@ -643,7 +668,10 @@ export default function BooksListScreen({ width }) {
             body={_renderContent}
             keyExtractor={(item) => `${item.value}`}
             showsVerticalScrollIndicator={false}
-            onToggle={(item, index, isExpanded) => setRightOpen(isExpanded)}
+            onToggle={(item, index, isExpanded) => {
+              openChapters(books[index + 39].label, books[index + 39].chapters);
+              setRightOpen(isExpanded);
+            }}
           />
         </View>
       </View>

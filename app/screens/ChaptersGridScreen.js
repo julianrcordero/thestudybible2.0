@@ -12,11 +12,13 @@ import { useTheme } from "../config/ThemeProvider";
 
 export default function ChaptersGridScreen({
   close,
-  chapters,
-  route,
   changeBibleBook,
+  chapters,
+  goBack = false,
+  navigation,
+  route,
 }) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   const { gridChapters } = route ? route.params : 0;
 
@@ -35,18 +37,18 @@ export default function ChaptersGridScreen({
   const changeBook = (book, chapter) => {
     close();
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        changeBibleBook({
-          label: book,
-          value: 1,
-          backgroundColor: "#345171",
-          icon: "apps",
-        });
+      // setTimeout(() => {
+      changeBibleBook({
+        label: book,
+        value: 1,
+        backgroundColor: "#345171",
+        icon: "apps",
       });
+      // });
     });
     () => interactionPromise.cancel();
 
-    console.log(book, chapter);
+    if (goBack) navigation.goBack();
   };
 
   return (

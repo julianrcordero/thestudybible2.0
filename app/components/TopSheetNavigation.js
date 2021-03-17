@@ -15,7 +15,7 @@ import SearchHistory from "./SearchHistory";
 import bookPaths from "../json/bible/Bible"; //../json/bible/Bible";
 
 import reactStringReplace from "react-string-replace";
-import verseFormatted from "../components/VerseFormatted";
+import VerseFormatted from "../components/VerseFormatted";
 
 const notesArray = JSON.parse(
   JSON.stringify(require("../json/bible/esvmsb.notes.json"))
@@ -73,35 +73,12 @@ class TopSheetNavigation extends PureComponent {
                 {(props) => (
                   <ChaptersGridScreen
                     {...props}
-                    books={this.props.books}
                     changeBibleBook={this.changeBibleBook}
                     close={this.close}
-                    width={this.props.width - 30}
+                    goBack={true}
                   />
                 )}
               </Stack.Screen>
-              {/* <Stack.Screen
-                name="Chapters"
-                component={ChaptersGridScreen}
-                options={({ route }) => ({
-                  cardStyle: {
-                    backgroundColor: "transparent",
-                  },
-                  headerRight: () => (
-                    <AppText style={styles.sectionTitle}>
-                      {route.params.title}
-                    </AppText>
-                  ),
-                  headerStyle: {
-                    backgroundColor: "transparent",
-                    height: 55,
-                  },
-                  headerTitle: "",
-                })}
-                initialParams={{
-                  topPanel: this.close,
-                }}
-              /> */}
             </Stack.Navigator>
           </NavigationContainer>
         );
@@ -111,7 +88,7 @@ class TopSheetNavigation extends PureComponent {
             <Stack.Navigator screenOptions={{ headerShown: true }}>
               <Stack.Screen
                 name="BooksList"
-                options={{
+                options={({ route }) => ({
                   headerShown: false,
                   title: "Books",
                   cardStyle: {
@@ -119,11 +96,11 @@ class TopSheetNavigation extends PureComponent {
                     //   ? colors.medium
                     //   : colors.light,
                   },
-                }}
+                })}
               >
-                {() => (
+                {(props) => (
                   <BooksListScreen
-                    books={this.props.books}
+                    {...props}
                     changeBibleBook={this.changeBibleBook}
                     close={this.close}
                     width={this.props.width - 30}
@@ -145,92 +122,94 @@ class TopSheetNavigation extends PureComponent {
   };
 
   changeBibleBook = (newBook) => {
-    this.props.setCurrentBook(newBook);
-    var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
-    var bibleJsonObject = JSON.parse(bibleJsonString);
+    if (this.props.currentBook !== newBook) {
+      this.props.setCurrentBook(newBook);
+      var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
+      var bibleJsonObject = JSON.parse(bibleJsonString);
 
-    let verses = [];
-    let johnsNote = "";
-    let crossrefs = "";
-    const chapters = bibleJsonObject["crossway-bible"]["book"]["chapter"];
-    const notes = notesArray[newBook.value - 1]["note"];
+      let verses = [];
+      let johnsNote = "";
+      let crossrefs = "";
+      const chapters = bibleJsonObject["crossway-bible"]["book"]["chapter"];
+      const notes = notesArray[newBook.value - 1]["note"];
 
-    const bookSections = [];
-    chapters.map((chapter) => {
-      chapter["verse"].forEach((verse) => {
-        let note = notes.find(
-          (el) =>
-            el["_start"] ===
-            "n" +
-              "01" +
-              ("000" + chapter["_num"]).substr(-3) +
-              ("000" + verse["_num"]).substr(-3)
-        );
+      const bookSections = [];
+      chapters.map((chapter) => {
+        chapter["verse"].forEach((verse) => {
+          let note = notes.find(
+            (el) =>
+              el["_start"] ===
+              "n" +
+                "01" +
+                ("000" + chapter["_num"]).substr(-3) +
+                ("000" + verse["_num"]).substr(-3)
+          );
 
-        if (note) {
-          const pTag = note["content"]["p"][0];
-          const parsedNote = pTag["a"]
-            ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
-                <Text key={i}>
-                  <Text style={{ fontSize: 12, lineHeight: 10 }}>
-                    {Array.isArray(pTag["a"])
-                      ? "REF1" //pTag["a"][0]["__text"] //"a" is always an array
-                      : "REF2"}
+          if (note) {
+            const pTag = note["content"]["p"][0];
+            const parsedNote = pTag["a"]
+              ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
+                  <Text key={i}>
+                    <Text style={{ fontSize: 12, lineHeight: 10 }}>
+                      {Array.isArray(pTag["a"])
+                        ? "REF1" //pTag["a"][0]["__text"] //"a" is always an array
+                        : "REF2"}
+                    </Text>
+                    {match}
                   </Text>
-                  {match}
-                </Text>
-              ))
-            : reactStringReplace(pTag["__text"], /\n/, (match, i) => (
-                <Text key={i}>{"REF3"}</Text>
-              ));
-          johnsNote = parsedNote;
-        } else {
-          johnsNote = "There is no note for this passage";
-        }
+                ))
+              : reactStringReplace(pTag["__text"], /\n/, (match, i) => (
+                  <Text key={i}>{"REF3"}</Text>
+                ));
+            johnsNote = parsedNote;
+          } else {
+            johnsNote = "There is no note for this passage";
+          }
 
-        let crossrefList = crossrefsJsonObject["chapter"][
-          Number(chapter["_num"]) - 1
-        ]["verse"].find(
-          (el) =>
-            el["id"] ===
-            "01" +
-              ("000" + chapter["_num"]).substr(-3) +
-              ("000" + verse["_num"]).substr(-3)
-        );
+          let crossrefList = crossrefsJsonObject["chapter"][
+            Number(chapter["_num"]) - 1
+          ]["verse"].find(
+            (el) =>
+              el["id"] ===
+              "01" +
+                ("000" + chapter["_num"]).substr(-3) +
+                ("000" + verse["_num"]).substr(-3)
+          );
 
-        if (crossrefList) {
-          crossrefs = crossrefList["letter"];
-        } else {
-          crossrefs = {
-            title: "",
-            text: "",
-          };
-        }
+          if (crossrefList) {
+            crossrefs = crossrefList["letter"];
+          } else {
+            crossrefs = {
+              title: "",
+              text: "",
+            };
+          }
 
-        verses.push({
-          chapter: Number(chapter["_num"]),
-          title: Number(verse["_num"]),
-          content: verseFormatted(verse, 12),
-          johnsNote: johnsNote,
-          // loved: false,
-          crossrefs: crossrefs,
-        });
-      });
-
-      Array.isArray(chapter["heading"])
-        ? bookSections.push({
-            chapterNum: Number(chapter["_num"]),
-            title: chapter["heading"][0],
-            data: chapter["verse"],
-          })
-        : bookSections.push({
-            chapterNum: Number(chapter["_num"]),
-            title: chapter["heading"],
-            data: chapter["verse"],
+          verses.push({
+            chapter: Number(chapter["_num"]),
+            title: Number(verse["_num"]),
+            content: verse, //VerseFormatted(verse, 12),
+            johnsNote: johnsNote,
+            // loved: false,
+            crossrefs: crossrefs,
           });
-    });
-    this.props.setSections(bookSections);
-    this.props.setVerseList(verses);
+        });
+
+        Array.isArray(chapter["heading"])
+          ? bookSections.push({
+              chapterNum: Number(chapter["_num"]),
+              title: chapter["heading"][0],
+              data: chapter["verse"],
+            })
+          : bookSections.push({
+              chapterNum: Number(chapter["_num"]),
+              title: chapter["heading"],
+              data: chapter["verse"],
+            });
+      });
+      this.props.setSections(bookSections);
+      this.props.setVerseList(verses);
+    }
   };
 
   styles = StyleSheet.create({

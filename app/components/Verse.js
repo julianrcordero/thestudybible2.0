@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import reactStringReplace from "react-string-replace";
-import verseFormatted from "./VerseFormatted";
+import VerseFormatted from "./VerseFormatted";
 
 export default class Verse extends PureComponent {
   constructor(props) {
@@ -43,7 +43,7 @@ export default class Verse extends PureComponent {
 
     const parsedReference = `${chapterNum} : ${verse["_num"]}`;
 
-    const parsedVerse = verseFormatted(verse, 12);
+    // const parsedVerse = VerseFormatted(verse, 12);
 
     return (
       <Text
@@ -69,7 +69,8 @@ export default class Verse extends PureComponent {
             // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
           }}
         >
-          {parsedVerse}
+          <VerseFormatted verse={verse} crossrefSize={12} />
+          {/* {parsedVerse} */}
         </Text>
         {/* <HighlightComponent
           highlightStyle={{ backgroundColor: "red" }}

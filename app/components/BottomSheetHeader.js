@@ -10,7 +10,8 @@ export default function BottomSheetHeader({ settingsMode, snapToZero }) {
     header: {
       alignItems: "center",
       backgroundColor: colors.background,
-      borderTopWidth: 0.3,
+      borderWidth: 0.2,
+      borderColor: colors.border,
       flexDirection: "row",
       height: 50,
       justifyContent: "space-between",

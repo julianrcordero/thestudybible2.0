@@ -33,7 +33,7 @@ export default class Verse extends PureComponent {
   render() {
     const {
       chapterNum,
-      crossrefSize,
+      // crossrefSize,
       // focusedVerse,
       verse,
       searchWords,
@@ -43,7 +43,7 @@ export default class Verse extends PureComponent {
 
     const parsedReference = `${chapterNum} : ${verse["_num"]}`;
 
-    const parsedVerse = verseFormatted(verse, crossrefSize);
+    const parsedVerse = verseFormatted(verse, 12);
 
     return (
       <Text

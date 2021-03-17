@@ -53,10 +53,12 @@ function CrossRef({ myObject }) {
 }
 
 function CrossReferences({ crossrefs }) {
+  const { colors } = useTheme();
   return (
     <View
       style={{
-        borderWidth: 0.5,
+        borderColor: colors.border,
+        borderWidth: 0.3,
         paddingHorizontal: 30,
       }}
     >
@@ -75,7 +77,7 @@ export default function StudyScreen({
   bottomSheetRef,
   carousel,
   currentBook,
-  crossrefSize,
+  // crossrefSize,
   fontSize,
   verseList,
   width,

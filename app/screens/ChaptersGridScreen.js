@@ -5,7 +5,12 @@ import { View } from "react-native-animatable";
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
 
-export default function ChaptersGridScreen({ close, chapters, route }) {
+export default function ChaptersGridScreen({
+  close,
+  chapters,
+  route,
+  changeBibleBook,
+}) {
   const { colors, isDark } = useTheme();
 
   const { gridChapters } = route ? route.params : 0;
@@ -22,6 +27,17 @@ export default function ChaptersGridScreen({ close, chapters, route }) {
     });
   }
 
+  const changeBook = (book, chapter) => {
+    close();
+    changeBibleBook({
+      label: book,
+      value: 1,
+      backgroundColor: "#345171",
+      icon: "apps",
+    });
+    console.log(book, chapter);
+  };
+
   return (
     <View style={{ backgroundColor: colors.background }}>
       <FlatList
@@ -29,7 +45,9 @@ export default function ChaptersGridScreen({ close, chapters, route }) {
         keyExtractor={(item) => item.id}
         numColumns={7}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={close}>
+          <TouchableOpacity
+            onPress={() => changeBook(route.params.title, item.title)}
+          >
             <BiblePickerItem item={item} label={item.short} flex={1 / 7} />
           </TouchableOpacity>
         )}

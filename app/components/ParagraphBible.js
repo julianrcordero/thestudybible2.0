@@ -53,7 +53,7 @@ export default class ParagraphBible extends PureComponent {
         formatting={this.props.formatting}
         key={i}
         chapterNum={item.chapterNum}
-        crossrefSize={this.props.crossrefSize}
+        // crossrefSize={this.props.crossrefSize}
         // focusedVerse={focusedVerse}
         fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}

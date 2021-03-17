@@ -90,7 +90,7 @@ export default class VerseByVerseBible extends PureComponent {
             <Verse
               key={index}
               chapterNum={section.chapterNum}
-              crossrefSize={crossrefSize}
+              // crossrefSize={crossrefSize}
               verse={item}
               //   searchWords={searchWords}
               onPress={() => toggleSlideView(section.chapterNum, index + 1)}

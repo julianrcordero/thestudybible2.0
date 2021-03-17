@@ -42,6 +42,7 @@ function ResourceBox({
       width: 30,
     },
     panelBox: {
+      borderColor: colors.border,
       borderBottomWidth: 0.2,
       paddingHorizontal: 30,
       width: "100%",
@@ -88,19 +89,17 @@ export default class PanelBox extends PureComponent {
         id: 2,
         title: "Today at 11:23am",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       },
       {
         id: 1,
         title: "December 22, 2020 at 5:00pm",
-        description:
-          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. ",
+        description: "The quick brown fox jumps over the lazy dog.",
       },
       {
         id: 0,
         title: "July 8, 2020 at 10:00am",
-        description:
-          "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
+        description: "Here is a sample sentence of a note that I have written.",
       },
     ],
   };

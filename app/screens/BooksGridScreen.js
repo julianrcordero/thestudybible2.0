@@ -14,7 +14,7 @@ import AppText from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
 
 export default function BooksGridScreen({ navigation }) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   const styles = StyleSheet.create({
     sectionTitle: {
@@ -578,15 +578,6 @@ export default function BooksGridScreen({ navigation }) {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              // close();
-              // const interactionPromise = InteractionManager.runAfterInteractions(
-              //   () => {
-              //     setTimeout(() => {
-              //       changeBibleBook(item);
-              //     });
-              //   }
-              // );
-              // () => interactionPromise.cancel();
               console.log(item);
               navigation.navigate("Chapters", {
                 title: item.label,
@@ -613,15 +604,6 @@ export default function BooksGridScreen({ navigation }) {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              // close();
-              // const interactionPromise = InteractionManager.runAfterInteractions(
-              //   () => {
-              //     setTimeout(() => {
-              //       changeBibleBook(item);
-              //     });
-              //   }
-              // );
-              // () => interactionPromise.cancel();
               console.log(item);
               navigation.navigate("Chapters", {
                 title: item.label,

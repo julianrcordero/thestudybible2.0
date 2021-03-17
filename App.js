@@ -33,14 +33,14 @@ export default function App() {
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
-  const crossrefSize = 12;
+  // const crossrefSize = 12;
 
   const topPanel = React.useRef();
-  const [] = useState(true);
 
   const searchHistoryRef = React.useRef();
 
   const [settingsMode, setSettingsMode] = useState(false);
+  const [sections, setSections] = useState([]);
   const [verseList, setVerseList] = useState([]);
   const carousel = React.useRef();
 
@@ -554,7 +554,7 @@ export default function App() {
       <StudyScreen
         bottomSheetRef={bottomSheetRef}
         carousel={carousel}
-        crossrefSize={crossrefSize}
+        // crossrefSize={crossrefSize}
         currentBook={currentBook}
         fontSize={fontSize}
         verseList={verseList}
@@ -583,6 +583,9 @@ export default function App() {
               height={top - getBottomSpace()}
               width={width}
               searchHistoryRef={searchHistoryRef}
+              setCurrentBook={setCurrentBook}
+              setSections={setSections}
+              setVerseList={setVerseList}
             />
           </Screen>
 
@@ -592,13 +595,14 @@ export default function App() {
                 formatting={formatting}
                 bottomSheetRef={bottomSheetRef}
                 carousel={carousel}
-                crossrefSize={crossrefSize}
+                // crossrefSize={crossrefSize}
                 currentBook={currentBook}
                 darkMode={darkMode}
                 fontFamily={fontFamily}
                 fontSize={fontSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
+                sections={sections}
                 setSettingsMode={setSettingsMode}
                 setVerseList={setVerseList}
                 setCurrentBook={setCurrentBook}
@@ -619,7 +623,7 @@ export default function App() {
 
         <ReanimatedBottomSheet
           ref={bottomSheetRef}
-          snapPoints={[top, "50%", "0%"]}
+          snapPoints={[top, "40%", "0%"]}
           initialSnap={2}
           onStartShouldSetResponderCapture={() => console.log("ScrollView")}
           renderHeader={bottomSheetHeader}

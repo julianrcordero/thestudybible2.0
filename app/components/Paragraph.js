@@ -16,7 +16,7 @@ export default class Paragraph extends PureComponent {
     const {
       chapterNum,
       colors,
-      crossrefSize,
+      // crossrefSize,
       // focusedVerse,
       fontFamily,
       fontSize,
@@ -31,7 +31,7 @@ export default class Paragraph extends PureComponent {
           <Verse
             key={j}
             chapterNum={chapterNum}
-            crossrefSize={crossrefSize}
+            // crossrefSize={crossrefSize}
             // focusedVerse={focusedVerse}
             verse={data}
             onPress={() => onPress(chapterNum, j + 1)}

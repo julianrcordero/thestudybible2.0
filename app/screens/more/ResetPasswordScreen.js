@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Image, StyleSheet, View, Alert } from "react-native";
 import * as yup from "yup";
 
-import authApi from "../../api/auth";
+import cognitoAuthApi from "../../api/cognitoAuth";
 import ActivityIndicator from "../../components/ActivityIndicator";
 
 import {
@@ -29,7 +29,7 @@ const validationSchema = yup.object().shape({
 function ResetPasswordScreen({ route, navigation }) {
   const { colors, isDark } = useTheme();
   const { email } = route.params;
-  const confirmforgotpasswordApi = useApi(authApi.confirmforgotpassword);
+  const confirmforgotpasswordApi = useApi(cognitoAuthApi.confirmforgotpassword);
 
   const auth = useAuth();
   const [error, setError] = useState();
@@ -53,7 +53,7 @@ function ResetPasswordScreen({ route, navigation }) {
       return;
     }
 
-    const result2 = await authApi.signin(email, proposed_password);
+    const result2 = await cognitoAuthApi.signin(email, proposed_password);
     auth.logIn(
       result2.data.body.data.AuthenticationResult.IdToken,
       result2.data.body.data.AuthenticationResult.AccessToken

@@ -1,9 +1,9 @@
-import client from "./client";
+import apiClient from "./apiClient";
 
 // const endpoint = "/getdashboard";
 
-const getDevotionals = () => client.get("/getdevotionals");
-const getResources = () => client.get("/getdashboard");
+const getDevotionals = () => apiClient.get("/getdevotionals");
+const getResources = () => apiClient.get("/getdashboard");
 
 // export const addListing = (listing, onUploadProgress) => {
 //   const data = new FormData();

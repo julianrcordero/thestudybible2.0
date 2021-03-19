@@ -63,8 +63,8 @@ function CrossReferences({ crossrefs }) {
   return (
     <View
       style={{
-        borderColor: colors.border,
-        borderTopWidth: 0.3,
+        // borderColor: colors.border,
+        // borderTopWidth: 0.3,
         marginHorizontal: 30,
       }}
     >
@@ -185,7 +185,9 @@ export default function StudyScreen({
         windowSize={11}
       />
       {currentCrossrefs && <CrossReferences crossrefs={currentCrossrefs} />}
-      <PanelBox fontSize={fontSize} johnsNote={currentJohnsNote}></PanelBox>
+      <View style={{ paddingHorizontal: 25 }}>
+        <PanelBox fontSize={fontSize} johnsNote={currentJohnsNote}></PanelBox>
+      </View>
     </>
   );
 }

@@ -1,7 +1,7 @@
-import client from "./client";
+import apiClient from "./apiClient";
 
 const register = (pushToken) =>
-  client.post("/expoPushTokens", { token: pushToken });
+  apiClient.post("/expoPushTokens", { token: pushToken });
 
 export default {
   register,

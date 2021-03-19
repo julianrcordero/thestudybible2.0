@@ -17,12 +17,11 @@ import defaultStyles from "../config/styles";
 import NoteHistory from "./NoteHistory";
 import ResourcesScreen from "../screens/ResourcesScreen";
 import AppButton from "./Button";
+import useAuth from "../auth/useAuth";
 
 function ResourceBox({
   children,
   image,
-  style,
-  text,
   title,
   topRightButton,
   topRightIcon,
@@ -33,11 +32,9 @@ function ResourceBox({
   const myStyles = {
     button: { alignItems: "center", flexDirection: "row" },
     header: {
-      borderColor: colors.border,
-      borderTopWidth: 0.3,
-      flexDirection: "row",
-      height: 50,
       alignItems: "center",
+      // backgroundColor: "yellow",
+      flexDirection: "row",
       justifyContent: "space-between",
     },
     image: {
@@ -47,25 +44,31 @@ function ResourceBox({
     },
     panelBox: {
       borderColor: colors.border,
-      paddingHorizontal: 30,
+      borderWidth: 0.3,
+      marginVertical: 12.5,
+      paddingHorizontal: 20,
+      paddingVertical: 15,
       width: "100%",
     },
     titleText: {
       color: colors.text,
       fontWeight: "bold",
       fontSize: 16,
-      // paddingHorizontal: 10,
     },
   };
 
   return (
     <View style={myStyles.panelBox}>
-      <View style={[style, myStyles.header]}>
+      <View style={myStyles.header}>
         {image ? <Image style={myStyles.image} source={image}></Image> : null}
         <AppText style={myStyles.titleText}>{title}</AppText>
         {topRightButton ? (
           <View style={myStyles.button}>
-            <Button title={topRightButton} onPress={topRightOnPress} />
+            <Button
+              title={topRightButton}
+              onPress={topRightOnPress}
+              style={{ fontSize: 12 }}
+            />
             <TouchableOpacity style={styles.search} onPress={topRightOnPress}>
               <MaterialCommunityIcons
                 name={topRightIcon}
@@ -82,6 +85,7 @@ function ResourceBox({
 }
 
 export default function PanelBox({ fontSize, johnsNote }) {
+  const { user, logOut } = useAuth();
   const { colors } = useTheme();
   const noteHistoryRef = useRef();
   const macarthurText = fontSize * 0.85;
@@ -95,7 +99,7 @@ export default function PanelBox({ fontSize, johnsNote }) {
         color: colors.text,
         fontSize: macarthurText,
         lineHeight: macarthurLineHeight,
-        paddingBottom: macarthurLineHeight,
+        paddingVertical: macarthurText,
       },
     ],
   };
@@ -115,16 +119,39 @@ export default function PanelBox({ fontSize, johnsNote }) {
       <ResourceBox
         title={"John's Note"}
         image={require("../assets/studyBibleAppLogo.jpg")}
-        style={{ borderColor: colors.border, borderTopWidth: 0.3 }}
       >
-        <Text style={myStyles.macArthurText}>{johnsNote}</Text>
+        <Text style={myStyles.macArthurText}>
+          {user
+            ? johnsNote
+            : "John's Notes from The Macarthur Study Bible can help you enrich your study of this passage."}
+        </Text>
+        {user ? null : (
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 10,
+            }}
+          >
+            <AppButton
+              title={"Get John's Notes"}
+              onPress={() => console.log("Get John's Notes")} //API CALL
+            />
+          </View>
+        )}
       </ResourceBox>
 
       <ResourceBox
         title={"Related Resources"}
         image={require("../assets/gtylogo.jpg")}
       >
-        <View style={{}}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 10,
+          }}
+        >
           {resourcesLoaded ? (
             <ResourcesScreen />
           ) : (
@@ -135,7 +162,6 @@ export default function PanelBox({ fontSize, johnsNote }) {
           )}
         </View>
       </ResourceBox>
-      {/* <View style={{ flex: 1, flexGrow: 1, flexShrink: 1 }}></View> */}
     </>
   );
 }

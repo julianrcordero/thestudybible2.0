@@ -16,7 +16,7 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../../components/forms/Index";
-import authApi from "../../api/auth";
+import cognitoAuthApi from "../../api/cognitoAuth";
 
 import { useTheme } from "../../config/ThemeProvider";
 
@@ -35,7 +35,7 @@ function LoginScreen({ navigation }) {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
-    const result = await authApi.signin(email, password);
+    const result = await cognitoAuthApi.signin(email, password);
 
     // console.log(result);
     if (!result.ok) {

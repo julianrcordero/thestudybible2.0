@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Alert, Image, StyleSheet, View } from "react-native";
 import * as yup from "yup";
 
-import authApi from "../../api/auth";
+import cognitoAuthApi from "../../api/cognitoAuth";
 import useApi from "../../hooks/useApi";
 import useAuth from "../../auth/useAuth";
 import ActivityIndicator from "../../components/ActivityIndicator";
@@ -25,8 +25,8 @@ const validationSchema = yup.object().shape({
 
 function ConfirmRegisterScreen({ route, navigation }) {
   const { colors, isDark } = useTheme();
-  const confirmsignupApi = useApi(authApi.confirmsignup);
-  const loginApi = useApi(authApi.signin);
+  const confirmsignupApi = useApi(cognitoAuthApi.confirmsignup);
+  const loginApi = useApi(cognitoAuthApi.signin);
   const auth = useAuth();
   const [error, setError] = useState();
 

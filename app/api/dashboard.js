@@ -1,9 +1,9 @@
-import client from "./client";
+import apiClient from "./apiClient";
 
 const endpoint = "/dashboard";
 
 const getDashboard = () => {
-  Object.values(client.get(endpoint));
+  Object.values(apiClient.get(endpoint));
 };
 
 export const addDashboardItem = (dashboardItem, onUploadProgress) => {
@@ -18,7 +18,7 @@ export const addDashboardItem = (dashboardItem, onUploadProgress) => {
 
   //Parent > Child
 
-  return client.post(endpoint, data, {
+  return apiClient.post(endpoint, data, {
     onUploadProgress: (progress) =>
       onUploadProgress(progress.loaded / progress.total),
   });

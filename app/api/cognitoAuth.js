@@ -1,4 +1,4 @@
-import cognitoClient from "./cognito";
+import cognitoClient from "./cognitoClient";
 
 const signin = (email, password) =>
   cognitoClient.post("/signin", { email, password });

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Alert, Image, StyleSheet, View } from "react-native";
 import * as yup from "yup";
 
-import usersApi from "../../api/users";
-import authApi from "../../api/auth";
+import cognitoAuthApi from "../../api/cognitoAuth";
 import useAuth from "../../auth/useAuth";
 import useApi from "../../hooks/useApi";
 import ActivityIndicator from "../../components/ActivityIndicator";
@@ -24,7 +23,7 @@ const validationSchema = yup.object().shape({
 });
 
 function RegisterScreen({ navigation }) {
-  const registerApi = useApi(authApi.signup);
+  const registerApi = useApi(cognitoAuthApi.signup);
 
   const auth = useAuth();
   const [error, setError] = useState();
@@ -145,38 +144,3 @@ function RegisterScreen({ navigation }) {
 }
 
 export default RegisterScreen;
-
-// (values) => {
-//   // console.log(values);
-//   fetch(
-//     "https://1scvbw6i67.execute-api.us-east-1.amazonaws.com/dev/signup",
-//     {
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json;charset=UTF-8",
-//       },
-//       method: "POST",
-//       body: JSON.stringify({
-//         name: values.name,
-//         email: values.email,
-//         password: values.password,
-//         phone_number: values.phone_number,
-//       }),
-//     }
-//   )
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (data.statusCode == 200) {
-//         console.log(data.body.message);
-//         navigation.navigate("ConfirmRegister", {
-//           email: values.email,
-//           password: values.password,
-//         });
-//       } else {
-//         console.log(data.body.message);
-//       }
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// }

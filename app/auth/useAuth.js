@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 
 import AuthContext from "./context";
 import authStorage from "./storage";
-import authApi from "../api/auth";
+import cognitoAuthApi from "../api/cognitoAuth";
 
 export default useAuth = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -18,7 +18,7 @@ export default useAuth = () => {
 
   const logOut = async () => {
     const accessToken = await authStorage.getAccessToken();
-    const result = await authApi.signout(accessToken);
+    const result = await cognitoAuthApi.signout(accessToken);
     result.ok
       ? console.log("Successfully signed out via Cognito")
       : console.log("Couldn't sign out via Cognito");

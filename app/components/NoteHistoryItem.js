@@ -4,13 +4,14 @@ import {
   Keyboard,
   View,
   StyleSheet,
+  Text,
   TextInput,
   TouchableWithoutFeedback,
 } from "react-native";
 
 import Button from "./Button";
-import Text from "./Text";
 import { useTheme } from "../config/ThemeProvider";
+import AppText from "./Text";
 
 export default class NoteHistoryItem extends PureComponent {
   constructor(props) {
@@ -66,34 +67,14 @@ export default class NoteHistoryItem extends PureComponent {
   };
 
   styles = StyleSheet.create({
-    container: {
-      // alignItems: "center",
-      // borderWidth: 0.3,
-      // borderColor: colors.medium,
-      // flex: 1,
-      flexDirection: "row",
-      // height: 50,
-      justifyContent: "flex-end",
-      padding: 5,
-    },
-    dateContainer: {
-      backgroundColor: "yellow",
-      // flex: 1,
-      // marginLeft: 10,
-      justifyContent: "flex-end",
-    },
+    container: { marginVertical: 15 },
     image: {
       width: 70,
       height: 70,
       borderRadius: 35,
     },
-    subTitle: {
-      // color: colors.dark,
-    },
     date: {
-      // color: colors.medium,
-      fontSize: 12,
-      fontWeight: "100",
+      textAlign: "right",
     },
     text: {
       color: this.props.colors.text,
@@ -110,15 +91,10 @@ export default class NoteHistoryItem extends PureComponent {
     );
 
     return (
-      <View style={{ marginVertical: 15 }}>
-        <View style={styles.container}>
-          <Text
-            style={[styles.date, { color: colors.primary }]}
-            numberOfLines={1}
-          >
-            {date}
-          </Text>
-        </View>
+      <View style={this.styles.container}>
+        <Text style={[this.styles.date, { color: colors.primary }]}>
+          {date}
+        </Text>
         <View>
           {this.state.isFocused ? (
             <>
@@ -156,19 +132,24 @@ export default class NoteHistoryItem extends PureComponent {
                   <Button
                     title={"Save"}
                     onPress={this.save} //API CALL
+                    style={{ width: "50%" }}
                   ></Button>
                 )}
                 <Button
                   color={this.state.noteText == "" ? "secondary" : "error"}
                   title={this.state.noteText == "" ? "Cancel" : "Delete"}
+                  style={{ width: "50%" }}
                   onPress={this.notFinishedAlert} //API CALL
                 ></Button>
               </View>
             </>
           ) : (
-            <Text onPress={this.setFocusedTrue} style={{ color: colors.text }}>
+            <AppText
+              onPress={this.setFocusedTrue}
+              style={{ color: colors.text }}
+            >
               {this.state.oldNoteText}
-            </Text>
+            </AppText>
           )}
         </View>
       </View>

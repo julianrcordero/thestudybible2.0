@@ -11,7 +11,7 @@ import {
 import { useTheme } from "../../config/ThemeProvider";
 
 import AppButton from "../../components/Button";
-import authApi from "../../api/auth";
+import cognitoAuthApi from "../../api/cognitoAuth";
 import useApi from "../../hooks/useApi";
 import useAuth from "../../auth/useAuth";
 import ActivityIndicator from "../../components/ActivityIndicator";
@@ -22,7 +22,7 @@ const validationSchema = yup.object().shape({
 
 function ForgotPasswordScreen({ navigation }) {
   const { colors, isDark } = useTheme();
-  const forgotpasswordApi = useApi(authApi.forgotpassword);
+  const forgotpasswordApi = useApi(cognitoAuthApi.forgotpassword);
 
   const auth = useAuth();
   const [error, setError] = useState();

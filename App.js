@@ -537,6 +537,7 @@ export default function App() {
 
   const bottomSheetContent = () => (
     <Screen flex={0}>
+      {/* <View style={{ backgroundColor: "red", height: "100%" }}> */}
       {settingsMode ? (
         <SettingsScreen
           fontFamily={fontFamily}
@@ -559,6 +560,7 @@ export default function App() {
           width={width}
         />
       )}
+      {/* </View> */}
     </Screen>
   );
 
@@ -619,17 +621,17 @@ export default function App() {
             position: "relative",
           }}
         ></View> */}
-        </AuthContext.Provider>
 
-        <ReanimatedBottomSheet
-          ref={bottomSheetRef}
-          snapPoints={[top, "40%", "0%"]}
-          initialSnap={2}
-          onStartShouldSetResponderCapture={() => console.log("ScrollView")}
-          renderHeader={bottomSheetHeader}
-          renderContent={bottomSheetContent}
-          // onCloseEnd={() => setFocusedVerse(null)}
-        />
+          <ReanimatedBottomSheet
+            ref={bottomSheetRef}
+            snapPoints={[top, "40%", "0%"]}
+            initialSnap={2}
+            onStartShouldSetResponderCapture={() => console.log("ScrollView")}
+            renderHeader={bottomSheetHeader}
+            renderContent={bottomSheetContent}
+            // onCloseEnd={() => setFocusedVerse(null)}
+          />
+        </AuthContext.Provider>
       </ThemeProvider>
     </AppearanceProvider>
   );

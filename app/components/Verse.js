@@ -41,16 +41,24 @@ export default class Verse extends PureComponent {
       onPress,
     } = this.props;
 
-    const parsedReference = `${chapterNum} : ${verse["_num"]}`;
+    styles = {
+      container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F5FCFF",
+        flexDirection: "row",
+      },
+    };
 
-    // const parsedVerse = VerseFormatted(verse, 12);
+    const isFirst = verse["_num"] === "1";
 
     return (
-      <Text
-        style={[style]}
-        onPress={onPress}
-        onLongPress={this._toggleHighlight}
-      >
+      // <View style={isFirst && styles.container}>
+      <Text onPress={onPress} onLongPress={this._toggleHighlight}>
+        {/* {isFirst ? (
+            <Text style={{ fontSize: 50 }}>{chapterNum}</Text>
+          ) : ( */}
         <Text
           style={{
             fontWeight: "bold",
@@ -60,17 +68,16 @@ export default class Verse extends PureComponent {
           {" "}
           {verse["_num"]}{" "}
         </Text>
+        {/* )} */}
 
         <Text
           style={{
             backgroundColor: this.state.backgroundColor,
-            // color: DarkTheme,
             // textDecorationLine: this.state.textDecorationLine,
             // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
           }}
         >
           <VerseFormatted verse={verse} crossrefSize={12} />
-          {/* {parsedVerse} */}
         </Text>
         {/* <HighlightComponent
           highlightStyle={{ backgroundColor: "red" }}
@@ -78,6 +85,7 @@ export default class Verse extends PureComponent {
           textToHighlight={parsedVerse}
         /> */}
       </Text>
+      // </View>
     );
   }
 }

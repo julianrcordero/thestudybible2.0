@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
-import { Text } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeProvider";
+import AppText from "./Text";
 
 export default class Paragraph extends PureComponent {
   constructor(props) {
@@ -16,8 +17,6 @@ export default class Paragraph extends PureComponent {
     const {
       chapterNum,
       colors,
-      // crossrefSize,
-      // focusedVerse,
       fontFamily,
       fontSize,
       section,
@@ -26,16 +25,9 @@ export default class Paragraph extends PureComponent {
     } = this.props;
 
     return (
-      <this.ConditionalWrapper wrapper={(children) => <Text>{children}</Text>}>
-        {section.data.map((data, j) => (
-          <Verse
-            key={j}
-            chapterNum={chapterNum}
-            // crossrefSize={crossrefSize}
-            // focusedVerse={focusedVerse}
-            verse={data}
-            onPress={() => onPress(chapterNum, j + 1)}
-            searchWords={searchWords}
+      <this.ConditionalWrapper
+        wrapper={(children) => (
+          <Text
             style={[
               defaultStyles.bibleText,
               {
@@ -45,6 +37,18 @@ export default class Paragraph extends PureComponent {
                 fontFamily: fontFamily,
               },
             ]}
+          >
+            {children}
+          </Text>
+        )}
+      >
+        {section.data.map((data, j) => (
+          <Verse
+            key={j}
+            chapterNum={chapterNum}
+            verse={data}
+            onPress={() => onPress(chapterNum, j + 1)}
+            searchWords={searchWords}
           />
         ))}
       </this.ConditionalWrapper>

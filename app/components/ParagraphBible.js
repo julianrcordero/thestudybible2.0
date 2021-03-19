@@ -6,6 +6,7 @@ import { useTheme } from "../config/ThemeProvider";
 
 import defaultStyles from "../config/styles";
 import Paragraph from "./Paragraph";
+import AppText from "./Text";
 
 class SectionHeader extends PureComponent {
   constructor(props) {
@@ -39,8 +40,6 @@ export default class ParagraphBible extends PureComponent {
     super(props);
   }
 
-  // state = { fontFamily: this.props.fontFamily };
-
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
       <AnimatedSectionHeader
@@ -48,15 +47,14 @@ export default class ParagraphBible extends PureComponent {
         title={item.title}
         titleSize={this.props.fontSize * 1.5}
       />
+      {/* <AppText>{item.chapterNum}</AppText> */}
       <Paragraph
-        colors={this.props.colors}
-        formatting={this.props.formatting}
-        key={i}
         chapterNum={item.chapterNum}
-        // crossrefSize={this.props.crossrefSize}
-        // focusedVerse={focusedVerse}
+        colors={this.props.colors}
         fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}
+        formatting={this.props.formatting}
+        key={i}
         section={item}
         // searchWords={searchWords}
         onPress={this.props.toggleSlideView}
@@ -65,15 +63,7 @@ export default class ParagraphBible extends PureComponent {
   );
 
   render() {
-    // const { colors, isDark } = useTheme();
-    const {
-      colors,
-      darkMode,
-      HEADER_HEIGHT,
-      sections,
-      scrollY,
-      top,
-    } = this.props;
+    const { colors, HEADER_HEIGHT, sections, scrollY } = this.props;
 
     const styles = {
       bibleTextView: {
@@ -100,7 +90,6 @@ export default class ParagraphBible extends PureComponent {
         style={[
           styles.bibleTextView,
           {
-            // backgroundColor: darkMode ? colors.primary : colors.white,
             paddingTop: HEADER_HEIGHT,
             paddingBottom: HEADER_HEIGHT + 300,
           },

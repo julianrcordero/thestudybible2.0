@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useRef, useState } from "react";
 import {
   Image,
   FlatList,
@@ -16,10 +16,12 @@ import AppText from "../components/Text";
 import defaultStyles from "../config/styles";
 import NoteHistory from "./NoteHistory";
 import ResourcesScreen from "../screens/ResourcesScreen";
+import AppButton from "./Button";
 
 function ResourceBox({
   children,
   image,
+  style,
   text,
   title,
   topRightButton,
@@ -31,6 +33,8 @@ function ResourceBox({
   const myStyles = {
     button: { alignItems: "center", flexDirection: "row" },
     header: {
+      borderColor: colors.border,
+      borderTopWidth: 0.3,
       flexDirection: "row",
       height: 50,
       alignItems: "center",
@@ -43,7 +47,6 @@ function ResourceBox({
     },
     panelBox: {
       borderColor: colors.border,
-      borderBottomWidth: 0.2,
       paddingHorizontal: 30,
       width: "100%",
     },
@@ -57,7 +60,7 @@ function ResourceBox({
 
   return (
     <View style={myStyles.panelBox}>
-      <View style={myStyles.header}>
+      <View style={[style, myStyles.header]}>
         {image ? <Image style={myStyles.image} source={image}></Image> : null}
         <AppText style={myStyles.titleText}>{title}</AppText>
         {topRightButton ? (
@@ -78,118 +81,61 @@ function ResourceBox({
   );
 }
 
-export default class PanelBox extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+export default function PanelBox({ fontSize, johnsNote }) {
+  const { colors } = useTheme();
+  const noteHistoryRef = useRef();
+  const macarthurText = fontSize * 0.85;
+  const macarthurLineHeight = macarthurText * 2;
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
 
-  state = {
-    noteHistory: [
+  const myStyles = {
+    macArthurText: [
+      defaultStyles.macArthurText,
       {
-        id: 2,
-        title: "Today at 11:23am",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      },
-      {
-        id: 1,
-        title: "December 22, 2020 at 5:00pm",
-        description: "The quick brown fox jumps over the lazy dog.",
-      },
-      {
-        id: 0,
-        title: "July 8, 2020 at 10:00am",
-        description: "Here is a sample sentence of a note that I have written.",
+        color: colors.text,
+        fontSize: macarthurText,
+        lineHeight: macarthurLineHeight,
+        paddingBottom: macarthurLineHeight,
       },
     ],
   };
 
-  addANote = () => {
-    const newNoteHistory = [
-      {
-        id: this.state.noteHistory.length,
-        title: "Today at 3:15pm",
-        description: "",
-        open: true,
-      },
-      ...this.state.noteHistory,
-    ];
-    this.setState({ noteHistory: newNoteHistory });
-  };
+  return (
+    <>
+      <ResourceBox
+        colors={colors}
+        title={"My Notes"}
+        topRightButton={"Add a note"}
+        topRightIcon={"pencil-plus-outline"}
+        topRightOnPress={() => noteHistoryRef.current.addANote()}
+      >
+        <NoteHistory ref={noteHistoryRef} colors={colors} />
+      </ResourceBox>
 
-  handleDelete = (item) => {
-    //Delete the message from messages
-    const newList = this.state.noteHistory.filter((m) => m.id !== item.id);
+      <ResourceBox
+        title={"John's Note"}
+        image={require("../assets/studyBibleAppLogo.jpg")}
+        style={{ borderColor: colors.border, borderTopWidth: 0.3 }}
+      >
+        <Text style={myStyles.macArthurText}>{johnsNote}</Text>
+      </ResourceBox>
 
-    this.setState({
-      noteHistory: newList,
-    });
-  };
-
-  render() {
-    const { colors, fontSize, johnsNote } = this.props;
-
-    const macarthurText = fontSize * 0.85;
-    const macarthurLineHeight = macarthurText * 2;
-
-    const myStyles = {
-      macArthurText: [
-        defaultStyles.macArthurText,
-        {
-          color: colors.text,
-          fontSize: macarthurText,
-          lineHeight: macarthurLineHeight,
-          paddingBottom: macarthurLineHeight,
-        },
-      ],
-    };
-
-    return (
-      <View>
-        <ResourceBox
-          colors={colors}
-          title={"My Notes"}
-          topRightButton={"Add a note"}
-          topRightIcon={"pencil-plus-outline"}
-          topRightOnPress={this.addANote}
-        >
-          <NoteHistory
-            noteHistory={this.state.noteHistory}
-            handleDelete={this.handleDelete}
-          />
-        </ResourceBox>
-
-        <ResourceBox
-          title={"John's Note"}
-          image={require("../assets/studyBibleAppLogo.jpg")}
-        >
-          <Text style={myStyles.macArthurText}>{johnsNote}</Text>
-        </ResourceBox>
-
-        <ResourceBox
-          title={"Related Resources"}
-          image={require("../assets/gtylogo.jpg")}
-        >
-          <ResourcesScreen />
-        </ResourceBox>
-      </View>
-    );
-  }
+      <ResourceBox
+        title={"Related Resources"}
+        image={require("../assets/gtylogo.jpg")}
+      >
+        <View style={{}}>
+          {resourcesLoaded ? (
+            <ResourcesScreen />
+          ) : (
+            <AppButton
+              title={"Load resources"}
+              onPress={() => console.log("Loading resources")}
+            />
+          )}
+        </View>
+      </ResourceBox>
+      {/* <View style={{ flex: 1, flexGrow: 1, flexShrink: 1 }}></View> */}
+    </>
+  );
 }
-
-const styles = StyleSheet.create({
-  macArthurBox: {
-    height: "100%",
-    // borderColor: colors.medium,
-    borderWidth: 1,
-    marginVertical: 5,
-    padding: 10,
-  },
-
-  relatedResourcesBox: {
-    // borderColor: colors.medium,
-    borderWidth: 1,
-    marginVertical: 5,
-    padding: 10,
-  },
-});

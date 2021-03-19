@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
-import VerseCard from "../components/VerseCard";
 import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
 import VerseFormatted from "../components/VerseFormatted";
@@ -65,8 +64,8 @@ function CrossReferences({ crossrefs }) {
     <View
       style={{
         borderColor: colors.border,
-        borderWidth: 0.3,
-        paddingHorizontal: 30,
+        borderTopWidth: 0.3,
+        marginHorizontal: 30,
       }}
     >
       {Array.isArray(crossrefs) ? (
@@ -80,12 +79,11 @@ function CrossReferences({ crossrefs }) {
   );
 }
 
-function Reference({ book, reference, fontSize, style }) {
+function Reference({ book, reference, style }) {
   return <AppText style={style}>{book + " " + reference}</AppText>;
 }
 
 export default function StudyScreen({
-  bottomSheetRef,
   carousel,
   currentBook,
   fontFamily,
@@ -94,7 +92,7 @@ export default function StudyScreen({
   width,
 }) {
   const { colors } = useTheme();
-  const [currentReference, setCurrentReference] = useState([]);
+  const [currentReference, setCurrentReference] = useState("1 : 1");
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
 
@@ -106,7 +104,7 @@ export default function StudyScreen({
 
   const keyExtractor = (item, index) => item + index;
 
-  const renderVerseCardItem = ({ item, index }) => {
+  const renderVerseCardItem = ({ item }) => {
     return (
       <Text style={styles.verseTextBox}>
         <VerseFormatted verse={item.content} crossrefSize={12} />
@@ -154,13 +152,10 @@ export default function StudyScreen({
       paddingHorizontal: 30,
       width: width,
     },
-    studyScreenBox: {
-      backgroundColor: colors.background,
-    },
   });
 
   return (
-    <View style={styles.studyScreenBox}>
+    <>
       <Reference
         book={currentBook.label}
         reference={currentReference}
@@ -189,12 +184,8 @@ export default function StudyScreen({
         viewabilityConfig={viewConfigRef.current}
         windowSize={11}
       />
-      <CrossReferences crossrefs={currentCrossrefs} />
-      <PanelBox
-        colors={colors}
-        fontSize={fontSize}
-        johnsNote={currentJohnsNote}
-      ></PanelBox>
-    </View>
+      {currentCrossrefs && <CrossReferences crossrefs={currentCrossrefs} />}
+      <PanelBox fontSize={fontSize} johnsNote={currentJohnsNote}></PanelBox>
+    </>
   );
 }

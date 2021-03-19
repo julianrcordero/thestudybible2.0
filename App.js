@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
@@ -33,7 +33,6 @@ export default function App() {
   const [fontFamily, setFontFamily] = useState("Avenir");
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
-  // const crossrefSize = 12;
 
   const topPanel = React.useRef();
 
@@ -538,7 +537,7 @@ export default function App() {
 
   const bottomSheetContent = () => (
     <Screen flex={0}>
-      {settingsMode && (
+      {settingsMode ? (
         <SettingsScreen
           fontFamily={fontFamily}
           fontSize={fontSize}
@@ -550,17 +549,16 @@ export default function App() {
           setFormatting={setFormatting}
           setDarkMode={setDarkMode}
         />
+      ) : (
+        <StudyScreen
+          carousel={carousel}
+          currentBook={currentBook}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          verseList={verseList}
+          width={width}
+        />
       )}
-      <StudyScreen
-        bottomSheetRef={bottomSheetRef}
-        carousel={carousel}
-        // crossrefSize={crossrefSize}
-        currentBook={currentBook}
-        fontFamily={fontFamily}
-        fontSize={fontSize}
-        verseList={verseList}
-        width={width}
-      />
     </Screen>
   );
 

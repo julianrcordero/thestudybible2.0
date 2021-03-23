@@ -54,7 +54,7 @@ const removeIdToken = async () => {
 };
 
 const getUser = async () => {
-  const idToken = await getIdToken();
+  const idToken = await getAccessToken(); //getIdToken();
   return idToken ? jwtDecode(idToken) : null;
 };
 

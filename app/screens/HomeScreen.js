@@ -1,20 +1,11 @@
-import React, {
-  Component,
-  useCallback,
-  useState,
-  useEffect,
-  PureComponent,
-} from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   Button,
   FlatList,
-  Image,
   RefreshControl,
-  StyleSheet,
   View,
   TouchableOpacity,
 } from "react-native";
-import Animated from "react-native-reanimated";
 
 import { useTheme } from "../config/ThemeProvider";
 
@@ -184,8 +175,8 @@ function HomeScreen({ navigation }) {
   const getDevotionalsApi = useApi(listingsApi.getDevotionals);
   const getResourcesApi = useApi(listingsApi.getResources);
 
-  const [blogs, setBlogs] = useState([]);
-  const [qnas, setQnas] = useState([]);
+  const [] = useState([]);
+  const [] = useState([]);
 
   const getResources = () => {
     getResourcesApi.request();

@@ -9,7 +9,7 @@ const gtyClient = create({
 gtyClient.addAsyncRequestTransform(async (request) => {
   const authToken = await authStorage.getAccessToken();
   if (!authToken) return;
-  request.headers["x-auth-token"] = authToken;
+  request.headers["Authorization"] = "Bearer " + authToken;
 });
 
 const get = gtyClient.get;

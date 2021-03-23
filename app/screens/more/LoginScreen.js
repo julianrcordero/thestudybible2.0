@@ -17,6 +17,8 @@ import {
   SubmitButton,
 } from "../../components/forms/Index";
 import cognitoAuthApi from "../../api/cognitoAuth";
+import gtyAuthApi from "../../api/gtyAuth";
+import gtyClient from "../../api/gtyClient";
 
 import { useTheme } from "../../config/ThemeProvider";
 
@@ -35,26 +37,46 @@ function LoginScreen({ navigation }) {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
-    const result = await cognitoAuthApi.signin(email, password);
+    const result = await gtyAuthApi.signin(email, password); //cognitoAuthApi.signin(email, password);
 
     // console.log(result);
     if (!result.ok) {
-      if (result.data) setLoginFailed(result.data.message);
+      if (result.data) setLoginFailed(result.problem);
       else {
         setLoginFailed("An unexpected error occurred.");
       }
       return;
-    } else if (result.data.statusCode !== 200) {
-      return setLoginFailed(result.data.body.message);
+    } else if (result.status !== 200) {
+      return setLoginFailed(result.status);
     } else {
       setLoginFailed(false);
-      auth.logIn(
-        result.data.body.data.AuthenticationResult.IdToken,
-        result.data.body.data.AuthenticationResult.AccessToken
-      );
+      auth.logIn(result.data);
+
       // navigation.navigate("More");
     }
   };
+
+  // const handleSubmit = async ({ email, password }) => {
+  //   const result = await cognitoAuthApi.signin(email, password);
+
+  //   // console.log(result);
+  //   if (!result.ok) {
+  //     if (result.data) setLoginFailed(result.data.message);
+  //     else {
+  //       setLoginFailed("An unexpected error occurred.");
+  //     }
+  //     return;
+  //   } else if (result.data.statusCode !== 200) {
+  //     return setLoginFailed(result.data.body.message);
+  //   } else {
+  //     setLoginFailed(false);
+  //     auth.logIn(
+  //       result.data.body.data.AuthenticationResult.IdToken,
+  //       result.data.body.data.AuthenticationResult.AccessToken
+  //     );
+  //     // navigation.navigate("More");
+  //   }
+  // };
 
   const styles = StyleSheet.create({
     container: {

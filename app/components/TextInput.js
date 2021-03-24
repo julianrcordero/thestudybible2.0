@@ -22,7 +22,7 @@ function AppTextInput({ editable, icon, width = "100%", ...otherProps }) {
       marginVertical: 10,
     },
     icon: {
-      backgroundColor: "red",
+      // backgroundColor: "red",
       alignSelf: "center",
       // flex: 1,
       marginHorizontal: 10,

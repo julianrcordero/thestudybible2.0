@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { InteractionManager, Dimensions } from "react-native";
+import { InteractionManager } from "react-native";
 
-import useApi from "../hooks/useApi";
-import gtyClient from "../api/gtyClient";
+import userMarkupApi from "../api/userMarkup";
 import { useTheme } from "../config/ThemeProvider";
 
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import ParagraphBible from "../components/ParagraphBible";
 import useAuth from "../auth/useAuth";
-
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
 
 export default function BibleScreen({
   formatting,
@@ -33,11 +28,6 @@ export default function BibleScreen({
   verseList,
 }) {
   const { colors } = useTheme();
-  const { user } = useAuth();
-
-  const getUserInfoApi = useApi(() =>
-    gtyClient.get("/api/values/GetUserInfoByUsername/" + user.sub)
-  );
 
   useEffect(() => {
     topPanel.current.changeBibleBook({
@@ -46,8 +36,6 @@ export default function BibleScreen({
       backgroundColor: "#345171",
       icon: "apps",
     });
-
-    getUserInfoApi.request().then(() => console.log(getUserInfoApi.data));
   }, []);
 
   const [currentChapter] = useState(1);

@@ -520,7 +520,10 @@ export default function App() {
 
   const restoreUser = async () => {
     const user = await authStorage.getUser();
-    if (user) setUser(user);
+    if (user) {
+      console.log(user);
+      setUser(user);
+    }
   };
 
   ////////////

@@ -3,15 +3,12 @@ import jwtDecode from "jwt-decode";
 
 import AuthContext from "./context";
 import authStorage from "./storage";
-import cognitoAuthApi from "../api/cognitoAuth";
-import gtyAuthApi from "../api/gtyAuth"; //for auth
 
-import gtyClient from "../api/gtyClient"; //for get
-import useApi from "../hooks/useApi";
+import userMarkupApi from "../api/userMarkup";
 
 export default useAuth = () => {
   const { user, setUser } = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState("");
+  const [userMarkup, setUserMarkup] = useState();
 
   const logIn = (data) => {
     const user = jwtDecode(data.access_token);
@@ -27,16 +24,33 @@ export default useAuth = () => {
 
     setUser(userToSet);
     authStorage.storeAccessToken(data.access_token);
+
+    getUserMarkup(user);
   };
 
   const logOut = async () => {
-    const accessToken = await authStorage.getAccessToken();
-
     setUser(null);
     authStorage.removeAccessToken();
   };
 
-  return { user, logIn, logOut };
+  const getUserMarkup = async (user) => {
+    if (user) {
+      console.log("Get user info for ", user.sub);
+      const result = await userMarkupApi.getUserMarkup(
+        user.sub
+        //     ,(progress) => setProgress(progress)
+      );
+
+      if (result.ok) {
+        console.log("result is ok");
+        return result.data;
+      } else return alert("Could not retrieve user markup");
+    } else {
+      console.log("No user to retrieve info for");
+    }
+  };
+
+  return { user, getUserMarkup, logIn, logOut };
 };
 
 // export default useAuth = () => {

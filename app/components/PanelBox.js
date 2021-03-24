@@ -84,7 +84,7 @@ function ResourceBox({
   );
 }
 
-export default function PanelBox({ fontSize, johnsNote }) {
+export default function PanelBox({ fontSize, notes, johnsNote }) {
   const { user, logOut } = useAuth();
   const { colors } = useTheme();
   const noteHistoryRef = useRef();
@@ -113,7 +113,7 @@ export default function PanelBox({ fontSize, johnsNote }) {
         topRightIcon={"pencil-plus-outline"}
         topRightOnPress={() => noteHistoryRef.current.addANote()}
       >
-        <NoteHistory ref={noteHistoryRef} colors={colors} />
+        <NoteHistory ref={noteHistoryRef} colors={colors} notes={notes} />
       </ResourceBox>
 
       <ResourceBox

@@ -18,8 +18,7 @@ import {
 } from "../../components/forms/Index";
 import cognitoAuthApi from "../../api/cognitoAuth";
 import gtyAuthApi from "../../api/gtyAuth";
-import gtyClient from "../../api/gtyClient";
-
+import userMarkupApi from "../../api/userMarkup";
 import { useTheme } from "../../config/ThemeProvider";
 
 import { Formik } from "formik";
@@ -37,9 +36,7 @@ function LoginScreen({ navigation }) {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
-    const result = await gtyAuthApi.signin(email, password); //cognitoAuthApi.signin(email, password);
-
-    // console.log(result);
+    const result = await gtyAuthApi.signin(email, password);
     if (!result.ok) {
       if (result.data) setLoginFailed(result.problem);
       else {
@@ -52,6 +49,7 @@ function LoginScreen({ navigation }) {
       setLoginFailed(false);
       auth.logIn(result.data);
 
+      wait(3000).then(getUserMarkup);
       // navigation.navigate("More");
     }
   };
@@ -122,7 +120,7 @@ function LoginScreen({ navigation }) {
         />
         <View
           style={{
-            backgroundColor: "green",
+            // backgroundColor: "green",
             flexDirection: "row",
             paddingVertical: 15,
           }}

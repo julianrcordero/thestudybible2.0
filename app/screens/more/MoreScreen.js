@@ -29,7 +29,7 @@ function MoreScreen({ navigation }) {
 
   const menuItems = [
     {
-      title: user ? user.name : "LOG IN / REGISTER",
+      title: user ? user.jti : "LOG IN / REGISTER",
       subTitle: user ? user.email : null,
       icon: {
         name: user ? null : "account-circle-outline",

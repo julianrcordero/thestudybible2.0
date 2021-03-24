@@ -1,4 +1,4 @@
-import React, { PureComponent, useRef, useState } from "react";
+import React, { PureComponent, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   View,
@@ -11,6 +11,7 @@ import { useTheme } from "../config/ThemeProvider";
 import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
 import VerseFormatted from "../components/VerseFormatted";
+import useAuth from "../auth/useAuth";
 
 const goToVerse = () => {
   console.log("goToVerse");
@@ -92,9 +93,22 @@ export default function StudyScreen({
   width,
 }) {
   const { colors } = useTheme();
+  const { user } = useAuth();
+  const auth = useAuth();
   const [currentReference, setCurrentReference] = useState("1 : 1");
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
+  const [currentNotes, setCurrentNotes] = useState();
+  const [referenceFilter, setReferenceFilter] = useState("01001001");
   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
+
+  useEffect(() => {
+    async function fetchUserMarkup() {
+      const userMarkup = await auth.getUserMarkup(user);
+      // console.log(userMarkup);
+      setCurrentNotes(userMarkup.notes);
+    }
+    fetchUserMarkup();
+  }, []);
 
   const getItemLayout = (data, index) => ({
     length: width,
@@ -114,13 +128,16 @@ export default function StudyScreen({
 
   const onViewRef = useRef((viewableItems) => {
     if (viewableItems.viewableItems[0]) {
-      setCurrentReference(
-        viewableItems.viewableItems[0].item.chapter +
-          " : " +
-          viewableItems.viewableItems[0].item.title
+      const v = viewableItems.viewableItems[0];
+
+      setCurrentReference(v.item.chapter + " : " + v.item.title);
+      setCurrentCrossrefs(v.item.crossrefs);
+      setReferenceFilter(
+        "01" +
+          ("000" + v.item.chapter).substr(-3) +
+          ("000" + v.item.title).substr(-3)
       );
-      setCurrentCrossrefs(viewableItems.viewableItems[0].item.crossrefs);
-      setCurrentJohnsNote(viewableItems.viewableItems[0].item.johnsNote);
+      setCurrentJohnsNote(v.item.johnsNote);
     }
     // Use viewable items in state or as intended
   });
@@ -186,7 +203,17 @@ export default function StudyScreen({
       />
       {currentCrossrefs && <CrossReferences crossrefs={currentCrossrefs} />}
       <View style={{ paddingHorizontal: 25 }}>
-        <PanelBox fontSize={fontSize} johnsNote={currentJohnsNote}></PanelBox>
+        <PanelBox
+          fontSize={fontSize}
+          notes={
+            currentNotes
+              ? currentNotes.filter(
+                  (m) => m.refs[0].start_ref == referenceFilter
+                )
+              : null
+          }
+          johnsNote={currentJohnsNote}
+        ></PanelBox>
       </View>
     </>
   );

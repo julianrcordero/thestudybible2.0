@@ -13,9 +13,7 @@ import PanelBox from "../components/PanelBox";
 import VerseFormatted from "../components/VerseFormatted";
 import useAuth from "../auth/useAuth";
 
-const goToVerse = () => {
-  console.log("goToVerse");
-};
+const goToVerse = () => {};
 
 class VerseHyperlink extends PureComponent {
   constructor(props) {
@@ -98,14 +96,20 @@ export default function StudyScreen({
   const [currentReference, setCurrentReference] = useState("1 : 1");
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
   const [currentNotes, setCurrentNotes] = useState();
+  const [currentFavorites, setCurrentFavorites] = useState();
+  const [currentHighlights, setCurrentHighlights] = useState();
   const [referenceFilter, setReferenceFilter] = useState("01001001");
   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
 
   useEffect(() => {
     async function fetchUserMarkup() {
       const userMarkup = await auth.getUserMarkup(user);
-      // console.log(userMarkup);
-      setCurrentNotes(userMarkup.notes);
+      if (userMarkup) {
+        console.log("User markup loaded");
+        setCurrentNotes(userMarkup.notes);
+        setCurrentFavorites(userMarkup.favorites);
+        setCurrentHighlights(userMarkup.highlights);
+      }
     }
     fetchUserMarkup();
   }, []);
@@ -119,9 +123,20 @@ export default function StudyScreen({
   const keyExtractor = (item, index) => item + index;
 
   const renderVerseCardItem = ({ item }) => {
+    let highlight = currentHighlights
+      ? currentHighlights.find((m) => m.start_ref == referenceFilter)
+      : null;
+
+    if (highlight) console.log(highlight.class_name);
+    let style = highlight
+      ? {
+          backgroundColor: highlight.class_name,
+        }
+      : null;
+
     return (
       <Text style={styles.verseTextBox}>
-        <VerseFormatted verse={item.content} crossrefSize={12} />
+        <VerseFormatted verse={item.content} crossrefSize={12} style={style} />
       </Text>
     );
   };
@@ -204,6 +219,7 @@ export default function StudyScreen({
       {currentCrossrefs && <CrossReferences crossrefs={currentCrossrefs} />}
       <View style={{ paddingHorizontal: 25 }}>
         <PanelBox
+          referenceFilter={referenceFilter}
           fontSize={fontSize}
           notes={
             currentNotes

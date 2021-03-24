@@ -78,10 +78,8 @@ function BibleMoreScreen({ route, navigation }) {
             .then((res) => res.json())
             .then((data) => {
               if (data.statusCode == 200) {
-                console.log(data.body.message);
                 navigation.navigate("Home");
               } else {
-                console.log(data.body.message);
               }
             })
             .catch((e) => {

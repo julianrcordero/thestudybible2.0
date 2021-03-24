@@ -77,9 +77,6 @@ function ResourceScreen({ route }) {
       }
       imageHeight={250}
       imageResizeMode={"contain"}
-      // onScroll={(position, reachedToTheBottomOfHeader) =>
-      //   console.log(position, reachedToTheBottomOfHeader)
-      // }
     >
       <View style={styles.detailsContainer}>
         <Text style={styles.date}>{date}</Text>

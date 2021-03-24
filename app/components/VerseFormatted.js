@@ -16,20 +16,24 @@ class VerseFormatted extends PureComponent {
   }
 
   render() {
-    const { verse } = this.props;
+    const { style, verse } = this.props;
 
-    return verse["crossref"]
-      ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) => (
-          <Text key={i}>
-            {Array.isArray(verse["crossref"])
-              ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-              : verse["crossref"]["_let"]}
-            {/* {match} */}
-          </Text>
-        ))
-      : reactStringReplace(verse["__text"], /(\n)/g, (match, i) => (
-          <Text key={i}>{match}</Text>
-        ));
+    return (
+      <Text style={style}>
+        {verse["crossref"]
+          ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) => (
+              <Text key={i}>
+                {Array.isArray(verse["crossref"])
+                  ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+                  : verse["crossref"]["_let"]}
+                {/* {match} */}
+              </Text>
+            ))
+          : reactStringReplace(verse["__text"], /(\n)/g, (match, i) => (
+              <Text key={i}>{match}</Text>
+            ))}
+      </Text>
+    );
   }
 }
 

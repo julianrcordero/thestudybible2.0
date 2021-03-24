@@ -47,7 +47,6 @@ export const SettingsScreen = ({
   };
 
   const handleDarkMode = () => {
-    // console.log("Settings Screen is in ", isDark, " mode");
     isDark ? setScheme("light") : setScheme("dark");
   };
 

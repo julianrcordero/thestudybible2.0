@@ -34,7 +34,6 @@ function ForgotPasswordScreen({ navigation }) {
       if (result.data) setError(result.data.message);
       else {
         setError("An unexpected error occurred.");
-        console.log(result);
       }
       return;
     } else if (result.data.statusCode !== 200) {
@@ -96,33 +95,3 @@ function ForgotPasswordScreen({ navigation }) {
 }
 
 export default ForgotPasswordScreen;
-
-// (values) => {
-//   // console.log(values);
-//   fetch(
-//     "https://1scvbw6i67.execute-api.us-east-1.amazonaws.com/dev/forgot-password",
-//     {
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json;charset=UTF-8",
-//       },
-//       method: "POST",
-//       body: JSON.stringify({
-//         email: values.email,
-//       }),
-//     }
-//   )
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (data.statusCode == 200) {
-//         navigation.navigate("ResetPassword", {
-//           email: values.email,
-//         });
-//       } else {
-//         console.log(data.body.message);
-//       }
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// }

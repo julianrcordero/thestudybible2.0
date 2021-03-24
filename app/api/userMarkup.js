@@ -1,41 +1,70 @@
 import gtyClient from "./gtyClient";
 
-const endpoint = "/GetUserInfoByUsername";
+const prefix = "/api/values";
 
 const getUserMarkup = (username) =>
-  gtyClient.get("/api/values" + endpoint + "/" + username);
+  gtyClient.get(prefix + "/GetUserInfoByUsername/" + username);
 
-// export const addListing = (listing, onUploadProgress) => {
-//   const data = new FormData();
-//   data.append("title", listing.title);
-//   data.append("scripture", listing.scripture);
-//   data.append("categoryId", listing.category.value);
-//   data.append("description", listing.description);
+const addUserMarkup = (
+  markup,
+  username,
+  type
+  // onUploadProgress
+) => {
+  //Parent > Child
 
-//   listing.images.forEach((image, index) =>
-//     data.append("images", {
-//       name: "image" + index,
-//       type: "image/jpeg",
-//       uri: image,
-//     })
-//   );
+  return gtyClient.post(
+    prefix + "/InsertObjectByUsernameType/" + username + "/" + type,
+    markup
+    // {
+    //   onUploadProgress: (progress) =>
+    //     onUploadProgress(progress.loaded / progress.total),
+    // }
+  );
+};
 
-//   if (listing.location)
-//     data.append("location", JSON.stringify(listing.location));
+const editUserMarkup = (
+  markup,
+  username,
+  type
+  // onUploadProgress
+) => {
+  //Parent > Child
 
-//   //Parent > Child
+  return gtyClient.put(
+    prefix + "/UpdateObjectByUsernameType/" + username + "/" + type,
+    markup
+    // {
+    //   onUploadProgress: (progress) =>
+    //     onUploadProgress(progress.loaded / progress.total),
+    // }
+  );
+};
 
-//   return client.post(endpoint, data, {
-//     onUploadProgress: (progress) =>
-//       onUploadProgress(progress.loaded / progress.total),
-//   });
-// };
+const deleteUserMarkup = (
+  id,
+  username,
+  type
+  // onUploadProgress
+) => {
+  //Parent > Child
+
+  return gtyClient.delete(
+    prefix + "/DeleteObjectByUsernameTypeId/" + username + "/" + type + "/" + id
+    // {
+    //   onUploadProgress: (progress) =>
+    //     onUploadProgress(progress.loaded / progress.total),
+    // }
+  );
+};
 
 // content-type
 // application/json
 // multipart/form-data
 
 export default {
-  // addListing,
+  addUserMarkup,
+  deleteUserMarkup,
+  editUserMarkup,
   getUserMarkup,
 };

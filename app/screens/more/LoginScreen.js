@@ -57,7 +57,6 @@ function LoginScreen({ navigation }) {
   // const handleSubmit = async ({ email, password }) => {
   //   const result = await cognitoAuthApi.signin(email, password);
 
-  //   // console.log(result);
   //   if (!result.ok) {
   //     if (result.data) setLoginFailed(result.data.message);
   //     else {
@@ -170,36 +169,3 @@ function LoginScreen({ navigation }) {
 }
 
 export default LoginScreen;
-
-// onSubmit={(values) => {
-//   fetch(
-//     "https://1scvbw6i67.execute-api.us-east-1.amazonaws.com/dev/signin",
-//     {
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json;charset=UTF-8",
-//       },
-//       method: "POST",
-//       body: JSON.stringify({
-//         email: values.email,
-//         password: values.password,
-//       }),
-//     }
-//   )
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (data.statusCode == 200) {
-//         console.log(data.body.message);
-//         console.log(data.body.data.AuthenticationResult.AccessToken);
-//         navigation.navigate("Account", {
-//           AccessToken: data.body.data.AuthenticationResult.AccessToken,
-//         });
-//       } else {
-//         const message = data.body.message;
-//         console.log(message);
-//       }
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// }}

@@ -521,7 +521,6 @@ export default function App() {
   const restoreUser = async () => {
     const user = await authStorage.getUser();
     if (user) {
-      console.log(user);
       setUser(user);
     }
   };
@@ -629,7 +628,6 @@ export default function App() {
             ref={bottomSheetRef}
             snapPoints={[top, "40%", "0%"]}
             initialSnap={2}
-            onStartShouldSetResponderCapture={() => console.log("ScrollView")}
             renderHeader={bottomSheetHeader}
             renderContent={bottomSheetContent}
             // onCloseEnd={() => setFocusedVerse(null)}

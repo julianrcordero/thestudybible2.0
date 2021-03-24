@@ -43,7 +43,6 @@ function ImageInput({ imageUri, onChangeImage }) {
       if (!result.cancelled) onChangeImage(result.uri);
     } catch (error) {
       console.log(error);
-      console.log("Error reading an image");
     }
   };
 

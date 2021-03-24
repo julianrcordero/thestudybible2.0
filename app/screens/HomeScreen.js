@@ -152,7 +152,6 @@ function ResourceSection({ data, navigation, showDate, title }) {
         keyExtractor={keyExtractor}
         listEmptyComponent={listEmptyComponent}
         // maxToRenderPerBatch={5}
-        onStartShouldSetResponderCapture={() => console.log("Vertical Scroll")}
         // ref={carousel}
         removeClippedSubviews
         renderItem={renderItem}
@@ -209,7 +208,6 @@ function HomeScreen({ navigation }) {
 
   var timeOfDay = new Date(),
     hour = timeOfDay.getHours();
-  // console.log(hour);
 
   return (
     <View style={{ flex: 1, paddingBottom: 70 }}>
@@ -228,9 +226,10 @@ function HomeScreen({ navigation }) {
           <AppText style={{ color: colors.text, fontSize: 24, margin: 10 }}>
             {"Good "}
             {hour > 11 ? "afternoon" : "morning"}
-            {user ? ", " + user.name.substr(0, user.name.indexOf(" ")) : null}
+            {user ? ", " + user.sub : null}
             {"."}
           </AppText>
+          //str(0, user.name.indexOf(" ")) : null}
         )}
 
         <ResourceSection

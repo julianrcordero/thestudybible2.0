@@ -19,13 +19,11 @@ apiClient.get = async (url, params, axiosConfig) => {
   // After
 
   if (response.ok) {
-    // console.log("storing this: ", url);
     cache.store(url, response.data);
 
     return response;
   }
 
-  // console.log("retrieving this: ", url);
   const obj = await cache.get(url);
   const data = Object.values(obj);
   return data ? { ok: true, data } : response;

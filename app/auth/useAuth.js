@@ -35,18 +35,17 @@ export default useAuth = () => {
 
   const getUserMarkup = async (user) => {
     if (user) {
-      console.log("Get user info for ", user.sub);
+      console.log("Loading data for", user.sub);
       const result = await userMarkupApi.getUserMarkup(
         user.sub
         //     ,(progress) => setProgress(progress)
       );
 
       if (result.ok) {
-        console.log("result is ok");
         return result.data;
       } else return alert("Could not retrieve user markup");
     } else {
-      console.log("No user to retrieve info for");
+      console.log("You are not logged in");
     }
   };
 
@@ -59,7 +58,6 @@ export default useAuth = () => {
 //   const logIn = (idToken, accessToken) => {
 //     const user = jwtDecode(idToken);
 //     setUser(user);
-//     console.log(user);
 //     authStorage.storeAccessToken(accessToken);
 //     authStorage.storeIdToken(idToken);
 //   };

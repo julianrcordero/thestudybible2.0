@@ -120,7 +120,6 @@ function MoreScreen({ navigation }) {
               }
               titleSize={item.titleSize ?? null}
               onPress={() => {
-                // console.log(item);
                 navigation.navigate(item.targetScreen);
               }}
             />

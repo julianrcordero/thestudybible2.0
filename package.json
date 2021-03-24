@@ -25,6 +25,7 @@
     "apisauce": "^2.0.1",
     "concat-stream": "^2.0.0",
     "cross-spawn": "^7.0.3",
+    "dateformat": "^4.5.1",
     "expo": "^40.0.1",
     "expo-app-loading": "^1.0.1",
     "expo-blur": "^9.0.0",

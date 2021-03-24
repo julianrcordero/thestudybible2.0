@@ -592,8 +592,6 @@ export default function BooksListScreen({
   };
 
   const _renderContent = (section) => {
-    // console.log(section);
-
     return (
       <View style={{ width: width }}>
         <ChaptersGridScreen
@@ -622,7 +620,6 @@ export default function BooksListScreen({
   });
 
   const openChapters = (title, gridChapters) => {
-    console.log(title, gridChapters);
     navigation.setParams({
       title: title,
       gridChapters: gridChapters,

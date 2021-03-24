@@ -8,6 +8,8 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from "react-native";
+import userMarkup from "../api/userMarkup";
+import moment from "moment";
 
 import Button from "./Button";
 import { useTheme } from "../config/ThemeProvider";
@@ -19,9 +21,9 @@ export default class NoteHistoryItem extends PureComponent {
   }
 
   state = {
-    isFocused: this.props.open ?? false,
-    noteText: this.props.subTitle,
-    oldNoteText: this.props.subTitle,
+    isFocused: this.props.item.open ?? false,
+    noteText: this.props.item.content,
+    oldNoteText: this.props.item.content,
   };
 
   notFinishedAlert = () => {
@@ -53,6 +55,8 @@ export default class NoteHistoryItem extends PureComponent {
   cancel = () => {
     this.setFocusedFalse();
     this.props.handleDelete();
+
+    if (this.props.item.id > 0) this.deleteNote(this.props.item.id);
   };
 
   save = () => {
@@ -64,6 +68,90 @@ export default class NoteHistoryItem extends PureComponent {
     this.setFocusedFalse();
 
     this.setState({ oldNoteText: this.state.noteText });
+
+    this.props.item.id > 0
+      ? this.updateNote(this.state.noteText)
+      : this.insertNote(this.state.noteText);
+  };
+
+  insertNote = async (noteText) => {
+    // setProgress(0);
+    // setUploadVisible(true);
+    const result = await userMarkup.addUserMarkup(
+      {
+        content: noteText,
+        refs: [
+          {
+            end_ref: this.props.referenceFilter,
+            start_ref: this.props.referenceFilter,
+          },
+        ],
+      },
+      this.props.user.sub,
+      "note"
+      // markup, username, type,
+      // (progress) => setProgress(progress)
+    );
+
+    if (!result.ok) {
+      // setUploadVisible(false);
+      return alert("Could not create the note.");
+    } else {
+      console.log("created note with id:", result.data);
+    }
+
+    // resetForm();
+  };
+
+  updateNote = async (noteText) => {
+    // setProgress(0);
+    // setUploadVisible(true);
+    const result = await userMarkup.editUserMarkup(
+      {
+        content: noteText,
+        id: this.props.item.id,
+        refs: [
+          {
+            end_ref: this.props.referenceFilter,
+            start_ref: this.props.referenceFilter,
+          },
+        ],
+      },
+      this.props.user.sub,
+      "note"
+      // markup, username, type,
+      // (progress) => setProgress(progress)
+    );
+
+    if (!result.ok) {
+      // setUploadVisible(false);
+      return alert("Could not update the note.");
+    } else {
+      console.log("updated note with id:", this.props.item.id);
+    }
+
+    // resetForm();
+  };
+
+  deleteNote = async (noteText) => {
+    // setProgress(0);
+    // setUploadVisible(true);
+    const result = await userMarkup.deleteUserMarkup(
+      this.props.item.id,
+      this.props.user.sub,
+      "note"
+      // markup, username, type,
+      // (progress) => setProgress(progress)
+    );
+
+    if (!result.ok) {
+      // setUploadVisible(false);
+      return alert("Could not delete the note.");
+    } else {
+      console.log("deleted note with id:", this.props.item.id);
+    }
+
+    // resetForm();
   };
 
   styles = StyleSheet.create({
@@ -82,7 +170,8 @@ export default class NoteHistoryItem extends PureComponent {
   });
 
   render() {
-    const { carousel, colors, date } = this.props;
+    const { colors, item } = this.props;
+    var dateFormat = require("dateformat");
 
     const DismissKeyboard = ({ children }) => (
       <TouchableWithoutFeedback onPress={this.notFinishedAlert}>
@@ -93,7 +182,7 @@ export default class NoteHistoryItem extends PureComponent {
     return (
       <View style={this.styles.container}>
         <Text style={[this.styles.date, { color: colors.primary }]}>
-          {date}
+          {dateFormat(item.date, "dddd mm-dd-yy, h:MMtt")}
         </Text>
         <View>
           {this.state.isFocused ? (
@@ -106,7 +195,6 @@ export default class NoteHistoryItem extends PureComponent {
                 // onBlur={this.notFinishedAlert}
                 onEndEditing={this.save}
                 onFocus={this.setFocusedTrue}
-                // onSelectionChange={(event) => console.log("onSelectionChange")}
                 blurOnSubmit={true}
                 onChangeText={(newText) => this.setState({ noteText: newText })}
                 placeholder={"Your note here"}

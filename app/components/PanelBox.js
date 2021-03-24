@@ -84,7 +84,29 @@ function ResourceBox({
   );
 }
 
-export default function PanelBox({ fontSize, notes, johnsNote }) {
+function ButtonBox({ buttonTitle, onPress }) {
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 10,
+      }}
+    >
+      <AppButton
+        title={buttonTitle}
+        onPress={onPress} //API CALL
+      />
+    </View>
+  );
+}
+
+export default function PanelBox({
+  fontSize,
+  notes,
+  johnsNote,
+  referenceFilter,
+}) {
   const { user, logOut } = useAuth();
   const { colors } = useTheme();
   const noteHistoryRef = useRef();
@@ -109,11 +131,24 @@ export default function PanelBox({ fontSize, notes, johnsNote }) {
       <ResourceBox
         colors={colors}
         title={"My Notes"}
-        topRightButton={"Add a note"}
+        topRightButton={notes ? "Add a note" : null}
         topRightIcon={"pencil-plus-outline"}
         topRightOnPress={() => noteHistoryRef.current.addANote()}
       >
-        <NoteHistory ref={noteHistoryRef} colors={colors} notes={notes} />
+        {notes ? (
+          <NoteHistory
+            ref={noteHistoryRef}
+            colors={colors}
+            notes={notes}
+            referenceFilter={referenceFilter}
+            user={user}
+          />
+        ) : (
+          <ButtonBox
+            buttonTitle={"Log in to create notes"}
+            onPress={() => console.log("Redirecting to login screen")}
+          />
+        )}
       </ResourceBox>
 
       <ResourceBox
@@ -126,18 +161,10 @@ export default function PanelBox({ fontSize, notes, johnsNote }) {
             : "John's Notes from The Macarthur Study Bible can help you enrich your study of this passage."}
         </Text>
         {user ? null : (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 10,
-            }}
-          >
-            <AppButton
-              title={"Get John's Notes"}
-              onPress={() => console.log("Get John's Notes")} //API CALL
-            />
-          </View>
+          <ButtonBox
+            buttonTitle={"Get John's Notes"}
+            onPress={() => console.log("Redirecting to login screen")}
+          />
         )}
       </ResourceBox>
 
@@ -145,22 +172,14 @@ export default function PanelBox({ fontSize, notes, johnsNote }) {
         title={"Related Resources"}
         image={require("../assets/gtylogo.jpg")}
       >
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 10,
-          }}
-        >
-          {resourcesLoaded ? (
-            <ResourcesScreen />
-          ) : (
-            <AppButton
-              title={"Load resources"}
-              onPress={() => console.log("Loading resources")}
-            />
-          )}
-        </View>
+        {resourcesLoaded ? (
+          <ResourcesScreen />
+        ) : (
+          <ButtonBox
+            buttonTitle={"Load Resources"}
+            onPress={() => console.log("Loading Resources")}
+          />
+        )}
       </ResourceBox>
     </>
   );

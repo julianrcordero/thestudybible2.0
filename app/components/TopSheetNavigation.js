@@ -136,17 +136,21 @@ class TopSheetNavigation extends PureComponent {
       const bookSections = [];
       chapters.map((chapter) => {
         chapter["verse"].forEach((verse) => {
+          let referenceCode =
+            "n" +
+            "01" +
+            ("000" + chapter["_num"]).substr(-3) +
+            ("000" + verse["_num"]).substr(-3);
+
           let note = notes.find(
             (el) =>
-              el["_start"] ===
-              "n" +
-                "01" +
-                ("000" + chapter["_num"]).substr(-3) +
-                ("000" + verse["_num"]).substr(-3)
+              el["_start"] === referenceCode &&
+              !el["_id"].includes("introduction")
           );
 
           if (note) {
             const pTag = note["content"]["p"][0];
+            // if (referenceCode == "n01001001") console.log(pTag);
             const parsedNote = pTag["a"]
               ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
                   <Text key={i}>

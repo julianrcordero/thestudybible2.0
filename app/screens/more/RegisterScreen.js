@@ -41,7 +41,6 @@ function RegisterScreen({ navigation }) {
       if (result.data) setError(result.data.message);
       else {
         setError("An unexpected error occurred.");
-        console.log(result);
       }
       return;
     } else if (result.data.statusCode !== 200) {

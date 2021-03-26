@@ -4,8 +4,12 @@ import { useTheme } from "../config/ThemeProvider";
 import StudyToolBar from "./StudyToolBar";
 import { PureComponent } from "react";
 
-export default function BottomSheetHeader({ settingsMode, snapToZero }) {
-  const { colors, isDark } = useTheme();
+export default function BottomSheetHeader({
+  carousel,
+  settingsMode,
+  snapToZero,
+}) {
+  const { colors } = useTheme();
   const styles = {
     header: {
       alignItems: "center",
@@ -27,7 +31,7 @@ export default function BottomSheetHeader({ settingsMode, snapToZero }) {
           Text Settings
         </Text>
       ) : (
-        <StudyToolBar colors={colors} />
+        <StudyToolBar carousel={carousel} colors={colors} />
       )}
       <Button
         title="Done"

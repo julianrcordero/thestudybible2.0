@@ -534,7 +534,11 @@ export default function App() {
   };
 
   const bottomSheetHeader = () => (
-    <BottomSheetHeader snapToZero={snapToZero} settingsMode={settingsMode} />
+    <BottomSheetHeader
+      snapToZero={snapToZero}
+      settingsMode={settingsMode}
+      carousel={carousel}
+    />
   );
 
   const bottomSheetContent = () => (
@@ -558,6 +562,7 @@ export default function App() {
           currentBook={currentBook}
           fontFamily={fontFamily}
           fontSize={fontSize}
+          setVerseList={setVerseList}
           verseList={verseList}
           width={width}
         />

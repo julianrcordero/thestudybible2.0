@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import AppText from "./Text";
 
 import Collapsible from "react-native-collapsible";
@@ -9,13 +9,12 @@ import BooksGridScreen from "../screens/BooksGridScreen";
 import BooksListScreen from "../screens/BooksListScreen";
 import ChaptersGridScreen from "../screens/ChaptersGridScreen";
 import SegmentedControl from "@react-native-community/segmented-control";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useTheme } from "@react-navigation/native";
 import SearchHistory from "./SearchHistory";
 
 import bookPaths from "../json/bible/Bible"; //../json/bible/Bible";
 
 import reactStringReplace from "react-string-replace";
-import VerseFormatted from "../components/VerseFormatted";
 
 const notesArray = JSON.parse(
   JSON.stringify(require("../json/bible/esvmsb.notes.json"))
@@ -150,21 +149,21 @@ class TopSheetNavigation extends PureComponent {
 
           if (note) {
             const pTag = note["content"]["p"][0];
-            // if (referenceCode == "n01001001") console.log(pTag);
-            const parsedNote = pTag["a"]
-              ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
-                  <Text key={i}>
-                    <Text style={{ fontSize: 12, lineHeight: 10 }}>
-                      {Array.isArray(pTag["a"])
-                        ? "REF1" //pTag["a"][0]["__text"] //"a" is always an array
-                        : "REF2"}
-                    </Text>
-                    {match}
-                  </Text>
-                ))
-              : reactStringReplace(pTag["__text"], /\n/, (match, i) => (
-                  <Text key={i}>{"REF3"}</Text>
-                ));
+            const parsedNote = pTag["__text"];
+            // pTag["a"]
+            //   ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
+            //       <Text key={i}>
+            //         <Text style={{ fontSize: 12, lineHeight: 10 }}>
+            //           {Array.isArray(pTag["a"])
+            //             ? "REF1" //pTag["a"][0]["__text"] //"a" is always an array
+            //             : "REF2"}
+            //         </Text>
+            //         {match}
+            //       </Text>
+            //     ))
+            //   : reactStringReplace(pTag["__text"], /\n/, (match, i) => (
+            //       <Text key={i}>{"REF3"}</Text>
+            //     ));
             johnsNote = parsedNote;
           } else {
             johnsNote = "There is no note for this passage";
@@ -192,7 +191,18 @@ class TopSheetNavigation extends PureComponent {
           verses.push({
             chapter: Number(chapter["_num"]),
             title: Number(verse["_num"]),
-            content: verse, //VerseFormatted(verse, 12),
+            content: verse["crossref"]
+              ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) =>
+                  Array.isArray(verse["crossref"])
+                    ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+                    : verse["crossref"]["_let"]
+                )
+              : reactStringReplace(
+                  verse["__text"],
+                  /(\n)/g,
+                  (match, i) => match
+                ),
+
             johnsNote: johnsNote,
             // loved: false,
             crossrefs: crossrefs,

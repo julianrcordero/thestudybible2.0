@@ -152,7 +152,6 @@ function ResourceSection({ data, navigation, showDate, title }) {
         keyExtractor={keyExtractor}
         listEmptyComponent={listEmptyComponent}
         // maxToRenderPerBatch={5}
-        // ref={carousel}
         removeClippedSubviews
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}

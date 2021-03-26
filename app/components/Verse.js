@@ -77,7 +77,10 @@ export default class Verse extends PureComponent {
             // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
           }}
         >
-          <VerseFormatted verse={verse} crossrefSize={12} />
+          <Text>
+            {"Placeholder"}
+            {/* <VerseFormatted verse={verse} crossrefSize={12} /> */}
+          </Text>
         </Text>
         {/* <HighlightComponent
           highlightStyle={{ backgroundColor: "red" }}

@@ -12,6 +12,17 @@ import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
 import VerseFormatted from "../components/VerseFormatted";
 import useAuth from "../auth/useAuth";
+import referenceCode from "../hooks/referenceCode";
+
+function Reference({ book, favorite, reference, style }) {
+  return (
+    <AppText style={style}>
+      {book + " " + reference}
+      {"\t\t\t\t\t"}
+      {favorite ? favorite.id : null}
+    </AppText>
+  );
+}
 
 const goToVerse = () => {};
 
@@ -57,31 +68,6 @@ function CrossRef({ myObject }) {
   );
 }
 
-function CrossReferences({ crossrefs }) {
-  const { colors } = useTheme();
-  return (
-    <View
-      style={{
-        // borderColor: colors.border,
-        // borderTopWidth: 0.3,
-        marginHorizontal: 30,
-      }}
-    >
-      {Array.isArray(crossrefs) ? (
-        crossrefs.map((crossref) => (
-          <CrossRef key={crossref["id"]} myObject={crossref} />
-        ))
-      ) : crossrefs["title"] == "" ? null : (
-        <CrossRef myObject={crossrefs} />
-      )}
-    </View>
-  );
-}
-
-function Reference({ book, reference, style }) {
-  return <AppText style={style}>{book + " " + reference}</AppText>;
-}
-
 export default function StudyScreen({
   carousel,
   currentBook,
@@ -93,11 +79,13 @@ export default function StudyScreen({
   const { colors } = useTheme();
   const { user } = useAuth();
   const auth = useAuth();
-  const [currentReference, setCurrentReference] = useState("1 : 1");
-  const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
+
   const [currentNotes, setCurrentNotes] = useState();
   const [currentFavorites, setCurrentFavorites] = useState();
   const [currentHighlights, setCurrentHighlights] = useState();
+
+  const [currentReference, setCurrentReference] = useState("1 : 1");
+  const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
   const [referenceFilter, setReferenceFilter] = useState("01001001");
   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
 
@@ -124,19 +112,19 @@ export default function StudyScreen({
 
   const renderVerseCardItem = ({ item }) => {
     let highlight = currentHighlights
-      ? currentHighlights.find((m) => m.start_ref == referenceFilter)
-      : null;
-
-    if (highlight) console.log(highlight.class_name);
-    let style = highlight
-      ? {
-          backgroundColor: highlight.class_name,
-        }
+      ? currentHighlights.find(
+          (h) => h.start_ref == referenceCode(item.chapter, item.title)
+        )
       : null;
 
     return (
       <Text style={styles.verseTextBox}>
-        <VerseFormatted verse={item.content} crossrefSize={12} style={style} />
+        <Text
+          style={highlight ? { backgroundColor: highlight.class_name } : {}}
+        >
+          {item.content}
+          {/* <VerseFormatted verse={item.content} crossrefSize={12} /> */}
+        </Text>
       </Text>
     );
   };
@@ -144,6 +132,10 @@ export default function StudyScreen({
   const onViewRef = useRef((viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
+      // console.log("////////////////////////////////////////////////////////");
+      // console.log(v.item);
+
+      // console.log(carousel.current.props.keys);
 
       setCurrentReference(v.item.chapter + " : " + v.item.title);
       setCurrentCrossrefs(v.item.crossrefs);
@@ -190,6 +182,11 @@ export default function StudyScreen({
     <>
       <Reference
         book={currentBook.label}
+        favorite={
+          currentFavorites
+            ? currentFavorites.find((f) => f.start_ref == referenceFilter)
+            : null
+        }
         reference={currentReference}
         fontSize={fontSize}
         style={styles.referenceBox}
@@ -216,7 +213,19 @@ export default function StudyScreen({
         viewabilityConfig={viewConfigRef.current}
         windowSize={11}
       />
-      {currentCrossrefs && <CrossReferences crossrefs={currentCrossrefs} />}
+      <View
+        style={{
+          marginHorizontal: 30,
+        }}
+      >
+        {Array.isArray(currentCrossrefs) ? (
+          currentCrossrefs.map((crossref) => (
+            <CrossRef key={crossref["id"]} myObject={crossref} />
+          ))
+        ) : currentCrossrefs["title"] == "" ? null : (
+          <CrossRef myObject={currentCrossrefs} />
+        )}
+      </View>
       <View style={{ paddingHorizontal: 25 }}>
         <PanelBox
           referenceFilter={referenceFilter}

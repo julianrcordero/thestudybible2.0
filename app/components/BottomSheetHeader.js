@@ -5,9 +5,9 @@ import StudyToolBar from "./StudyToolBar";
 import { PureComponent } from "react";
 
 export default function BottomSheetHeader({
-  carousel,
   settingsMode,
   snapToZero,
+  studyToolBar,
 }) {
   const { colors } = useTheme();
   const styles = {
@@ -31,7 +31,7 @@ export default function BottomSheetHeader({
           Text Settings
         </Text>
       ) : (
-        <StudyToolBar carousel={carousel} colors={colors} />
+        <StudyToolBar colors={colors} ref={studyToolBar} />
       )}
       <Button
         title="Done"

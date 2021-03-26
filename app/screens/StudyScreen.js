@@ -13,15 +13,19 @@ import PanelBox from "../components/PanelBox";
 import VerseFormatted from "../components/VerseFormatted";
 import useAuth from "../auth/useAuth";
 import referenceCode from "../hooks/referenceCode";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function Reference({ book, favorite, reference, style }) {
-  return (
-    <AppText style={style}>
-      {book + " " + reference}
-      {"\t\t\t\t\t"}
-      {favorite ? favorite.id : null}
-    </AppText>
-  );
+function Reference({ book, fontFamily, fontSize, reference }) {
+  const { colors } = useTheme();
+  const myStyle = {
+    color: colors.text,
+    fontFamily: fontFamily,
+    fontSize: fontSize * 1.1,
+    fontWeight: "bold",
+    textAlign: "left",
+  };
+
+  return <AppText style={myStyle}>{book + " " + reference}</AppText>;
 }
 
 const goToVerse = () => {};
@@ -73,6 +77,7 @@ export default function StudyScreen({
   currentBook,
   fontFamily,
   fontSize,
+  studyToolBar,
   verseList,
   width,
 }) {
@@ -111,10 +116,14 @@ export default function StudyScreen({
   const keyExtractor = (item, index) => item + index;
 
   const renderVerseCardItem = ({ item }) => {
+    let myReferenceCode = referenceCode(item.chapter, item.title);
+
     let highlight = currentHighlights
-      ? currentHighlights.find(
-          (h) => h.start_ref == referenceCode(item.chapter, item.title)
-        )
+      ? currentHighlights.find((h) => h.start_ref == myReferenceCode)
+      : null;
+
+    let myFavorite = currentFavorites
+      ? currentFavorites.find((f) => f.start_ref == myReferenceCode)
       : null;
 
     return (
@@ -129,13 +138,17 @@ export default function StudyScreen({
     );
   };
 
+  // const renderFavorite = () => {
+  //   console.log(referenceFilter);
+
+  //   studyToolBar.current.setState({
+  //     loved: myFavorite ? true : false,
+  //   });
+  // };
+
   const onViewRef = useRef((viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
-      // console.log("////////////////////////////////////////////////////////");
-      // console.log(v.item);
-
-      // console.log(carousel.current.props.keys);
 
       setCurrentReference(v.item.chapter + " : " + v.item.title);
       setCurrentCrossrefs(v.item.crossrefs);
@@ -157,14 +170,12 @@ export default function StudyScreen({
 
   const styles = StyleSheet.create({
     referenceBox: {
-      alignItems: "center",
-      color: colors.text,
-      fontFamily: fontFamily,
-      fontSize: fontSize * 1.1,
-      fontWeight: "bold",
-      paddingHorizontal: 30,
+      // alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingLeft: 30,
+      paddingRight: 60,
       paddingVertical: fontSize,
-      textAlign: "left",
       width: width,
     },
     verseTextBox: {
@@ -180,17 +191,21 @@ export default function StudyScreen({
 
   return (
     <>
-      <Reference
-        book={currentBook.label}
-        favorite={
+      <View style={styles.referenceBox}>
+        <Reference
+          book={currentBook.label}
+          reference={currentReference}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+        />
+        {/* {(
           currentFavorites
             ? currentFavorites.find((f) => f.start_ref == referenceFilter)
             : null
-        }
-        reference={currentReference}
-        fontSize={fontSize}
-        style={styles.referenceBox}
-      />
+        ) ? (
+          <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
+        ) : null} */}
+      </View>
       <FlatList
         bounces={false}
         data={verseList}

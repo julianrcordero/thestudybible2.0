@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Dimensions, View } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
@@ -34,14 +34,16 @@ export default function App() {
   const [formatting, setFormatting] = useState("Default");
   const [darkMode, setDarkMode] = useState(true);
 
-  const topPanel = React.useRef();
-
-  const searchHistoryRef = React.useRef();
+  const topPanel = useRef();
+  const searchHistoryRef = useRef();
+  const carousel = useRef();
+  const paragraphBibleRef = useRef();
+  const bottomSheetRef = useRef();
+  const studyToolBar = useRef();
 
   const [settingsMode, setSettingsMode] = useState(false);
   const [sections, setSections] = useState([]);
   const [verseList, setVerseList] = useState([]);
-  const carousel = React.useRef();
 
   const books = [
     {
@@ -508,12 +510,6 @@ export default function App() {
     },
   ];
   const [currentBook, setCurrentBook] = useState(books[0]);
-  const [] = useState(1);
-  const [] = useState(1);
-
-  const paragraphBibleRef = React.useRef();
-
-  const bottomSheetRef = React.useRef(null);
 
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState();
@@ -525,10 +521,6 @@ export default function App() {
     }
   };
 
-  ////////////
-
-  ////////////
-
   const snapToZero = () => {
     bottomSheetRef.current.snapTo(2);
   };
@@ -537,7 +529,7 @@ export default function App() {
     <BottomSheetHeader
       snapToZero={snapToZero}
       settingsMode={settingsMode}
-      carousel={carousel}
+      studyToolBar={studyToolBar}
     />
   );
 
@@ -563,6 +555,7 @@ export default function App() {
           fontFamily={fontFamily}
           fontSize={fontSize}
           setVerseList={setVerseList}
+          studyToolBar={studyToolBar}
           verseList={verseList}
           width={width}
         />

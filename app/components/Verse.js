@@ -78,8 +78,8 @@ export default class Verse extends PureComponent {
           }}
         >
           <Text>
-            {"Placeholder"}
-            {/* <VerseFormatted verse={verse} crossrefSize={12} /> */}
+            {/* {"Placeholder"} */}
+            <VerseFormatted verse={verse} crossrefSize={12} />
           </Text>
         </Text>
         {/* <HighlightComponent

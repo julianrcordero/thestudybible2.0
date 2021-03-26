@@ -29,7 +29,7 @@ export default class StudyToolBar extends PureComponent {
   };
 
   render() {
-    const { carousel, colors } = this.props;
+    const { colors } = this.props;
 
     return (
       <View
@@ -54,7 +54,7 @@ export default class StudyToolBar extends PureComponent {
           {
             <MaterialCommunityIcons
               name={this.state.loved ? "heart" : "heart-outline"}
-              color={colors.icon} //this.state.loved ? "red" : "black"}
+              color={this.state.loved ? "red" : colors.icon}
               size={22}
             />
           }

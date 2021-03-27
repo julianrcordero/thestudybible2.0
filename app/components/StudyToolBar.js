@@ -50,7 +50,7 @@ export default class StudyToolBar extends PureComponent {
             size={22}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={this._toggleLoved}>
+        <TouchableOpacity>
           {
             <MaterialCommunityIcons
               name={this.state.loved ? "heart" : "heart-outline"}

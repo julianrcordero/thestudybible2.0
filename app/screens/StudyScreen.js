@@ -72,12 +72,31 @@ function CrossRef({ myObject }) {
   );
 }
 
+class VerseText extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { highlight, style, text } = this.props;
+
+    return (
+      <Text style={style}>
+        <Text
+          style={highlight ? { backgroundColor: highlight.class_name } : {}}
+        >
+          {text}
+        </Text>
+      </Text>
+    );
+  }
+}
+
 export default function StudyScreen({
   carousel,
   currentBook,
   fontFamily,
   fontSize,
-  studyToolBar,
   verseList,
   width,
 }) {
@@ -122,29 +141,18 @@ export default function StudyScreen({
       ? currentHighlights.find((h) => h.start_ref == myReferenceCode)
       : null;
 
-    let myFavorite = currentFavorites
-      ? currentFavorites.find((f) => f.start_ref == myReferenceCode)
-      : null;
+    // let myFavorite = currentFavorites
+    //   ? currentFavorites.find((f) => f.start_ref == myReferenceCode)
+    //   : null;
 
     return (
-      <Text style={styles.verseTextBox}>
-        <Text
-          style={highlight ? { backgroundColor: highlight.class_name } : {}}
-        >
-          {item.content}
-          {/* <VerseFormatted verse={item.content} crossrefSize={12} /> */}
-        </Text>
-      </Text>
+      <VerseText
+        highlight={highlight}
+        style={styles.verseTextBox}
+        text={item.content}
+      />
     );
   };
-
-  // const renderFavorite = () => {
-  //   console.log(referenceFilter);
-
-  //   studyToolBar.current.setState({
-  //     loved: myFavorite ? true : false,
-  //   });
-  // };
 
   const onViewRef = useRef((viewableItems) => {
     if (viewableItems.viewableItems[0]) {
@@ -198,13 +206,13 @@ export default function StudyScreen({
           fontFamily={fontFamily}
           fontSize={fontSize}
         />
-        {/* {(
+        {(
           currentFavorites
             ? currentFavorites.find((f) => f.start_ref == referenceFilter)
             : null
         ) ? (
           <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
-        ) : null} */}
+        ) : null}
       </View>
       <FlatList
         bounces={false}

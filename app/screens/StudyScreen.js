@@ -1,4 +1,10 @@
-import React, { PureComponent, useEffect, useRef, useState } from "react";
+import React, {
+  Component,
+  PureComponent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   FlatList,
   View,
@@ -6,6 +12,8 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
+
+import userMarkup from "../api/userMarkup";
 
 import { useTheme } from "../config/ThemeProvider";
 import AppText from "../components/Text";
@@ -92,9 +100,82 @@ class VerseText extends PureComponent {
   }
 }
 
+class Favorite extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    favorite: null,
+  };
+
+  toggleFavorite = async () => {
+    if (this.state.favorite) {
+      this.setState({ favorite: null });
+
+      if (this.state.favorite.id > 0) {
+        console.log("deleting this:", this.state.favorite);
+        const result = await userMarkup.deleteUserMarkup(
+          this.state.favorite.id,
+          this.props.user.sub,
+          "favorite"
+        );
+
+        if (!result.ok) {
+          // setUploadVisible(false);
+          console.log(result);
+          return alert("Could not delete the favorite.");
+        } else {
+          console.log("deleted favorite with id:", this.props.favorite.id);
+        }
+      }
+    } else {
+      this.setState({
+        favorite: {
+          id: 0,
+          end_ref: 45012021,
+          start_ref: 45012021,
+        },
+      });
+
+      const result = await userMarkup.addUserMarkup(
+        {
+          end_ref: this.props.referenceFilter,
+          start_ref: this.props.referenceFilter,
+        },
+        this.props.user.sub,
+        "favorite"
+      );
+
+      if (!result.ok) {
+        return alert("Could not create the note.");
+      } else {
+        console.log("created favorite with id:", result.data);
+      }
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.favorite !== this.props.favorite &&
+      this.props.favorite !== this.state.favorite
+    ) {
+      // console.log("change favorite state");
+      this.setState({ favorite: this.props.favorite });
+    }
+  }
+
+  render() {
+    return this.state.favorite ? (
+      <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
+    ) : null;
+  }
+}
+
 export default function StudyScreen({
   carousel,
   currentBook,
+  favoriteRef,
   fontFamily,
   fontSize,
   verseList,
@@ -104,8 +185,8 @@ export default function StudyScreen({
   const { user } = useAuth();
   const auth = useAuth();
 
-  const [currentNotes, setCurrentNotes] = useState();
-  const [currentFavorites, setCurrentFavorites] = useState();
+  const [currentNotes, setCurrentNotes] = useState([]);
+  const [currentFavorites, setCurrentFavorites] = useState([]);
   const [currentHighlights, setCurrentHighlights] = useState();
 
   const [currentReference, setCurrentReference] = useState("1 : 1");
@@ -206,13 +287,14 @@ export default function StudyScreen({
           fontFamily={fontFamily}
           fontSize={fontSize}
         />
-        {(
-          currentFavorites
-            ? currentFavorites.find((f) => f.start_ref == referenceFilter)
-            : null
-        ) ? (
-          <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
-        ) : null}
+        <Favorite
+          favorite={currentFavorites.find(
+            (f) => f.start_ref == referenceFilter
+          )}
+          ref={favoriteRef}
+          referenceFilter={referenceFilter}
+          user={user}
+        />
       </View>
       <FlatList
         bounces={false}
@@ -253,13 +335,9 @@ export default function StudyScreen({
         <PanelBox
           referenceFilter={referenceFilter}
           fontSize={fontSize}
-          notes={
-            currentNotes
-              ? currentNotes.filter(
-                  (m) => m.refs[0].start_ref == referenceFilter
-                )
-              : null
-          }
+          notes={currentNotes.filter(
+            (m) => m.refs[0].start_ref == referenceFilter
+          )}
           johnsNote={currentJohnsNote}
         ></PanelBox>
       </View>

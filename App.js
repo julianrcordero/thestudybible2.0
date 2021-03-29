@@ -40,6 +40,7 @@ export default function App() {
   const paragraphBibleRef = useRef();
   const bottomSheetRef = useRef();
   const studyToolBar = useRef();
+  const favoriteRef = useRef();
 
   const [settingsMode, setSettingsMode] = useState(false);
   const [sections, setSections] = useState([]);
@@ -527,6 +528,7 @@ export default function App() {
 
   const bottomSheetHeader = () => (
     <BottomSheetHeader
+      favoriteRef={favoriteRef}
       snapToZero={snapToZero}
       settingsMode={settingsMode}
       studyToolBar={studyToolBar}
@@ -552,6 +554,7 @@ export default function App() {
         <StudyScreen
           carousel={carousel}
           currentBook={currentBook}
+          favoriteRef={favoriteRef}
           fontFamily={fontFamily}
           fontSize={fontSize}
           setVerseList={setVerseList}

@@ -111,46 +111,69 @@ class Favorite extends Component {
 
   toggleFavorite = async () => {
     if (this.state.favorite) {
+      let theFavorite = this.state.favorite;
       this.setState({ favorite: null });
+      const newCache = this.props.currentFavorites.filter(
+        (f) => f.start_ref != this.props.referenceFilter
+      );
 
-      if (this.state.favorite.id > 0) {
-        console.log("deleting this:", this.state.favorite);
+      this.props.setCurrentFavorites(newCache);
+
+      if (theFavorite.id > 0) {
         const result = await userMarkup.deleteUserMarkup(
-          this.state.favorite.id,
+          theFavorite.id,
           this.props.user.sub,
           "favorite"
         );
 
         if (!result.ok) {
-          // setUploadVisible(false);
           console.log(result);
-          return alert("Could not delete the favorite.");
         } else {
-          console.log("deleted favorite with id:", this.props.favorite.id);
+          console.log(
+            "deleted favorite with id:",
+            theFavorite.id,
+            "on ",
+            theFavorite.start_ref
+          );
         }
       }
     } else {
-      this.setState({
-        favorite: {
-          id: 0,
-          end_ref: 45012021,
-          start_ref: 45012021,
-        },
-      });
+      let dummyFavorite = {
+        end_ref: this.props.referenceFilter,
+        start_ref: this.props.referenceFilter,
+      };
+
+      this.setState({ favorite: dummyFavorite });
 
       const result = await userMarkup.addUserMarkup(
-        {
-          end_ref: this.props.referenceFilter,
-          start_ref: this.props.referenceFilter,
-        },
+        dummyFavorite,
         this.props.user.sub,
         "favorite"
       );
 
+      let newFavorite = {
+        id: result ? result.data : 0,
+        ...dummyFavorite,
+      };
+
+      this.setState({
+        favorite: newFavorite,
+      });
+
+      this.props.setCurrentFavorites([
+        ...this.props.currentFavorites,
+        newFavorite,
+      ]);
+
       if (!result.ok) {
         return alert("Could not create the note.");
       } else {
-        console.log("created favorite with id:", result.data);
+        console.log(
+          "created favorite with id:",
+          result.data,
+          "on ",
+          newFavorite.start_ref
+        );
       }
     }
   };
@@ -160,13 +183,13 @@ class Favorite extends Component {
       prevState.favorite !== this.props.favorite &&
       this.props.favorite !== this.state.favorite
     ) {
-      // console.log("change favorite state");
       this.setState({ favorite: this.props.favorite });
     }
   }
 
   render() {
-    return this.state.favorite ? (
+    return this.state.favorite &&
+      this.state.favorite.start_ref == this.props.referenceFilter ? (
       <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
     ) : null;
   }
@@ -187,7 +210,7 @@ export default function StudyScreen({
 
   const [currentNotes, setCurrentNotes] = useState([]);
   const [currentFavorites, setCurrentFavorites] = useState([]);
-  const [currentHighlights, setCurrentHighlights] = useState();
+  const [currentHighlights, setCurrentHighlights] = useState([]);
 
   const [currentReference, setCurrentReference] = useState("1 : 1");
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
@@ -195,17 +218,28 @@ export default function StudyScreen({
   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
 
   useEffect(() => {
-    async function fetchUserMarkup() {
-      const userMarkup = await auth.getUserMarkup(user);
-      if (userMarkup) {
-        console.log("User markup loaded");
-        setCurrentNotes(userMarkup.notes);
-        setCurrentFavorites(userMarkup.favorites);
-        setCurrentHighlights(userMarkup.highlights);
-      }
-    }
     fetchUserMarkup();
   }, []);
+
+  async function fetchUserMarkup() {
+    const userMarkup = await auth.getUserMarkup(user);
+    if (userMarkup) {
+      console.log("User markup loaded");
+      let bookNotes = userMarkup.notes.filter(
+        (n) => n.refs[0].start_ref.toString().slice(0, -6) == "1"
+      );
+      let bookFavorites = userMarkup.favorites.filter(
+        (n) => n.start_ref.toString().slice(0, -6) == "1"
+      );
+      let bookHighlights = userMarkup.highlights.filter(
+        (n) => n.start_ref.toString().slice(0, -6) == "1"
+      );
+
+      setCurrentNotes(bookNotes);
+      setCurrentFavorites(bookFavorites);
+      setCurrentHighlights(bookHighlights);
+    }
+  }
 
   const getItemLayout = (data, index) => ({
     length: width,
@@ -221,10 +255,6 @@ export default function StudyScreen({
     let highlight = currentHighlights
       ? currentHighlights.find((h) => h.start_ref == myReferenceCode)
       : null;
-
-    // let myFavorite = currentFavorites
-    //   ? currentFavorites.find((f) => f.start_ref == myReferenceCode)
-    //   : null;
 
     return (
       <VerseText
@@ -288,11 +318,13 @@ export default function StudyScreen({
           fontSize={fontSize}
         />
         <Favorite
+          currentFavorites={currentFavorites}
           favorite={currentFavorites.find(
             (f) => f.start_ref == referenceFilter
           )}
           ref={favoriteRef}
           referenceFilter={referenceFilter}
+          setCurrentFavorites={setCurrentFavorites}
           user={user}
         />
       </View>
@@ -333,12 +365,14 @@ export default function StudyScreen({
       </View>
       <View style={{ paddingHorizontal: 25 }}>
         <PanelBox
-          referenceFilter={referenceFilter}
+          currentNotes={currentNotes}
           fontSize={fontSize}
+          johnsNote={currentJohnsNote}
           notes={currentNotes.filter(
             (m) => m.refs[0].start_ref == referenceFilter
           )}
-          johnsNote={currentJohnsNote}
+          referenceFilter={referenceFilter}
+          setCurrentNotes={setCurrentNotes}
         ></PanelBox>
       </View>
     </>

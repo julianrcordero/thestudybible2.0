@@ -102,10 +102,12 @@ function ButtonBox({ buttonTitle, onPress }) {
 }
 
 export default function PanelBox({
+  currentNotes,
   fontSize,
-  notes,
   johnsNote,
+  notes,
   referenceFilter,
+  setCurrentNotes,
 }) {
   const { user, logOut } = useAuth();
   const { colors } = useTheme();
@@ -139,8 +141,10 @@ export default function PanelBox({
           <NoteHistory
             ref={noteHistoryRef}
             colors={colors}
+            currentNotes={currentNotes}
             notes={notes}
             referenceFilter={referenceFilter}
+            setCurrentNotes={setCurrentNotes}
             user={user}
           />
         ) : (

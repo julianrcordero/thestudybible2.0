@@ -77,27 +77,41 @@ export default class NoteHistoryItem extends PureComponent {
   insertNote = async (noteText) => {
     // setProgress(0);
     // setUploadVisible(true);
+    let dummyNote = {
+      content: noteText,
+      refs: [
+        {
+          end_ref: this.props.referenceFilter,
+          start_ref: this.props.referenceFilter,
+        },
+      ],
+    };
+
     const result = await userMarkup.addUserMarkup(
-      {
-        content: noteText,
-        refs: [
-          {
-            end_ref: this.props.referenceFilter,
-            start_ref: this.props.referenceFilter,
-          },
-        ],
-      },
+      dummyNote,
       this.props.user.sub,
       "note"
       // markup, username, type,
       // (progress) => setProgress(progress)
     );
 
+    let newNote = {
+      id: result ? result.data : 0,
+      ...dummyNote,
+    };
+
+    this.props.setCurrentNotes([...this.props.currentNotes, newNote]);
+
     if (!result.ok) {
       // setUploadVisible(false);
       return alert("Could not create the note.");
     } else {
-      console.log("created note with id:", result.data);
+      console.log(
+        "created note with id:",
+        result.data,
+        "on ",
+        newNote.refs[0].start_ref
+      );
     }
 
     // resetForm();

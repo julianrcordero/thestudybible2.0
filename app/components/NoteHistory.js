@@ -32,11 +32,14 @@ export default class NoteHistory extends Component {
 
   handleDelete = (item) => {
     //Delete the message from messages
-    const newList = this.state.notes.filter((m) => m.id !== item.id);
+    const newList = this.props.notes.filter((m) => m.id !== item.id);
 
     this.setState({
       notes: newList,
     });
+
+    const newCache = this.props.currentNotes.filter((n) => n.id !== item.id);
+    this.props.setCurrentNotes(newCache);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,24 +51,32 @@ export default class NoteHistory extends Component {
         prevState.notes !== this.props.notes &&
         this.props.notes !== this.state.notes
       ) {
-        // console.log("change note state");
+        console.log("change note state");
         this.setState({ notes: this.props.notes });
       }
     }
   }
 
   render() {
-    const { colors, referenceFilter, user } = this.props;
+    const {
+      colors,
+      currentNotes,
+      referenceFilter,
+      setCurrentNotes,
+      user,
+    } = this.props;
 
     return this.state.notes
       .sort((a, b) => a.created < b.created)
       .map((item) => (
         <NoteHistoryItem
           colors={colors}
+          currentNotes={currentNotes}
           handleDelete={() => this.handleDelete(item)}
           key={item.id.toString()}
           item={item}
           referenceFilter={referenceFilter}
+          setCurrentNotes={setCurrentNotes}
           user={user}
 
           // date={item.created}

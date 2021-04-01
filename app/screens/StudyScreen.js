@@ -18,10 +18,12 @@ import userMarkup from "../api/userMarkup";
 import { useTheme } from "../config/ThemeProvider";
 import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
+import Favorite from "../components/Favorite";
 import VerseFormatted from "../components/VerseFormatted";
 import useAuth from "../auth/useAuth";
 import referenceCode from "../hooks/referenceCode";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Highlight from "../components/Highlight";
 
 function Reference({ book, fontFamily, fontSize, reference }) {
   const { colors } = useTheme();
@@ -80,127 +82,37 @@ function CrossRef({ myObject }) {
   );
 }
 
-class VerseText extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+// class VerseText extends PureComponent {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    const { highlight, style, text } = this.props;
+//   render() {
+//     const { highlight, style, text } = this.props;
 
-    return (
-      <Text style={style}>
-        <Text
-          style={highlight ? { backgroundColor: highlight.class_name } : {}}
-        >
-          {text}
-        </Text>
-      </Text>
-    );
-  }
-}
-
-class Favorite extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  state = {
-    favorite: null,
-  };
-
-  toggleFavorite = async () => {
-    if (this.state.favorite) {
-      let theFavorite = this.state.favorite;
-      this.setState({ favorite: null });
-      const newCache = this.props.currentFavorites.filter(
-        (f) => f.start_ref != this.props.referenceFilter
-      );
-
-      this.props.setCurrentFavorites(newCache);
-
-      if (theFavorite.id > 0) {
-        const result = await userMarkup.deleteUserMarkup(
-          theFavorite.id,
-          this.props.user.sub,
-          "favorite"
-        );
-
-        if (!result.ok) {
-          console.log(result);
-        } else {
-          console.log(
-            "deleted favorite with id:",
-            theFavorite.id,
-            "on ",
-            theFavorite.start_ref
-          );
-        }
-      }
-    } else {
-      let dummyFavorite = {
-        end_ref: this.props.referenceFilter,
-        start_ref: this.props.referenceFilter,
-      };
-
-      this.setState({ favorite: dummyFavorite });
-
-      const result = await userMarkup.addUserMarkup(
-        dummyFavorite,
-        this.props.user.sub,
-        "favorite"
-      );
-
-      let newFavorite = {
-        id: result ? result.data : 0,
-        ...dummyFavorite,
-      };
-
-      this.setState({
-        favorite: newFavorite,
-      });
-
-      this.props.setCurrentFavorites([
-        ...this.props.currentFavorites,
-        newFavorite,
-      ]);
-
-      if (!result.ok) {
-        return alert("Could not create the note.");
-      } else {
-        console.log(
-          "created favorite with id:",
-          result.data,
-          "on ",
-          newFavorite.start_ref
-        );
-      }
-    }
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.favorite !== this.props.favorite &&
-      this.props.favorite !== this.state.favorite
-    ) {
-      this.setState({ favorite: this.props.favorite });
-    }
-  }
-
-  render() {
-    return this.state.favorite &&
-      this.state.favorite.start_ref == this.props.referenceFilter ? (
-      <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
-    ) : null;
-  }
-}
+//     return (
+//       <Text style={style}>
+//         <Text
+//           style={highlight ? { backgroundColor: highlight.class_name } : {}}
+//         >
+//           {text}
+//         </Text>
+//       </Text>
+//     );
+//   }
+// }
 
 export default function StudyScreen({
   carousel,
+  currentHighlights,
   currentBook,
   favoriteRef,
   fontFamily,
   fontSize,
+  // referenceFilter,
+  setCurrentHighlights,
+  // setReferenceFilter,
+  studyToolBar,
   verseList,
   width,
 }) {
@@ -210,7 +122,7 @@ export default function StudyScreen({
 
   const [currentNotes, setCurrentNotes] = useState([]);
   const [currentFavorites, setCurrentFavorites] = useState([]);
-  const [currentHighlights, setCurrentHighlights] = useState([]);
+  // const [currentHighlights, setCurrentHighlights] = useState([]);
 
   const [currentReference, setCurrentReference] = useState("1 : 1");
   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
@@ -241,6 +153,12 @@ export default function StudyScreen({
     }
   }
 
+  async function sendVerseToToolBar(chapter, title) {
+    await studyToolBar.current.setState({
+      currentVerse: referenceCode(chapter, title),
+    });
+  }
+
   const getItemLayout = (data, index) => ({
     length: width,
     offset: width * index,
@@ -250,15 +168,11 @@ export default function StudyScreen({
   const keyExtractor = (item, index) => item + index;
 
   const renderVerseCardItem = ({ item }) => {
-    let myReferenceCode = referenceCode(item.chapter, item.title);
-
-    let highlight = currentHighlights
-      ? currentHighlights.find((h) => h.start_ref == myReferenceCode)
-      : null;
-
     return (
-      <VerseText
-        highlight={highlight}
+      <Highlight
+        highlight={currentHighlights.find(
+          (h) => h.start_ref == referenceCode(item.chapter, item.title)
+        )}
         style={styles.verseTextBox}
         text={item.content}
       />
@@ -277,6 +191,7 @@ export default function StudyScreen({
           ("000" + v.item.title).substr(-3)
       );
       setCurrentJohnsNote(v.item.johnsNote);
+      sendVerseToToolBar(v.item.chapter, v.item.title);
     }
     // Use viewable items in state or as intended
   });
@@ -309,7 +224,7 @@ export default function StudyScreen({
   });
 
   return (
-    <>
+    <View style={{ height: "100%" }}>
       <View style={styles.referenceBox}>
         <Reference
           book={currentBook.label}
@@ -328,28 +243,30 @@ export default function StudyScreen({
           user={user}
         />
       </View>
-      <FlatList
-        bounces={false}
-        data={verseList}
-        decelerationRate={"fast"}
-        // extraData={this.state}
-        getItemLayout={getItemLayout}
-        horizontal={true}
-        initialNumToRender={5}
-        keyExtractor={keyExtractor}
-        maxToRenderPerBatch={3}
-        onViewableItemsChanged={onViewRef.current}
-        ref={carousel}
-        removeClippedSubviews
-        renderItem={renderVerseCardItem}
-        // scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        snapToAlignment={"center"}
-        snapToInterval={width}
-        updateCellsBatchingPeriod={25}
-        viewabilityConfig={viewConfigRef.current}
-        windowSize={11}
-      />
+      <View style={{ flexShrink: 1 }}>
+        <FlatList
+          bounces={false}
+          data={verseList}
+          decelerationRate={"fast"}
+          // extraData={this.state}
+          getItemLayout={getItemLayout}
+          horizontal={true}
+          initialNumToRender={5}
+          keyExtractor={keyExtractor}
+          maxToRenderPerBatch={3}
+          onViewableItemsChanged={onViewRef.current}
+          ref={carousel}
+          removeClippedSubviews
+          renderItem={renderVerseCardItem}
+          // scrollEventThrottle={16}
+          showsHorizontalScrollIndicator={false}
+          snapToAlignment={"center"}
+          snapToInterval={width}
+          updateCellsBatchingPeriod={25}
+          viewabilityConfig={viewConfigRef.current}
+          windowSize={11}
+        />
+      </View>
       <View
         style={{
           marginHorizontal: 30,
@@ -363,18 +280,16 @@ export default function StudyScreen({
           <CrossRef myObject={currentCrossrefs} />
         )}
       </View>
-      <View style={{ paddingHorizontal: 25 }}>
-        <PanelBox
-          currentNotes={currentNotes}
-          fontSize={fontSize}
-          johnsNote={currentJohnsNote}
-          notes={currentNotes.filter(
-            (m) => m.refs[0].start_ref == referenceFilter
-          )}
-          referenceFilter={referenceFilter}
-          setCurrentNotes={setCurrentNotes}
-        ></PanelBox>
-      </View>
-    </>
+      <PanelBox
+        currentNotes={currentNotes}
+        fontSize={fontSize}
+        johnsNote={currentJohnsNote}
+        notes={currentNotes.filter(
+          (m) => m.refs[0].start_ref == referenceFilter
+        )}
+        referenceFilter={referenceFilter}
+        setCurrentNotes={setCurrentNotes}
+      ></PanelBox>
+    </View>
   );
 }

@@ -51,7 +51,6 @@ export default class NoteHistory extends Component {
         prevState.notes !== this.props.notes &&
         this.props.notes !== this.state.notes
       ) {
-        console.log("change note state");
         this.setState({ notes: this.props.notes });
       }
     }

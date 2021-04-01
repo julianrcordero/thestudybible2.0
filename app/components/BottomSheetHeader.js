@@ -8,6 +8,7 @@ export default function BottomSheetHeader({
   favoriteRef,
   settingsMode,
   snapToZero,
+  studyScreen,
   studyToolBar,
 }) {
   const { colors } = useTheme();
@@ -36,6 +37,7 @@ export default function BottomSheetHeader({
           colors={colors}
           favoriteRef={favoriteRef}
           ref={studyToolBar}
+          studyScreen={studyScreen}
         />
       )}
       <Button

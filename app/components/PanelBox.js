@@ -8,6 +8,7 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import reactStringReplace from "react-string-replace";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../config/ThemeProvider";
@@ -129,7 +130,7 @@ export default function PanelBox({
   };
 
   return (
-    <>
+    <View style={{ paddingHorizontal: 25 }}>
       <ResourceBox
         colors={colors}
         title={"My Notes"}
@@ -161,8 +162,11 @@ export default function PanelBox({
       >
         <Text style={myStyles.macArthurText}>
           {user
-            ? johnsNote
-            : "John's Notes from The Macarthur Study Bible can help you enrich your study of this passage."}
+            ? reactStringReplace(johnsNote, /\n/, (match, i) => (
+                <Text key={i}>{"REF"}</Text>
+              ))
+            : //johnsNote
+              "John's Notes from The Macarthur Study Bible can help you enrich your study of this passage."}
         </Text>
         {user ? null : (
           <ButtonBox
@@ -185,6 +189,6 @@ export default function PanelBox({
           />
         )}
       </ResourceBox>
-    </>
+    </View>
   );
 }

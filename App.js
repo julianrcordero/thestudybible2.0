@@ -41,6 +41,7 @@ export default function App() {
   const bottomSheetRef = useRef();
   const studyToolBar = useRef();
   const favoriteRef = useRef();
+  const studyScreen = useRef();
 
   const [settingsMode, setSettingsMode] = useState(false);
   const [sections, setSections] = useState([]);
@@ -511,6 +512,8 @@ export default function App() {
     },
   ];
   const [currentBook, setCurrentBook] = useState(books[0]);
+  const [currentHighlights, setCurrentHighlights] = useState([]);
+  const [referenceFilter, setReferenceFilter] = useState("01001001");
 
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState();
@@ -531,6 +534,7 @@ export default function App() {
       favoriteRef={favoriteRef}
       snapToZero={snapToZero}
       settingsMode={settingsMode}
+      studyScreen={studyScreen}
       studyToolBar={studyToolBar}
     />
   );
@@ -554,9 +558,13 @@ export default function App() {
         <StudyScreen
           carousel={carousel}
           currentBook={currentBook}
+          currentHighlights={currentHighlights}
           favoriteRef={favoriteRef}
           fontFamily={fontFamily}
           fontSize={fontSize}
+          // referenceFilter={referenceFilter}
+          setCurrentHighlights={setCurrentHighlights}
+          // setReferenceFilter={setReferenceFilter}
           setVerseList={setVerseList}
           studyToolBar={studyToolBar}
           verseList={verseList}

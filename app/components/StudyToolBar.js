@@ -34,6 +34,7 @@ export default class StudyToolBar extends Component {
 
     this.state = {
       backgroundColor: "white",
+      currentVerse: "01001001",
       textDecorationLine: "none",
       bookmarked: false,
       loved: false,
@@ -44,6 +45,11 @@ export default class StudyToolBar extends Component {
     this.state.bookmarked === true
       ? this.setState({ bookmarked: false })
       : this.setState({ bookmarked: true });
+  };
+
+  _toggleHighlight = () => {
+    console.log(this.state.currentVerse);
+    // this.props.studyScreen.current.highlightCurrentVerse();
   };
 
   _toggleLoved = () => {
@@ -67,7 +73,7 @@ export default class StudyToolBar extends Component {
         }}
       >
         <ToolBarIcon
-          onPress={() => console.log("marker")}
+          onPress={this._toggleHighlight}
           color={colors.icon}
           icon="marker"
         />

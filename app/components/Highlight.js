@@ -3,7 +3,8 @@ import React, { PureComponent } from "react";
 import userMarkup from "../api/userMarkup";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
+import AppText from "./Text";
 
 export default class Highlight extends PureComponent {
   constructor(props) {
@@ -12,6 +13,12 @@ export default class Highlight extends PureComponent {
 
   state = {
     highlight: null,
+  };
+
+  toggleHighlight = () => {
+    this.setState({
+      highlight: this.state.highlight ? null : { backgroundColor: "lightblue" },
+    });
   };
 
   //   toggleHighlight = async () => {
@@ -95,14 +102,16 @@ export default class Highlight extends PureComponent {
   render() {
     const { highlight, style, text } = this.props;
 
+    const highlightStyle = highlight
+      ? { backgroundColor: highlight.class_name }
+      : {};
+
     return (
-      <Text style={style}>
-        <Text
-          style={highlight ? { backgroundColor: highlight.class_name } : {}}
-        >
-          {text}
-        </Text>
-      </Text>
+      <TouchableOpacity onPress={this.toggleHighlight}>
+        <AppText style={style}>
+          <Text style={this.state.highlight}>{text}</Text>
+        </AppText>
+      </TouchableOpacity>
     );
   }
 }

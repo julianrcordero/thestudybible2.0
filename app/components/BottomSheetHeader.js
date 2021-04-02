@@ -5,7 +5,9 @@ import StudyToolBar from "./StudyToolBar";
 import { PureComponent } from "react";
 
 export default function BottomSheetHeader({
+  currentHighlights,
   favoriteRef,
+  setCurrentHighlights,
   settingsMode,
   snapToZero,
   studyScreen,
@@ -16,7 +18,7 @@ export default function BottomSheetHeader({
     header: {
       alignItems: "center",
       backgroundColor: colors.background,
-      // borderWidth: 0.3,
+      borderTopWidth: 0.3,
       borderColor: colors.border,
       flexDirection: "row",
       height: 50,
@@ -35,8 +37,10 @@ export default function BottomSheetHeader({
       ) : (
         <StudyToolBar
           colors={colors}
+          currentHighlights={currentHighlights}
           favoriteRef={favoriteRef}
           ref={studyToolBar}
+          setCurrentHighlights={setCurrentHighlights}
           studyScreen={studyScreen}
         />
       )}

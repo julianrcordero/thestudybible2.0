@@ -48,8 +48,25 @@ export default class StudyToolBar extends Component {
   };
 
   _toggleHighlight = () => {
-    console.log(this.state.currentVerse);
-    // this.props.studyScreen.current.highlightCurrentVerse();
+    // let highlight = this.props.currentHighlights.find(
+    //   (h) => h.start_ref == this.state.currentVerse
+    // );
+
+    // if (highlight) {
+    //   console.log("There is a highlight");
+    // } else {
+    //   let dummyHighlight = {
+    //     class_name: "yellow",
+    //     end_ref: this.state.currentVerse,
+    //     start_ref: this.state.currentVerse,
+    //   };
+
+    //   this.props.setCurrentHighlights([
+    //     ...this.props.currentHighlights,
+    //     dummyHighlight,
+    //   ]);
+    // }
+    this.props.studyScreen.current.highlightCurrentVerse();
   };
 
   _toggleLoved = () => {

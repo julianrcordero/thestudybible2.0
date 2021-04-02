@@ -23,6 +23,7 @@ import Constants from "expo-constants";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import { SettingsScreen } from "./app/screens/SettingsScreen";
 import BottomSheetHeader from "./app/components/BottomSheetHeader";
+import useAuth from "./app/auth/useAuth";
 const { height, width } = Dimensions.get("window");
 
 //View -> UIView
@@ -531,9 +532,11 @@ export default function App() {
 
   const bottomSheetHeader = () => (
     <BottomSheetHeader
+      currentHighlights={currentHighlights}
       favoriteRef={favoriteRef}
-      snapToZero={snapToZero}
+      setCurrentHighlights={setCurrentHighlights}
       settingsMode={settingsMode}
+      snapToZero={snapToZero}
       studyScreen={studyScreen}
       studyToolBar={studyToolBar}
     />
@@ -558,15 +561,15 @@ export default function App() {
         <StudyScreen
           carousel={carousel}
           currentBook={currentBook}
-          currentHighlights={currentHighlights}
           favoriteRef={favoriteRef}
           fontFamily={fontFamily}
           fontSize={fontSize}
+          ref={studyScreen}
           // referenceFilter={referenceFilter}
-          setCurrentHighlights={setCurrentHighlights}
           // setReferenceFilter={setReferenceFilter}
           setVerseList={setVerseList}
           studyToolBar={studyToolBar}
+          user={user}
           verseList={verseList}
           width={width}
         />

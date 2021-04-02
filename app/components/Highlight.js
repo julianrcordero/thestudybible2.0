@@ -9,6 +9,7 @@ import AppText from "./Text";
 export default class Highlight extends PureComponent {
   constructor(props) {
     super(props);
+    this.textInput = React.createRef();
   }
 
   state = {
@@ -90,28 +91,28 @@ export default class Highlight extends PureComponent {
   //     }
   //   };
 
-  //   componentDidUpdate(prevProps, prevState) {
-  //     if (
-  //       prevState.highlight !== this.props.highlight &&
-  //       this.props.highlight !== this.state.highlight
-  //     ) {
-  //       this.setState({ highlight: this.props.highlight });
-  //     }
-  //   }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.highlight !== this.props.highlight &&
+      this.props.highlight !== this.state.highlight
+    ) {
+      this.setState({ highlight: this.props.highlight });
+    }
+  }
 
   render() {
-    const { highlight, style, text } = this.props;
+    const { highlight, text } = this.props;
 
     const highlightStyle = highlight
       ? { backgroundColor: highlight.class_name }
       : {};
 
     return (
-      <TouchableOpacity onPress={this.toggleHighlight}>
-        <AppText style={style}>
-          <Text style={this.state.highlight}>{text}</Text>
-        </AppText>
-      </TouchableOpacity>
+      // <TouchableOpacity onPress={this.toggleHighlight} ref={this.textInput}>
+      // <AppText style={style}>
+      <Text style={highlightStyle}>{text}</Text>
+      // </AppText>
+      // </TouchableOpacity>
     );
   }
 }

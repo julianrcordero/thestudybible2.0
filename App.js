@@ -41,6 +41,7 @@ export default function App() {
   const paragraphBibleRef = useRef();
   const bottomSheetRef = useRef();
   const studyToolBar = useRef();
+  const highlightRef = useRef();
   const favoriteRef = useRef();
   const studyScreen = useRef();
 
@@ -513,7 +514,6 @@ export default function App() {
     },
   ];
   const [currentBook, setCurrentBook] = useState(books[0]);
-  const [currentHighlights, setCurrentHighlights] = useState([]);
   const [referenceFilter, setReferenceFilter] = useState("01001001");
 
   const [user, setUser] = useState();
@@ -532,9 +532,7 @@ export default function App() {
 
   const bottomSheetHeader = () => (
     <BottomSheetHeader
-      currentHighlights={currentHighlights}
       favoriteRef={favoriteRef}
-      setCurrentHighlights={setCurrentHighlights}
       settingsMode={settingsMode}
       snapToZero={snapToZero}
       studyScreen={studyScreen}

@@ -112,22 +112,6 @@ export default class StudyScreen extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevState.referenceFilter !== this.props.referenceFilter &&
-  //     this.props.referenceFilter !== this.state.referenceFilter
-  //   ) {
-  //     const arrLength = 11; //this.props.verseList.length;
-  //     this.setState({
-  //       elRefs: Array(arrLength)
-  //         .fill()
-  //         .map((_, i) => this.state.elRefs[i] || createRef()),
-  //     });
-  //   }
-
-  //   // console.log(prevProps);
-  // }
-
   async sendVerseToToolBar(chapter, title) {
     await studyToolBar.current.setState({
       currentVerse: this.referenceCode(chapter, title),
@@ -140,10 +124,11 @@ export default class StudyScreen extends Component {
     currentHighlights: [],
 
     currentReference: "1 : 1",
-    // elRefs: [], //useRef([]),
     referenceFilter: "01001001",
     currentCrossrefs: [],
     currentJohnsNote: [],
+
+    highlightedVerse: null,
   };
 
   getItemLayout = (data, index) => ({
@@ -154,26 +139,18 @@ export default class StudyScreen extends Component {
 
   highlightCurrentVerse = () => {
     console.log(this.state.currentReference);
-    console.log(this.state.elRefs[0]);
+    this.setState({
+      highlightedVerse: this.state.highlightedVerse
+        ? {}
+        : { backgroundColor: "yellow" },
+    });
+    // console.log(this.state.elRefs[0]);
   };
 
   keyExtractor = (item, index) => item + index;
 
   referenceCode = (chapter, verse) => {
     return "01" + ("000" + chapter).substr(-3) + ("000" + verse).substr(-3);
-  };
-
-  renderVerseCardItem = ({ item, i }) => {
-    return (
-      <Highlight
-        highlight={this.state.currentHighlights.find(
-          (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
-        )}
-        // ref={this.state.elRefs[i]}
-        style={this.styles.verseTextBox}
-        text={item.content}
-      />
-    );
   };
 
   setCurrentFavorites = (newArray) => {
@@ -190,15 +167,14 @@ export default class StudyScreen extends Component {
 
       this.setState({
         currentReference: v.item.chapter + " : " + v.item.title,
-      });
-      this.setState({ currentCrossrefs: v.item.crossrefs });
-      this.setState({
+        currentCrossrefs: v.item.crossrefs,
         referenceFilter:
           "01" +
           ("000" + v.item.chapter).substr(-3) +
           ("000" + v.item.title).substr(-3),
+        currentJohnsNote: v.item.johnsNote,
+        // highlightedVerse:
       });
-      this.setState({ currentJohnsNote: v.item.johnsNote });
       // sendVerseToToolBar(v.item.chapter, v.item.title);
     }
     // Use viewable items in state or as intended
@@ -212,7 +188,6 @@ export default class StudyScreen extends Component {
 
   styles = StyleSheet.create({
     referenceBox: {
-      // alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
       paddingLeft: 30,
@@ -221,7 +196,6 @@ export default class StudyScreen extends Component {
       width: this.props.width,
     },
     verseTextBox: {
-      // color: colors.text,
       fontFamily: this.props.fontFamily,
       fontSize: this.props.fontSize,
       lineHeight: this.props.fontSize * 2,
@@ -231,15 +205,37 @@ export default class StudyScreen extends Component {
     },
   });
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.highlightedVerse !== this.state.highlightedVerse) {
+  //     this.setState({ highlight: this.props.highlight });
+  //   }
+  // }
+
+  renderVerseCardItem = ({ item, i }) => {
+    // const highlightStyle = highlight
+    //   ? { backgroundColor: highlight.class_name }
+    //   : {};
+
+    return (
+      <AppText style={this.styles.verseTextBox}>
+        <Text style={this.state.highlightedVerse}>{item.content}</Text>
+        {/* <Highlight
+          highlight={this.state.currentHighlights.find(
+            (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
+          )}
+          text={item.content}
+        /> */}
+      </AppText>
+    );
+  };
+
   render() {
     const {
       carousel,
-      currentHighlights,
       currentBook,
       favoriteRef,
       fontFamily,
       fontSize,
-      setCurrentHighlights,
       studyToolBar,
       verseList,
       width,
@@ -248,23 +244,18 @@ export default class StudyScreen extends Component {
     return (
       <View style={{ height: "100%" }}>
         <View style={this.styles.referenceBox}>
-          {/* {
-         ? */}
           <Reference
             book={currentBook.label}
             reference={this.state.currentReference}
             fontFamily={fontFamily}
             fontSize={fontSize}
           />
-          {/* :
-        <HighlightPalette />
-} */}
           <Favorite
             currentFavorites={this.state.currentFavorites}
             favorite={this.state.currentFavorites.find(
               (f) => f.start_ref == this.state.referenceFilter
             )}
-            ref={this.favoriteRef}
+            ref={favoriteRef}
             referenceFilter={this.state.referenceFilter}
             setCurrentFavorites={this.setCurrentFavorites}
             user={this.props.user}

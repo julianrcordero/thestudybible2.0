@@ -9,23 +9,7 @@ export default class NoteHistory extends Component {
   // const { colors, isDark } = useTheme();
 
   state = {
-    noteHistory: [
-      // {
-      //   content: "Sample note",
-      //   content_format: "html",
-      //   created: "2018-02-01T22:29:49.738Z",
-      //   id: 4782937,
-      //   modified: "2018-02-01T23:00:24.047Z",
-      //   refs: [
-      //     {
-      //       end_ref: 45012021,
-      //       start_ref: 45012021,
-      //     },
-      //   ],
-      //   resource_uri:
-      //     "/GetObjectByUsernameTypeId/jcordero@gty.org/note/4782937",
-      // },
-    ],
+    notes: [],
   };
 
   addANote = () => {
@@ -41,37 +25,57 @@ export default class NoteHistory extends Component {
           },
         ],
       },
-      ...this.state.noteHistory,
+      ...this.state.notes,
     ];
-    this.setState({ noteHistory: newNoteHistory });
+    this.setState({ notes: newNoteHistory });
   };
 
   handleDelete = (item) => {
     //Delete the message from messages
-    const newList = this.state.noteHistory.filter((m) => m.id !== item.id);
+    const newList = this.props.notes.filter((m) => m.id !== item.id);
 
     this.setState({
-      noteHistory: newList,
+      notes: newList,
     });
+
+    const newCache = this.props.currentNotes.filter((n) => n.id !== item.id);
+    this.props.setCurrentNotes(newCache);
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.notes !== this.props.notes)
-      this.setState({ noteHistory: this.props.notes });
+    // if (prevProps.notes !== this.props.notes)
+    //   this.setState({ notes: this.props.notes });
+
+    if (this.props.notes.length > 0 || this.state.notes.length > 0) {
+      if (
+        prevState.notes !== this.props.notes &&
+        this.props.notes !== this.state.notes
+      ) {
+        this.setState({ notes: this.props.notes });
+      }
+    }
   }
 
   render() {
-    const { colors, referenceFilter, user } = this.props;
+    const {
+      colors,
+      currentNotes,
+      referenceFilter,
+      setCurrentNotes,
+      user,
+    } = this.props;
 
-    return this.state.noteHistory
+    return this.state.notes
       .sort((a, b) => a.created < b.created)
       .map((item) => (
         <NoteHistoryItem
           colors={colors}
+          currentNotes={currentNotes}
           handleDelete={() => this.handleDelete(item)}
           key={item.id.toString()}
           item={item}
           referenceFilter={referenceFilter}
+          setCurrentNotes={setCurrentNotes}
           user={user}
 
           // date={item.created}

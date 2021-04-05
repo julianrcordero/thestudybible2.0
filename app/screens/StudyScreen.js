@@ -1,4 +1,11 @@
-import React, { PureComponent, useEffect, useRef, useState } from "react";
+import React, {
+  Component,
+  PureComponent,
+  useEffect,
+  useRef,
+  useState,
+  createRef,
+} from "react";
 import {
   FlatList,
   View,
@@ -7,13 +14,17 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import userMarkup from "../api/userMarkup";
+
 import { useTheme } from "../config/ThemeProvider";
 import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
+import Favorite from "../components/Favorite";
 import VerseFormatted from "../components/VerseFormatted";
 import useAuth from "../auth/useAuth";
 import referenceCode from "../hooks/referenceCode";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Highlight from "../components/Highlight";
 
 function Reference({ book, fontFamily, fontSize, reference }) {
   const { colors } = useTheme();
@@ -72,197 +83,427 @@ function CrossRef({ myObject }) {
   );
 }
 
-class VerseText extends PureComponent {
+export default class StudyScreen extends Component {
   constructor(props) {
     super(props);
   }
 
-  render() {
-    const { highlight, style, text } = this.props;
+  async componentDidMount() {
+    const myMarkup = await userMarkup.getUserMarkup(this.props.user.sub);
+    if (myMarkup) {
+      console.log("User markup loaded");
+      const data = myMarkup.data;
+      let bookNotes = data.notes.filter(
+        (n) => n.refs[0].start_ref.toString().slice(0, -6) == "1"
+      );
+      let bookFavorites = data.favorites.filter(
+        (n) => n.start_ref.toString().slice(0, -6) == "1"
+      );
+      let bookHighlights = data.highlights.filter(
+        (n) => n.start_ref.toString().slice(0, -6) == "1"
+      );
 
-    return (
-      <Text style={style}>
-        <Text
-          style={highlight ? { backgroundColor: highlight.class_name } : {}}
-        >
-          {text}
-        </Text>
-      </Text>
-    );
-  }
-}
-
-export default function StudyScreen({
-  carousel,
-  currentBook,
-  fontFamily,
-  fontSize,
-  verseList,
-  width,
-}) {
-  const { colors } = useTheme();
-  const { user } = useAuth();
-  const auth = useAuth();
-
-  const [currentNotes, setCurrentNotes] = useState();
-  const [currentFavorites, setCurrentFavorites] = useState();
-  const [currentHighlights, setCurrentHighlights] = useState();
-
-  const [currentReference, setCurrentReference] = useState("1 : 1");
-  const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
-  const [referenceFilter, setReferenceFilter] = useState("01001001");
-  const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
-
-  useEffect(() => {
-    async function fetchUserMarkup() {
-      const userMarkup = await auth.getUserMarkup(user);
-      if (userMarkup) {
-        console.log("User markup loaded");
-        setCurrentNotes(userMarkup.notes);
-        setCurrentFavorites(userMarkup.favorites);
-        setCurrentHighlights(userMarkup.highlights);
-      }
+      this.setState({
+        currentNotes: bookNotes,
+        currentFavorites: bookFavorites,
+        currentHighlights: bookHighlights,
+      });
+      // this.props.setCurrentHighlights(bookHighlights);
     }
-    fetchUserMarkup();
-  }, []);
+  }
 
-  const getItemLayout = (data, index) => ({
-    length: width,
-    offset: width * index,
+  async sendVerseToToolBar(chapter, title) {
+    await studyToolBar.current.setState({
+      currentVerse: this.referenceCode(chapter, title),
+    });
+  }
+
+  state = {
+    currentNotes: [],
+    currentFavorites: [],
+    currentHighlights: [],
+
+    currentReference: "1 : 1",
+    referenceFilter: "01001001",
+    currentCrossrefs: [],
+    currentJohnsNote: [],
+
+    highlightedVerse: null,
+  };
+
+  getItemLayout = (data, index) => ({
+    length: this.props.width,
+    offset: this.props.width * index,
     index,
   });
 
-  const keyExtractor = (item, index) => item + index;
-
-  const renderVerseCardItem = ({ item }) => {
-    let myReferenceCode = referenceCode(item.chapter, item.title);
-
-    let highlight = currentHighlights
-      ? currentHighlights.find((h) => h.start_ref == myReferenceCode)
-      : null;
-
-    // let myFavorite = currentFavorites
-    //   ? currentFavorites.find((f) => f.start_ref == myReferenceCode)
-    //   : null;
-
-    return (
-      <VerseText
-        highlight={highlight}
-        style={styles.verseTextBox}
-        text={item.content}
-      />
-    );
+  highlightCurrentVerse = () => {
+    console.log(this.state.currentReference);
+    this.setState({
+      highlightedVerse: this.state.highlightedVerse
+        ? {}
+        : { backgroundColor: "yellow" },
+    });
+    // console.log(this.state.elRefs[0]);
   };
 
-  const onViewRef = useRef((viewableItems) => {
+  keyExtractor = (item, index) => item + index;
+
+  referenceCode = (chapter, verse) => {
+    return "01" + ("000" + chapter).substr(-3) + ("000" + verse).substr(-3);
+  };
+
+  setCurrentFavorites = (newArray) => {
+    this.setState({ currentFavorites: newArray });
+  };
+
+  setCurrentHighlights = (newArray) => {
+    this.setState({ currentHighlights: newArray });
+  };
+
+  onViewRef = (viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
 
-      setCurrentReference(v.item.chapter + " : " + v.item.title);
-      setCurrentCrossrefs(v.item.crossrefs);
-      setReferenceFilter(
-        "01" +
+      this.setState({
+        currentReference: v.item.chapter + " : " + v.item.title,
+        currentCrossrefs: v.item.crossrefs,
+        referenceFilter:
+          "01" +
           ("000" + v.item.chapter).substr(-3) +
-          ("000" + v.item.title).substr(-3)
-      );
-      setCurrentJohnsNote(v.item.johnsNote);
+          ("000" + v.item.title).substr(-3),
+        currentJohnsNote: v.item.johnsNote,
+        // highlightedVerse:
+      });
+      // sendVerseToToolBar(v.item.chapter, v.item.title);
     }
     // Use viewable items in state or as intended
-  });
-  const viewConfigRef = useRef({
+  };
+  viewConfigRef = {
     waitForInteraction: true,
     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
     // viewAreaCoveragePercentThreshold: 95,
     itemVisiblePercentThreshold: 75,
-  });
+  };
 
-  const styles = StyleSheet.create({
+  styles = StyleSheet.create({
     referenceBox: {
-      // alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
       paddingLeft: 30,
       paddingRight: 60,
-      paddingVertical: fontSize,
-      width: width,
+      paddingVertical: this.props.fontSize,
+      width: this.props.width,
     },
     verseTextBox: {
-      color: colors.text,
-      fontFamily: fontFamily,
-      fontSize: fontSize,
-      lineHeight: fontSize * 2,
-      paddingBottom: fontSize,
+      fontFamily: this.props.fontFamily,
+      fontSize: this.props.fontSize,
+      lineHeight: this.props.fontSize * 2,
+      paddingBottom: this.props.fontSize,
       paddingHorizontal: 30,
-      width: width,
+      width: this.props.width,
     },
   });
 
-  return (
-    <>
-      <View style={styles.referenceBox}>
-        <Reference
-          book={currentBook.label}
-          reference={currentReference}
-          fontFamily={fontFamily}
-          fontSize={fontSize}
-        />
-        {(
-          currentFavorites
-            ? currentFavorites.find((f) => f.start_ref == referenceFilter)
-            : null
-        ) ? (
-          <MaterialCommunityIcons name={"heart"} color={"red"} size={24} />
-        ) : null}
-      </View>
-      <FlatList
-        bounces={false}
-        data={verseList}
-        decelerationRate={"fast"}
-        // extraData={this.state}
-        getItemLayout={getItemLayout}
-        horizontal={true}
-        initialNumToRender={5}
-        keyExtractor={keyExtractor}
-        maxToRenderPerBatch={3}
-        onViewableItemsChanged={onViewRef.current}
-        ref={carousel}
-        removeClippedSubviews
-        renderItem={renderVerseCardItem}
-        // scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        snapToAlignment={"center"}
-        snapToInterval={width}
-        updateCellsBatchingPeriod={25}
-        viewabilityConfig={viewConfigRef.current}
-        windowSize={11}
-      />
-      <View
-        style={{
-          marginHorizontal: 30,
-        }}
-      >
-        {Array.isArray(currentCrossrefs) ? (
-          currentCrossrefs.map((crossref) => (
-            <CrossRef key={crossref["id"]} myObject={crossref} />
-          ))
-        ) : currentCrossrefs["title"] == "" ? null : (
-          <CrossRef myObject={currentCrossrefs} />
-        )}
-      </View>
-      <View style={{ paddingHorizontal: 25 }}>
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.highlightedVerse !== this.state.highlightedVerse) {
+  //     this.setState({ highlight: this.props.highlight });
+  //   }
+  // }
+
+  renderVerseCardItem = ({ item, i }) => {
+    // const highlightStyle = highlight
+    //   ? { backgroundColor: highlight.class_name }
+    //   : {};
+
+    return (
+      <AppText style={this.styles.verseTextBox}>
+        <Text style={this.state.highlightedVerse}>{item.content}</Text>
+        {/* <Highlight
+          highlight={this.state.currentHighlights.find(
+            (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
+          )}
+          text={item.content}
+        /> */}
+      </AppText>
+    );
+  };
+
+  render() {
+    const {
+      carousel,
+      currentBook,
+      favoriteRef,
+      fontFamily,
+      fontSize,
+      studyToolBar,
+      verseList,
+      width,
+    } = this.props;
+
+    return (
+      <View style={{ height: "100%" }}>
+        <View style={this.styles.referenceBox}>
+          <Reference
+            book={currentBook.label}
+            reference={this.state.currentReference}
+            fontFamily={fontFamily}
+            fontSize={fontSize}
+          />
+          <Favorite
+            currentFavorites={this.state.currentFavorites}
+            favorite={this.state.currentFavorites.find(
+              (f) => f.start_ref == this.state.referenceFilter
+            )}
+            ref={favoriteRef}
+            referenceFilter={this.state.referenceFilter}
+            setCurrentFavorites={this.setCurrentFavorites}
+            user={this.props.user}
+          />
+        </View>
+        <View style={{ flexShrink: 1 }}>
+          <FlatList
+            bounces={false}
+            data={verseList}
+            decelerationRate={"fast"}
+            // extraData={this.state}
+            getItemLayout={this.getItemLayout}
+            horizontal={true}
+            initialNumToRender={5}
+            keyExtractor={this.keyExtractor}
+            maxToRenderPerBatch={3}
+            onViewableItemsChanged={this.onViewRef}
+            ref={carousel}
+            removeClippedSubviews
+            renderItem={this.renderVerseCardItem}
+            // scrollEventThrottle={16}
+            showsHorizontalScrollIndicator={false}
+            snapToAlignment={"center"}
+            snapToInterval={width}
+            updateCellsBatchingPeriod={25}
+            viewabilityConfig={this.viewConfigRef}
+            windowSize={11}
+          />
+        </View>
+        <View
+          style={{
+            marginHorizontal: 30,
+          }}
+        >
+          {Array.isArray(this.state.currentCrossrefs) ? (
+            this.state.currentCrossrefs.map((crossref) => (
+              <CrossRef key={crossref["id"]} myObject={crossref} />
+            ))
+          ) : this.state.currentCrossrefs["title"] == "" ? null : (
+            <CrossRef myObject={this.state.currentCrossrefs} />
+          )}
+        </View>
         <PanelBox
-          referenceFilter={referenceFilter}
+          currentNotes={this.state.currentNotes}
           fontSize={fontSize}
-          notes={
-            currentNotes
-              ? currentNotes.filter(
-                  (m) => m.refs[0].start_ref == referenceFilter
-                )
-              : null
-          }
-          johnsNote={currentJohnsNote}
+          johnsNote={this.state.currentJohnsNote}
+          notes={this.state.currentNotes.filter(
+            (m) => m.refs[0].start_ref == this.state.referenceFilter
+          )}
+          referenceFilter={this.state.referenceFilter}
+          setCurrentNotes={this.setCurrentNotes}
         ></PanelBox>
       </View>
-    </>
-  );
+    );
+  }
 }
+
+// export default function StudyScreen({
+//   carousel,
+//   currentHighlights,
+//   currentBook,
+//   favoriteRef,
+//   fontFamily,
+//   fontSize,
+//   setCurrentHighlights,
+//   studyToolBar,
+//   verseList,
+//   width,
+// }) {
+//   const { colors } = useTheme();
+//   const { user } = useAuth();
+//   const auth = useAuth();
+
+//   const [currentNotes, setCurrentNotes] = useState([]);
+//   const [currentFavorites, setCurrentFavorites] = useState([]);
+//   // const [currentHighlights, setCurrentHighlights] = useState([]);
+
+//   const [currentReference, setCurrentReference] = useState("1 : 1");
+//   const [currentCrossrefs, setCurrentCrossrefs] = useState([]);
+//   const [referenceFilter, setReferenceFilter] = useState("01001001");
+//   const [currentJohnsNote, setCurrentJohnsNote] = useState([]);
+
+//   useEffect(() => {
+//     fetchUserMarkup();
+//   }, []);
+
+//   async function fetchUserMarkup() {
+//     const userMarkup = await auth.getUserMarkup(user);
+//     if (userMarkup) {
+//       console.log("User markup loaded");
+//       let bookNotes = userMarkup.notes.filter(
+//         (n) => n.refs[0].start_ref.toString().slice(0, -6) == "1"
+//       );
+//       let bookFavorites = userMarkup.favorites.filter(
+//         (n) => n.start_ref.toString().slice(0, -6) == "1"
+//       );
+//       let bookHighlights = userMarkup.highlights.filter(
+//         (n) => n.start_ref.toString().slice(0, -6) == "1"
+//       );
+
+//       setCurrentNotes(bookNotes);
+//       setCurrentFavorites(bookFavorites);
+//       setCurrentHighlights(bookHighlights);
+//     }
+//   }
+
+//   async function sendVerseToToolBar(chapter, title) {
+//     await studyToolBar.current.setState({
+//       currentVerse: referenceCode(chapter, title),
+//     });
+//   }
+
+//   const getItemLayout = (data, index) => ({
+//     length: width,
+//     offset: width * index,
+//     index,
+//   });
+
+//   const keyExtractor = (item, index) => item + index;
+
+//   const renderVerseCardItem = ({ item }) => {
+//     return (
+//       <Highlight
+//         highlight={currentHighlights.find(
+//           (h) => h.start_ref == referenceCode(item.chapter, item.title)
+//         )}
+//         style={styles.verseTextBox}
+//         text={item.content}
+//       />
+//     );
+//   };
+
+//   const onViewRef = useRef((viewableItems) => {
+//     if (viewableItems.viewableItems[0]) {
+//       const v = viewableItems.viewableItems[0];
+
+//       setCurrentReference(v.item.chapter + " : " + v.item.title);
+//       setCurrentCrossrefs(v.item.crossrefs);
+//       setReferenceFilter(
+//         "01" +
+//           ("000" + v.item.chapter).substr(-3) +
+//           ("000" + v.item.title).substr(-3)
+//       );
+//       setCurrentJohnsNote(v.item.johnsNote);
+//       sendVerseToToolBar(v.item.chapter, v.item.title);
+//     }
+//     // Use viewable items in state or as intended
+//   });
+//   const viewConfigRef = useRef({
+//     waitForInteraction: true,
+//     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
+//     // viewAreaCoveragePercentThreshold: 95,
+//     itemVisiblePercentThreshold: 75,
+//   });
+
+//   const styles = StyleSheet.create({
+//     referenceBox: {
+//       // alignItems: "center",
+//       flexDirection: "row",
+//       justifyContent: "space-between",
+//       paddingLeft: 30,
+//       paddingRight: 60,
+//       paddingVertical: fontSize,
+//       width: width,
+//     },
+//     verseTextBox: {
+//       // color: colors.text,
+//       fontFamily: fontFamily,
+//       fontSize: fontSize,
+//       lineHeight: fontSize * 2,
+//       paddingBottom: fontSize,
+//       paddingHorizontal: 30,
+//       width: width,
+//     },
+//   });
+
+//   return (
+//     <View style={{ height: "100%" }}>
+//       <View style={styles.referenceBox}>
+//         {/* {
+//          ? */}
+//         <Reference
+//           book={currentBook.label}
+//           reference={currentReference}
+//           fontFamily={fontFamily}
+//           fontSize={fontSize}
+//         />
+//         {/* :
+//         <HighlightPalette />
+// } */}
+//         <Favorite
+//           currentFavorites={currentFavorites}
+//           favorite={currentFavorites.find(
+//             (f) => f.start_ref == referenceFilter
+//           )}
+//           ref={favoriteRef}
+//           referenceFilter={referenceFilter}
+//           setCurrentFavorites={setCurrentFavorites}
+//           user={user}
+//         />
+//       </View>
+//       <View style={{ flexShrink: 1 }}>
+//         <FlatList
+//           bounces={false}
+//           data={verseList}
+//           decelerationRate={"fast"}
+//           // extraData={this.state}
+//           getItemLayout={getItemLayout}
+//           horizontal={true}
+//           initialNumToRender={5}
+//           keyExtractor={keyExtractor}
+//           maxToRenderPerBatch={3}
+//           onViewableItemsChanged={onViewRef.current}
+//           ref={carousel}
+//           removeClippedSubviews
+//           renderItem={renderVerseCardItem}
+//           // scrollEventThrottle={16}
+//           showsHorizontalScrollIndicator={false}
+//           snapToAlignment={"center"}
+//           snapToInterval={width}
+//           updateCellsBatchingPeriod={25}
+//           viewabilityConfig={viewConfigRef.current}
+//           windowSize={11}
+//         />
+//       </View>
+//       <View
+//         style={{
+//           marginHorizontal: 30,
+//         }}
+//       >
+//         {Array.isArray(currentCrossrefs) ? (
+//           currentCrossrefs.map((crossref) => (
+//             <CrossRef key={crossref["id"]} myObject={crossref} />
+//           ))
+//         ) : currentCrossrefs["title"] == "" ? null : (
+//           <CrossRef myObject={currentCrossrefs} />
+//         )}
+//       </View>
+//       <PanelBox
+//         currentNotes={currentNotes}
+//         fontSize={fontSize}
+//         johnsNote={currentJohnsNote}
+//         notes={currentNotes.filter(
+//           (m) => m.refs[0].start_ref == referenceFilter
+//         )}
+//         referenceFilter={referenceFilter}
+//         setCurrentNotes={setCurrentNotes}
+//       ></PanelBox>
+//     </View>
+//   );
+// }

@@ -21,6 +21,7 @@ export default class NoteHistoryItem extends PureComponent {
   }
 
   state = {
+    modified: this.props.item.modified,
     isFocused: this.props.item.open ?? false,
     noteText: this.props.item.content,
     oldNoteText: this.props.item.content,
@@ -67,7 +68,10 @@ export default class NoteHistoryItem extends PureComponent {
 
     this.setFocusedFalse();
 
-    this.setState({ oldNoteText: this.state.noteText });
+    this.setState({
+      oldNoteText: this.state.noteText,
+      modified: Date.now(),
+    });
 
     this.props.item.id > 0
       ? this.updateNote(this.state.noteText)
@@ -77,27 +81,41 @@ export default class NoteHistoryItem extends PureComponent {
   insertNote = async (noteText) => {
     // setProgress(0);
     // setUploadVisible(true);
+    let dummyNote = {
+      content: noteText,
+      refs: [
+        {
+          end_ref: this.props.referenceFilter,
+          start_ref: this.props.referenceFilter,
+        },
+      ],
+    };
+
     const result = await userMarkup.addUserMarkup(
-      {
-        content: noteText,
-        refs: [
-          {
-            end_ref: this.props.referenceFilter,
-            start_ref: this.props.referenceFilter,
-          },
-        ],
-      },
+      dummyNote,
       this.props.user.sub,
       "note"
       // markup, username, type,
       // (progress) => setProgress(progress)
     );
 
+    let newNote = {
+      id: result ? result.data : 0,
+      ...dummyNote,
+    };
+
+    this.props.setCurrentNotes([...this.props.currentNotes, newNote]);
+
     if (!result.ok) {
       // setUploadVisible(false);
       return alert("Could not create the note.");
     } else {
-      console.log("created note with id:", result.data);
+      console.log(
+        "created note with id:",
+        result.data,
+        "on ",
+        newNote.refs[0].start_ref
+      );
     }
 
     // resetForm();
@@ -106,17 +124,28 @@ export default class NoteHistoryItem extends PureComponent {
   updateNote = async (noteText) => {
     // setProgress(0);
     // setUploadVisible(true);
+    let newNote = {
+      content: noteText,
+      id: this.props.item.id,
+      refs: [
+        {
+          end_ref: this.props.referenceFilter,
+          start_ref: this.props.referenceFilter,
+        },
+      ],
+    };
+
+    //modify currentNotes here
+    let newNotes = this.props.currentNotes.map((el) =>
+      el.id === this.props.item.id
+        ? { ...el, content: noteText, modified: Date.now() }
+        : el
+    );
+    this.props.setCurrentNotes(newNotes);
+    //
+
     const result = await userMarkup.editUserMarkup(
-      {
-        content: noteText,
-        id: this.props.item.id,
-        refs: [
-          {
-            end_ref: this.props.referenceFilter,
-            start_ref: this.props.referenceFilter,
-          },
-        ],
-      },
+      newNote,
       this.props.user.sub,
       "note"
       // markup, username, type,
@@ -125,7 +154,7 @@ export default class NoteHistoryItem extends PureComponent {
 
     if (!result.ok) {
       // setUploadVisible(false);
-      return alert("Could not update the note.");
+      console.log(result);
     } else {
       console.log("updated note with id:", this.props.item.id);
     }
@@ -146,7 +175,7 @@ export default class NoteHistoryItem extends PureComponent {
 
     if (!result.ok) {
       // setUploadVisible(false);
-      return alert("Could not delete the note.");
+      console.log(result);
     } else {
       console.log("deleted note with id:", this.props.item.id);
     }
@@ -182,7 +211,7 @@ export default class NoteHistoryItem extends PureComponent {
     return (
       <View style={this.styles.container}>
         <Text style={[this.styles.date, { color: colors.primary }]}>
-          {dateFormat(item.date, "dddd mm-dd-yy, h:MMtt")}
+          {dateFormat(this.state.modified, "dddd mm-dd-yy, h:MMtt")}
         </Text>
         <View>
           {this.state.isFocused ? (

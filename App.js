@@ -23,6 +23,7 @@ import Constants from "expo-constants";
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import { SettingsScreen } from "./app/screens/SettingsScreen";
 import BottomSheetHeader from "./app/components/BottomSheetHeader";
+import useAuth from "./app/auth/useAuth";
 const { height, width } = Dimensions.get("window");
 
 //View -> UIView
@@ -40,6 +41,9 @@ export default function App() {
   const paragraphBibleRef = useRef();
   const bottomSheetRef = useRef();
   const studyToolBar = useRef();
+  const highlightRef = useRef();
+  const favoriteRef = useRef();
+  const studyScreen = useRef();
 
   const [settingsMode, setSettingsMode] = useState(false);
   const [sections, setSections] = useState([]);
@@ -510,6 +514,7 @@ export default function App() {
     },
   ];
   const [currentBook, setCurrentBook] = useState(books[0]);
+  const [referenceFilter, setReferenceFilter] = useState("01001001");
 
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState();
@@ -527,8 +532,10 @@ export default function App() {
 
   const bottomSheetHeader = () => (
     <BottomSheetHeader
-      snapToZero={snapToZero}
+      favoriteRef={favoriteRef}
       settingsMode={settingsMode}
+      snapToZero={snapToZero}
+      studyScreen={studyScreen}
       studyToolBar={studyToolBar}
     />
   );
@@ -552,10 +559,15 @@ export default function App() {
         <StudyScreen
           carousel={carousel}
           currentBook={currentBook}
+          favoriteRef={favoriteRef}
           fontFamily={fontFamily}
           fontSize={fontSize}
+          ref={studyScreen}
+          // referenceFilter={referenceFilter}
+          // setReferenceFilter={setReferenceFilter}
           setVerseList={setVerseList}
           studyToolBar={studyToolBar}
+          user={user}
           verseList={verseList}
           width={width}
         />

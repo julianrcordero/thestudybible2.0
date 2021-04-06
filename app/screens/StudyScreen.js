@@ -157,8 +157,11 @@ export default class StudyScreen extends Component {
     this.setState({ currentFavorites: newArray });
   };
 
-  setCurrentHighlights = (newArray) => {
-    this.setState({ currentHighlights: newArray });
+  setCurrentHighlights = () => {
+    this.state.currentHighlights.find(
+      (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
+    );
+    // this.setState({ currentHighlights: newArray });
   };
 
   onViewRef = (viewableItems) => {
@@ -205,11 +208,11 @@ export default class StudyScreen extends Component {
     },
   });
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.highlightedVerse !== this.state.highlightedVerse) {
-  //     this.setState({ highlight: this.props.highlight });
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.highlightedVerse !== this.state.highlightedVerse) {
+      this.setState({ highlight: this.props.highlight });
+    }
+  }
 
   renderVerseCardItem = ({ item, i }) => {
     // const highlightStyle = highlight

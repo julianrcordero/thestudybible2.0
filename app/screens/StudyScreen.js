@@ -205,11 +205,20 @@ export default class StudyScreen extends Component {
     },
   });
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.highlightedVerse !== this.state.highlightedVerse) {
-  //     this.setState({ highlight: this.props.highlight });
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    const currentHighlight = this.state.currentHighlights.find(
+      (h) => h.start_ref == this.state.referenceFilter
+    );
+    const formerHighlight = this.state.currentHighlights.find(
+      (h) => h.start_ref == prevState.referenceFilter
+    );
+
+    if (currentHighlight !== formerHighlight) {
+      console.log("highlights are different");
+      // this.setState({ highlight: currentHighlight });
+      //This is where we make the current highlight component change
+    }
+  }
 
   renderVerseCardItem = ({ item, i }) => {
     // const highlightStyle = highlight

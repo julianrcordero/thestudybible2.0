@@ -147,6 +147,10 @@ export default class StudyScreen extends Component {
     this.setState({ currentFavorites: newArray });
   };
 
+  setCurrentHighlights = (newArray) => {
+    this.setState({ currentHighlights: newArray });
+  };
+
   toggleColorPalette = () => {
     this.setState({
       colorPaletteVisible: this.state.colorPaletteVisible ? false : true,
@@ -227,20 +231,23 @@ export default class StudyScreen extends Component {
     // const highlightStyle = highlight
     //   ? { backgroundColor: highlight.class_name }
     //   : {};
+    let highlight = this.state.currentHighlights.find(
+      (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
+    );
+    if (highlight) console.log(highlight);
 
-    {
-      /* <Text style={this.state.highlightedVerse}>{item.content}</Text> */
-    }
     return (
       // <AppText style={this.styles.verseTextBox}>
       <Highlight
         colorPaletteVisible={this.state.colorPaletteVisible}
-        highlight={this.state.currentHighlights.find(
-          (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
-        )}
+        currentHighlights={this.state.currentHighlights}
+        highlight={highlight}
+        setCurrentHighlights={this.setCurrentHighlights}
+        referenceFilter={this.state.referenceFilter}
         verseBoxStyle={this.styles.verseBox}
         verseTextStyle={this.styles.verseText}
         text={item.content}
+        user={this.props.user}
       />
       // </AppText>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, TouchableOpacity, Text, View } from "react-native";
+import { Button, StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { useTheme } from "../config/ThemeProvider";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -149,21 +149,7 @@ export default class StudyToolBar extends Component {
         </View>
         {this.state.colorPaletteVisible ? (
           <View style={{ width: "90%" }}>
-            <View
-              style={{
-                width: 0,
-                height: 0,
-                backgroundColor: "transparent",
-                borderStyle: "solid",
-                borderLeftWidth: 20,
-                borderRightWidth: 20,
-                borderBottomWidth: 16,
-                borderLeftColor: "transparent",
-                borderRightColor: "transparent",
-                borderBottomColor: "black",
-                // left: 10,
-              }}
-            ></View>
+            <View style={styles.triangle}></View>
             <View
               style={{
                 alignItems: "center",
@@ -190,3 +176,19 @@ export default class StudyToolBar extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderLeftWidth: 20,
+    borderRightWidth: 20,
+    borderBottomWidth: 16,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "black",
+    // left: 10,
+  },
+});

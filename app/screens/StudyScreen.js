@@ -128,7 +128,7 @@ export default class StudyScreen extends Component {
     currentCrossrefs: [],
     currentJohnsNote: [],
 
-    highlightedVerse: null,
+    colorPaletteVisible: false,
   };
 
   getItemLayout = (data, index) => ({
@@ -136,16 +136,6 @@ export default class StudyScreen extends Component {
     offset: this.props.width * index,
     index,
   });
-
-  highlightCurrentVerse = () => {
-    console.log(this.state.currentReference);
-    this.setState({
-      highlightedVerse: this.state.highlightedVerse
-        ? {}
-        : { backgroundColor: "yellow" },
-    });
-    // console.log(this.state.elRefs[0]);
-  };
 
   keyExtractor = (item, index) => item + index;
 
@@ -157,12 +147,18 @@ export default class StudyScreen extends Component {
     this.setState({ currentFavorites: newArray });
   };
 
-  setCurrentHighlights = () => {
-    this.state.currentHighlights.find(
-      (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
-    );
-    // this.setState({ currentHighlights: newArray });
+  toggleColorPalette = () => {
+    this.setState({
+      colorPaletteVisible: this.state.colorPaletteVisible ? false : true,
+    });
   };
+
+  // setCurrentHighlights = () => {
+  //   this.state.currentHighlights.find(
+  //     (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
+  //   );
+  //   this.setState({ currentHighlights: newArray });
+  // };
 
   onViewRef = (viewableItems) => {
     if (viewableItems.viewableItems[0]) {
@@ -191,26 +187,39 @@ export default class StudyScreen extends Component {
 
   styles = StyleSheet.create({
     referenceBox: {
+      alignItems: "flex-end",
       flexDirection: "row",
       justifyContent: "space-between",
+      minHeight: 60,
       paddingLeft: 30,
       paddingRight: 60,
       paddingVertical: this.props.fontSize,
       width: this.props.width,
     },
-    verseTextBox: {
-      fontFamily: this.props.fontFamily,
-      fontSize: this.props.fontSize,
-      lineHeight: this.props.fontSize * 2,
+    verseBox: {
       paddingBottom: this.props.fontSize,
       paddingHorizontal: 30,
       width: this.props.width,
     },
+    verseText: {
+      fontFamily: this.props.fontFamily,
+      fontSize: this.props.fontSize,
+      lineHeight: this.props.fontSize * 2,
+    },
   });
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.highlightedVerse !== this.state.highlightedVerse) {
-      this.setState({ highlight: this.props.highlight });
+    const currentHighlight = this.state.currentHighlights.find(
+      (h) => h.start_ref == this.state.referenceFilter
+    );
+    const formerHighlight = this.state.currentHighlights.find(
+      (h) => h.start_ref == prevState.referenceFilter
+    );
+
+    if (currentHighlight !== formerHighlight) {
+      console.log("highlights are different");
+      // this.setState({ highlight: currentHighlight });
+      //This is where we make the current highlight component change
     }
   }
 
@@ -219,16 +228,21 @@ export default class StudyScreen extends Component {
     //   ? { backgroundColor: highlight.class_name }
     //   : {};
 
+    {
+      /* <Text style={this.state.highlightedVerse}>{item.content}</Text> */
+    }
     return (
-      <AppText style={this.styles.verseTextBox}>
-        <Text style={this.state.highlightedVerse}>{item.content}</Text>
-        {/* <Highlight
-          highlight={this.state.currentHighlights.find(
-            (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
-          )}
-          text={item.content}
-        /> */}
-      </AppText>
+      // <AppText style={this.styles.verseTextBox}>
+      <Highlight
+        colorPaletteVisible={this.state.colorPaletteVisible}
+        highlight={this.state.currentHighlights.find(
+          (h) => h.start_ref == this.referenceCode(item.chapter, item.title)
+        )}
+        verseBoxStyle={this.styles.verseBox}
+        verseTextStyle={this.styles.verseText}
+        text={item.content}
+      />
+      // </AppText>
     );
   };
 
@@ -247,12 +261,22 @@ export default class StudyScreen extends Component {
     return (
       <View style={{ height: "100%" }}>
         <View style={this.styles.referenceBox}>
+          {/* {this.state.colorPaletteVisible ? (
+            <View
+              style={{
+                backgroundColor: "black",
+                height: 24,
+                width: 100,
+              }}
+            ></View>
+          ) : ( */}
           <Reference
             book={currentBook.label}
             reference={this.state.currentReference}
             fontFamily={fontFamily}
             fontSize={fontSize}
           />
+          {/* )} */}
           <Favorite
             currentFavorites={this.state.currentFavorites}
             favorite={this.state.currentFavorites.find(

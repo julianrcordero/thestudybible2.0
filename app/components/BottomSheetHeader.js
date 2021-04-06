@@ -14,12 +14,12 @@ export default function BottomSheetHeader({
   const { colors } = useTheme();
   const styles = {
     header: {
-      alignItems: "center",
+      alignItems: "flex-start",
       backgroundColor: colors.background,
       borderTopWidth: 0.3,
       borderColor: colors.border,
       flexDirection: "row",
-      height: 50,
+      height: 40,
       justifyContent: "space-between",
       paddingHorizontal: 15,
       width: "100%",
@@ -29,7 +29,14 @@ export default function BottomSheetHeader({
   return (
     <View style={[styles.header]}>
       {settingsMode ? (
-        <Text style={{ color: colors.text, fontSize: 20, fontWeight: "bold" }}>
+        <Text
+          style={{
+            color: colors.text,
+            fontSize: 20,
+            fontWeight: "bold",
+            paddingVertical: 7,
+          }}
+        >
           Text Settings
         </Text>
       ) : (

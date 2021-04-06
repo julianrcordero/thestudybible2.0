@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import userMarkup from "../api/userMarkup";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import AppText from "./Text";
 
 export default class Highlight extends PureComponent {
@@ -13,7 +13,9 @@ export default class Highlight extends PureComponent {
   }
 
   state = {
-    highlight: null,
+    highlight: this.props.highlight
+      ? { backgroundColor: this.props.highlight.class_name }
+      : null,
   };
 
   toggleHighlight = () => {
@@ -91,28 +93,44 @@ export default class Highlight extends PureComponent {
   //     }
   //   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.highlight !== this.props.highlight &&
-      this.props.highlight !== this.state.highlight
-    ) {
-      this.setState({ highlight: this.props.highlight });
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     prevState.highlight !== this.props.highlight &&
+  //     this.props.highlight !== this.state.highlight
+  //   ) {
+  //     console.log("componentDidUpdate");
+  //     this.setState({ highlight: this.props.highlight });
+  //   }
+  // }
 
   render() {
-    const { highlight, text } = this.props;
+    const {
+      colorPaletteVisible,
+      highlight,
+      text,
+      verseBoxStyle,
+      verseTextStyle,
+    } = this.props;
 
     const highlightStyle = highlight
       ? { backgroundColor: highlight.class_name }
       : {};
 
     return (
-      // <TouchableOpacity onPress={this.toggleHighlight} ref={this.textInput}>
-      // <AppText style={style}>
-      <Text style={highlightStyle}>{text}</Text>
-      // </AppText>
-      // </TouchableOpacity>
+      // <View style={{ flexDirection: "column" }}>
+      //   <View
+      //     style={{
+      //       backgroundColor: "black",
+      //       height: colorPaletteVisible ? 50 : 0,
+      //       width: 100,
+      //     }}
+      //   ></View>
+      <TouchableOpacity onPress={this.toggleHighlight} style={verseBoxStyle}>
+        <AppText style={verseTextStyle}>
+          <Text style={this.state.highlight}>{text}</Text>
+        </AppText>
+      </TouchableOpacity>
+      // </View>
     );
   }
 }

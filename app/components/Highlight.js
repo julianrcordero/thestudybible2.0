@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import userMarkup from "../api/userMarkup";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import AppText from "./Text";
 
 export default class Highlight extends PureComponent {
@@ -13,7 +13,7 @@ export default class Highlight extends PureComponent {
   }
 
   state = {
-    highlight: this.props.highlight,
+    highlight: null, //this.props.highlight,
     // ? { backgroundColor: this.props.highlight.class_name }
     // : null,
   };
@@ -29,7 +29,7 @@ export default class Highlight extends PureComponent {
       let theHighlight = this.state.highlight;
       this.setState({ highlight: null });
       const newCache = this.props.currentHighlights.filter(
-        (f) => f.start_ref != this.props.referenceFilter
+        (f) => f.start_ref !== this.props.referenceFilter
       );
 
       this.props.setCurrentHighlights(newCache);
@@ -37,7 +37,7 @@ export default class Highlight extends PureComponent {
       if (theHighlight.id > 0) {
         const result = await userMarkup.deleteUserMarkup(
           theHighlight.id,
-          this.props.user.sub,
+          this.props.username,
           "highlight"
         );
 
@@ -61,98 +61,90 @@ export default class Highlight extends PureComponent {
         class_name: color,
       };
 
-      console.log(dummyHighlight);
-
       this.setState({ highlight: dummyHighlight });
 
-      const result = await userMarkup.addUserMarkup(
-        dummyHighlight,
-        this.props.user.sub,
-        "highlight"
-      );
-
-      console.log(result);
-
-      let newHighlight = {
-        id: result ? result.data : 0,
-        ...dummyHighlight,
-      };
-
-      this.setState({
-        highlight: newHighlight,
-      });
-
-      this.props.setCurrentHighlights([
-        ...this.props.currentHighlights,
-        newHighlight,
-      ]);
-
-      if (!result.ok) {
-        return alert("Could not create the highlight.");
-      } else {
-        console.log(
-          "created highlight with id:",
-          result.data,
-          "on ",
-          newHighlight.start_ref
-        );
-      }
+      this.recursiveHighlightCall(dummyHighlight);
     }
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevState.highlight !== this.props.highlight &&
-  //     this.props.highlight !== this.state.highlight
-  //   ) {
-  //     console.log("componentDidUpdate");
-  //     this.setState({ highlight: this.props.highlight });
-  //   }
-  // }
+  recursiveHighlightCall = async (dummyHighlight) => {
+    const result = await userMarkup.addUserMarkup(
+      dummyHighlight,
+      this.props.username,
+      "highlight"
+    );
+
+    let newHighlight = {
+      id: result ? result.data : 0,
+      ...dummyHighlight,
+    };
+
+    this.setState({
+      highlight: newHighlight,
+    });
+
+    this.props.setCurrentHighlights([
+      ...this.props.currentHighlights,
+      newHighlight,
+    ]);
+
+    if (!result.ok) {
+      console.log(
+        "Could not create the highlight at",
+        this.props.referenceFilter
+      );
+      this.recursiveHighlightCall(dummyHighlight);
+    } else {
+      console.log(
+        "created highlight with id:",
+        result.data,
+        "on ",
+        newHighlight.start_ref
+      );
+    }
+  };
+
+  setCurrentHighlightToState() {
+    let currentHighlight = this.props.currentHighlights.find(
+      (h) => h.start_ref === this.props.referenceFilter
+    );
+    if (currentHighlight && !this.state.highlight) {
+      this.setState({ highlight: currentHighlight });
+    }
+  }
 
   componentDidMount() {
-    this.setState({ highlight: this.props.highlight });
+    // console.log("componentDidMount:", this.props.referenceFilter);
+    this.setCurrentHighlightToState();
+  }
+
+  // DON'T NEED THIS SINCE RE-RENDERS ARE NOT BASED ON PROPS
+  componentDidUpdate(prevProps, prevState) {
+    // console.log(prevProps.currentHighlights);
+    console.log(this.props.currentHighlights.length);
+
+    if (prevState.highlight === this.state.highlight) {
+      //also only call if current reference is visible one
+      this.setCurrentHighlightToState();
+    }
   }
 
   render() {
-    const {
-      colorPaletteVisible,
-      highlight,
-      text,
-      verseBoxStyle,
-      verseTextStyle,
-    } = this.props;
-
-    // const highlightStyle = highlight
-    //   ? { backgroundColor: highlight.class_name }
-    //   : {};
+    const { text, verseBoxStyle, verseTextStyle } = this.props;
 
     return (
-      // <View style={{ flexDirection: "column" }}>
-      //   <View
-      //     style={{
-      //       backgroundColor: "black",
-      //       height: colorPaletteVisible ? 50 : 0,
-      //       width: 100,
-      //     }}
-      //   ></View>
-      <TouchableOpacity
-        onLongPress={this.toggleHighlight}
-        style={verseBoxStyle}
-      >
-        <AppText style={verseTextStyle}>
-          <Text
-            style={
-              this.state.highlight
-                ? { backgroundColor: this.state.highlight.class_name }
-                : { backgroundColor: "transparent" }
-            }
-          >
-            {text}
-          </Text>
+      <Text onLongPress={this.toggleHighlight} style={verseBoxStyle}>
+        <AppText
+          style={[
+            verseTextStyle,
+            this.state.highlight
+              ? { backgroundColor: this.state.highlight.class_name }
+              : { backgroundColor: "transparent" },
+          ]}
+        >
+          {text}
         </AppText>
-      </TouchableOpacity>
-      // </View>
+      </Text>
     );
   }
 }

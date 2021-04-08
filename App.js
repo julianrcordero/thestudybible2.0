@@ -527,7 +527,7 @@ export default function App() {
   };
 
   const snapToZero = () => {
-    bottomSheetRef.current.snapTo(2);
+    bottomSheetRef.current.snapTo(1);
   };
 
   const bottomSheetHeader = () => (
@@ -636,8 +636,12 @@ export default function App() {
 
           <ReanimatedBottomSheet
             ref={bottomSheetRef}
-            snapPoints={[top, "40%", "0%"]}
-            initialSnap={2}
+            snapPoints={[
+              top,
+              // "40%",
+              "0%",
+            ]}
+            initialSnap={1}
             renderHeader={bottomSheetHeader}
             renderContent={bottomSheetContent}
             // onCloseEnd={() => setFocusedVerse(null)}

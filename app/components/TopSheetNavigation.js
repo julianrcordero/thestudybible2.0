@@ -121,6 +121,7 @@ class TopSheetNavigation extends PureComponent {
   };
 
   changeBibleBook = (newBook) => {
+    console.log(newBook);
     if (this.props.currentBook !== newBook) {
       this.props.setCurrentBook(newBook);
       var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
@@ -136,34 +137,20 @@ class TopSheetNavigation extends PureComponent {
       chapters.map((chapter) => {
         chapter["verse"].forEach((verse) => {
           let referenceCode =
-            "n" +
-            "01" +
+            ("00" + newBook.value).substr(-2) +
             ("000" + chapter["_num"]).substr(-3) +
             ("000" + verse["_num"]).substr(-3);
 
+          let noteCode = "n" + referenceCode;
+
           let note = notes.find(
             (el) =>
-              el["_start"] === referenceCode &&
-              !el["_id"].includes("introduction")
+              el["_start"] === noteCode && !el["_id"].includes("introduction")
           );
 
           if (note) {
             const pTag = note["content"]["p"][0];
             const parsedNote = pTag["__text"];
-            // pTag["a"]
-            //   ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
-            //       <Text key={i}>
-            //         <Text style={{ fontSize: 12, lineHeight: 10 }}>
-            //           {Array.isArray(pTag["a"])
-            //             ? "REF1" //pTag["a"][0]["__text"] //"a" is always an array
-            //             : "REF2"}
-            //         </Text>
-            //         {match}
-            //       </Text>
-            //     ))
-            //   : reactStringReplace(pTag["__text"], /\n/, (match, i) => (
-            //       <Text key={i}>{"REF3"}</Text>
-            //     ));
             johnsNote = parsedNote;
           } else {
             johnsNote = "There is no note for this passage";
@@ -171,13 +158,7 @@ class TopSheetNavigation extends PureComponent {
 
           let crossrefList = crossrefsJsonObject["chapter"][
             Number(chapter["_num"]) - 1
-          ]["verse"].find(
-            (el) =>
-              el["id"] ===
-              "01" +
-                ("000" + chapter["_num"]).substr(-3) +
-                ("000" + verse["_num"]).substr(-3)
-          );
+          ]["verse"].find((el) => el["id"] === referenceCode);
 
           if (crossrefList) {
             crossrefs = crossrefList["letter"];
@@ -202,9 +183,7 @@ class TopSheetNavigation extends PureComponent {
                   /(\n)/g,
                   (match, i) => match
                 ),
-
             johnsNote: johnsNote,
-            // loved: false,
             crossrefs: crossrefs,
           });
         });
@@ -223,6 +202,9 @@ class TopSheetNavigation extends PureComponent {
       });
       this.props.setSections(bookSections);
       this.props.setVerseList(verses);
+      this.props.studyScreen.current.setState({
+        bookFilter: newBook.value,
+      });
     }
   };
 
@@ -325,3 +307,18 @@ class TopSheetNavigation extends PureComponent {
 }
 
 export default TopSheetNavigation;
+
+// pTag["a"]
+//   ? reactStringReplace(pTag["__text"], /\n/g, (match, i) => (
+//       <Text key={i}>
+//         <Text style={{ fontSize: 12, lineHeight: 10 }}>
+//           {Array.isArray(pTag["a"])
+//             ? "REF1" //pTag["a"][0]["__text"] //"a" is always an array
+//             : "REF2"}
+//         </Text>
+//         {match}
+//       </Text>
+//     ))
+//   : reactStringReplace(pTag["__text"], /\n/, (match, i) => (
+//       <Text key={i}>{"REF3"}</Text>
+//     ));

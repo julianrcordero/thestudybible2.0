@@ -514,7 +514,7 @@ export default function App() {
     },
   ];
   const [currentBook, setCurrentBook] = useState(books[0]);
-  const [referenceFilter, setReferenceFilter] = useState("01001001");
+  // const [referenceFilter, setReferenceFilter] = useState("01001001");
 
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState();
@@ -600,6 +600,7 @@ export default function App() {
               setCurrentBook={setCurrentBook}
               setSections={setSections}
               setVerseList={setVerseList}
+              studyScreen={studyScreen}
             />
           </Screen>
 

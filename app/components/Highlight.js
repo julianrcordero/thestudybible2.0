@@ -35,22 +35,7 @@ export default class Highlight extends PureComponent {
       this.props.setCurrentHighlights(newCache);
 
       if (theHighlight.id > 0) {
-        const result = await userMarkup.deleteUserMarkup(
-          theHighlight.id,
-          this.props.username,
-          "highlight"
-        );
-
-        if (!result.ok) {
-          console.log(result);
-        } else {
-          console.log(
-            "deleted highlight with id:",
-            theHighlight.id,
-            "on ",
-            theHighlight.start_ref
-          );
-        }
+        this.recursiveHighlightDelete(theHighlight);
       }
     } else {
       let color = "yellow";
@@ -63,11 +48,11 @@ export default class Highlight extends PureComponent {
 
       this.setState({ highlight: dummyHighlight });
 
-      this.recursiveHighlightCall(dummyHighlight);
+      this.recursiveHighlightAdd(dummyHighlight);
     }
   };
 
-  recursiveHighlightCall = async (dummyHighlight) => {
+  recursiveHighlightAdd = async (dummyHighlight) => {
     const result = await userMarkup.addUserMarkup(
       dummyHighlight,
       this.props.username,
@@ -93,13 +78,36 @@ export default class Highlight extends PureComponent {
         "Could not create the highlight at",
         this.props.referenceFilter
       );
-      this.recursiveHighlightCall(dummyHighlight);
+      this.recursiveHighlightAdd(dummyHighlight);
     } else {
       console.log(
         "created highlight with id:",
         result.data,
         "on ",
         newHighlight.start_ref
+      );
+    }
+  };
+
+  recursiveHighlightDelete = async (highlight) => {
+    const result = await userMarkup.deleteUserMarkup(
+      highlight.id,
+      this.props.username,
+      "highlight"
+    );
+
+    if (!result.ok) {
+      console.log(
+        "Could not delete the highlight at",
+        this.props.referenceFilter
+      );
+      this.recursiveHighlightDelete(highlight);
+    } else {
+      console.log(
+        "deleted highlight with id:",
+        highlight.id,
+        "on ",
+        highlight.start_ref
       );
     }
   };
@@ -121,7 +129,7 @@ export default class Highlight extends PureComponent {
   // DON'T NEED THIS SINCE RE-RENDERS ARE NOT BASED ON PROPS
   componentDidUpdate(prevProps, prevState) {
     // console.log(prevProps.currentHighlights);
-    console.log(this.props.currentHighlights.length);
+    // console.log(this.props.currentHighlights.length);
 
     if (prevState.highlight === this.state.highlight) {
       //also only call if current reference is visible one

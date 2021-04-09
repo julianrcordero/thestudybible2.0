@@ -26,7 +26,7 @@ class BiblePicker extends PureComponent {
     this.props.setSettingsMode(true);
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
-        this.props.bottomSheetRef.current.snapTo(1);
+        this.props.bottomSheetRef.current.snapTo(0);
       });
     });
     () => interactionPromise.cancel();

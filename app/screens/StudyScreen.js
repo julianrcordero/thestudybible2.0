@@ -135,6 +135,7 @@ export default class StudyScreen extends Component {
     currentHighlights: [],
 
     currentReference: "1 : 1",
+    bookFilter: "01",
     referenceFilter: "01001001",
     currentCrossrefs: [],
     currentJohnsNote: [],
@@ -154,7 +155,9 @@ export default class StudyScreen extends Component {
 
   referenceCode = (chapter, verse) => {
     return Number(
-      "01" + ("000" + chapter).substr(-3) + ("000" + verse).substr(-3)
+      this.state.bookFilter +
+        ("000" + chapter).substr(-3) +
+        ("000" + verse).substr(-3)
     );
   };
 

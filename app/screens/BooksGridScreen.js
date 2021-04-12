@@ -561,11 +561,23 @@ export default function BooksGridScreen({ navigation }) {
     },
   ];
 
-  const navigateToChapters = (title, gridChapters) =>
-    navigation.navigate("Chapters", {
+  const navigateToChapters = (title, gridChapters, value) => {
+    let passThis = {
       title: title,
       gridChapters: gridChapters,
-    });
+      value: value,
+    };
+
+    navigation.navigate("Chapters", passThis);
+  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => navigateToChapters(item.label, item.chapters, item.value)}
+    >
+      <BiblePickerItem item={item} label={item.short} />
+    </TouchableOpacity>
+  );
 
   return (
     <View
@@ -581,13 +593,7 @@ export default function BooksGridScreen({ navigation }) {
         data={books.slice(0, 39)}
         keyExtractor={(item) => item.value.toString()}
         numColumns={7}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigateToChapters(item.label, item.chapters)}
-          >
-            <BiblePickerItem item={item} label={item.short} />
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
         columnWrapperStyle={{
           justifyContent: "flex-start",
           width: "14.2857%",
@@ -601,13 +607,7 @@ export default function BooksGridScreen({ navigation }) {
         data={books.slice(39, 66)}
         keyExtractor={(item) => item.value.toString()}
         numColumns={7}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigateToChapters(item.label, item.chapters)}
-          >
-            <BiblePickerItem item={item} label={item.short} />
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
         columnWrapperStyle={{
           justifyContent: "flex-start",
           width: "14.2857%",

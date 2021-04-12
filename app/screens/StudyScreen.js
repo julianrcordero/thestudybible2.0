@@ -22,7 +22,7 @@ import PanelBox from "../components/PanelBox";
 import Favorite from "../components/Favorite";
 import VerseFormatted from "../components/VerseFormatted";
 import useAuth from "../auth/useAuth";
-import referenceCode from "../hooks/referenceCode";
+// import referenceCode from "../hooks/referenceCode";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Highlight from "../components/Highlight";
 import AppButton from "../components/Button";
@@ -136,7 +136,7 @@ export default class StudyScreen extends Component {
 
     currentReference: "1 : 1",
     bookFilter: "01",
-    referenceFilter: "01001001",
+    referenceFilter: "001001",
     currentCrossrefs: [],
     currentJohnsNote: [],
 
@@ -186,7 +186,7 @@ export default class StudyScreen extends Component {
       this.setState({
         currentReference: v.item.chapter + " : " + v.item.title,
         currentCrossrefs: v.item.crossrefs,
-        referenceFilter: referenceCode(v.item.chapter, v.item.title),
+        referenceFilter: this.referenceCode(v.item.chapter, v.item.title),
         // "01" +
         // ("000" + v.item.chapter).substr(-3) +
         // ("000" + v.item.title).substr(-3),
@@ -232,7 +232,11 @@ export default class StudyScreen extends Component {
         // colorPaletteVisible={this.state.colorPaletteVisible}
         currentHighlights={this.state.currentHighlights}
         setCurrentHighlights={this.setCurrentHighlights}
-        referenceFilter={this.referenceCode(item.chapter, item.title)}
+        referenceFilter={
+          this.state.bookFilter +
+          ("000" + item.chapter).substr(-3) +
+          ("000" + item.title).substr(-3)
+        } //this.referenceCode(item.chapter, item.title)}
         verseBoxStyle={this.styles.verseBox}
         verseTextStyle={this.styles.verseText}
         text={item.content}

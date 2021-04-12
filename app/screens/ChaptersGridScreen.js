@@ -34,13 +34,13 @@ export default function ChaptersGridScreen({
     });
   }
 
-  const changeBook = (book, chapter) => {
+  const changeBook = (book, chapter, value) => {
     close();
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       // setTimeout(() => {
       changeBibleBook({
         label: book,
-        value: 1,
+        value: value,
         backgroundColor: "#345171",
         icon: "apps",
       });
@@ -51,19 +51,23 @@ export default function ChaptersGridScreen({
     if (goBack) navigation.goBack();
   };
 
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() =>
+        changeBook(route.params.title, item.title, route.params.value)
+      }
+    >
+      <BiblePickerItem item={item} label={item.short} flex={1 / 7} />
+    </TouchableOpacity>
+  );
+
   return (
     <View style={{ backgroundColor: colors.background }}>
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}
         numColumns={7}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => changeBook(route.params.title, item.title)}
-          >
-            <BiblePickerItem item={item} label={item.short} flex={1 / 7} />
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
         columnWrapperStyle={{
           justifyContent: "flex-start",
           width: "14.2857%",

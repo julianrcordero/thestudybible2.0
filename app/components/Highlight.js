@@ -141,7 +141,13 @@ export default class Highlight extends PureComponent {
     const { text, verseBoxStyle, verseTextStyle } = this.props;
 
     return (
-      <Text onLongPress={this.toggleHighlight} style={verseBoxStyle}>
+      <Text
+        onLongPress={
+          () => console.log(this.props.referenceFilter)
+          // this.toggleHighlight
+        }
+        style={verseBoxStyle}
+      >
         <AppText
           style={[
             verseTextStyle,

@@ -121,7 +121,6 @@ class TopSheetNavigation extends PureComponent {
   };
 
   changeBibleBook = (newBook) => {
-    console.log(newBook);
     if (this.props.currentBook !== newBook) {
       this.props.setCurrentBook(newBook);
       var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
@@ -202,6 +201,7 @@ class TopSheetNavigation extends PureComponent {
       });
       this.props.setSections(bookSections);
       this.props.setVerseList(verses);
+      console.log(newBook.value);
       this.props.studyScreen.current.setState({
         bookFilter: newBook.value,
       });

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { FlatList, Text, StyleSheet, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeProvider";
@@ -12,6 +12,17 @@ export default class Paragraph extends PureComponent {
 
   ConditionalWrapper = ({ wrapper, children }) =>
     this.props.formatting == "Default" ? wrapper(children) : children;
+
+  keyExtractor = (item, index) => item + index;
+
+  renderVerseItem = ({ item, i }) => (
+    <Verse
+      key={i}
+      verse={item}
+      // onPress={() => onPress(chapterNum, j + 1)}
+      // searchWords={searchWords}
+    />
+  );
 
   render() {
     const {
@@ -42,15 +53,32 @@ export default class Paragraph extends PureComponent {
           </Text>
         )}
       >
-        {section.data.map((data, j) => (
-          <Verse
-            key={j}
-            chapterNum={chapterNum}
-            verse={data}
-            onPress={() => onPress(chapterNum, j + 1)}
-            searchWords={searchWords}
-          />
-        ))}
+        {
+          // <FlatList
+          //   bounces={false}
+          //   contentContainerStyle={{ flexDirection: "row" }}
+          //   data={section}
+          //   decelerationRate={"fast"}
+          //   horizontal={true}
+          //   initialNumToRender={5}
+          //   keyExtractor={this.keyExtractor}
+          //   maxToRenderPerBatch={7}
+          //   removeClippedSubviews
+          //   renderItem={this.renderVerseItem}
+          //   updateCellsBatchingPeriod={25}
+          //   windowSize={11}
+          // />
+
+          section.map((data, j) => (
+            <Verse
+              key={j}
+              // chapterNum={chapterNum}
+              verse={data}
+              // onPress={() => onPress(chapterNum, j + 1)}
+              // searchWords={searchWords}
+            />
+          ))
+        }
       </this.ConditionalWrapper>
     );
   }

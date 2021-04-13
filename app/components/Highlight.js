@@ -113,9 +113,14 @@ export default class Highlight extends PureComponent {
   };
 
   setCurrentHighlightToState() {
+    // console.log("referenceFilter:", this.props.referenceFilter);
+    // console.log(this.props.currentHighlights);
+
     let currentHighlight = this.props.currentHighlights.find(
       (h) => h.start_ref === this.props.referenceFilter
     );
+
+    if (currentHighlight) console.log(currentHighlight);
     if (currentHighlight && !this.state.highlight) {
       this.setState({ highlight: currentHighlight });
     }
@@ -128,10 +133,8 @@ export default class Highlight extends PureComponent {
 
   // DON'T NEED THIS SINCE RE-RENDERS ARE NOT BASED ON PROPS
   componentDidUpdate(prevProps, prevState) {
-    // console.log(prevProps.currentHighlights);
-    // console.log(this.props.currentHighlights.length);
-
     if (prevState.highlight === this.state.highlight) {
+      //AKA if this.props.currentHighlights changes
       //also only call if current reference is visible one
       this.setCurrentHighlightToState();
     }
@@ -143,8 +146,8 @@ export default class Highlight extends PureComponent {
     return (
       <Text
         onLongPress={
-          () => console.log(this.props.referenceFilter)
-          // this.toggleHighlight
+          // () => console.log(this.props.referenceFilter)
+          this.toggleHighlight
         }
         style={verseBoxStyle}
       >

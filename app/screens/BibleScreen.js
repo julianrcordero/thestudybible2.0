@@ -69,7 +69,6 @@ export default function BibleScreen({
       fontSize={fontSize}
       HEADER_HEIGHT={HEADER_HEIGHT}
       ref={paragraphBibleRef}
-      sections={sections}
       scrollY={scrollY}
       toggleSlideView={toggleSlideView}
     />

@@ -96,6 +96,28 @@ function MoreScreen({ navigation }) {
     },
   ];
 
+  const renderItem = ({ item }) => (
+    <ListItem
+      height={60}
+      title={item.title}
+      subTitle={item.subTitle}
+      image={item.image}
+      IconComponent={
+        item.icon.name ? (
+          <Icon
+            name={item.icon.name}
+            backgroundColor={colors.white} //item.icon.backgroundColor}
+            iconColor={colors.medium}
+          />
+        ) : null
+      }
+      titleSize={item.titleSize ?? null}
+      onPress={() => {
+        navigation.navigate(item.targetScreen);
+      }}
+    />
+  );
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -103,27 +125,7 @@ function MoreScreen({ navigation }) {
           data={menuItems}
           keyExtractor={(menuItem) => menuItem.title}
           ItemSeparatorComponent={ListItemSeparator}
-          renderItem={({ item }) => (
-            <ListItem
-              height={60}
-              title={item.title}
-              subTitle={item.subTitle}
-              image={item.image}
-              IconComponent={
-                item.icon.name ? (
-                  <Icon
-                    name={item.icon.name}
-                    backgroundColor={colors.white} //item.icon.backgroundColor}
-                    iconColor={colors.medium}
-                  />
-                ) : null
-              }
-              titleSize={item.titleSize ?? null}
-              onPress={() => {
-                navigation.navigate(item.targetScreen);
-              }}
-            />
-          )}
+          renderItem={renderItem}
         />
       </View>
     </View>

@@ -29,20 +29,22 @@ function BibleListingsScreen({ navigation }) {
     },
   });
 
+  const renderItem = ({ item }) => (
+    <BibleCard
+      title={item.title}
+      subTitle={item.description}
+      image={item.image}
+      onPress={() => navigation.navigate("BibleResource")}
+    />
+  );
+
   return (
     <View style={styles.screen}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={listings}
         keyExtractor={(listing) => listing.id.toString()}
-        renderItem={({ item }) => (
-          <BibleCard
-            title={item.title}
-            subTitle={item.description}
-            image={item.image}
-            onPress={() => navigation.navigate("BibleResource")}
-          />
-        )}
+        renderItem={renderItem}
       />
     </View>
   );

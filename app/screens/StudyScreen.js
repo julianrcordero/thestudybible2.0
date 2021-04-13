@@ -103,13 +103,19 @@ export default class StudyScreen extends Component {
       console.log("User markup loaded");
       const data = myMarkup.data;
       let bookNotes = data.notes.filter(
-        (n) => n.refs[0].start_ref.toString().slice(0, -6) == "1"
+        (n) =>
+          n.refs[0].start_ref.toString().slice(0, -6) ==
+          this.props.currentBook.value.toString()
       );
       let bookFavorites = data.favorites.filter(
-        (n) => n.start_ref.toString().slice(0, -6) == "1"
+        (n) =>
+          n.start_ref.toString().slice(0, -6) ==
+          this.props.currentBook.value.toString()
       );
       let bookHighlights = data.highlights.filter(
-        (n) => n.start_ref.toString().slice(0, -6) == "1"
+        (n) =>
+          n.start_ref.toString().slice(0, -6) ==
+          this.props.currentBook.value.toString()
       );
 
       this.setState({
@@ -135,7 +141,7 @@ export default class StudyScreen extends Component {
     currentHighlights: [],
 
     currentReference: "1 : 1",
-    bookFilter: "01",
+    bookFilter: this.props.currentBook.value,
     referenceFilter: "001001",
     currentCrossrefs: [],
     currentJohnsNote: [],
@@ -187,9 +193,6 @@ export default class StudyScreen extends Component {
         currentReference: v.item.chapter + " : " + v.item.title,
         currentCrossrefs: v.item.crossrefs,
         referenceFilter: this.referenceCode(v.item.chapter, v.item.title),
-        // "01" +
-        // ("000" + v.item.chapter).substr(-3) +
-        // ("000" + v.item.title).substr(-3),
         currentJohnsNote: v.item.johnsNote,
       });
       // sendVerseToToolBar(v.item.chapter, v.item.title);
@@ -232,11 +235,11 @@ export default class StudyScreen extends Component {
         // colorPaletteVisible={this.state.colorPaletteVisible}
         currentHighlights={this.state.currentHighlights}
         setCurrentHighlights={this.setCurrentHighlights}
-        referenceFilter={
+        referenceFilter={Number(
           this.state.bookFilter +
-          ("000" + item.chapter).substr(-3) +
-          ("000" + item.title).substr(-3)
-        } //this.referenceCode(item.chapter, item.title)}
+            ("000" + item.chapter).substr(-3) +
+            ("000" + item.title).substr(-3)
+        )} //this.referenceCode(item.chapter, item.title)}
         verseBoxStyle={this.styles.verseBox}
         verseTextStyle={this.styles.verseText}
         text={item.content}
@@ -275,11 +278,11 @@ export default class StudyScreen extends Component {
             fontFamily={fontFamily}
             fontSize={fontSize}
           />
-          <AppButton
+          {/* <AppButton
             onPress={() => this.loadUserMarkup(this.state.user)}
             title={"Reload user data"}
             style={{ width: 100 }}
-          ></AppButton>
+          ></AppButton> */}
           <Favorite
             currentFavorites={this.state.currentFavorites}
             favorite={this.state.currentFavorites.find(

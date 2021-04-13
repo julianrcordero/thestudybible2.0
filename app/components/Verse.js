@@ -32,13 +32,13 @@ export default class Verse extends PureComponent {
 
   render() {
     const {
-      chapterNum,
+      // chapterNum,
       // crossrefSize,
       // focusedVerse,
       verse,
-      searchWords,
+      // searchWords,
       style,
-      onPress,
+      // onPress,
     } = this.props;
 
     styles = {
@@ -54,11 +54,7 @@ export default class Verse extends PureComponent {
     const isFirst = verse["_num"] === "1";
 
     return (
-      // <View style={isFirst && styles.container}>
-      <Text onPress={onPress} onLongPress={this._toggleHighlight}>
-        {/* {isFirst ? (
-            <Text style={{ fontSize: 50 }}>{chapterNum}</Text>
-          ) : ( */}
+      <Text onLongPress={this._toggleHighlight}>
         <Text
           style={{
             fontWeight: "bold",
@@ -68,7 +64,6 @@ export default class Verse extends PureComponent {
           {" "}
           {verse["_num"]}{" "}
         </Text>
-        {/* )} */}
 
         <Text
           style={{
@@ -78,7 +73,6 @@ export default class Verse extends PureComponent {
           }}
         >
           <Text>
-            {/* {"Placeholder"} */}
             <VerseFormatted verse={verse} crossrefSize={12} />
           </Text>
         </Text>
@@ -88,7 +82,6 @@ export default class Verse extends PureComponent {
           textToHighlight={parsedVerse}
         /> */}
       </Text>
-      // </View>
     );
   }
 }

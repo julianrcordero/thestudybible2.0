@@ -46,7 +46,6 @@ export default function App() {
   const studyScreen = useRef();
 
   const [settingsMode, setSettingsMode] = useState(false);
-  const [sections, setSections] = useState([]);
   const [verseList, setVerseList] = useState([]);
 
   const books = [
@@ -596,9 +595,9 @@ export default function App() {
               ref={topPanel}
               height={top - getBottomSpace()}
               width={width}
+              paragraphBibleRef={paragraphBibleRef}
               searchHistoryRef={searchHistoryRef}
               setCurrentBook={setCurrentBook}
-              setSections={setSections}
               setVerseList={setVerseList}
               studyScreen={studyScreen}
             />
@@ -617,7 +616,6 @@ export default function App() {
                 fontSize={fontSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
-                sections={sections}
                 setSettingsMode={setSettingsMode}
                 setVerseList={setVerseList}
                 setCurrentBook={setCurrentBook}

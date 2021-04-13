@@ -64,6 +64,24 @@ export default class VerseByVerseBible extends PureComponent {
     },
   };
 
+  renderItem = ({ item, index, section }) => (
+    <Text style={[defaultStyles.bibleText]}>
+      <Verse
+        key={index}
+        chapterNum={section.chapterNum}
+        // crossrefSize={crossrefSize}
+        verse={item}
+        //   searchWords={searchWords}
+        onPress={() => toggleSlideView(section.chapterNum, index + 1)}
+        style={[
+          defaultStyles.bibleText,
+          { fontSize: fontSize, lineHeight: fontSize * 2 },
+        ]}
+        // landscape={landscape}
+      />
+    </Text>
+  );
+
   render() {
     const {
       fontSize,
@@ -85,23 +103,7 @@ export default class VerseByVerseBible extends PureComponent {
             nativeEvent: { contentOffset: { y: scrollY } },
           },
         ])}
-        renderItem={({ item, index, section }) => (
-          <Text style={[defaultStyles.bibleText]}>
-            <Verse
-              key={index}
-              chapterNum={section.chapterNum}
-              // crossrefSize={crossrefSize}
-              verse={item}
-              //   searchWords={searchWords}
-              onPress={() => toggleSlideView(section.chapterNum, index + 1)}
-              style={[
-                defaultStyles.bibleText,
-                { fontSize: fontSize, lineHeight: fontSize * 2 },
-              ]}
-              // landscape={landscape}
-            />
-          </Text>
-        )}
+        renderItem={this.renderItem}
         renderSectionHeader={({ section: { title } }) => (
           <AnimatedSectionHeader title={title} titleSize={fontSize * 2} />
         )}

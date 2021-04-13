@@ -41,7 +41,6 @@ const AppNavigator = (props) =>
       formatting,
       paragraphBibleRef,
       searchHistoryRef,
-      sections,
       setCurrentBook,
       setSettingsMode,
       setVerseList,
@@ -85,7 +84,6 @@ const AppNavigator = (props) =>
               paragraphBibleRef={paragraphBibleRef}
               scrollY={scrollY}
               searchHistoryRef={searchHistoryRef}
-              sections={sections}
               setCurrentBook={setCurrentBook}
               setSettingsMode={setSettingsMode}
               setVerseList={setVerseList}

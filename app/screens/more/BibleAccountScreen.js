@@ -28,6 +28,19 @@ function BibleMoreScreen({ route, navigation }) {
   const { colors, isDark } = useTheme();
   const { AccessToken } = route.params;
 
+  const renderItem = ({ item }) => (
+    <ListItem
+      title={item.title}
+      IconComponent={
+        <Icon
+          name={item.icon.name}
+          backgroundColor={item.icon.backgroundColor}
+        />
+      }
+      onPress={() => navigation.navigate("Messages")}
+    />
+  );
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.light }}>
       <View style={styles.container}>
@@ -43,18 +56,7 @@ function BibleMoreScreen({ route, navigation }) {
           data={menuItems}
           keyExtractor={(menuItem) => menuItem.title}
           ItemSeparatorComponent={ListItemSeparatorComponent}
-          renderItem={({ item }) => (
-            <ListItem
-              title={item.title}
-              IconComponent={
-                <Icon
-                  name={item.icon.name}
-                  backgroundColor={item.icon.backgroundColor}
-                />
-              }
-              onPress={() => navigation.navigate("Messages")}
-            />
-          )}
+          renderItem={renderItem}
         />
       </View>
 

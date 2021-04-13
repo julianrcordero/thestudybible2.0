@@ -30,22 +30,24 @@ function MessagesScreen(props) {
     setMessages(messages.filter((m) => m.id !== message.id));
   };
 
+  const renderItem = ({ item }) => (
+    <ListItem
+      title={item.title}
+      description={item.description}
+      image={item.image}
+      onPress={() => console.log("Message selected", item)}
+      renderRightActions={() => (
+        <ListItemDeleteAction onPress={() => handleDelete(item)} />
+      )}
+    />
+  );
+
   return (
     <View style={styles.container}>
       <FlatList
         data={messages}
         keyExtractor={(message) => message.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.title}
-            description={item.description}
-            image={item.image}
-            onPress={() => console.log("Message selected", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
-            )}
-          />
-        )}
+        renderItem={renderItem}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
         onRefresh={() => {

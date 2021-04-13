@@ -32,6 +32,27 @@ function DashboardScreen({ navigation }) {
     },
   });
 
+  const renderItem = ({ item }) => (
+    <Card
+      title={item.Title}
+      subTitle={item.Scripture}
+      imageUrl={item.ImageUrl}
+      // onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+      thumbnailUrl={item.ImageUrl}
+      // data.append("Title", dashboardItem.Title);
+      // data.append("Scripture", dashboardItem.Scripture);
+      // // data.append("categoryId", dashboardItem.category.value);
+      // data.append("description", dashboardItem.description);
+
+      // // dashboardItem.images.forEach((image, index) =>
+      // data.append("images", {
+      //   name: dashboardItem.Title, //"image" + index,
+      //   type: "image/jpeg",
+      //   uri: dashboardItem.SeriesImage,
+      // });
+    />
+  );
+
   return (
     <Screen style={styles.screen}>
       {getDashboardApi.error && (
@@ -45,26 +66,7 @@ function DashboardScreen({ navigation }) {
       <FlatList
         data={getDashboardApi.data}
         keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => (
-          <Card
-            title={item.Title}
-            subTitle={item.Scripture}
-            imageUrl={item.ImageUrl}
-            // onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-            thumbnailUrl={item.ImageUrl}
-            // data.append("Title", dashboardItem.Title);
-            // data.append("Scripture", dashboardItem.Scripture);
-            // // data.append("categoryId", dashboardItem.category.value);
-            // data.append("description", dashboardItem.description);
-
-            // // dashboardItem.images.forEach((image, index) =>
-            // data.append("images", {
-            //   name: dashboardItem.Title, //"image" + index,
-            //   type: "image/jpeg",
-            //   uri: dashboardItem.SeriesImage,
-            // });
-          />
-        )}
+        renderItem={renderItem}
       />
     </Screen>
   );

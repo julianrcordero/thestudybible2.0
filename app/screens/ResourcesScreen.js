@@ -44,22 +44,24 @@ function ResourcesScreen(props) {
     setMessages(messages.filter((m) => m.id !== message.id));
   };
 
+  const renderItem = ({ item }) => (
+    <ListItem
+      title={item.title}
+      type={item.type}
+      description={item.description}
+      image={item.image}
+      onPress={() => console.log("Message selected", item)}
+      renderRightActions={() => (
+        <ListItemDeleteAction onPress={() => handleDelete(item)} />
+      )}
+    />
+  );
+
   return (
     <FlatList
       data={messages}
       keyExtractor={(message) => message.id.toString()}
-      renderItem={({ item }) => (
-        <ListItem
-          title={item.title}
-          type={item.type}
-          description={item.description}
-          image={item.image}
-          onPress={() => console.log("Message selected", item)}
-          renderRightActions={() => (
-            <ListItemDeleteAction onPress={() => handleDelete(item)} />
-          )}
-        />
-      )}
+      renderItem={renderItem}
       ItemSeparatorComponent={ListItemSeparator}
       refreshing={refreshing}
       // onRefresh={() => {

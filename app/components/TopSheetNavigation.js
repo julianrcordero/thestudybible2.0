@@ -122,86 +122,77 @@ class TopSheetNavigation extends PureComponent {
 
   changeBibleBook = (newBook) => {
     if (this.props.currentBook !== newBook) {
+      // var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
+      // var bibleJsonObject = JSON.parse(bibleJsonString);
+      const chapters =
+        bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+
+      this.props.paragraphBibleRef.current.setState({ sections: chapters }); //for normal Bible view
       this.props.setCurrentBook(newBook);
-      var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
-      var bibleJsonObject = JSON.parse(bibleJsonString);
+      //normal Bible view
+      // bookSections.push({
+      //   chapterNum: Number(chapter["_num"]),
+      //   title: Array.isArray(chapter["heading"])
+      //     ? chapter["heading"][0]
+      //     : chapter["heading"],
+      //   data: chapter["verse"],
+      // });
+      // });
 
-      let verses = [];
-      let johnsNote = "";
-      let crossrefs = "";
-      const chapters = bibleJsonObject["crossway-bible"]["book"]["chapter"];
-      const notes = notesArray[newBook.value - 1]["note"];
+      // let verses = [];
+      // let johnsNote = "";
+      // let crossrefs = "";
+      // const notes = notesArray[newBook.value - 1]["note"];
+      // const bookSections = [];
+      // chapters.map((chapter) => {
+      // chapter["verse"].forEach((verse) => {
+      //   let referenceCode =
+      //     ("00" + newBook.value).substr(-2) +
+      //     ("000" + chapter["_num"]).substr(-3) +
+      //     ("000" + verse["_num"]).substr(-3);
+      //   let noteCode = "n" + referenceCode;
+      //   let note = notes.find(
+      //     (el) =>
+      //       el["_start"] === noteCode && !el["_id"].includes("introduction")
+      //   );
+      //   if (note) {
+      //     const pTag = note["content"]["p"][0];
+      //     const parsedNote = pTag["__text"];
+      //     johnsNote = parsedNote;
+      //   } else {
+      //     johnsNote = "There is no note for this passage";
+      //   }
+      //   let crossrefList = crossrefsJsonObject["chapter"][
+      //     Number(chapter["_num"]) - 1
+      //   ]["verse"].find((el) => el["id"] === referenceCode);
+      //   if (crossrefList) {
+      //     crossrefs = crossrefList["letter"];
+      //   } else {
+      //     crossrefs = {
+      //       title: "",
+      //       text: "",
+      //     };
+      //   }
+      //   verses.push({
+      //     chapter: Number(chapter["_num"]),
+      //     title: Number(verse["_num"]),
+      //     content: verse["crossref"]
+      //       ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) =>
+      //           Array.isArray(verse["crossref"])
+      //             ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+      //             : verse["crossref"]["_let"]
+      //         )
+      //       : reactStringReplace(
+      //           verse["__text"],
+      //           /(\n)/g,
+      //           (match, i) => match
+      //         ),
+      //     johnsNote: johnsNote,
+      //     crossrefs: crossrefs,
+      //   });
+      // });
 
-      const bookSections = [];
-      chapters.map((chapter) => {
-        chapter["verse"].forEach((verse) => {
-          let referenceCode =
-            ("00" + newBook.value).substr(-2) +
-            ("000" + chapter["_num"]).substr(-3) +
-            ("000" + verse["_num"]).substr(-3);
-
-          let noteCode = "n" + referenceCode;
-
-          let note = notes.find(
-            (el) =>
-              el["_start"] === noteCode && !el["_id"].includes("introduction")
-          );
-
-          if (note) {
-            const pTag = note["content"]["p"][0];
-            const parsedNote = pTag["__text"];
-            johnsNote = parsedNote;
-          } else {
-            johnsNote = "There is no note for this passage";
-          }
-
-          let crossrefList = crossrefsJsonObject["chapter"][
-            Number(chapter["_num"]) - 1
-          ]["verse"].find((el) => el["id"] === referenceCode);
-
-          if (crossrefList) {
-            crossrefs = crossrefList["letter"];
-          } else {
-            crossrefs = {
-              title: "",
-              text: "",
-            };
-          }
-
-          verses.push({
-            chapter: Number(chapter["_num"]),
-            title: Number(verse["_num"]),
-            content: verse["crossref"]
-              ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) =>
-                  Array.isArray(verse["crossref"])
-                    ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-                    : verse["crossref"]["_let"]
-                )
-              : reactStringReplace(
-                  verse["__text"],
-                  /(\n)/g,
-                  (match, i) => match
-                ),
-            johnsNote: johnsNote,
-            crossrefs: crossrefs,
-          });
-        });
-
-        Array.isArray(chapter["heading"])
-          ? bookSections.push({
-              chapterNum: Number(chapter["_num"]),
-              title: chapter["heading"][0],
-              data: chapter["verse"],
-            })
-          : bookSections.push({
-              chapterNum: Number(chapter["_num"]),
-              title: chapter["heading"],
-              data: chapter["verse"],
-            });
-      });
-      this.props.setSections(bookSections);
-      this.props.setVerseList(verses);
-      console.log(newBook.value);
+      // this.props.setVerseList(verses);//for Study Screen
       this.props.studyScreen.current.setState({
         bookFilter: newBook.value,
       });

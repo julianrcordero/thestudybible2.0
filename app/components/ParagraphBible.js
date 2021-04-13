@@ -40,30 +40,50 @@ export default class ParagraphBible extends PureComponent {
     super(props);
   }
 
+  state = {
+    sections: null,
+  };
+  // chapterNum: Number(chapter["_num"]),
+  // title: Array.isArray(chapter["heading"])
+  //   ? chapter["heading"][0]
+  //   : chapter["heading"],
+  // data: chapter["verse"],
+
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
       <AnimatedSectionHeader
         colors={this.props.colors}
-        title={item.title}
+        title={
+          Array.isArray(item["heading"]) ? item["heading"][0] : item["heading"]
+          // item.title
+        }
         titleSize={this.props.fontSize * 1.5}
       />
       {/* <AppText>{item.chapterNum}</AppText> */}
       <Paragraph
-        chapterNum={item.chapterNum}
+        chapterNum={Number(item["_num"])} //item.chapterNum}
         colors={this.props.colors}
         fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}
         formatting={this.props.formatting}
         key={i}
-        section={item}
+        section={item["verse"]}
         // searchWords={searchWords}
         onPress={this.props.toggleSlideView}
       />
     </React.Fragment>
   );
 
+  keyExtractor = (item) => item["_num"];
+
+  // getItemLayout = (data, index) => ({
+  //   length: this.props.width,
+  //   offset: this.props.width * index,
+  //   index,
+  // });
+
   render() {
-    const { colors, HEADER_HEIGHT, sections, scrollY } = this.props;
+    const { colors, HEADER_HEIGHT, scrollY } = this.props;
 
     const styles = {
       bibleTextView: {
@@ -75,17 +95,19 @@ export default class ParagraphBible extends PureComponent {
     return (
       <AnimatedFlatList
         bounces={false}
-        data={sections}
+        data={this.state.sections}
         // extra={this.props.fontSize}
-        // initialNumToRender={20}
-        keyExtractor={(item) => item.chapterNum.toString()}
+        initialNumToRender={1}
+        keyExtractor={this.keyExtractor}
+        maxToRenderPerBatch={3}
         onScroll={Animated.event([
           {
             nativeEvent: { contentOffset: { y: scrollY } },
           },
         ])}
+        removeClippedSubviews
         renderItem={this.renderParagraphItem}
-        scrollEventThrottle={16}
+        // scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         style={[
           styles.bibleTextView,
@@ -94,6 +116,23 @@ export default class ParagraphBible extends PureComponent {
             paddingBottom: HEADER_HEIGHT + 300,
           },
         ]}
+        updateCellsBatchingPeriod={150}
+        windowSize={3}
+
+        // initialNumToRender={5}
+        // keyExtractor={this.keyExtractor}
+        // maxToRenderPerBatch={3}
+        // onViewableItemsChanged={this.onViewRef}
+        // ref={carousel}
+        // removeClippedSubviews
+        // renderItem={this.renderVerseCardItem}
+        // // scrollEventThrottle={16}
+        // showsHorizontalScrollIndicator={false}
+        // snapToAlignment={"center"}
+        // snapToInterval={width}
+        // updateCellsBatchingPeriod={25}
+        // viewabilityConfig={this.viewConfigRef}
+        // windowSize={11}
       />
     );
   }

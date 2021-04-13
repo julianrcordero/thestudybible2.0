@@ -48,6 +48,17 @@ function AppPicker({
     },
   });
 
+  const renderItem = ({ item }) => (
+    <PickerItemComponent
+      item={item}
+      label={item.label}
+      onPress={() => {
+        setModalVisible(false);
+        onSelectItem(item);
+      }}
+    />
+  );
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
@@ -80,16 +91,7 @@ function AppPicker({
           data={items}
           keyExtractor={(item) => item.value.toString()}
           numColumns={numberOfColumns}
-          renderItem={({ item }) => (
-            <PickerItemComponent
-              item={item}
-              label={item.label}
-              onPress={() => {
-                setModalVisible(false);
-                onSelectItem(item);
-              }}
-            />
-          )}
+          renderItem={renderItem}
         />
         {/* </Screen> */}
       </Modal>

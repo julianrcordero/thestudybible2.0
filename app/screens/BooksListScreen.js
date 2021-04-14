@@ -593,15 +593,14 @@ export default function BooksListScreen({
 
   const _renderContent = (section) => {
     return (
-      <View style={{ width: width }}>
-        <ChaptersGridScreen
-          changeBibleBook={changeBibleBook}
-          chapters={section.chapters}
-          close={close}
-          navigation={navigation}
-          route={route}
-        />
-      </View>
+      <ChaptersGridScreen
+        changeBibleBook={changeBibleBook}
+        chapters={section.chapters}
+        close={close}
+        navigation={navigation}
+        route={route}
+        width={width}
+      />
     );
   };
 

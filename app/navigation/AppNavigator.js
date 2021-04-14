@@ -29,19 +29,20 @@ const AppNavigator = (props) =>
   // { user }
   {
     useNotifications();
+    const { colors } = useTheme();
 
     const {
       bottomSheetRef,
       carousel,
       // crossrefSize,
-      currentBook,
+      // currentBook,
       darkMode,
       fontFamily,
       fontSize,
       formatting,
       paragraphBibleRef,
       searchHistoryRef,
-      setCurrentBook,
+      // setCurrentBook,
       setSettingsMode,
       setVerseList,
       titleSize,
@@ -75,7 +76,8 @@ const AppNavigator = (props) =>
               bottomSheetRef={bottomSheetRef}
               carousel={carousel}
               // crossrefSize={crossrefSize}
-              currentBook={currentBook}
+              // currentBook={currentBook}
+              colors={colors}
               darkMode={darkMode}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
@@ -84,7 +86,7 @@ const AppNavigator = (props) =>
               paragraphBibleRef={paragraphBibleRef}
               scrollY={scrollY}
               searchHistoryRef={searchHistoryRef}
-              setCurrentBook={setCurrentBook}
+              // setCurrentBook={setCurrentBook}
               setSettingsMode={setSettingsMode}
               setVerseList={setVerseList}
               titleSize={titleSize}

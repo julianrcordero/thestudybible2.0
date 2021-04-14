@@ -17,6 +17,7 @@ export default function ChaptersGridScreen({
   goBack = false,
   navigation,
   route,
+  width,
 }) {
   const { colors } = useTheme();
 
@@ -62,7 +63,12 @@ export default function ChaptersGridScreen({
   );
 
   return (
-    <View style={{ backgroundColor: colors.background }}>
+    <View
+      style={[
+        { backgroundColor: colors.background },
+        width ? { width: width } : null,
+      ]}
+    >
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}

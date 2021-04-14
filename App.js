@@ -512,7 +512,7 @@ export default function App() {
       icon: "apps",
     },
   ];
-  const [currentBook, setCurrentBook] = useState(books[0]);
+  // const [currentBook, setCurrentBook] = useState(books[0]);
   // const [referenceFilter, setReferenceFilter] = useState("01001001");
 
   const [user, setUser] = useState();
@@ -557,7 +557,7 @@ export default function App() {
       ) : (
         <StudyScreen
           carousel={carousel}
-          currentBook={currentBook}
+          // currentBook={currentBook}
           favoriteRef={favoriteRef}
           fontFamily={fontFamily}
           fontSize={fontSize}
@@ -566,6 +566,7 @@ export default function App() {
           // setReferenceFilter={setReferenceFilter}
           setVerseList={setVerseList}
           studyToolBar={studyToolBar}
+          topPanel={topPanel}
           user={user}
           verseList={verseList}
           width={width}
@@ -591,13 +592,13 @@ export default function App() {
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
               books={books}
-              currentBook={currentBook}
+              // currentBook={currentBook}
               ref={topPanel}
               height={top - getBottomSpace()}
               width={width}
               paragraphBibleRef={paragraphBibleRef}
               searchHistoryRef={searchHistoryRef}
-              setCurrentBook={setCurrentBook}
+              // setCurrentBook={setCurrentBook}
               setVerseList={setVerseList}
               studyScreen={studyScreen}
             />
@@ -610,7 +611,7 @@ export default function App() {
                 bottomSheetRef={bottomSheetRef}
                 carousel={carousel}
                 // crossrefSize={crossrefSize}
-                currentBook={currentBook}
+                // currentBook={currentBook}
                 darkMode={darkMode}
                 fontFamily={fontFamily}
                 fontSize={fontSize}
@@ -618,7 +619,7 @@ export default function App() {
                 searchHistoryRef={searchHistoryRef}
                 setSettingsMode={setSettingsMode}
                 setVerseList={setVerseList}
-                setCurrentBook={setCurrentBook}
+                // setCurrentBook={setCurrentBook}
                 topPanel={topPanel}
                 verseList={verseList}
               />

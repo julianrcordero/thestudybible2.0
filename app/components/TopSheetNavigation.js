@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import AppText from "./Text";
 
@@ -12,29 +12,40 @@ import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import SearchHistory from "./SearchHistory";
 
-import bookPaths from "../json/bible/Bible"; //../json/bible/Bible";
+import bookPaths from "../json/bible/Bible";
 
-import reactStringReplace from "react-string-replace";
+// import reactStringReplace from "react-string-replace";
 
-const notesArray = JSON.parse(
-  JSON.stringify(require("../json/bible/esvmsb.notes.json"))
-)["crossway-studynotes"]["book"];
+// const notesArray = JSON.parse(
+//   JSON.stringify(require("../json/bible/esvmsb.notes.json"))
+// )["crossway-studynotes"]["book"];
 
-const crossrefsJsonObject = JSON.parse(
-  JSON.stringify(require("../json/bible/GenesisCrossrefs.json"))
-)["book"];
+// const crossrefsJsonObject = JSON.parse(
+//   JSON.stringify(require("../json/bible/GenesisCrossrefs.json"))
+// )["book"];
 
-class TopSheetNavigation extends PureComponent {
+class TopSheetNavigation extends Component {
   constructor(props) {
     super(props);
   }
 
   state = {
+    currentBook: {
+      label: "Genesis",
+      short: "Ge",
+      value: 1,
+      backgroundColor: "#FFFB79",
+      icon: "apps",
+    },
     pickerType: 0,
     collapsed: true,
   };
 
   close = () => this.setState({ collapsed: true });
+
+  componentDidMount() {
+    console.log("componentDidMount TopSheetNavigation");
+  }
 
   selectedPicker = () => {
     switch (this.state.pickerType) {
@@ -121,81 +132,84 @@ class TopSheetNavigation extends PureComponent {
   };
 
   changeBibleBook = (newBook) => {
-    if (this.props.currentBook !== newBook) {
-      // var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
-      // var bibleJsonObject = JSON.parse(bibleJsonString);
-      const chapters =
-        bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+    let currentBook = this.state.currentBook;
+    if (currentBook) {
+      if (currentBook !== newBook) {
+        // var bibleJsonString = JSON.stringify(bookPaths[newBook.label]);
+        // var bibleJsonObject = JSON.parse(bibleJsonString);
+        const chapters =
+          bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
 
-      this.props.paragraphBibleRef.current.setState({ sections: chapters }); //for normal Bible view
-      this.props.setCurrentBook(newBook);
-      //normal Bible view
-      // bookSections.push({
-      //   chapterNum: Number(chapter["_num"]),
-      //   title: Array.isArray(chapter["heading"])
-      //     ? chapter["heading"][0]
-      //     : chapter["heading"],
-      //   data: chapter["verse"],
-      // });
-      // });
+        this.props.paragraphBibleRef.current.setState({ sections: chapters }); //for normal Bible view
+        this.setState({ currentBook: newBook });
+        //normal Bible view
+        // bookSections.push({
+        //   chapterNum: Number(chapter["_num"]),
+        //   title: Array.isArray(chapter["heading"])
+        //     ? chapter["heading"][0]
+        //     : chapter["heading"],
+        //   data: chapter["verse"],
+        // });
+        // });
 
-      // let verses = [];
-      // let johnsNote = "";
-      // let crossrefs = "";
-      // const notes = notesArray[newBook.value - 1]["note"];
-      // const bookSections = [];
-      // chapters.map((chapter) => {
-      // chapter["verse"].forEach((verse) => {
-      //   let referenceCode =
-      //     ("00" + newBook.value).substr(-2) +
-      //     ("000" + chapter["_num"]).substr(-3) +
-      //     ("000" + verse["_num"]).substr(-3);
-      //   let noteCode = "n" + referenceCode;
-      //   let note = notes.find(
-      //     (el) =>
-      //       el["_start"] === noteCode && !el["_id"].includes("introduction")
-      //   );
-      //   if (note) {
-      //     const pTag = note["content"]["p"][0];
-      //     const parsedNote = pTag["__text"];
-      //     johnsNote = parsedNote;
-      //   } else {
-      //     johnsNote = "There is no note for this passage";
-      //   }
-      //   let crossrefList = crossrefsJsonObject["chapter"][
-      //     Number(chapter["_num"]) - 1
-      //   ]["verse"].find((el) => el["id"] === referenceCode);
-      //   if (crossrefList) {
-      //     crossrefs = crossrefList["letter"];
-      //   } else {
-      //     crossrefs = {
-      //       title: "",
-      //       text: "",
-      //     };
-      //   }
-      //   verses.push({
-      //     chapter: Number(chapter["_num"]),
-      //     title: Number(verse["_num"]),
-      //     content: verse["crossref"]
-      //       ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) =>
-      //           Array.isArray(verse["crossref"])
-      //             ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-      //             : verse["crossref"]["_let"]
-      //         )
-      //       : reactStringReplace(
-      //           verse["__text"],
-      //           /(\n)/g,
-      //           (match, i) => match
-      //         ),
-      //     johnsNote: johnsNote,
-      //     crossrefs: crossrefs,
-      //   });
-      // });
+        // let verses = [];
+        // let johnsNote = "";
+        // let crossrefs = "";
+        // const notes = notesArray[newBook.value - 1]["note"];
+        // const bookSections = [];
+        // chapters.map((chapter) => {
+        // chapter["verse"].forEach((verse) => {
+        //   let referenceCode =
+        //     ("00" + newBook.value).substr(-2) +
+        //     ("000" + chapter["_num"]).substr(-3) +
+        //     ("000" + verse["_num"]).substr(-3);
+        //   let noteCode = "n" + referenceCode;
+        //   let note = notes.find(
+        //     (el) =>
+        //       el["_start"] === noteCode && !el["_id"].includes("introduction")
+        //   );
+        //   if (note) {
+        //     const pTag = note["content"]["p"][0];
+        //     const parsedNote = pTag["__text"];
+        //     johnsNote = parsedNote;
+        //   } else {
+        //     johnsNote = "There is no note for this passage";
+        //   }
+        //   let crossrefList = crossrefsJsonObject["chapter"][
+        //     Number(chapter["_num"]) - 1
+        //   ]["verse"].find((el) => el["id"] === referenceCode);
+        //   if (crossrefList) {
+        //     crossrefs = crossrefList["letter"];
+        //   } else {
+        //     crossrefs = {
+        //       title: "",
+        //       text: "",
+        //     };
+        //   }
+        //   verses.push({
+        //     chapter: Number(chapter["_num"]),
+        //     title: Number(verse["_num"]),
+        //     content: verse["crossref"]
+        //       ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) =>
+        //           Array.isArray(verse["crossref"])
+        //             ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+        //             : verse["crossref"]["_let"]
+        //         )
+        //       : reactStringReplace(
+        //           verse["__text"],
+        //           /(\n)/g,
+        //           (match, i) => match
+        //         ),
+        //     johnsNote: johnsNote,
+        //     crossrefs: crossrefs,
+        //   });
+        // });
 
-      // this.props.setVerseList(verses);//for Study Screen
-      this.props.studyScreen.current.setState({
-        bookFilter: newBook.value,
-      });
+        // this.props.setVerseList(verses);//for Study Screen
+        // this.props.studyScreen.current.setState({
+        //   bookFilter: newBook.value,
+        // });
+      }
     }
   };
 

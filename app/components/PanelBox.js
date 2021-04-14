@@ -51,6 +51,11 @@ function ResourceBox({
       paddingVertical: 15,
       width: "100%",
     },
+    search: {
+      alignItems: "center",
+      aspectRatio: 0.8,
+      justifyContent: "center",
+    },
     titleText: {
       color: colors.text,
       fontWeight: "bold",
@@ -70,7 +75,7 @@ function ResourceBox({
               onPress={topRightOnPress}
               style={{ fontSize: 12 }}
             />
-            <TouchableOpacity style={styles.search} onPress={topRightOnPress}>
+            <TouchableOpacity style={myStyles.search} onPress={topRightOnPress}>
               <MaterialCommunityIcons
                 name={topRightIcon}
                 color={colors.icon}

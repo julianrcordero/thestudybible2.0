@@ -22,7 +22,7 @@ export const ThemeProvider = (props) => {
 
   // Listening to changes of device appearance while in run-time
   useEffect(() => {
-    console.log("useEffect colorScheme: ", colorScheme);
+    // console.log("useEffect colorScheme: ", colorScheme);
     setIsDark(colorScheme === "dark");
   }, [colorScheme]);
 

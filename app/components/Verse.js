@@ -38,7 +38,7 @@ export default class Verse extends PureComponent {
       verse,
       // searchWords,
       style,
-      // onPress,
+      onPress,
     } = this.props;
 
     styles = {
@@ -54,7 +54,7 @@ export default class Verse extends PureComponent {
     const isFirst = verse["_num"] === "1";
 
     return (
-      <Text onLongPress={this._toggleHighlight}>
+      <Text onPress={onPress} onLongPress={this._toggleHighlight}>
         <Text
           style={{
             fontWeight: "bold",

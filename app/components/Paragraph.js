@@ -74,7 +74,7 @@ export default class Paragraph extends PureComponent {
               key={j}
               // chapterNum={chapterNum}
               verse={data}
-              // onPress={() => onPress(chapterNum, j + 1)}
+              onPress={() => onPress(chapterNum, j + 1)}
               // searchWords={searchWords}
             />
           ))

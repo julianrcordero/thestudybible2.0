@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
@@ -11,16 +11,30 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "./Text";
 
-class BiblePicker extends PureComponent {
+class BiblePicker extends Component {
   constructor(props) {
     super(props);
   }
 
   state = {
+    currentBook: {
+      backgroundColor: "#345171",
+      icon: "apps",
+      label: "Genesis",
+      value: 1,
+    },
     pickerType: 0,
     collapsed: true,
     searchOn: false,
   };
+
+  componentDidMount() {
+    console.log("componentDidMount BiblePicker");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate");
+  }
 
   _toggleSettings = () => {
     this.props.setSettingsMode(true);
@@ -45,6 +59,11 @@ class BiblePicker extends PureComponent {
       ...currentSearchHistory.state.searchHistory,
     ];
     currentSearchHistory.setState({ searchHistory: newSearchHistory });
+  };
+
+  openPicker = () => {
+    this.props.topPanel.current.setState({ collapsed: false });
+    // console.log(this.props.topPanel.current.state.currentBook);
   };
 
   render() {
@@ -188,26 +207,25 @@ class BiblePicker extends PureComponent {
           ) : (
             <View style={{ flex: 1, flexDirection: "row", marginRight: 10 }}>
               <TouchableOpacity
-                onPress={() => topPanel.current.setState({ collapsed: false })}
+                onPress={this.openPicker} //() => console.log(topPanel.current.state.currentBook)} //
                 style={styles.reference}
               >
-                {currentBook ? (
-                  <AppText
-                    style={{
-                      color: colors.icon,
-                      fontFamily: fontFamily,
-                      fontSize: fontSize,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {
-                      currentBook.label + " " + currentChapter // +" : " +currentVerse
-                      // "Song of Solomon 1"
-                    }
-                  </AppText>
-                ) : (
+                {/* {topPanel.current.state.currentBook ? ( */}
+                <AppText
+                  style={{
+                    color: colors.icon,
+                    fontFamily: fontFamily,
+                    fontSize: fontSize,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {
+                    currentBook.label + " " + currentChapter // +" : " +currentVerse
+                  }
+                </AppText>
+                {/* ) : (
                   <AppText style={styles.placeholder}>{placeholder}</AppText>
-                )}
+                )} */}
                 <MaterialCommunityIcons
                   name="chevron-down"
                   size={24}

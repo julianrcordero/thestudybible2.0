@@ -93,6 +93,9 @@ export default class StudyScreen extends Component {
     let myUser = this.props.user;
     this.loadUserMarkup(this.props.user);
     this.setState({ user: myUser });
+    this.setState({
+      currentBook: this.props.topPanel.current.state.currentBook,
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {}
@@ -100,22 +103,22 @@ export default class StudyScreen extends Component {
   async loadUserMarkup(user) {
     const myMarkup = await userMarkup.getUserMarkup(user.sub);
     if (myMarkup) {
-      console.log("User markup loaded");
+      // console.log("User markup loaded");
       const data = myMarkup.data;
       let bookNotes = data.notes.filter(
         (n) =>
           n.refs[0].start_ref.toString().slice(0, -6) ==
-          this.props.currentBook.value.toString()
+          this.state.currentBook.value.toString()
       );
       let bookFavorites = data.favorites.filter(
         (n) =>
           n.start_ref.toString().slice(0, -6) ==
-          this.props.currentBook.value.toString()
+          this.state.currentBook.value.toString()
       );
       let bookHighlights = data.highlights.filter(
         (n) =>
           n.start_ref.toString().slice(0, -6) ==
-          this.props.currentBook.value.toString()
+          this.state.currentBook.value.toString()
       );
 
       this.setState({
@@ -123,7 +126,7 @@ export default class StudyScreen extends Component {
         currentFavorites: bookFavorites,
         currentHighlights: bookHighlights,
       });
-      console.log("User markup set in StudyScreen state");
+      // console.log("User markup set in StudyScreen state");
 
       // console.log(bookHighlights);
     }
@@ -140,8 +143,15 @@ export default class StudyScreen extends Component {
     currentFavorites: [],
     currentHighlights: [],
 
+    currentBook: {
+      label: "Genesis",
+      short: "Ge",
+      value: 1,
+      backgroundColor: "#FFFB79",
+      icon: "apps",
+    },
     currentReference: "1 : 1",
-    bookFilter: this.props.currentBook.value,
+    bookFilter: 1,
     referenceFilter: "001001",
     currentCrossrefs: [],
     currentJohnsNote: [],
@@ -251,7 +261,7 @@ export default class StudyScreen extends Component {
   render() {
     const {
       carousel,
-      currentBook,
+      // currentBook,
       favoriteRef,
       fontFamily,
       fontSize,
@@ -273,7 +283,7 @@ export default class StudyScreen extends Component {
             ></View>
           ) : ( */}
           <Reference
-            book={currentBook.label}
+            book={this.state.currentBook.label}
             reference={this.state.currentReference}
             fontFamily={fontFamily}
             fontSize={fontSize}

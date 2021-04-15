@@ -35,6 +35,7 @@ export default class BibleScreen extends Component {
 
   toggleSlideView = (chapter, verse) => {
     // this.props.setSettingsMode(false);
+    this.props.headerContentRef.current.setState({ settingsMode: false });
     this.props.bottomSheetContentRef.current.setState({ settingsMode: false });
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       let myIndex = this.props.verseList.findIndex(
@@ -57,6 +58,7 @@ export default class BibleScreen extends Component {
       carousel,
       colors,
       darkMode,
+      headerContentRef,
       HEADER_HEIGHT,
       scrollY,
       headerY,
@@ -73,6 +75,7 @@ export default class BibleScreen extends Component {
       <>
         <BibleScreenToolBar
           bottomSheetContentRef={bottomSheetContentRef}
+          headerContentRef={headerContentRef}
           HEADER_HEIGHT={HEADER_HEIGHT}
           headerY={headerY}
           currentBook={this.state.currentBook}

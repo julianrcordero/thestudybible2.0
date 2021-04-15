@@ -23,6 +23,7 @@ class BiblePicker extends Component {
   };
 
   _toggleSettings = () => {
+    this.props.headerContentRef.current.setState({ settingsMode: true });
     this.props.bottomSheetContentRef.current.setState({ settingsMode: true });
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {

@@ -34,6 +34,7 @@ export default function BibleScreenToolBar(props) {
         darkMode={props.darkMode}
         fontFamily={props.fontFamily}
         fontSize={props.fontSize}
+        headerContentRef={props.headerContentRef}
         HEADER_HEIGHT={props.HEADER_HEIGHT}
         paragraphBibleRef={props.paragraphBibleRef}
         // placeholder="Category"

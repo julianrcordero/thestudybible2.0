@@ -1,13 +1,47 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button, View, Text } from "react-native";
 import { useTheme } from "../config/ThemeProvider";
 import StudyToolBar from "./StudyToolBar";
 import { PureComponent } from "react";
 
+class HeaderContent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    settingsMode: false,
+  };
+
+  render() {
+    const { colors, favoriteRef, studyToolBar, studyScreen } = this.props;
+
+    return this.state.settingsMode ? (
+      <Text
+        style={{
+          color: colors.text,
+          fontSize: 20,
+          fontWeight: "bold",
+          paddingVertical: 7,
+        }}
+      >
+        Text Settings
+      </Text>
+    ) : (
+      <StudyToolBar
+        colors={colors}
+        favoriteRef={favoriteRef}
+        ref={studyToolBar}
+        studyScreen={studyScreen}
+      />
+    );
+  }
+}
+
 export default function BottomSheetHeader({
   bottomSheetContentRef,
   favoriteRef,
-  settingsMode,
+  headerContentRef,
   snapToZero,
   studyScreen,
   studyToolBar,
@@ -29,25 +63,14 @@ export default function BottomSheetHeader({
 
   return (
     <View style={[styles.header]}>
-      {bottomSheetContentRef.current.state.settingsMode ? (
-        <Text
-          style={{
-            color: colors.text,
-            fontSize: 20,
-            fontWeight: "bold",
-            paddingVertical: 7,
-          }}
-        >
-          Text Settings
-        </Text>
-      ) : (
-        <StudyToolBar
-          colors={colors}
-          favoriteRef={favoriteRef}
-          ref={studyToolBar}
-          studyScreen={studyScreen}
-        />
-      )}
+      <HeaderContent
+        bottomSheetContentRef={bottomSheetContentRef}
+        colors={colors}
+        favoriteRef={favoriteRef}
+        ref={headerContentRef}
+        studyToolBar={studyToolBar}
+        studyScreen={studyScreen}
+      />
       <Button
         title="Done"
         onPress={snapToZero}

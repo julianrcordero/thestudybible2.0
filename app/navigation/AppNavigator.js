@@ -37,6 +37,7 @@ const AppNavigator = (props) =>
       bottomSheetContentRef,
       carousel,
       // crossrefSize,
+      headerContentRef,
       paragraphBibleRef,
       searchHistoryRef,
       // setCurrentBook,
@@ -74,6 +75,7 @@ const AppNavigator = (props) =>
               // crossrefSize={crossrefSize}
               colors={colors}
               darkMode={isDark}
+              headerContentRef={headerContentRef}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
               paragraphBibleRef={paragraphBibleRef}

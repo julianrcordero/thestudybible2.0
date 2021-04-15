@@ -34,6 +34,7 @@ export default function App() {
   const bottomSheetContentRef = useRef();
   const carousel = useRef();
   const favoriteRef = useRef();
+  const headerContentRef = useRef();
   const paragraphBibleRef = useRef();
   const searchHistoryRef = useRef();
   const studyScreen = useRef();
@@ -525,6 +526,7 @@ export default function App() {
     <BottomSheetHeader
       bottomSheetContentRef={bottomSheetContentRef}
       favoriteRef={favoriteRef}
+      headerContentRef={headerContentRef}
       snapToZero={snapToZero}
       studyScreen={studyScreen}
       studyToolBar={studyToolBar}
@@ -583,6 +585,7 @@ export default function App() {
                 bottomSheetRef={bottomSheetRef}
                 bottomSheetContentRef={bottomSheetContentRef}
                 carousel={carousel}
+                headerContentRef={headerContentRef}
                 // crossrefSize={crossrefSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}

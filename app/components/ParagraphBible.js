@@ -14,7 +14,6 @@ class SectionHeader extends PureComponent {
   }
 
   render() {
-    // const { colors, isDark } = useTheme();
     return (
       <Text
         style={[
@@ -43,11 +42,6 @@ export default class ParagraphBible extends PureComponent {
   state = {
     sections: null,
   };
-
-  componentDidUpdate() {
-    // console.log("componentDidUpdate ParagraphBible");
-    // console.log("paragraphBible", this.props.fontSize);
-  }
 
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (this.state.sections !== nextState.sections) {

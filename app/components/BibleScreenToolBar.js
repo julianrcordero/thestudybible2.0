@@ -11,8 +11,6 @@ import AppText from "./Text";
 import SearchHistory from "./SearchHistory";
 
 export default function BibleScreenToolBar(props) {
-  // const [sliderVisible, setSliderVisible] = useState(false);
-  // const handleFontSize = () => setSliderVisible(!sliderVisible);
   const [historyVisible, setHistoryVisible] = useState(false);
 
   const { colors, isDark } = useTheme();
@@ -28,6 +26,7 @@ export default function BibleScreenToolBar(props) {
       }}
     >
       <BiblePicker
+        bottomSheetContentRef={props.bottomSheetContentRef}
         colors={colors}
         currentBook={props.currentBook}
         currentChapter={props.currentChapter}
@@ -41,7 +40,6 @@ export default function BibleScreenToolBar(props) {
         PickerItemComponent={BiblePickerItem}
         bottomSheetRef={props.bottomSheetRef}
         searchHistoryRef={props.searchHistoryRef}
-        setSettingsMode={props.setSettingsMode}
         setHistoryVisible={setHistoryVisible}
         topPanel={props.topPanel}
       />

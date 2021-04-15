@@ -43,10 +43,6 @@ class TopSheetNavigation extends Component {
 
   close = () => this.setState({ collapsed: true });
 
-  componentDidMount() {
-    console.log("componentDidMount TopSheetNavigation");
-  }
-
   selectedPicker = () => {
     switch (this.state.pickerType) {
       case 0:
@@ -132,6 +128,7 @@ class TopSheetNavigation extends Component {
   };
 
   changeBibleBook = (newBook) => {
+    console.log("changeBibleBook to", newBook.label);
     let currentBook = this.state.currentBook;
     if (currentBook) {
       if (currentBook !== newBook) {
@@ -141,6 +138,10 @@ class TopSheetNavigation extends Component {
           bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
 
         this.props.paragraphBibleRef.current.setState({ sections: chapters }); //for normal Bible view
+
+        let bibleScreen = this.props.bibleScreen;
+        if (bibleScreen.current)
+          bibleScreen.current.setState({ currentBook: newBook });
         this.setState({ currentBook: newBook });
         //normal Bible view
         // bookSections.push({
@@ -206,9 +207,11 @@ class TopSheetNavigation extends Component {
         // });
 
         // this.props.setVerseList(verses);//for Study Screen
-        // this.props.studyScreen.current.setState({
-        //   bookFilter: newBook.value,
-        // });
+        if (this.props.studyScreen.current)
+          this.props.studyScreen.current.setState({
+            bookFilter: newBook.value,
+            currentBook: newBook,
+          });
       }
     }
   };

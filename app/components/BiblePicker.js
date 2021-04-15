@@ -17,30 +17,16 @@ class BiblePicker extends Component {
   }
 
   state = {
-    currentBook: {
-      backgroundColor: "#345171",
-      icon: "apps",
-      label: "Genesis",
-      value: 1,
-    },
     pickerType: 0,
     collapsed: true,
     searchOn: false,
   };
 
-  componentDidMount() {
-    console.log("componentDidMount BiblePicker");
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
-  }
-
   _toggleSettings = () => {
-    this.props.setSettingsMode(true);
+    this.props.bottomSheetContentRef.current.setState({ settingsMode: true });
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
-        this.props.bottomSheetRef.current.snapTo(0);
+        this.props.bottomSheetRef.current.snapTo(1);
       });
     });
     () => interactionPromise.cancel();
@@ -63,7 +49,6 @@ class BiblePicker extends Component {
 
   openPicker = () => {
     this.props.topPanel.current.setState({ collapsed: false });
-    // console.log(this.props.topPanel.current.state.currentBook);
   };
 
   render() {
@@ -207,10 +192,9 @@ class BiblePicker extends Component {
           ) : (
             <View style={{ flex: 1, flexDirection: "row", marginRight: 10 }}>
               <TouchableOpacity
-                onPress={this.openPicker} //() => console.log(topPanel.current.state.currentBook)} //
+                onPress={this.openPicker}
                 style={styles.reference}
               >
-                {/* {topPanel.current.state.currentBook ? ( */}
                 <AppText
                   style={{
                     color: colors.icon,
@@ -223,9 +207,6 @@ class BiblePicker extends Component {
                     currentBook.label + " " + currentChapter // +" : " +currentVerse
                   }
                 </AppText>
-                {/* ) : (
-                  <AppText style={styles.placeholder}>{placeholder}</AppText>
-                )} */}
                 <MaterialCommunityIcons
                   name="chevron-down"
                   size={24}

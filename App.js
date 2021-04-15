@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
@@ -12,7 +12,6 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 
 import Screen from "./app/components/Screen";
-import StudyScreen from "./app/screens/StudyScreen";
 
 import ReanimatedBottomSheet from "reanimated-bottom-sheet";
 import { enableScreens } from "react-native-screens";
@@ -21,8 +20,8 @@ import { getBottomSpace } from "react-native-iphone-x-helper";
 import Constants from "expo-constants";
 
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
-import { SettingsScreen } from "./app/screens/SettingsScreen";
 import BottomSheetHeader from "./app/components/BottomSheetHeader";
+import BottomSheetContent from "./app/components/BottomSheetContent";
 import useAuth from "./app/auth/useAuth";
 const { height, width } = Dimensions.get("window");
 
@@ -30,22 +29,17 @@ const { height, width } = Dimensions.get("window");
 export default function App() {
   const top = height - Constants.statusBarHeight;
 
-  const [fontSize, setFontSize] = useState(16);
-  const [fontFamily, setFontFamily] = useState("Avenir");
-  const [formatting, setFormatting] = useState("Default");
-  const [darkMode, setDarkMode] = useState(true);
-
-  const topPanel = useRef();
-  const searchHistoryRef = useRef();
-  const carousel = useRef();
-  const paragraphBibleRef = useRef();
+  const bibleScreen = useRef();
   const bottomSheetRef = useRef();
-  const studyToolBar = useRef();
-  const highlightRef = useRef();
+  const bottomSheetContentRef = useRef();
+  const carousel = useRef();
   const favoriteRef = useRef();
+  const paragraphBibleRef = useRef();
+  const searchHistoryRef = useRef();
   const studyScreen = useRef();
+  const studyToolBar = useRef();
+  const topPanel = useRef();
 
-  const [settingsMode, setSettingsMode] = useState(false);
   const [verseList, setVerseList] = useState([]);
 
   const books = [
@@ -512,8 +506,6 @@ export default function App() {
       icon: "apps",
     },
   ];
-  // const [currentBook, setCurrentBook] = useState(books[0]);
-  // const [referenceFilter, setReferenceFilter] = useState("01001001");
 
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState();
@@ -526,13 +518,13 @@ export default function App() {
   };
 
   const snapToZero = () => {
-    bottomSheetRef.current.snapTo(1);
+    bottomSheetRef.current.snapTo(2);
   };
 
   const bottomSheetHeader = () => (
     <BottomSheetHeader
+      bottomSheetContentRef={bottomSheetContentRef}
       favoriteRef={favoriteRef}
-      settingsMode={settingsMode}
       snapToZero={snapToZero}
       studyScreen={studyScreen}
       studyToolBar={studyToolBar}
@@ -540,40 +532,21 @@ export default function App() {
   );
 
   const bottomSheetContent = () => (
-    <Screen flex={0}>
-      {/* <View style={{ backgroundColor: "red", height: "100%" }}> */}
-      {settingsMode ? (
-        <SettingsScreen
-          fontFamily={fontFamily}
-          fontSize={fontSize}
-          formatting={formatting}
-          top={top}
-          paragraphBibleRef={paragraphBibleRef}
-          setFontSize={setFontSize}
-          setFontFamily={setFontFamily}
-          setFormatting={setFormatting}
-          setDarkMode={setDarkMode}
-        />
-      ) : (
-        <StudyScreen
-          carousel={carousel}
-          // currentBook={currentBook}
-          favoriteRef={favoriteRef}
-          fontFamily={fontFamily}
-          fontSize={fontSize}
-          ref={studyScreen}
-          // referenceFilter={referenceFilter}
-          // setReferenceFilter={setReferenceFilter}
-          setVerseList={setVerseList}
-          studyToolBar={studyToolBar}
-          topPanel={topPanel}
-          user={user}
-          verseList={verseList}
-          width={width}
-        />
-      )}
-      {/* </View> */}
-    </Screen>
+    <BottomSheetContent
+      bibleScreen={bibleScreen}
+      carousel={carousel}
+      favoriteRef={favoriteRef}
+      paragraphBibleRef={paragraphBibleRef}
+      ref={bottomSheetContentRef}
+      setVerseList={setVerseList}
+      studyScreen={studyScreen}
+      studyToolBar={studyToolBar}
+      top={top}
+      topPanel={topPanel}
+      user={user}
+      verseList={verseList}
+      width={width}
+    />
   );
 
   if (!isReady)
@@ -591,14 +564,13 @@ export default function App() {
         <AuthContext.Provider value={{ user, setUser }}>
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
+              bibleScreen={bibleScreen}
               books={books}
-              // currentBook={currentBook}
               ref={topPanel}
               height={top - getBottomSpace()}
               width={width}
               paragraphBibleRef={paragraphBibleRef}
               searchHistoryRef={searchHistoryRef}
-              // setCurrentBook={setCurrentBook}
               setVerseList={setVerseList}
               studyScreen={studyScreen}
             />
@@ -607,40 +579,23 @@ export default function App() {
           <Screen>
             <NavigationContainer ref={navigationRef}>
               <AppNavigator
-                formatting={formatting}
+                bibleScreen={bibleScreen}
                 bottomSheetRef={bottomSheetRef}
+                bottomSheetContentRef={bottomSheetContentRef}
                 carousel={carousel}
                 // crossrefSize={crossrefSize}
-                // currentBook={currentBook}
-                darkMode={darkMode}
-                fontFamily={fontFamily}
-                fontSize={fontSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
-                setSettingsMode={setSettingsMode}
                 setVerseList={setVerseList}
-                // setCurrentBook={setCurrentBook}
                 topPanel={topPanel}
                 verseList={verseList}
               />
             </NavigationContainer>
           </Screen>
-          {/* <View
-          style={{
-            backgroundColor: colors.light,
-            bottom: -useSafeAreaInsets().bottom,
-            height: useSafeAreaInsets().bottom,
-            position: "relative",
-          }}
-        ></View> */}
 
           <ReanimatedBottomSheet
             ref={bottomSheetRef}
-            snapPoints={[
-              top,
-              // "40%",
-              "0%",
-            ]}
+            snapPoints={[top, "45%", "0%"]}
             initialSnap={1}
             renderHeader={bottomSheetHeader}
             renderContent={bottomSheetContent}

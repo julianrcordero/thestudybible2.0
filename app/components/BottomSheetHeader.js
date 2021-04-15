@@ -5,6 +5,7 @@ import StudyToolBar from "./StudyToolBar";
 import { PureComponent } from "react";
 
 export default function BottomSheetHeader({
+  bottomSheetContentRef,
   favoriteRef,
   settingsMode,
   snapToZero,
@@ -28,7 +29,7 @@ export default function BottomSheetHeader({
 
   return (
     <View style={[styles.header]}>
-      {settingsMode ? (
+      {bottomSheetContentRef.current.state.settingsMode ? (
         <Text
           style={{
             color: colors.text,

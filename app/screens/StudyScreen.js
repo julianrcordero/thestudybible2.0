@@ -93,8 +93,11 @@ export default class StudyScreen extends Component {
     let myUser = this.props.user;
     this.loadUserMarkup(this.props.user);
     this.setState({ user: myUser });
+
+    let currentBook = this.props.topPanel.current.state.currentBook;
+    console.log("setting StudyScreen to", currentBook.label);
     this.setState({
-      currentBook: this.props.topPanel.current.state.currentBook,
+      currentBook: currentBook,
     });
   }
 

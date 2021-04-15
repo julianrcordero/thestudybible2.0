@@ -29,21 +29,17 @@ const AppNavigator = (props) =>
   // { user }
   {
     useNotifications();
-    const { colors } = useTheme();
+    const { colors, isDark } = useTheme();
 
     const {
+      bibleScreen,
       bottomSheetRef,
+      bottomSheetContentRef,
       carousel,
       // crossrefSize,
-      // currentBook,
-      darkMode,
-      fontFamily,
-      fontSize,
-      formatting,
       paragraphBibleRef,
       searchHistoryRef,
       // setCurrentBook,
-      setSettingsMode,
       setVerseList,
       titleSize,
       topPanel,
@@ -56,13 +52,13 @@ const AppNavigator = (props) =>
         swipeEnabled
         tabBar={(props) => <MyTabBar {...props} />}
         tabBarOptions={{
-          darkMode: darkMode,
+          darkMode: isDark,
         }}
       >
         <Tab.Screen
           name="Home"
           // component={FeedNavigator}
-          children={() => <FeedNavigator darkMode={darkMode} />}
+          children={() => <FeedNavigator darkMode={isDark} />}
           options={{
             tabBarIcon: "home",
           }}
@@ -72,22 +68,18 @@ const AppNavigator = (props) =>
           name="Bible"
           children={() => (
             <BibleScreen
-              formatting={formatting}
               bottomSheetRef={bottomSheetRef}
+              bottomSheetContentRef={bottomSheetContentRef}
               carousel={carousel}
               // crossrefSize={crossrefSize}
-              // currentBook={currentBook}
               colors={colors}
-              darkMode={darkMode}
+              darkMode={isDark}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
-              fontFamily={fontFamily}
-              fontSize={fontSize}
               paragraphBibleRef={paragraphBibleRef}
+              ref={bibleScreen}
               scrollY={scrollY}
               searchHistoryRef={searchHistoryRef}
-              // setCurrentBook={setCurrentBook}
-              setSettingsMode={setSettingsMode}
               setVerseList={setVerseList}
               titleSize={titleSize}
               topPanel={topPanel}

@@ -43,11 +43,19 @@ export default class ParagraphBible extends PureComponent {
   state = {
     sections: null,
   };
-  // chapterNum: Number(chapter["_num"]),
-  // title: Array.isArray(chapter["heading"])
-  //   ? chapter["heading"][0]
-  //   : chapter["heading"],
-  // data: chapter["verse"],
+
+  componentDidUpdate() {
+    // console.log("componentDidUpdate ParagraphBible");
+    // console.log("paragraphBible", this.props.fontSize);
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.sections !== nextState.sections) {
+  //     console.log("sections changed");
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
@@ -76,12 +84,6 @@ export default class ParagraphBible extends PureComponent {
 
   keyExtractor = (item) => item["_num"];
 
-  // getItemLayout = (data, index) => ({
-  //   length: this.props.width,
-  //   offset: this.props.width * index,
-  //   index,
-  // });
-
   render() {
     const { colors, HEADER_HEIGHT, scrollY } = this.props;
 
@@ -96,7 +98,6 @@ export default class ParagraphBible extends PureComponent {
       <AnimatedFlatList
         bounces={false}
         data={this.state.sections}
-        // extra={this.props.fontSize}
         initialNumToRender={1}
         keyExtractor={this.keyExtractor}
         maxToRenderPerBatch={3}
@@ -118,21 +119,6 @@ export default class ParagraphBible extends PureComponent {
         ]}
         updateCellsBatchingPeriod={150}
         windowSize={3}
-
-        // initialNumToRender={5}
-        // keyExtractor={this.keyExtractor}
-        // maxToRenderPerBatch={3}
-        // onViewableItemsChanged={this.onViewRef}
-        // ref={carousel}
-        // removeClippedSubviews
-        // renderItem={this.renderVerseCardItem}
-        // // scrollEventThrottle={16}
-        // showsHorizontalScrollIndicator={false}
-        // snapToAlignment={"center"}
-        // snapToInterval={width}
-        // updateCellsBatchingPeriod={25}
-        // viewabilityConfig={this.viewConfigRef}
-        // windowSize={11}
       />
     );
   }

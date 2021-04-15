@@ -47,12 +47,7 @@ const styles = StyleSheet.create({
     // borderColor: colors.white,
     justifyContent: "center",
   },
-  text: {
-    // padding: 15,
-    // flexShrink: 1,
-    // fontSize: RFPercentage(1),
-    // fontSize: 20,
-  },
+  text: {},
 });
 
 export default BiblePickerItem;

@@ -20,7 +20,6 @@ function AppButton({
       borderRadius: 5,
       height: 40,
       justifyContent: "center",
-      // paddingVertical: 8,
       // paddingHorizontal: 16,
       width: "100%",
       // marginLeft: 5,

@@ -40,7 +40,7 @@ function Reference({ book, fontFamily, fontSize, reference }) {
   return <AppText style={myStyle}>{book + " " + reference}</AppText>;
 }
 
-const goToVerse = () => {};
+const goToVerse = () => console.log("Clicked a verse");
 
 class VerseHyperlink extends PureComponent {
   constructor(props) {
@@ -49,7 +49,7 @@ class VerseHyperlink extends PureComponent {
 
   styles = {
     verseLink: {
-      color: "#00aeef",
+      color: "#007AFF",
     },
   };
 
@@ -57,7 +57,7 @@ class VerseHyperlink extends PureComponent {
     const { cr } = this.props;
     return (
       <TouchableOpacity onPress={goToVerse}>
-        <AppText style={this.styles.verseLink}>{cr["text"] + ",\t\t"}</AppText>
+        <Text style={this.styles.verseLink}>{cr["text"] + ",\t\t"}</Text>
       </TouchableOpacity>
     );
   }
@@ -67,7 +67,13 @@ function CrossRef({ myObject }) {
   const { colors } = useTheme();
 
   return (
-    <View style={{ flexDirection: "row", paddingVertical: 10 }}>
+    <View
+      style={{
+        alignItems: "center",
+        flexDirection: "row",
+        paddingBottom: 12.5,
+      }}
+    >
       <AppText style={{ color: colors.text }}>
         {myObject["title"] + "\t"}
       </AppText>
@@ -84,7 +90,7 @@ function CrossRef({ myObject }) {
   );
 }
 
-export default class StudyScreen extends PureComponent {
+export default class StudyScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -119,7 +125,10 @@ export default class StudyScreen extends PureComponent {
   componentDidMount() {
     let myUser = this.props.user;
     this.loadUserMarkup(this.props.user);
-    this.setState({ user: myUser });
+    if (!this.state.user) {
+      this.setState({ user: myUser });
+      console.log("just set user");
+    }
 
     let currentBook = this.props.topPanel.current.state.currentBook;
     console.log(
@@ -127,19 +136,19 @@ export default class StudyScreen extends PureComponent {
       currentBook.label,
       "(StudyScreen.js)"
     );
-    this.setState({
-      currentBook: currentBook,
-    });
+    console.log(this.state.currentBook.label, "->", currentBook.label);
+    if (this.state.currentBook.label !== currentBook.label) {
+      this.setState({
+        currentBook: currentBook,
+      });
+      console.log("changed currentBook");
+      this.props.topPanel.current.changeStudyScreenBook(currentBook);
+    }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  // console.log(this.state.verseList.length, "items in StudyScreen list");
-
-  // if (prevState.bookFilter !== this.state.bookFilter)
-  //   console.log(this.state.bookFilter);
-  //referenceFilter
-  //bookFilter
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
 
   async loadUserMarkup(user) {
     const myMarkup = await userMarkup.getUserMarkup(user.sub);
@@ -273,10 +282,10 @@ export default class StudyScreen extends PureComponent {
   };
 
   render() {
-    const { carousel, favoriteRef, width } = this.props;
+    const { carousel, favoriteRef, height, width } = this.props;
 
     return (
-      <View style={{ height: "100%" }}>
+      <View style={{ minHeight: height }}>
         <View
           style={[
             this.styles.referenceBox,
@@ -285,26 +294,12 @@ export default class StudyScreen extends PureComponent {
             },
           ]}
         >
-          {/* {this.state.colorPaletteVisible ? (
-            <View
-              style={{
-                backgroundColor: "black",
-                height: 24,
-                width: 100,
-              }}
-            ></View>
-          ) : ( */}
           <Reference
             book={this.state.currentBook.label}
             reference={this.state.currentReference}
             fontFamily={this.state.fontFamily}
             fontSize={this.state.fontSize}
           />
-          {/* <AppButton
-            onPress={() => this.loadUserMarkup(this.state.user)}
-            title={"Reload user data"}
-            style={{ width: 100 }}
-          ></AppButton> */}
           <Favorite
             currentFavorites={this.state.currentFavorites}
             favorite={this.state.currentFavorites.find(
@@ -316,7 +311,7 @@ export default class StudyScreen extends PureComponent {
             user={this.state.user}
           />
         </View>
-        <View style={{ flexShrink: 1 }}>
+        <View style={{ minHeight: this.state.fontSize * 3 }}>
           <FlatList
             bounces={false}
             data={this.state.verseList}
@@ -340,9 +335,11 @@ export default class StudyScreen extends PureComponent {
             windowSize={11}
           />
         </View>
+
         <View
           style={{
             marginHorizontal: 30,
+            marginVertical: 12.5,
           }}
         >
           {Array.isArray(this.state.currentCrossrefs) ? (
@@ -362,6 +359,7 @@ export default class StudyScreen extends PureComponent {
           )}
           referenceFilter={this.state.referenceFilter}
           setCurrentNotes={this.setCurrentNotes}
+          // style={{ minHeight: 400 }}
         ></PanelBox>
       </View>
     );

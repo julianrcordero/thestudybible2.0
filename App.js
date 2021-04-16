@@ -537,6 +537,7 @@ export default function App() {
       carousel={carousel}
       favoriteRef={favoriteRef}
       paragraphBibleRef={paragraphBibleRef}
+      height={top - getBottomSpace() - 40}
       ref={bottomSheetContentRef}
       studyScreen={studyScreen}
       studyToolBar={studyToolBar}

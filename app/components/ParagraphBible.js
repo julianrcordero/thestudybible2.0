@@ -91,7 +91,7 @@ export default class ParagraphBible extends Component {
     const styles = {
       bibleTextView: {
         backgroundColor: colors.background,
-        paddingHorizontal: 25,
+        paddingHorizontal: 30,
       },
     };
 

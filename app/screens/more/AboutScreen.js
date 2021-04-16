@@ -51,7 +51,6 @@ function ResourceScreen({ route }) {
     title: {
       fontSize: 22,
       fontWeight: "bold",
-      // paddingVertical: 10,
     },
     transcript: {
       // fontSize: 20,

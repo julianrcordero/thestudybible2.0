@@ -29,8 +29,13 @@ export default class BibleScreen extends Component {
 
   componentDidMount() {
     let currentBook = this.state.currentBook;
-    console.log("setting BibleScreen to", currentBook.label);
+    console.log(
+      "setting BibleScreen to",
+      currentBook.label,
+      "(BibleScreen.js)"
+    );
     this.props.topPanel.current.changeBibleBook(currentBook);
+    // this.props.topPanel.current.changeStudyScreenBook(currentBook);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -47,6 +52,9 @@ export default class BibleScreen extends Component {
     } else if (this.state.fontSize !== nextState.fontSize) {
       return true;
     } else if (this.state.fontFamily !== nextState.fontFamily) {
+      return true;
+    } else if (this.props.headerY !== nextProps.headerY) {
+      console.log("scrollY different");
       return true;
     }
     return false;
@@ -95,6 +103,7 @@ export default class BibleScreen extends Component {
       <>
         <BibleScreenToolBar
           bottomSheetContentRef={bottomSheetContentRef}
+          colors={colors}
           headerContentRef={headerContentRef}
           HEADER_HEIGHT={HEADER_HEIGHT}
           headerY={headerY}

@@ -43,10 +43,10 @@ function ResourceBox({
       marginRight: 5,
       width: 30,
     },
-    panelBox: {
+    resourceBox: {
       borderColor: colors.border,
       borderWidth: 0.3,
-      marginVertical: 12.5,
+      marginBottom: 25,
       paddingHorizontal: 20,
       paddingVertical: 15,
       width: "100%",
@@ -64,7 +64,7 @@ function ResourceBox({
   };
 
   return (
-    <View style={myStyles.panelBox}>
+    <View style={myStyles.resourceBox}>
       <View style={myStyles.header}>
         {image ? <Image style={myStyles.image} source={image}></Image> : null}
         <AppText style={myStyles.titleText}>{title}</AppText>
@@ -114,6 +114,7 @@ export default function PanelBox({
   notes,
   referenceFilter,
   setCurrentNotes,
+  style,
 }) {
   const { user, logOut } = useAuth();
   const { colors } = useTheme();
@@ -135,7 +136,7 @@ export default function PanelBox({
   };
 
   return (
-    <View style={{ paddingHorizontal: 25 }}>
+    <View style={[style, { paddingHorizontal: 30 }]}>
       <ResourceBox
         colors={colors}
         title={"My Notes"}

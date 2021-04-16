@@ -16,6 +16,7 @@ class BottomSheetContent extends Component {
   render() {
     const {
       bibleScreen,
+      height,
       top,
       paragraphBibleRef,
       carousel,
@@ -40,6 +41,7 @@ class BottomSheetContent extends Component {
         <StudyScreen
           carousel={carousel}
           favoriteRef={favoriteRef}
+          height={height}
           ref={studyScreen}
           // referenceFilter={referenceFilter}
           // setReferenceFilter={setReferenceFilter}

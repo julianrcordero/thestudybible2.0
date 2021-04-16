@@ -54,7 +54,6 @@ function ResourceScreen({ route }) {
       color: colors.text,
       fontSize: 22,
       fontWeight: "bold",
-      // paddingVertical: 10,
     },
     transcript: {
       // fontSize: 20,

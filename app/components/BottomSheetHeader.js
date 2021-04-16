@@ -56,7 +56,7 @@ export default function BottomSheetHeader({
       flexDirection: "row",
       height: 40,
       justifyContent: "space-between",
-      paddingHorizontal: 15,
+      paddingHorizontal: 20,
       width: "100%",
     },
   };

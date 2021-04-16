@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import reactStringReplace from "react-string-replace";
 import VerseFormatted from "./VerseFormatted";
 
-export default class Verse extends PureComponent {
+export default class Verse extends Component {
   constructor(props) {
     super(props);
 
@@ -29,15 +29,20 @@ export default class Verse extends PureComponent {
   //     this.setState({ textDecorationLine: "none" });
   //   }
   // };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.verse !== nextProps.verse) {
+      return true;
+    } else if (this.state.backgroundColor !== nextState.backgroundColor) {
+      return true;
+    }
+    return false;
+  }
 
   render() {
     const {
-      // chapterNum,
-      // crossrefSize,
       // focusedVerse,
       verse,
       // searchWords,
-      style,
       onPress,
     } = this.props;
 
@@ -72,9 +77,7 @@ export default class Verse extends PureComponent {
             // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
           }}
         >
-          <Text>
-            <VerseFormatted verse={verse} crossrefSize={12} />
-          </Text>
+          <VerseFormatted verse={verse} crossrefSize={12} />
         </Text>
         {/* <HighlightComponent
           highlightStyle={{ backgroundColor: "red" }}

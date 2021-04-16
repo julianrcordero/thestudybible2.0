@@ -41,8 +41,6 @@ export default function App() {
   const studyToolBar = useRef();
   const topPanel = useRef();
 
-  const [verseList, setVerseList] = useState([]);
-
   const books = [
     {
       label: "Genesis",
@@ -540,13 +538,11 @@ export default function App() {
       favoriteRef={favoriteRef}
       paragraphBibleRef={paragraphBibleRef}
       ref={bottomSheetContentRef}
-      setVerseList={setVerseList}
       studyScreen={studyScreen}
       studyToolBar={studyToolBar}
       top={top}
       topPanel={topPanel}
       user={user}
-      verseList={verseList}
       width={width}
     />
   );
@@ -573,7 +569,6 @@ export default function App() {
               width={width}
               paragraphBibleRef={paragraphBibleRef}
               searchHistoryRef={searchHistoryRef}
-              setVerseList={setVerseList}
               studyScreen={studyScreen}
             />
           </Screen>
@@ -589,9 +584,8 @@ export default function App() {
                 // crossrefSize={crossrefSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
-                setVerseList={setVerseList}
+                studyScreen={studyScreen}
                 topPanel={topPanel}
-                verseList={verseList}
               />
             </NavigationContainer>
           </Screen>

@@ -1,12 +1,9 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import { FlatList, Text } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useTheme } from "../config/ThemeProvider";
-
 import defaultStyles from "../config/styles";
 import Paragraph from "./Paragraph";
-import AppText from "./Text";
 
 class SectionHeader extends PureComponent {
   constructor(props) {
@@ -34,22 +31,34 @@ class SectionHeader extends PureComponent {
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedSectionHeader = Animated.createAnimatedComponent(SectionHeader);
 
-export default class ParagraphBible extends PureComponent {
+export default class ParagraphBible extends Component {
   constructor(props) {
     super(props);
   }
 
   state = {
-    sections: null,
+    sections: [],
   };
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.sections !== nextState.sections) {
-  //     console.log("sections changed");
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  componentDidUpdate() {
+    console.log("ParagraphBible.js updated");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.fontFamily !== nextProps.fontFamily) {
+      console.log("fontFamily changed (ParagraphBible.js)");
+      return true;
+    } else if (this.props.fontSize !== nextProps.fontSize) {
+      console.log("fontFamily changed (ParagraphBible.js)");
+      return true;
+    } else if (this.state.sections !== nextState.sections) {
+      //(this.state.sections.length !== nextState.sections.length) {
+      return true;
+    } else if (this.props.colors !== nextProps.colors) {
+      return true;
+    }
+    return false;
+  }
 
   renderParagraphItem = ({ item, i }) => (
     <React.Fragment key={i}>
@@ -57,13 +66,11 @@ export default class ParagraphBible extends PureComponent {
         colors={this.props.colors}
         title={
           Array.isArray(item["heading"]) ? item["heading"][0] : item["heading"]
-          // item.title
         }
         titleSize={this.props.fontSize * 1.5}
       />
-      {/* <AppText>{item.chapterNum}</AppText> */}
       <Paragraph
-        chapterNum={Number(item["_num"])} //item.chapterNum}
+        chapterNum={Number(item["_num"])}
         colors={this.props.colors}
         fontFamily={this.props.fontFamily}
         fontSize={this.props.fontSize}

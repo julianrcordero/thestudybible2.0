@@ -5,7 +5,7 @@ import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeProvider";
 import AppText from "./Text";
 
-export default class Paragraph extends PureComponent {
+export default class Paragraph extends Component {
   constructor(props) {
     super(props);
   }
@@ -27,13 +27,33 @@ export default class Paragraph extends PureComponent {
   componentDidUpdate(prevProps, prevState) {
     // console.log("paragraph", this.props.fontSize);
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props.section !== nextProps.section) {
-  //     console.log("section changed");
-  //     return true;
-  //   }
-  //   return false;
-  // }
+
+  // chapterNum={Number(item["_num"])} //item.chapterNum}
+
+  // colors={this.props.colors}
+  // fontFamily={this.props.fontFamily}
+  // fontSize={this.props.fontSize}
+  // formatting={this.props.formatting}
+  // section={item["verse"]}
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Paragraph.js updated");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.section !== nextProps.section) {
+      return true;
+    } else if (this.props.colors !== nextProps.colors) {
+      return true;
+    } else if (this.props.fontFamily !== nextProps.fontFamily) {
+      return true;
+    } else if (this.props.fontSize !== nextProps.fontSize) {
+      return true;
+    } else if (this.props.formatting !== nextProps.formatting) {
+      return true;
+    }
+    return false;
+  }
 
   render() {
     const {

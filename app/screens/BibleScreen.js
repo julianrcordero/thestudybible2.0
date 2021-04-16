@@ -33,20 +33,42 @@ export default class BibleScreen extends Component {
     this.props.topPanel.current.changeBibleBook(currentBook);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentBook !== this.state.currentBook) {
+      this.props.topPanel.current.changeStudyScreenBook(this.state.currentBook);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.currentBook !== nextState.currentBook) {
+      return true;
+    } else if (this.props.colors !== nextProps.colors) {
+      return true;
+    } else if (this.state.fontSize !== nextState.fontSize) {
+      return true;
+    } else if (this.state.fontFamily !== nextState.fontFamily) {
+      return true;
+    }
+    return false;
+  }
+
   toggleSlideView = (chapter, verse) => {
-    // this.props.setSettingsMode(false);
     this.props.headerContentRef.current.setState({ settingsMode: false });
     this.props.bottomSheetContentRef.current.setState({ settingsMode: false });
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      let myIndex = this.props.verseList.findIndex(
+      let myIndex = this.props.studyScreen.current.state.verseList.findIndex(
         (obj) => obj.chapter === chapter && obj.title === verse
       );
+
+      // this.props.verseList.findIndex(
+      //   (obj) => obj.chapter === chapter && obj.title === verse
+      // );
       setTimeout(() => {
         this.props.bottomSheetRef.current.snapTo(0);
-        // this.props.carousel.current.scrollToIndex({
-        //   animated: false,
-        //   index: myIndex,
-        // });
+        this.props.carousel.current.scrollToIndex({
+          animated: false,
+          index: myIndex,
+        });
       });
     });
     () => interactionPromise.cancel();
@@ -66,9 +88,7 @@ export default class BibleScreen extends Component {
       bottomSheetRef,
       paragraphBibleRef,
       searchHistoryRef,
-      sections,
       topPanel,
-      verseList,
     } = this.props;
 
     return (
@@ -99,6 +119,7 @@ export default class BibleScreen extends Component {
           ref={paragraphBibleRef}
           scrollY={scrollY}
           toggleSlideView={this.toggleSlideView}
+          topPanel={topPanel}
         />
       </>
     );

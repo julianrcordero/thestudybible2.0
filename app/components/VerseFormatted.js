@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
 
 import reactStringReplace from "react-string-replace";
-import { useTheme } from "../config/ThemeProvider";
 
 const myReplace = () => {
   reactStringReplace(verse["__text"], /(\n)/g, (match, i) => (

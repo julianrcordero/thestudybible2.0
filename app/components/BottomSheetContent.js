@@ -21,11 +21,9 @@ class BottomSheetContent extends Component {
       carousel,
       favoriteRef,
       studyScreen,
-      setVerseList,
       studyToolBar,
       topPanel,
       user,
-      verseList,
       width,
     } = this.props;
 
@@ -34,26 +32,22 @@ class BottomSheetContent extends Component {
         {this.state.settingsMode ? (
           <SettingsScreen
             bibleScreen={bibleScreen}
+            studyScreen={studyScreen}
             top={top}
             paragraphBibleRef={paragraphBibleRef}
           />
-        ) : (
-          <StudyScreen
-            carousel={carousel}
-            favoriteRef={favoriteRef}
-            fontFamily={"Avenir"}
-            fontSize={16}
-            ref={studyScreen}
-            // referenceFilter={referenceFilter}
-            // setReferenceFilter={setReferenceFilter}
-            setVerseList={setVerseList}
-            studyToolBar={studyToolBar}
-            topPanel={topPanel}
-            user={user}
-            verseList={verseList}
-            width={width}
-          />
-        )}
+        ) : null}
+        <StudyScreen
+          carousel={carousel}
+          favoriteRef={favoriteRef}
+          ref={studyScreen}
+          // referenceFilter={referenceFilter}
+          // setReferenceFilter={setReferenceFilter}
+          studyToolBar={studyToolBar}
+          topPanel={topPanel}
+          user={user}
+          width={width}
+        />
       </Screen>
     );
   }

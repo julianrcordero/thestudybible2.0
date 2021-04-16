@@ -58,7 +58,12 @@ export default function ChaptersGridScreen({
         changeBook(route.params.title, item.title, route.params.value)
       }
     >
-      <BiblePickerItem item={item} label={item.short} flex={1 / 7} />
+      <BiblePickerItem
+        item={item}
+        label={item.short}
+        flex={1 / 7}
+        textColor={colors.text}
+      />
     </TouchableOpacity>
   );
 

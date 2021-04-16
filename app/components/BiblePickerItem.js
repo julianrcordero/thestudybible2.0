@@ -7,6 +7,15 @@ class BiblePickerItem extends PureComponent {
     super(props);
   }
 
+  styles = {
+    container: {
+      alignItems: "center",
+      // borderColor: colors.white,
+      justifyContent: "center",
+    },
+    text: { color: this.props.textColor },
+  };
+
   render() {
     const {
       aspectRatio = 1,
@@ -21,7 +30,7 @@ class BiblePickerItem extends PureComponent {
     return (
       <View
         style={[
-          styles.container,
+          this.styles.container,
           {
             backgroundColor: item.backgroundColor,
             borderWidth,
@@ -32,22 +41,10 @@ class BiblePickerItem extends PureComponent {
           },
         ]}
       >
-        <AppText style={styles.text}>
-          {/* {"A"} */}
-          {label}
-        </AppText>
+        <AppText style={this.styles.text}>{label}</AppText>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    // borderColor: colors.white,
-    justifyContent: "center",
-  },
-  text: {},
-});
 
 export default BiblePickerItem;

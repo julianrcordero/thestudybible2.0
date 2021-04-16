@@ -567,6 +567,7 @@ export default function BooksListScreen({
             label={section.label}
             aspectRatio={5}
             width={buttonWidth}
+            textColor={colors.text}
           />
         )}
       </View>

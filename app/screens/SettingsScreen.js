@@ -18,27 +18,37 @@ import Slider from "@react-native-community/slider";
 
 export const SettingsScreen = ({
   bibleScreen,
+  studyScreen,
   // paragraphBibleRef,
   top,
 }) => {
   const { setScheme, isDark, colors } = useTheme();
 
   const [showCrossReferences, setShowCrossReferences] = useState(false);
-  const [fontSize, setFontSize] = useState(16);
-  const [fontFamily, setFontFamily] = useState("Avenir");
-  const [formatting, setFormatting] = useState("Default");
+  const [fontSize, setFontSize] = useState(
+    bibleScreen.current ? bibleScreen.current.state.fontSize : 16
+  );
+  const [fontFamily, setFontFamily] = useState(
+    bibleScreen.current ? bibleScreen.current.state.fontFamily : "Avenir"
+  );
+  const [formatting, setFormatting] = useState(
+    bibleScreen.current ? bibleScreen.current.state.formatting : "Default"
+  );
 
   const handleSlide = (value) => {
     bibleScreen.current.setState({ fontSize: value });
     setFontSize(value);
+    studyScreen.current.setState({ fontSize: value });
   };
 
   const handleFont = (value) => {
     bibleScreen.current.setState({ fontFamily: value });
+    studyScreen.current.setState({ fontFamily: value });
   };
 
   const handleFormat = (value) => {
     bibleScreen.current.setState({ formatting: value });
+    studyScreen.current.setState({ formatting: value });
   };
 
   const handleCrossReferences = () => {

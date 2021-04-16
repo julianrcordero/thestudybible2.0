@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 
 import userMarkup from "../api/userMarkup";
 
@@ -6,23 +6,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import AppText from "./Text";
 
-export default class Highlight extends PureComponent {
+export default class Highlight extends Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
   }
 
   state = {
-    highlight: null, //this.props.highlight,
-    // ? { backgroundColor: this.props.highlight.class_name }
-    // : null,
+    highlight: null,
   };
-
-  // toggleHighlight = () => {
-  //   this.setState({
-  //     highlight: this.state.highlight ? null : { backgroundColor: "lightblue" },
-  //   });
-  // };
 
   toggleHighlight = async () => {
     if (this.state.highlight) {
@@ -113,21 +105,17 @@ export default class Highlight extends PureComponent {
   };
 
   setCurrentHighlightToState() {
-    // console.log("referenceFilter:", this.props.referenceFilter);
-    // console.log(this.props.currentHighlights);
-
     let currentHighlight = this.props.currentHighlights.find(
       (h) => h.start_ref === this.props.referenceFilter
     );
 
-    if (currentHighlight) console.log(currentHighlight);
     if (currentHighlight && !this.state.highlight) {
+      console.log("Setting highlight");
       this.setState({ highlight: currentHighlight });
     }
   }
 
   componentDidMount() {
-    // console.log("componentDidMount:", this.props.referenceFilter);
     this.setCurrentHighlightToState();
   }
 
@@ -140,28 +128,47 @@ export default class Highlight extends PureComponent {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.highlight !== nextState.highlight) {
+      // console.log("highlight updated");
+      return true;
+    } else if (this.props.text !== nextProps.text) {
+      // console.log("text updated");
+      return true;
+    } else if (
+      this.props.verseTextStyle.fontSize !== nextProps.verseTextStyle.fontSize
+    ) {
+      // console.log("font size updated");
+      return true;
+    }
+    return false;
+    //!setCurrentHighlights
+    //!text
+
+    //currentHighlights
+    //referenceFilter
+    //verseTextStyle
+    //username
+  }
+
   render() {
-    const { text, verseBoxStyle, verseTextStyle } = this.props;
+    const { text, verseTextStyle } = this.props;
 
     return (
-      <Text
+      <AppText
+        style={[
+          verseTextStyle,
+          this.state.highlight
+            ? { backgroundColor: this.state.highlight.class_name }
+            : { backgroundColor: "transparent" },
+        ]}
         onLongPress={
           // () => console.log(this.props.referenceFilter)
           this.toggleHighlight
         }
-        style={verseBoxStyle}
       >
-        <AppText
-          style={[
-            verseTextStyle,
-            this.state.highlight
-              ? { backgroundColor: this.state.highlight.class_name }
-              : { backgroundColor: "transparent" },
-          ]}
-        >
-          {text}
-        </AppText>
-      </Text>
+        {text}
+      </AppText>
     );
   }
 }

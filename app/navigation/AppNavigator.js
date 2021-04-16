@@ -40,11 +40,9 @@ const AppNavigator = (props) =>
       headerContentRef,
       paragraphBibleRef,
       searchHistoryRef,
-      // setCurrentBook,
-      setVerseList,
+      studyScreen,
       titleSize,
       topPanel,
-      verseList,
     } = props;
 
     return (
@@ -82,10 +80,9 @@ const AppNavigator = (props) =>
               ref={bibleScreen}
               scrollY={scrollY}
               searchHistoryRef={searchHistoryRef}
-              setVerseList={setVerseList}
+              studyScreen={studyScreen}
               titleSize={titleSize}
               topPanel={topPanel}
-              verseList={verseList}
             />
           )}
           options={{

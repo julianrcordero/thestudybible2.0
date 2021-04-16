@@ -82,6 +82,10 @@ export default class VerseByVerseBible extends PureComponent {
     </Text>
   );
 
+  renderSectionHeader = ({ section: { title } }) => (
+    <AnimatedSectionHeader title={title} titleSize={fontSize * 2} />
+  );
+
   render() {
     const {
       fontSize,
@@ -104,9 +108,7 @@ export default class VerseByVerseBible extends PureComponent {
           },
         ])}
         renderItem={this.renderItem}
-        renderSectionHeader={({ section: { title } }) => (
-          <AnimatedSectionHeader title={title} titleSize={fontSize * 2} />
-        )}
+        renderSectionHeader={this.renderSectionHeader}
         scrollEventThrottle={16}
         sections={sections}
         showsVerticalScrollIndicator={false}

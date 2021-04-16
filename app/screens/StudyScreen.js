@@ -84,10 +84,37 @@ function CrossRef({ myObject }) {
   );
 }
 
-export default class StudyScreen extends Component {
+export default class StudyScreen extends PureComponent {
   constructor(props) {
     super(props);
   }
+
+  state = {
+    currentNotes: [],
+    currentFavorites: [],
+    currentHighlights: [],
+
+    currentBook: {
+      label: "Genesis",
+      short: "Ge",
+      value: 1,
+      backgroundColor: "#FFFB79",
+      icon: "apps",
+    },
+    currentReference: "1 : 1",
+    bookFilter: 1,
+    referenceFilter: "001001",
+    currentCrossrefs: [],
+    currentJohnsNote: [],
+
+    colorPaletteVisible: false,
+
+    fontSize: 16,
+    fontFamily: "Avenir",
+
+    user: null,
+    verseList: [],
+  };
 
   componentDidMount() {
     let myUser = this.props.user;
@@ -95,13 +122,24 @@ export default class StudyScreen extends Component {
     this.setState({ user: myUser });
 
     let currentBook = this.props.topPanel.current.state.currentBook;
-    console.log("setting StudyScreen to", currentBook.label);
+    console.log(
+      "componentDidMount() to",
+      currentBook.label,
+      "(StudyScreen.js)"
+    );
     this.setState({
       currentBook: currentBook,
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {}
+  // componentDidUpdate(prevProps, prevState) {
+  // console.log(this.state.verseList.length, "items in StudyScreen list");
+
+  // if (prevState.bookFilter !== this.state.bookFilter)
+  //   console.log(this.state.bookFilter);
+  //referenceFilter
+  //bookFilter
+  // }
 
   async loadUserMarkup(user) {
     const myMarkup = await userMarkup.getUserMarkup(user.sub);
@@ -140,29 +178,6 @@ export default class StudyScreen extends Component {
   //     currentVerse: this.referenceCode(chapter, title),
   //   });
   // }
-
-  state = {
-    currentNotes: [],
-    currentFavorites: [],
-    currentHighlights: [],
-
-    currentBook: {
-      label: "Genesis",
-      short: "Ge",
-      value: 1,
-      backgroundColor: "#FFFB79",
-      icon: "apps",
-    },
-    currentReference: "1 : 1",
-    bookFilter: 1,
-    referenceFilter: "001001",
-    currentCrossrefs: [],
-    currentJohnsNote: [],
-
-    colorPaletteVisible: false,
-
-    user: null,
-  };
 
   getItemLayout = (data, index) => ({
     length: this.props.width,
@@ -227,55 +242,49 @@ export default class StudyScreen extends Component {
       minHeight: 60,
       paddingLeft: 30,
       paddingRight: 60,
-      paddingVertical: this.props.fontSize,
       width: this.props.width,
     },
     verseBox: {
-      paddingBottom: this.props.fontSize,
       paddingHorizontal: 30,
       width: this.props.width,
-    },
-    verseText: {
-      fontFamily: this.props.fontFamily,
-      fontSize: this.props.fontSize,
-      lineHeight: this.props.fontSize * 2,
     },
   });
 
   renderVerseCardItem = ({ item, i }) => {
     return (
-      <Highlight
-        // colorPaletteVisible={this.state.colorPaletteVisible}
-        currentHighlights={this.state.currentHighlights}
-        setCurrentHighlights={this.setCurrentHighlights}
-        referenceFilter={Number(
-          this.state.bookFilter +
-            ("000" + item.chapter).substr(-3) +
-            ("000" + item.title).substr(-3)
-        )} //this.referenceCode(item.chapter, item.title)}
-        verseBoxStyle={this.styles.verseBox}
-        verseTextStyle={this.styles.verseText}
-        text={item.content}
-        username={this.props.user.sub}
-      />
+      <Text
+        style={[this.styles.verseBox, { paddingBottom: this.state.fontSize }]}
+      >
+        <Highlight
+          // colorPaletteVisible={this.state.colorPaletteVisible}
+          currentHighlights={this.state.currentHighlights}
+          setCurrentHighlights={this.setCurrentHighlights}
+          referenceFilter={this.referenceCode(item.chapter, item.title)}
+          verseTextStyle={{
+            fontFamily: this.state.fontFamily,
+            fontSize: this.state.fontSize,
+            lineHeight: this.state.fontSize * 2,
+          }}
+          text={item.content}
+          username={this.state.user.sub}
+        />
+      </Text>
     );
   };
 
   render() {
-    const {
-      carousel,
-      // currentBook,
-      favoriteRef,
-      fontFamily,
-      fontSize,
-      studyToolBar,
-      verseList,
-      width,
-    } = this.props;
+    const { carousel, favoriteRef, width } = this.props;
 
     return (
       <View style={{ height: "100%" }}>
-        <View style={this.styles.referenceBox}>
+        <View
+          style={[
+            this.styles.referenceBox,
+            {
+              paddingVertical: this.state.fontSize,
+            },
+          ]}
+        >
           {/* {this.state.colorPaletteVisible ? (
             <View
               style={{
@@ -288,8 +297,8 @@ export default class StudyScreen extends Component {
           <Reference
             book={this.state.currentBook.label}
             reference={this.state.currentReference}
-            fontFamily={fontFamily}
-            fontSize={fontSize}
+            fontFamily={this.state.fontFamily}
+            fontSize={this.state.fontSize}
           />
           {/* <AppButton
             onPress={() => this.loadUserMarkup(this.state.user)}
@@ -304,13 +313,13 @@ export default class StudyScreen extends Component {
             ref={favoriteRef}
             referenceFilter={this.state.referenceFilter}
             setCurrentFavorites={this.setCurrentFavorites}
-            user={this.props.user}
+            user={this.state.user}
           />
         </View>
         <View style={{ flexShrink: 1 }}>
           <FlatList
             bounces={false}
-            data={verseList}
+            data={this.state.verseList}
             decelerationRate={"fast"}
             // extraData={this.state}
             getItemLayout={this.getItemLayout}
@@ -346,7 +355,7 @@ export default class StudyScreen extends Component {
         </View>
         <PanelBox
           currentNotes={this.state.currentNotes}
-          fontSize={fontSize}
+          fontSize={this.state.fontSize}
           johnsNote={this.state.currentJohnsNote}
           notes={this.state.currentNotes.filter(
             (m) => m.refs[0].start_ref == this.state.referenceFilter

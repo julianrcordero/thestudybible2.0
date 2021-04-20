@@ -36,20 +36,19 @@ export default function ChaptersGridScreen({
   }
 
   const changeBook = (book, chapter, value) => {
+    changeBibleBook({
+      label: book,
+      value: value,
+      backgroundColor: "#345171",
+      icon: "apps",
+    });
     close();
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      // setTimeout(() => {
-      changeBibleBook({
-        label: book,
-        value: value,
-        backgroundColor: "#345171",
-        icon: "apps",
+      setTimeout(() => {
+        if (goBack) navigation.goBack();
       });
-      // });
     });
     () => interactionPromise.cancel();
-
-    if (goBack) navigation.goBack();
   };
 
   const renderItem = ({ item }) => (

@@ -582,7 +582,6 @@ export default function App() {
                 bottomSheetContentRef={bottomSheetContentRef}
                 carousel={carousel}
                 headerContentRef={headerContentRef}
-                // crossrefSize={crossrefSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
                 studyScreen={studyScreen}
@@ -594,7 +593,7 @@ export default function App() {
           <ReanimatedBottomSheet
             ref={bottomSheetRef}
             snapPoints={[top, "45%", "0%"]}
-            initialSnap={1}
+            initialSnap={2}
             renderHeader={bottomSheetHeader}
             renderContent={bottomSheetContent}
             // onCloseEnd={() => setFocusedVerse(null)}

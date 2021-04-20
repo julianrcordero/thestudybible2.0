@@ -39,6 +39,7 @@ class BottomSheetContent extends Component {
           />
         ) : null}
         <StudyScreen
+          bibleScreen={bibleScreen}
           carousel={carousel}
           favoriteRef={favoriteRef}
           height={height}

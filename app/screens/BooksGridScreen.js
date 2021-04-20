@@ -1,12 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-  FlatList,
-  InteractionManager,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
 

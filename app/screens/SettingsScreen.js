@@ -1,27 +1,14 @@
 import React, { PureComponent, useState } from "react";
-import {
-  FlatList,
-  InteractionManager,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Switch,
-} from "react-native";
+import { TouchableOpacity, View, Switch } from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
+import defaultStyles from "../config/styles";
 
 import Text from "../components/Text";
-import BiblePickerItem from "../components/BiblePickerItem";
 
 import Slider from "@react-native-community/slider";
 
-export const SettingsScreen = ({
-  bibleScreen,
-  studyScreen,
-  // paragraphBibleRef,
-  top,
-}) => {
+export const SettingsScreen = ({ bibleScreen, studyScreen, top }) => {
   const { setScheme, isDark, colors } = useTheme();
 
   const [showCrossReferences, setShowCrossReferences] = useState(false);
@@ -107,12 +94,13 @@ export const SettingsScreen = ({
 
   return (
     <View
-      style={{
-        backgroundColor: colors.background,
-        height: top - 50,
-        borderTopWidth: 0.3,
-        paddingHorizontal: 50,
-      }}
+      style={[
+        {
+          backgroundColor: colors.background,
+          height: top - 50,
+        },
+        defaultStyles.paddingText,
+      ]}
     >
       <View style={styles.buttonSection}>
         <Text style={{ color: colors.text }}>

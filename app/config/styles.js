@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
-
-import { useTheme } from "./ThemeProvider";
+import { Dimensions } from "react-native";
 
 export default {
   bibleText: {
@@ -14,5 +13,11 @@ export default {
     color: "darkslategrey",
     // fontSize: 13,
     fontFamily: Platform.OS === "android" ? "normal" : "Georgia-Italic",
+  },
+  paddingText: {
+    paddingHorizontal: Dimensions.get("window").width * 0.075,
+  },
+  headerPaddingHorizontal: {
+    paddingHorizontal: Dimensions.get("window").width * 0.03,
   },
 };

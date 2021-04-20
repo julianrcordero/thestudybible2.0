@@ -36,9 +36,9 @@ export default class Paragraph extends Component {
   // formatting={this.props.formatting}
   // section={item["verse"]}
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("Paragraph.js updated");
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("Paragraph.js updated");
+  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.section !== nextProps.section) {

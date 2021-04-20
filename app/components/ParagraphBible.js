@@ -40,9 +40,9 @@ export default class ParagraphBible extends Component {
     sections: [],
   };
 
-  componentDidUpdate() {
-    console.log("ParagraphBible.js updated");
-  }
+  // componentDidUpdate() {
+  //   console.log("ParagraphBible.js updated");
+  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.fontFamily !== nextProps.fontFamily) {
@@ -91,7 +91,7 @@ export default class ParagraphBible extends Component {
     const styles = {
       bibleTextView: {
         backgroundColor: colors.background,
-        paddingHorizontal: 30,
+        // paddingHorizontal: 30,
       },
     };
 
@@ -117,6 +117,7 @@ export default class ParagraphBible extends Component {
             paddingTop: HEADER_HEIGHT,
             paddingBottom: HEADER_HEIGHT + 300,
           },
+          defaultStyles.paddingText,
         ]}
         updateCellsBatchingPeriod={150}
         windowSize={3}

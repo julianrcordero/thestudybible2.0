@@ -136,7 +136,7 @@ export default function PanelBox({
   };
 
   return (
-    <View style={[style, { paddingHorizontal: 30 }]}>
+    <View style={[style, defaultStyles.paddingText]}>
       <ResourceBox
         colors={colors}
         title={"My Notes"}

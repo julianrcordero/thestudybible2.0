@@ -19,28 +19,28 @@ export default class BibleScreenToolBar extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.headerY !== nextProps.headerY) {
-      console.log("headerY");
+      // console.log("headerY");
       return true;
     } else if (this.props.colors !== nextProps.colors) {
-      console.log("colors");
+      // console.log("colors");
       return true;
     } else if (this.props.currentBook !== nextProps.currentBook) {
-      console.log("currentBook");
+      // console.log("currentBook");
       return true;
     } else if (this.props.currentChapter !== nextProps.currentChapter) {
-      console.log("currentChapter");
+      // console.log("currentChapter");
       return true;
     } else if (this.props.currentVerse !== nextProps.currentVerse) {
-      console.log("currentVerse");
+      // console.log("currentVerse");
       return true;
     } else if (this.props.darkMode !== nextProps.darkMode) {
-      console.log("darkMode");
+      // console.log("darkMode");
       return true;
     } else if (this.props.fontFamily !== nextProps.fontFamily) {
-      console.log("fontFamily");
+      // console.log("fontFamily");
       return true;
     } else if (this.props.fontSize !== nextProps.fontSize) {
-      console.log("fontSize");
+      // console.log("fontSize");
       return true;
     }
     return false;

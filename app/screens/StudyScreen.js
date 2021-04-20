@@ -1,11 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  useEffect,
-  useRef,
-  useState,
-  createRef,
-} from "react";
+import React, { Component, PureComponent } from "react";
 import {
   FlatList,
   View,
@@ -26,6 +19,8 @@ import useAuth from "../auth/useAuth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Highlight from "../components/Highlight";
 import AppButton from "../components/Button";
+
+import defaultStyles from "../config/styles";
 
 function Reference({ book, fontFamily, fontSize, reference }) {
   const { colors } = useTheme();
@@ -63,29 +58,61 @@ class VerseHyperlink extends PureComponent {
   }
 }
 
-function CrossRef({ myObject }) {
+class CrossRef extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { colors, myObject } = this.props;
+
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          flexDirection: "row",
+          paddingBottom: 12.5,
+        }}
+      >
+        <AppText style={{ color: colors.text }}>
+          {myObject["title"] + "\t"}
+        </AppText>
+        <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+          {Array.isArray(myObject["refs"]["ref"]) ? (
+            myObject["refs"]["ref"].map((cr) => (
+              <VerseHyperlink key={cr["for"]} cr={cr} />
+            ))
+          ) : (
+            <VerseHyperlink
+              key={myObject["for"]}
+              cr={myObject["refs"]["ref"]}
+            />
+          )}
+        </View>
+      </View>
+    );
+  }
+}
+
+function CrossRefList({ currentCrossrefs }) {
   const { colors } = useTheme();
 
   return (
     <View
-      style={{
-        alignItems: "center",
-        flexDirection: "row",
-        paddingBottom: 12.5,
-      }}
+      style={[
+        {
+          marginVertical: 12.5,
+        },
+        defaultStyles.paddingText,
+      ]}
     >
-      <AppText style={{ color: colors.text }}>
-        {myObject["title"] + "\t"}
-      </AppText>
-      <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-        {Array.isArray(myObject["refs"]["ref"]) ? (
-          myObject["refs"]["ref"].map((cr) => (
-            <VerseHyperlink key={cr["for"]} cr={cr} />
-          ))
-        ) : (
-          <VerseHyperlink key={myObject["for"]} cr={myObject["refs"]["ref"]} />
-        )}
-      </View>
+      {Array.isArray(currentCrossrefs) ? (
+        currentCrossrefs.map((crossref) => (
+          <CrossRef colors={colors} key={crossref["id"]} myObject={crossref} />
+        ))
+      ) : currentCrossrefs["title"] == "" ? null : (
+        <CrossRef colors={colors} myObject={currentCrossrefs} />
+      )}
     </View>
   );
 }
@@ -101,11 +128,11 @@ export default class StudyScreen extends Component {
     currentHighlights: [],
 
     currentBook: {
-      label: "Genesis",
-      short: "Ge",
-      value: 1,
-      backgroundColor: "#FFFB79",
-      icon: "apps",
+      label: "",
+      short: "",
+      value: 0,
+      backgroundColor: "",
+      icon: "",
     },
     currentReference: "1 : 1",
     bookFilter: 1,
@@ -127,22 +154,18 @@ export default class StudyScreen extends Component {
     this.loadUserMarkup(this.props.user);
     if (!this.state.user) {
       this.setState({ user: myUser });
-      console.log("just set user");
     }
 
-    let currentBook = this.props.topPanel.current.state.currentBook;
-    console.log(
-      "componentDidMount() to",
-      currentBook.label,
-      "(StudyScreen.js)"
-    );
-    console.log(this.state.currentBook.label, "->", currentBook.label);
+    let currentBook = this.props.bibleScreen.current.state.currentBook;
+
     if (this.state.currentBook.label !== currentBook.label) {
       this.setState({
+        bookFilter: currentBook.value,
         currentBook: currentBook,
+        verseList: this.props.topPanel.current.changeStudyScreenBook(
+          currentBook
+        ),
       });
-      console.log("changed currentBook");
-      this.props.topPanel.current.changeStudyScreenBook(currentBook);
     }
   }
 
@@ -176,9 +199,6 @@ export default class StudyScreen extends Component {
         currentFavorites: bookFavorites,
         currentHighlights: bookHighlights,
       });
-      // console.log("User markup set in StudyScreen state");
-
-      // console.log(bookHighlights);
     }
   }
 
@@ -249,12 +269,12 @@ export default class StudyScreen extends Component {
       flexDirection: "row",
       justifyContent: "space-between",
       minHeight: 60,
-      paddingLeft: 30,
+      // paddingLeft: 30,
       paddingRight: 60,
       width: this.props.width,
     },
     verseBox: {
-      paddingHorizontal: 30,
+      // paddingHorizontal: 30,
       width: this.props.width,
     },
   });
@@ -262,7 +282,11 @@ export default class StudyScreen extends Component {
   renderVerseCardItem = ({ item, i }) => {
     return (
       <Text
-        style={[this.styles.verseBox, { paddingBottom: this.state.fontSize }]}
+        style={[
+          this.styles.verseBox,
+          { paddingBottom: this.state.fontSize },
+          defaultStyles.paddingText,
+        ]}
       >
         <Highlight
           // colorPaletteVisible={this.state.colorPaletteVisible}
@@ -275,7 +299,7 @@ export default class StudyScreen extends Component {
             lineHeight: this.state.fontSize * 2,
           }}
           text={item.content}
-          username={this.state.user.sub}
+          username={this.state.user ? this.state.user.sub : ""}
         />
       </Text>
     );
@@ -292,6 +316,7 @@ export default class StudyScreen extends Component {
             {
               paddingVertical: this.state.fontSize,
             },
+            defaultStyles.paddingText,
           ]}
         >
           <Reference
@@ -336,20 +361,7 @@ export default class StudyScreen extends Component {
           />
         </View>
 
-        <View
-          style={{
-            marginHorizontal: 30,
-            marginVertical: 12.5,
-          }}
-        >
-          {Array.isArray(this.state.currentCrossrefs) ? (
-            this.state.currentCrossrefs.map((crossref) => (
-              <CrossRef key={crossref["id"]} myObject={crossref} />
-            ))
-          ) : this.state.currentCrossrefs["title"] == "" ? null : (
-            <CrossRef myObject={this.state.currentCrossrefs} />
-          )}
-        </View>
+        <CrossRefList currentCrossrefs={this.state.currentCrossrefs} />
         <PanelBox
           currentNotes={this.state.currentNotes}
           fontSize={this.state.fontSize}

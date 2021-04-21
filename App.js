@@ -29,6 +29,7 @@ const { height, width } = Dimensions.get("window");
 export default function App() {
   const top = height - Constants.statusBarHeight;
 
+  const bibleSectionsRef = useRef();
   const bibleScreen = useRef();
   const bottomSheetRef = useRef();
   const bottomSheetContentRef = useRef();
@@ -563,6 +564,7 @@ export default function App() {
         <AuthContext.Provider value={{ user, setUser }}>
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
+              bibleSectionsRef={bibleSectionsRef}
               bibleScreen={bibleScreen}
               books={books}
               ref={topPanel}
@@ -577,6 +579,7 @@ export default function App() {
           <Screen>
             <NavigationContainer ref={navigationRef}>
               <AppNavigator
+                bibleSectionsRef={bibleSectionsRef}
                 bibleScreen={bibleScreen}
                 bottomSheetRef={bottomSheetRef}
                 bottomSheetContentRef={bottomSheetContentRef}

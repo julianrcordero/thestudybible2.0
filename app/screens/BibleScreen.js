@@ -7,6 +7,7 @@ import { useTheme } from "../config/ThemeProvider";
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import ParagraphBible from "../components/ParagraphBible";
 import useAuth from "../auth/useAuth";
+import VerseByVerseBible from "../components/VerseByVerseBible";
 
 export default class BibleScreen extends Component {
   constructor(props) {
@@ -84,6 +85,7 @@ export default class BibleScreen extends Component {
 
   render() {
     const {
+      bibleSectionsRef,
       bottomSheetContentRef,
       carousel,
       colors,
@@ -117,7 +119,8 @@ export default class BibleScreen extends Component {
           topPanel={topPanel}
           searchHistoryRef={searchHistoryRef}
         />
-        <ParagraphBible
+        <VerseByVerseBible
+          bibleSectionsRef={bibleSectionsRef}
           colors={colors}
           darkMode={darkMode}
           fontFamily={this.state.fontFamily}
@@ -128,6 +131,18 @@ export default class BibleScreen extends Component {
           toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         />
+        {/* <ParagraphBible
+          bibleSectionsRef={bibleSectionsRef}
+          colors={colors}
+          darkMode={darkMode}
+          fontFamily={this.state.fontFamily}
+          fontSize={this.state.fontSize}
+          HEADER_HEIGHT={HEADER_HEIGHT}
+          ref={paragraphBibleRef}
+          scrollY={scrollY}
+          toggleSlideView={this.toggleSlideView}
+          topPanel={topPanel}
+        /> */}
       </>
     );
   }

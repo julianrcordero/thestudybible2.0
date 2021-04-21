@@ -17,6 +17,7 @@ export default function ChaptersGridScreen({
   goBack = false,
   navigation,
   route,
+  scrollToChapter,
   width,
 }) {
   const { colors } = useTheme();
@@ -45,6 +46,7 @@ export default function ChaptersGridScreen({
     close();
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
+        scrollToChapter(chapter);
         if (goBack) navigation.goBack();
       });
     });

@@ -24,20 +24,8 @@ export default class Paragraph extends Component {
     />
   );
 
-  componentDidUpdate(prevProps, prevState) {
-    // console.log("paragraph", this.props.fontSize);
-  }
-
-  // chapterNum={Number(item["_num"])} //item.chapterNum}
-
-  // colors={this.props.colors}
-  // fontFamily={this.props.fontFamily}
-  // fontSize={this.props.fontSize}
-  // formatting={this.props.formatting}
-  // section={item["verse"]}
-
   // componentDidUpdate(prevProps, prevState) {
-  //   console.log("Paragraph.js updated");
+  //   console.log("paragraph", this.props.fontSize);
   // }
 
   shouldComponentUpdate(nextProps, nextState) {

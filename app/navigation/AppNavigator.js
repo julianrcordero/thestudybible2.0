@@ -32,6 +32,7 @@ const AppNavigator = (props) =>
     const { colors, isDark } = useTheme();
 
     const {
+      bibleSectionsRef,
       bibleScreen,
       bottomSheetRef,
       bottomSheetContentRef,
@@ -66,6 +67,7 @@ const AppNavigator = (props) =>
           name="Bible"
           children={() => (
             <BibleScreen
+              bibleSectionsRef={bibleSectionsRef}
               bottomSheetRef={bottomSheetRef}
               bottomSheetContentRef={bottomSheetContentRef}
               carousel={carousel}

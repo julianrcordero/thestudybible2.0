@@ -129,37 +129,10 @@ class TopSheetNavigation extends Component {
     }
   };
 
-  // changeBibleBook = (newBook) => {
-  //   if (this.state.currentBook.label !== newBook.label) {
-  //     this.props.paragraphBibleRef.current.setState({
-  //       sections: bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
-  //     });
-
-  //     let bibleScreen = this.props.bibleScreen;
-  //     if (bibleScreen.current)
-  //       bibleScreen.current.setState({ currentBook: newBook });
-
-  //     this.setState({ currentBook: newBook });
-  //   }
-  // };
-
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
-      const chapters =
-        bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
-      const sections = [];
-
-      chapters.map((chapter) => {
-        sections.push({
-          title: Array.isArray(chapter["heading"])
-            ? chapter["heading"][0]
-            : chapter["heading"],
-          data: chapter["verse"],
-        });
-      });
-
       this.props.paragraphBibleRef.current.setState({
-        sections: sections,
+        sections: bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
       });
 
       let bibleScreen = this.props.bibleScreen;
@@ -170,7 +143,36 @@ class TopSheetNavigation extends Component {
     }
   };
 
+  // changeBibleBook = (newBook) => {
+  //   if (this.state.currentBook.label !== newBook.label) {
+  //     const chapters =
+  //       bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+  //     const sections = [];
+
+  //     chapters.map((chapter) => {
+  //       sections.push({
+  //         chapter: chapter["_num"],
+  //         title: Array.isArray(chapter["heading"])
+  //           ? chapter["heading"][0]
+  //           : chapter["heading"],
+  //         data: chapter["verse"],
+  //       });
+  //     });
+
+  //     this.props.paragraphBibleRef.current.setState({
+  //       sections: sections,
+  //     });
+
+  //     let bibleScreen = this.props.bibleScreen;
+  //     if (bibleScreen.current)
+  //       bibleScreen.current.setState({ currentBook: newBook });
+
+  //     this.setState({ currentBook: newBook });
+  //   }
+  // };
+
   scrollToChapter = (chapter) => {
+    console.log("setting state to", chapter - 1);
     this.props.paragraphBibleRef.current.setState({ index: chapter - 1 });
   };
 

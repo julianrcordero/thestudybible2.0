@@ -119,19 +119,7 @@ export default class BibleScreen extends Component {
           topPanel={topPanel}
           searchHistoryRef={searchHistoryRef}
         />
-        <VerseByVerseBible
-          bibleSectionsRef={bibleSectionsRef}
-          colors={colors}
-          darkMode={darkMode}
-          fontFamily={this.state.fontFamily}
-          fontSize={this.state.fontSize}
-          HEADER_HEIGHT={HEADER_HEIGHT}
-          ref={paragraphBibleRef}
-          scrollY={scrollY}
-          toggleSlideView={this.toggleSlideView}
-          topPanel={topPanel}
-        />
-        {/* <ParagraphBible
+        {/* <VerseByVerseBible
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}
           darkMode={darkMode}
@@ -143,6 +131,18 @@ export default class BibleScreen extends Component {
           toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         /> */}
+        <ParagraphBible
+          bibleSectionsRef={bibleSectionsRef}
+          colors={colors}
+          darkMode={darkMode}
+          fontFamily={this.state.fontFamily}
+          fontSize={this.state.fontSize}
+          HEADER_HEIGHT={HEADER_HEIGHT}
+          ref={paragraphBibleRef}
+          scrollY={scrollY}
+          toggleSlideView={this.toggleSlideView}
+          topPanel={topPanel}
+        />
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component, PureComponent } from "react";
-import { FlatList, Text, SectionList } from "react-native";
+import { FlatList, InteractionManager, Text, SectionList } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useTheme } from "../config/ThemeProvider";
@@ -14,6 +14,7 @@ class SectionHeader extends PureComponent {
   }
 
   render() {
+    const { chapter, title } = this.props;
     return (
       <Text
         style={[
@@ -24,9 +25,20 @@ class SectionHeader extends PureComponent {
           },
         ]}
       >
-        {this.props.title}
+        {chapter + "\t" + title}
       </Text>
     );
+  }
+}
+
+class VerseText extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { verseText } = this.props;
+    return <Text>{verseText}</Text>;
   }
 }
 
@@ -48,32 +60,37 @@ export default class VerseByVerseBible extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.index !== this.state.index) {
-      console.log("scrolling to", this.state.index);
-      this.scrollToChapter();
-    }
     if (prevState.sections !== this.state.sections) {
-      console.log(this.state.sections.length);
+      console.log(this.state.sections.length, "sections");
+    } else if (prevState.index !== this.state.index) {
+      console.log(prevState.index, "-->", this.state.index);
+      this.scrollToChapter();
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props.fontFamily !== nextProps.fontFamily) {
-  //     return true;
-  //   } else if (this.props.fontSize !== nextProps.fontSize) {
-  //     return true;
-  //   } else if (this.state.sections !== nextState.sections) {
-  //     return true;
-  //   } else if (this.props.colors !== nextProps.colors) {
-  //     return true;
-  //   } else if (this.state.index !== nextState.index) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.fontFamily !== nextProps.fontFamily) {
+      // console.log("fontFamily");
+      return true;
+    } else if (this.props.fontSize !== nextProps.fontSize) {
+      // console.log("fontSize");
+      return true;
+    } else if (this.props.colors !== nextProps.colors) {
+      // console.log("colors");
+      return true;
+    } else if (this.state.sections !== nextState.sections) {
+      // console.log("sections");
+      return true;
+    } else if (this.state.index !== nextState.index) {
+      // console.log("index");
+      return true;
+    }
+    return false;
+  }
 
   renderItem = ({ item, index, section }) => (
-    <Text>{section.data[index]["__text"]}</Text>
+    // <Text>{section.data[index]["__text"]}</Text>
+    <VerseText verseText={section.data[index]["__text"]} />
     // <Paragraph
     //   chapterNum={Number(item["_num"])}
     //   colors={this.props.colors}
@@ -87,13 +104,20 @@ export default class VerseByVerseBible extends Component {
     // />
   );
 
-  renderSectionHeader = ({ section: { title } }) => (
+  renderSectionHeader = ({ section: { chapter, title } }) => (
     <AnimatedSectionHeader
+      chapter={chapter}
       colors={this.props.colors}
       title={title}
       titleSize={this.props.fontSize * 1.75}
     />
   );
+
+  getItemLayout = (data, index) => ({
+    length: this.props.fontSize * 3,
+    offset: this.props.fontSize * index,
+    index,
+  });
 
   keyExtractor = (item) => item["_num"];
 
@@ -125,16 +149,31 @@ export default class VerseByVerseBible extends Component {
 
     return (
       <AnimatedSectionList
-        bounces={false}
+        // bounces={false}
+        // getItemLayout={this.getItemLayout}
         initialNumToRender={1}
         keyExtractor={this.keyExtractor}
         // maxToRenderPerBatch={3}
-        numColumns={1}
+        numColumns={2}
+        onContentSizeChange={() =>
+          bibleSectionsRef.current.getNode().scrollToLocation({
+            sectionIndex: this.state.index,
+            itemIndex: 0,
+          })
+        }
         onScroll={Animated.event([
           {
             nativeEvent: { contentOffset: { y: scrollY } },
           },
         ])}
+        onScrollToIndexFailed={(info) => {
+          const wait = new Promise((resolve) => setTimeout(resolve, 200));
+          wait.then(() => {
+            console.log("trying again");
+            // bibleSectionsRef.current.getNode().scrollToEnd();
+            // this.scrollToChapter();
+          });
+        }}
         ref={bibleSectionsRef}
         removeClippedSubviews
         renderItem={this.renderItem}

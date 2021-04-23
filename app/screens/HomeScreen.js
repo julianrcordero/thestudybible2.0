@@ -124,11 +124,7 @@ function ResourceSection({ data, navigation, showDate, title }) {
       <FlatList
         // data={data}
         // horizontal
-        // getItemLayout={(data, index) => ({
-        //   length: 500,
-        //   offset: 500 * index,
-        //   index,
-        // })}
+        // getItemLayout={}
         // keyExtractor={(listing) => listing.id.toString()}
         // renderItem={({ item }) => (
         //   <ContentCard

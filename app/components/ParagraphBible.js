@@ -50,7 +50,6 @@ export default class ParagraphBible extends Component {
     //   console.log(this.state.sections.length, "elements in paragraph Bible");
     // }
     if (prevState.index !== this.state.index) {
-      console.log("scrolling to", this.state.index);
       this.scrollToChapter();
     }
   }
@@ -97,6 +96,12 @@ export default class ParagraphBible extends Component {
     </React.Fragment>
   );
 
+  // getItemLayout = (data, index) => ({
+  //   length: this.props.fontSize * 3,
+  //   offset: this.props.fontSize * index,
+  //   index,
+  // });
+
   keyExtractor = (item) => item["_num"];
 
   scrollToChapter = () => {
@@ -106,6 +111,7 @@ export default class ParagraphBible extends Component {
     ) {
       const node = this.props.bibleSectionsRef.current.getNode();
       if (node) {
+        console.log("scrolling to", this.state.index);
         node.scrollToIndex({
           animated: false,
           index: this.state.index,
@@ -129,28 +135,60 @@ export default class ParagraphBible extends Component {
       <AnimatedFlatList
         // bounces={false}
         data={this.state.sections}
+        // getItemLayout={this.getItemLayout}
         initialNumToRender={1}
+        // initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
         // maxToRenderPerBatch={3}
+        numColumns={2}
+        // onEndReached={() => console.log("onEndReached")}
+        // onEndReachedThreshold={0.75}
+        onContentSizeChange={() =>
+          bibleSectionsRef.current
+            .getNode()
+            .scrollToIndex({ animated: false, index: this.state.index })
+        }
         onScroll={Animated.event([
           {
             nativeEvent: { contentOffset: { y: scrollY } },
           },
         ])}
         onScrollToIndexFailed={(info) => {
-          // console.log(info);
           const wait = new Promise((resolve) => setTimeout(resolve, 500));
           wait.then(() => {
+            console.log("trying again");
+            bibleSectionsRef.current.getNode().scrollToEnd();
             this.scrollToChapter();
           });
         }}
         ref={bibleSectionsRef}
-        // removeClippedSubviews
+        removeClippedSubviews
         renderItem={this.renderParagraphItem}
         showsVerticalScrollIndicator={false}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         // updateCellsBatchingPeriod={150}
         // windowSize={3}
+
+        // bounces={false}
+        // data={this.state.verseList}
+        // decelerationRate={"fast"}
+        // // extraData={this.state}
+        // getItemLayout={this.getItemLayout}
+        // horizontal={true}
+        // initialNumToRender={5}
+        // keyExtractor={this.keyExtractor}
+        // maxToRenderPerBatch={3}
+        // onViewableItemsChanged={this.onViewRef}
+        // ref={carousel}
+        // removeClippedSubviews
+        // renderItem={this.renderVerseCardItem}
+        // // scrollEventThrottle={16}
+        // showsHorizontalScrollIndicator={false}
+        // snapToAlignment={"center"}
+        // snapToInterval={width}
+        // updateCellsBatchingPeriod={25}
+        // viewabilityConfig={this.viewConfigRef}
+        // windowSize={11}
       />
     );
   }

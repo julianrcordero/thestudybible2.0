@@ -69,7 +69,7 @@ export default class ParagraphBible extends Component {
     return false;
   }
 
-  renderParagraphItem = ({ item, i }) => (
+  renderItem = ({ item, i }) => (
     <React.Fragment key={i}>
       <AnimatedSectionHeader
         colors={this.props.colors}
@@ -96,20 +96,34 @@ export default class ParagraphBible extends Component {
     </React.Fragment>
   );
 
-  // getItemLayout = (data, index) => ({
-  //   length: this.props.fontSize * 3,
-  //   offset: this.props.fontSize * index,
-  //   index,
-  // });
-
   keyExtractor = (item) => item["_num"];
 
+  contentSizeChange = () => {
+    console.log("contentSizeChange");
+
+    const flatList = this.props.bibleSectionsRef.current;
+    if (flatList && flatList.getNode) {
+      flatList
+        .getNode()
+        .scrollToIndex({ animated: false, index: this.state.index });
+    }
+  };
+
+  scroll = Animated.event(
+    [
+      {
+        nativeEvent: { contentOffset: { y: this.props.scrollY } },
+      },
+    ],
+    { useNativeDriver: false }
+  );
+
   scrollToChapter = () => {
-    if (
-      this.props.bibleSectionsRef.current &&
-      this.props.bibleSectionsRef.current.getNode
-    ) {
-      const node = this.props.bibleSectionsRef.current.getNode();
+    console.log("scrollToChapter");
+
+    const flatList = this.props.bibleSectionsRef.current;
+    if (flatList && flatList.getNode) {
+      const node = flatList.getNode();
       if (node) {
         console.log("scrolling to", this.state.index);
         node.scrollToIndex({
@@ -119,6 +133,22 @@ export default class ParagraphBible extends Component {
       }
     }
   };
+
+  scrollToIndexFailed(error) {
+    console.log(error);
+    const offset = error.averageItemLength * error.index;
+
+    const flatList = props.bibleSectionsRef.current;
+
+    if (flatList && flatList.getNode) {
+      flatList.getNode().scrollToOffset({ offset });
+      setTimeout(() => {
+        flatList
+          .getNode()
+          .scrollToIndex({ animated: false, index: error.index });
+      }, 100); // You may choose to skip this line if the above typically works well because your average item height is accurate.
+    }
+  }
 
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
@@ -133,37 +163,22 @@ export default class ParagraphBible extends Component {
 
     return (
       <AnimatedFlatList
-        // bounces={false}
+        bounces={false}
         data={this.state.sections}
         // getItemLayout={this.getItemLayout}
         initialNumToRender={1}
         // initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
         // maxToRenderPerBatch={3}
-        numColumns={2}
+        // numColumns={2}
         // onEndReached={() => console.log("onEndReached")}
         // onEndReachedThreshold={0.75}
-        onContentSizeChange={() =>
-          bibleSectionsRef.current
-            .getNode()
-            .scrollToIndex({ animated: false, index: this.state.index })
-        }
-        onScroll={Animated.event([
-          {
-            nativeEvent: { contentOffset: { y: scrollY } },
-          },
-        ])}
-        onScrollToIndexFailed={(info) => {
-          const wait = new Promise((resolve) => setTimeout(resolve, 500));
-          wait.then(() => {
-            console.log("trying again");
-            bibleSectionsRef.current.getNode().scrollToEnd();
-            this.scrollToChapter();
-          });
-        }}
+        // onContentSizeChange={this.contentSizeChange}
+        onScroll={this.scroll}
+        onScrollToIndexFailed={this.scrollToIndexFailed}
         ref={bibleSectionsRef}
         removeClippedSubviews
-        renderItem={this.renderParagraphItem}
+        renderItem={this.renderItem}
         showsVerticalScrollIndicator={false}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         // updateCellsBatchingPeriod={150}

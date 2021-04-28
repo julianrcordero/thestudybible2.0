@@ -99,7 +99,7 @@ export default class ParagraphBible extends Component {
   keyExtractor = (item) => item["_num"];
 
   contentSizeChange = () => {
-    console.log("contentSizeChange");
+    console.log("contentSizeChange DOE nyama nyama");
 
     const flatList = this.props.bibleSectionsRef.current;
     if (flatList && flatList.getNode) {

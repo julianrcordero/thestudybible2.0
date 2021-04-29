@@ -35,14 +35,13 @@ export default class BibleScreen extends Component {
       "(BibleScreen.js)"
     );
     this.props.topPanel.current.changeBibleBook(currentBook);
-    this.props.topPanel.current.changeStudyScreenBook(currentBook);
+    // this.props.topPanel.current.changeStudyScreenBook(currentBook);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (prevState.currentBook !== this.state.currentBook) {
-    console.log("componentDidUpdate BibleScreen.js");
-    this.props.topPanel.current.changeStudyScreenBook(this.state.currentBook);
-    // }
+    if (prevState.currentBook !== this.state.currentBook) {
+      this.props.topPanel.current.changeStudyScreenBook(this.state.currentBook);
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {

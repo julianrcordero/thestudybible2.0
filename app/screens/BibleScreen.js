@@ -7,6 +7,7 @@ import { useTheme } from "../config/ThemeProvider";
 import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import ParagraphBible from "../components/ParagraphBible";
 import useAuth from "../auth/useAuth";
+import VerseByVerseBible from "../components/VerseByVerseBible";
 
 export default class BibleScreen extends Component {
   constructor(props) {
@@ -29,18 +30,18 @@ export default class BibleScreen extends Component {
 
   componentDidMount() {
     let currentBook = this.state.currentBook;
-    console.log(
-      "setting BibleScreen to",
-      currentBook.label,
-      "(BibleScreen.js)"
-    );
     this.props.topPanel.current.changeBibleBook(currentBook);
-    // this.props.topPanel.current.changeStudyScreenBook(currentBook);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentBook !== this.state.currentBook) {
-      this.props.topPanel.current.changeStudyScreenBook(this.state.currentBook);
+    if (prevState.currentBook.label !== this.state.currentBook.label) {
+      this.props.studyScreen.current.setState({
+        bookFilter: this.state.currentBook.value,
+        currentBook: this.state.currentBook,
+        verseList: this.props.topPanel.current.changeStudyScreenBook(
+          this.state.currentBook
+        ),
+      });
     }
   }
 
@@ -84,6 +85,7 @@ export default class BibleScreen extends Component {
 
   render() {
     const {
+      bibleSectionsRef,
       bottomSheetContentRef,
       carousel,
       colors,
@@ -92,7 +94,6 @@ export default class BibleScreen extends Component {
       HEADER_HEIGHT,
       scrollY,
       headerY,
-      // crossrefSize,
       bottomSheetRef,
       paragraphBibleRef,
       searchHistoryRef,
@@ -118,9 +119,21 @@ export default class BibleScreen extends Component {
           topPanel={topPanel}
           searchHistoryRef={searchHistoryRef}
         />
-        <ParagraphBible
+        {/* <VerseByVerseBible
+          bibleSectionsRef={bibleSectionsRef}
           colors={colors}
-          // crossrefSize={crossrefSize}
+          darkMode={darkMode}
+          fontFamily={this.state.fontFamily}
+          fontSize={this.state.fontSize}
+          HEADER_HEIGHT={HEADER_HEIGHT}
+          ref={paragraphBibleRef}
+          scrollY={scrollY}
+          toggleSlideView={this.toggleSlideView}
+          topPanel={topPanel}
+        /> */}
+        <ParagraphBible
+          bibleSectionsRef={bibleSectionsRef}
+          colors={colors}
           darkMode={darkMode}
           fontFamily={this.state.fontFamily}
           fontSize={this.state.fontSize}

@@ -29,6 +29,7 @@ const { height, width } = Dimensions.get("window");
 export default function App() {
   const top = height - Constants.statusBarHeight;
 
+  const bibleSectionsRef = useRef();
   const bibleScreen = useRef();
   const bottomSheetRef = useRef();
   const bottomSheetContentRef = useRef();
@@ -563,6 +564,7 @@ export default function App() {
         <AuthContext.Provider value={{ user, setUser }}>
           <Screen style={{ position: "absolute", width: "100%", zIndex: 200 }}>
             <TopSheetNavigation
+              bibleSectionsRef={bibleSectionsRef}
               bibleScreen={bibleScreen}
               books={books}
               ref={topPanel}
@@ -577,12 +579,12 @@ export default function App() {
           <Screen>
             <NavigationContainer ref={navigationRef}>
               <AppNavigator
+                bibleSectionsRef={bibleSectionsRef}
                 bibleScreen={bibleScreen}
                 bottomSheetRef={bottomSheetRef}
                 bottomSheetContentRef={bottomSheetContentRef}
                 carousel={carousel}
                 headerContentRef={headerContentRef}
-                // crossrefSize={crossrefSize}
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
                 studyScreen={studyScreen}
@@ -594,7 +596,7 @@ export default function App() {
           <ReanimatedBottomSheet
             ref={bottomSheetRef}
             snapPoints={[top, "45%", "0%"]}
-            initialSnap={1}
+            initialSnap={2}
             renderHeader={bottomSheetHeader}
             renderContent={bottomSheetContent}
             // onCloseEnd={() => setFocusedVerse(null)}

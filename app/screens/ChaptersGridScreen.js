@@ -17,6 +17,7 @@ export default function ChaptersGridScreen({
   goBack = false,
   navigation,
   route,
+  scrollToChapter,
   width,
 }) {
   const { colors } = useTheme();
@@ -36,20 +37,20 @@ export default function ChaptersGridScreen({
   }
 
   const changeBook = (book, chapter, value) => {
+    changeBibleBook({
+      label: book,
+      value: value,
+      backgroundColor: "#345171",
+      icon: "apps",
+    });
     close();
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      // setTimeout(() => {
-      changeBibleBook({
-        label: book,
-        value: value,
-        backgroundColor: "#345171",
-        icon: "apps",
+      setTimeout(() => {
+        scrollToChapter(chapter);
+        if (goBack) navigation.goBack();
       });
-      // });
     });
     () => interactionPromise.cancel();
-
-    if (goBack) navigation.goBack();
   };
 
   const renderItem = ({ item }) => (

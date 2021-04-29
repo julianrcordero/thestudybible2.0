@@ -91,12 +91,12 @@ export default class StudyToolBar extends Component {
     const { colors } = this.props;
 
     return (
-      <View>
+      <View style={{ height: "100%" }}>
         <View
           style={{
             alignItems: "flex-start",
             // backgroundColor: "blue",
-            height: "100%",
+            // height: "100%",
             // flex: 0.75,
             flexDirection: "row",
             justifyContent: "space-between",

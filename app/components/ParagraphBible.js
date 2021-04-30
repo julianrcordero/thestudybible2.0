@@ -102,10 +102,8 @@ export default class ParagraphBible extends Component {
     console.log("contentSizeChange DOE nyama nyama");
 
     const flatList = this.props.bibleSectionsRef.current;
-    if (flatList && flatList.getNode) {
-      flatList
-        .getNode()
-        .scrollToIndex({ animated: false, index: this.state.index });
+    if (flatList) {
+      flatList.scrollToIndex({ animated: false, index: this.state.index });
     }
   };
 
@@ -115,40 +113,37 @@ export default class ParagraphBible extends Component {
         nativeEvent: { contentOffset: { y: this.props.scrollY } },
       },
     ],
-    { useNativeDriver: false }
+    { useNativeDriver: true }
   );
 
   scrollToChapter = () => {
     console.log("scrollToChapter");
 
     const flatList = this.props.bibleSectionsRef.current;
-    if (flatList && flatList.getNode) {
-      const node = flatList.getNode();
-      if (node) {
-        console.log("scrolling to", this.state.index);
-        node.scrollToIndex({
-          animated: false,
-          index: this.state.index,
-        });
-      }
+    if (flatList) {
+      console.log("scrolling to", this.state.index);
+      flatList.scrollToIndex({
+        animated: false,
+        index: this.state.index,
+      });
     }
   };
 
-  scrollToIndexFailed(error) {
-    console.log(error);
+  scrollToIndexFailed = (error) => {
+    // console.log("scrollToIndexFailed");
     const offset = error.averageItemLength * error.index;
 
-    const flatList = props.bibleSectionsRef.current;
+    const flatList = this.props.bibleSectionsRef.current;
 
-    if (flatList && flatList.getNode) {
-      flatList.getNode().scrollToOffset({ offset });
+    if (flatList) {
+      console.log("attempting to scroll to offset");
+      flatList.scrollToOffset({ animated: false, offset: offset });
       setTimeout(() => {
-        flatList
-          .getNode()
-          .scrollToIndex({ animated: false, index: error.index });
+        console.log("attempting to scroll to index");
+        flatList.scrollToIndex({ animated: false, index: error.index });
       }, 100); // You may choose to skip this line if the above typically works well because your average item height is accurate.
     }
-  }
+  };
 
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
@@ -166,10 +161,10 @@ export default class ParagraphBible extends Component {
         bounces={false}
         data={this.state.sections}
         // getItemLayout={this.getItemLayout}
-        initialNumToRender={1}
+        initialNumToRender={20}
         // initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
-        // maxToRenderPerBatch={3}
+        maxToRenderPerBatch={20}
         // numColumns={2}
         // onEndReached={() => console.log("onEndReached")}
         // onEndReachedThreshold={0.75}
@@ -177,33 +172,12 @@ export default class ParagraphBible extends Component {
         onScroll={this.scroll}
         onScrollToIndexFailed={this.scrollToIndexFailed}
         ref={bibleSectionsRef}
-        removeClippedSubviews
+        // removeClippedSubviews
         renderItem={this.renderItem}
         showsVerticalScrollIndicator={false}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
-        // updateCellsBatchingPeriod={150}
-        // windowSize={3}
-
-        // bounces={false}
-        // data={this.state.verseList}
-        // decelerationRate={"fast"}
-        // // extraData={this.state}
-        // getItemLayout={this.getItemLayout}
-        // horizontal={true}
-        // initialNumToRender={5}
-        // keyExtractor={this.keyExtractor}
-        // maxToRenderPerBatch={3}
-        // onViewableItemsChanged={this.onViewRef}
-        // ref={carousel}
-        // removeClippedSubviews
-        // renderItem={this.renderVerseCardItem}
-        // // scrollEventThrottle={16}
-        // showsHorizontalScrollIndicator={false}
-        // snapToAlignment={"center"}
-        // snapToInterval={width}
-        // updateCellsBatchingPeriod={25}
-        // viewabilityConfig={this.viewConfigRef}
-        // windowSize={11}
+        updateCellsBatchingPeriod={25}
+        windowSize={31}
       />
     );
   }

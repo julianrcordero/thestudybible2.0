@@ -17,7 +17,6 @@ class BottomSheetContent extends Component {
     const {
       bibleScreen,
       height,
-      top,
       paragraphBibleRef,
       carousel,
       favoriteRef,
@@ -34,7 +33,6 @@ class BottomSheetContent extends Component {
           <SettingsScreen
             bibleScreen={bibleScreen}
             studyScreen={studyScreen}
-            top={top}
             paragraphBibleRef={paragraphBibleRef}
           />
         ) : null}

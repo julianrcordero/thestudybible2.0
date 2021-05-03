@@ -131,6 +131,7 @@ class TopSheetNavigation extends Component {
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
+      console.log("changeBibleBook");
       this.props.paragraphBibleRef.current.setState({
         sections: bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
       });
@@ -172,11 +173,12 @@ class TopSheetNavigation extends Component {
   // };
 
   scrollToChapter = (chapter) => {
-    console.log("setting state to", chapter - 1);
+    // console.log("setting state to", chapter - 1);
     this.props.paragraphBibleRef.current.setState({ index: chapter - 1 });
   };
 
   changeStudyScreenBook = (newBook) => {
+    console.log("changeStudyScreenBook");
     let verses = [];
     let johnsNote = "";
     let crossrefs = "";

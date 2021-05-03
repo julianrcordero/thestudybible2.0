@@ -24,10 +24,6 @@ export default class Paragraph extends Component {
     />
   );
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("paragraph", this.props.fontSize);
-  // }
-
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.section !== nextProps.section) {
       return true;
@@ -55,23 +51,6 @@ export default class Paragraph extends Component {
     } = this.props;
 
     return (
-      // <this.ConditionalWrapper
-      //   wrapper={(children) => (
-      //     <Text
-      //       style={[
-      //         defaultStyles.bibleText,
-      //         {
-      //           color: colors.text,
-      //           fontSize: this.state.fontSize,
-      //           lineHeight: this.state.fontSize * 2,
-      //           fontFamily: fontFamily,
-      //         },
-      //       ]}
-      //     >
-      //       {children}
-      //     </Text>
-      //   )}
-      // >
       <Text
         style={[
           defaultStyles.bibleText,

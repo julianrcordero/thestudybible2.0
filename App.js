@@ -18,12 +18,12 @@ import { enableScreens } from "react-native-screens";
 enableScreens();
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import Constants from "expo-constants";
+const { height, width } = Dimensions.get("window");
 
 import TopSheetNavigation from "./app/components/TopSheetNavigation";
 import BottomSheetHeader from "./app/components/BottomSheetHeader";
 import BottomSheetContent from "./app/components/BottomSheetContent";
 import useAuth from "./app/auth/useAuth";
-const { height, width } = Dimensions.get("window");
 
 //View -> UIView
 export default function App() {
@@ -542,7 +542,6 @@ export default function App() {
       ref={bottomSheetContentRef}
       studyScreen={studyScreen}
       studyToolBar={studyToolBar}
-      top={top}
       topPanel={topPanel}
       user={user}
       width={width}

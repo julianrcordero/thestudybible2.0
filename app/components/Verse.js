@@ -59,7 +59,7 @@ export default class Verse extends Component {
     const isFirst = verse["_num"] === "1";
 
     return (
-      <Text onPress={onPress} onLongPress={this._toggleHighlight}>
+      <Text onPress={this._toggleHighlight} onLongPress={onPress}>
         <Text
           style={{
             fontWeight: "bold",

@@ -139,7 +139,7 @@ function LoginScreen({ navigation }) {
                 color: colors.black,
                 fontWeight: "bold",
                 marginVertical: 5,
-                fontSize: 16,
+                fontSize: 18,
                 textDecorationLine: "underline",
                 // textAlign: "center",
               }}

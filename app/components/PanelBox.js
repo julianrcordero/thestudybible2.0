@@ -59,7 +59,7 @@ function ResourceBox({
     titleText: {
       color: colors.text,
       fontWeight: "bold",
-      fontSize: 16,
+      fontSize: 18,
     },
   };
 

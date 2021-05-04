@@ -36,7 +36,7 @@ function MoreScreen({ navigation }) {
       },
       image: user ? require("../../assets/gtylogo.jpg") : null,
       targetScreen: routes.ACCOUNT,
-      titleSize: user ? 16 : null,
+      titleSize: user ? 18 : null,
     },
     {
       title: "NOTIFICATIONS",

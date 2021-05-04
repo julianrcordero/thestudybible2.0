@@ -142,7 +142,7 @@ export default class StudyScreen extends Component {
 
     colorPaletteVisible: false,
 
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Avenir",
 
     user: null,

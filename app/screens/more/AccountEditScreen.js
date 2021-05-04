@@ -48,7 +48,7 @@ export default class AccountEditScreen extends PureComponent {
                 color: "cornflowerblue",
                 fontWeight: "bold",
                 marginVertical: 5,
-                fontSize: 16,
+                fontSize: 18,
                 textDecorationLine: "underline",
                 // textAlign: "center",
               }}

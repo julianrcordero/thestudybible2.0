@@ -106,7 +106,7 @@ const MoreNavigator = () => (
 
 const styles = StyleSheet.create({
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     paddingHorizontal: 20,
   },
 });

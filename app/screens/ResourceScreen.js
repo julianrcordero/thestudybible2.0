@@ -14,7 +14,7 @@ import HTML from "react-native-render-html";
 
 function ResourceScreen({ route }) {
   const { item, date, imageSource } = route.params;
-  const fontSize = 16;
+  const fontSize = 18;
   const { colors } = useTheme();
 
   const styles = StyleSheet.create({
@@ -100,11 +100,11 @@ function ResourceScreen({ route }) {
           baseFontStyle={{ color: colors.text }}
           tagsStyles={
             {
-              // strong: { fontSize: 16, lineHeight: 36 },
-              // li: { fontSize: 16, lineHeight: 36 },
-              // h4: { fontSize: 16, lineHeight: 36 },
-              // em: { fontSize: 16, lineHeight: 36 },
-              // p: { fontSize: 16, lineHeight: 36 },
+              // strong: { fontSize: 18, lineHeight: 36 },
+              // li: { fontSize: 18, lineHeight: 36 },
+              // h4: { fontSize: 18, lineHeight: 36 },
+              // em: { fontSize: 18, lineHeight: 36 },
+              // p: { fontSize: 18, lineHeight: 36 },
             }
           }
           // contentWidth={100}

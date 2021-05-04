@@ -15,7 +15,7 @@ export const SettingsScreen = ({ bibleScreen, studyScreen }) => {
 
   const [showCrossReferences, setShowCrossReferences] = useState(false);
   const [fontSize, setFontSize] = useState(
-    bibleScreen.current ? bibleScreen.current.state.fontSize : 16
+    bibleScreen.current ? bibleScreen.current.state.fontSize : 18
   );
   const [fontFamily, setFontFamily] = useState(
     bibleScreen.current ? bibleScreen.current.state.fontFamily : "Avenir"

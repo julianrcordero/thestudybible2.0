@@ -107,7 +107,7 @@ function ResourceSection({ data, navigation, showDate, title }) {
           style={{
             color: colors.text,
             fontWeight: "bold",
-            fontSize: 16,
+            fontSize: 18,
             paddingVertical: 15,
           }}
         >

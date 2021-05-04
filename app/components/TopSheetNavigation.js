@@ -173,7 +173,6 @@ class TopSheetNavigation extends Component {
   // };
 
   scrollToChapter = (chapter) => {
-    // console.log("setting state to", chapter - 1);
     this.props.paragraphBibleRef.current.setState({ index: chapter - 1 });
   };
 

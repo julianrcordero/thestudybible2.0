@@ -68,6 +68,13 @@ export default function ChaptersGridScreen({
     </TouchableOpacity>
   );
 
+  const columnWrapperStyle = {
+    justifyContent: "flex-start",
+    width: "14.2857%",
+  };
+
+  const keyExtractor = (item) => item.id;
+
   return (
     <View
       style={[
@@ -77,13 +84,10 @@ export default function ChaptersGridScreen({
     >
       <FlatList
         data={DATA}
-        keyExtractor={(item) => item.id}
+        keyExtractor={keyExtractor}
         numColumns={7}
         renderItem={renderItem}
-        columnWrapperStyle={{
-          justifyContent: "flex-start",
-          width: "14.2857%",
-        }}
+        columnWrapperStyle={columnWrapperStyle}
         showsVerticalScrollIndicator={false}
       />
     </View>

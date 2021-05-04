@@ -15,30 +15,7 @@ import Paragraph from "./Paragraph";
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
-class SectionHeader extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <Text
-        style={[
-          defaultStyles.bibleText,
-          {
-            color: this.props.colors.primary,
-            fontSize: this.props.titleSize,
-          },
-        ]}
-      >
-        {this.props.title}
-      </Text>
-    );
-  }
-}
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const AnimatedSectionHeader = Animated.createAnimatedComponent(SectionHeader);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 export default class ParagraphBible extends Component {
@@ -88,43 +65,25 @@ export default class ParagraphBible extends Component {
   }
 
   renderItem = ({ item, i }) => (
-    <View
+    <Paragraph
+      chapterNum={Number(item["_num"])}
+      colors={this.props.colors}
+      fontFamily={this.props.fontFamily}
+      fontSize={this.props.fontSize}
+      formatting={this.props.formatting}
+      height={this.height}
+      item={item}
       key={i}
-      // onLayout={(event) => {
-      //   const { height } = event.nativeEvent.layout;
-      //   console.log(height);
-      // }}
-      style={{ height: this.height }}
-    >
-      <AnimatedSectionHeader
-        colors={this.props.colors}
-        title={
-          item["_num"] +
-          "\t" +
-          (Array.isArray(item["heading"])
-            ? item["heading"][0]
-            : item["heading"])
-        }
-        titleSize={this.props.fontSize * 1.75}
-      />
-      <Paragraph
-        chapterNum={Number(item["_num"])}
-        colors={this.props.colors}
-        fontFamily={this.props.fontFamily}
-        fontSize={this.props.fontSize}
-        formatting={this.props.formatting}
-        key={i}
-        section={item["verse"]}
-        // searchWords={searchWords}
-        onPress={this.props.toggleSlideView}
-      />
-    </View>
+      // section={item["verse"]}
+      // searchWords={searchWords}
+      onPress={this.props.toggleSlideView}
+    />
   );
 
   keyExtractor = (item) => item["_num"];
 
   contentSizeChange = () => {
-    console.log("contentSizeChange DOE nyama nyama");
+    console.log("contentSizeChange");
 
     const flatList = this.props.bibleSectionsRef.current;
     if (flatList) {
@@ -175,6 +134,22 @@ export default class ParagraphBible extends Component {
     }
   };
 
+  onViewRef = (viewableItems) => {
+    if (viewableItems.viewableItems[0]) {
+      const v = viewableItems.viewableItems[0];
+      // console.log(v.item._num);
+      this.props.bibleScreen.current.setState({ currentChapter: v.item._num });
+      // sendVerseToToolBar(v.item.chapter, v.item.title);
+    }
+    // Use viewable items in state or as intended
+  };
+  viewConfigRef = {
+    waitForInteraction: true,
+    // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
+    // viewAreaCoveragePercentThreshold: 95,
+    itemVisiblePercentThreshold: 75,
+  };
+
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
 
@@ -217,18 +192,19 @@ export default class ParagraphBible extends Component {
         getItemLayout={this.getItemLayout}
         initialNumToRender={3}
         keyExtractor={this.keyExtractor}
-        maxToRenderPerBatch={3}
-        // onViewableItemsChanged={this.onViewRef}
+        // maxToRenderPerBatch={3}
+        onViewableItemsChanged={this.onViewRef}
         onScroll={this.scroll}
         ref={bibleSectionsRef}
         removeClippedSubviews
         renderItem={this.renderItem}
+        scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         // snapToAlignment={"center"}
         // snapToInterval={this.height}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         updateCellsBatchingPeriod={25}
-        // viewabilityConfig={this.viewConfigRef}
+        viewabilityConfig={this.viewConfigRef}
         windowSize={7}
       />
     );

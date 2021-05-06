@@ -79,10 +79,8 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <ChaptersGridScreen
                     {...props}
-                    changeBibleBook={this.changeBibleBook}
-                    close={this.close}
-                    goBack={true}
-                    scrollToChapter={this.scrollToChapter}
+                    paragraphBibleRef={this.props.paragraphBibleRef}
+                    topPanel={this.props.topPanel}
                   />
                 )}
               </Stack.Screen>
@@ -108,9 +106,11 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <BooksListScreen
                     {...props}
-                    changeBibleBook={this.changeBibleBook}
-                    close={this.close}
-                    scrollToChapter={this.scrollToChapter}
+                    // changeBibleBook={this.changeBibleBook}
+                    // close={this.close}
+                    paragraphBibleRef={this.props.paragraphBibleRef}
+                    // scrollToChapter={this.scrollToChapter}
+                    topPanel={this.props.topPanel}
                     width={this.props.width - 30}
                   />
                 )}
@@ -177,7 +177,6 @@ class TopSheetNavigation extends Component {
   };
 
   changeStudyScreenBook = (newBook) => {
-    console.log("changeStudyScreenBook");
     let verses = [];
     let johnsNote = "";
     let crossrefs = "";

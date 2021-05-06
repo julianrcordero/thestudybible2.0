@@ -8,10 +8,10 @@ import { AccordionList } from "accordion-collapse-react-native";
 import { useTheme } from "../config/ThemeProvider";
 
 export default function BooksListScreen({
-  changeBibleBook,
-  close,
   navigation,
   route,
+  paragraphBibleRef,
+  topPanel,
   width,
 }) {
   const { colors, isDark } = useTheme();
@@ -595,11 +595,11 @@ export default function BooksListScreen({
   const _renderContent = (section) => {
     return (
       <ChaptersGridScreen
-        changeBibleBook={changeBibleBook}
+        // changeBibleBook={changeBibleBook}
         chapters={section.chapters}
-        close={close}
-        navigation={navigation}
+        paragraphBibleRef={paragraphBibleRef}
         route={route}
+        topPanel={topPanel}
         width={width}
       />
     );
@@ -620,11 +620,22 @@ export default function BooksListScreen({
   });
 
   const openChapters = (title, gridChapters) => {
+    console.log("openChapters:", title, gridChapters);
     navigation.setParams({
       title: title,
       gridChapters: gridChapters,
     });
   };
+
+  const onToggleLeft = (item, index, isExpanded) =>
+    openChapters(books[index].label, books[index].chapters);
+
+  const onToggleRight = (item, index, isExpanded) => {
+    openChapters(books[index + 39].label, books[index + 39].chapters);
+    setRightOpen(isExpanded);
+  };
+
+  const keyExtractor = (item) => `${item.value}`;
 
   return (
     <View style={{ backgroundColor: colors.background, height: "100%" }}>
@@ -651,11 +662,9 @@ export default function BooksListScreen({
             list={books.slice(0, 39)}
             header={_renderLeftHeader}
             body={_renderContent}
-            keyExtractor={(item) => `${item.value}`}
+            keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}
-            onToggle={(item, index, isExpanded) =>
-              openChapters(books[index].label, books[index].chapters)
-            }
+            onToggle={onToggleLeft}
           />
         </View>
         <View style={styles.column2}>
@@ -663,12 +672,9 @@ export default function BooksListScreen({
             list={books.slice(39, 66)}
             header={_renderRightHeader}
             body={_renderContent}
-            keyExtractor={(item) => `${item.value}`}
+            keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}
-            onToggle={(item, index, isExpanded) => {
-              openChapters(books[index + 39].label, books[index + 39].chapters);
-              setRightOpen(isExpanded);
-            }}
+            onToggle={onToggleRight}
           />
         </View>
       </View>

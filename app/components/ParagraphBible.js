@@ -192,7 +192,7 @@ export default class ParagraphBible extends Component {
         getItemLayout={this.getItemLayout}
         initialNumToRender={3}
         keyExtractor={this.keyExtractor}
-        // maxToRenderPerBatch={3}
+        maxToRenderPerBatch={3}
         onViewableItemsChanged={this.onViewRef}
         onScroll={this.scroll}
         ref={bibleSectionsRef}

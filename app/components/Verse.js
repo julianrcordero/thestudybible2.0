@@ -3,6 +3,7 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import reactStringReplace from "react-string-replace";
 import VerseFormatted from "./VerseFormatted";
+import defaultStyles from "../config/styles";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -58,37 +59,44 @@ export default class Verse extends Component {
 
     const isFirst = verse["_num"] === "1";
 
-    return (
-      <Text onPress={this._toggleHighlight} onLongPress={onPress}>
-        <Text
-          style={{
-            fontWeight: "bold",
-            color: "#00aeef",
-          }}
-        >
-          {" "}
-          {verse["_num"]}{" "}
-        </Text>
+    // const textStyle = [defaultStyles.bibleText, style];
 
-        <Text
-          style={{
-            backgroundColor: this.state.backgroundColor,
-            // textDecorationLine: this.state.textDecorationLine,
-            // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
-          }}
-        >
-          <VerseFormatted verse={verse} crossrefSize={12} />
-        </Text>
-        {/* <HighlightComponent
-          highlightStyle={{ backgroundColor: "red" }}
-          searchWords={searchWords}
-          textToHighlight={parsedVerse}
-        /> */}
+    const verseNumberStyle = {
+      fontWeight: "bold",
+      color: "#00aeef",
+    };
+
+    const verseTextStyle = {
+      backgroundColor: this.state.backgroundColor,
+      // textDecorationLine: this.state.textDecorationLine,
+      // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
+    };
+
+    return (
+      <Text
+        onPress={this._toggleHighlight}
+        onLongPress={onPress}
+        style={verseTextStyle}
+      >
+        <Text style={verseNumberStyle}>{verse["_num"]}</Text>
+
+        {/* <Text style={verseTextStyle}> */}
+
+        {verse["__text"]}
+        {/* <VerseFormatted verse={verse} /> */}
+        {/* </Text> */}
       </Text>
     );
   }
 }
 
+{
+  /* <HighlightComponent
+          highlightStyle={{ backgroundColor: "red" }}
+          searchWords={searchWords}
+          textToHighlight={parsedVerse}
+        /> */
+}
 class HighlightComponent extends PureComponent {
   render() {
     const { style, highlightStyle, searchWords, textToHighlight } = this.props;

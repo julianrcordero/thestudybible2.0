@@ -23,6 +23,8 @@ export default class ParagraphBible extends Component {
     super(props);
   }
 
+  flatList = this.props.bibleSectionsRef;
+
   height = height - Constants.statusBarHeight;
 
   state = {
@@ -39,6 +41,7 @@ export default class ParagraphBible extends Component {
     //   console.log(this.state.sections.length, "elements in paragraph Bible");
     // }
     if (prevState.index !== this.state.index) {
+      // this.scrollByIndex();
       this.scrollToChapter();
     }
   }
@@ -64,6 +67,17 @@ export default class ParagraphBible extends Component {
     return false;
   }
 
+  paragraphStyle = { height: this.height };
+
+  // titleSize = this.props.fontSize * 1.75;
+
+  // verseTextStyle = {
+  //   color: this.props.colors.text,
+  //   fontSize: this.props.fontSize,
+  //   lineHeight: this.props.fontSize * 2,
+  //   fontFamily: this.props.fontFamily,
+  // };
+
   renderItem = ({ item, i }) => (
     <Paragraph
       chapterNum={Number(item["_num"])}
@@ -71,12 +85,18 @@ export default class ParagraphBible extends Component {
       fontFamily={this.props.fontFamily}
       fontSize={this.props.fontSize}
       formatting={this.props.formatting}
-      height={this.height}
       item={item}
       key={i}
-      // section={item["verse"]}
+      // paragraphStyle={this.paragraphStyle}
       // searchWords={searchWords}
       onPress={this.props.toggleSlideView}
+      titleSize={this.props.fontSize * 1.75}
+      verseTextStyle={{
+        color: this.props.colors.text,
+        fontSize: this.props.fontSize,
+        lineHeight: this.props.fontSize * 2,
+        fontFamily: this.props.fontFamily,
+      }}
     />
   );
 
@@ -85,10 +105,10 @@ export default class ParagraphBible extends Component {
   contentSizeChange = () => {
     console.log("contentSizeChange");
 
-    const flatList = this.props.bibleSectionsRef.current;
-    if (flatList) {
-      flatList.scrollToIndex({ animated: false, index: this.state.index });
-    }
+    this.flatList.current?.scrollToIndex({
+      animated: false,
+      index: this.state.index,
+    });
   };
 
   scroll = Animated.event(
@@ -100,44 +120,49 @@ export default class ParagraphBible extends Component {
     { useNativeDriver: true }
   );
 
-  scrollToChapter = () => {
-    console.log("scrollToChapter");
+  scrollByIndex = () => {
+    console.log("scrollByIndex", this.state.index);
 
-    const flatList = this.props.bibleSectionsRef.current;
-    if (flatList) {
-      const interactionPromise = InteractionManager.runAfterInteractions(() => {
-        setTimeout(() => {
-          console.log("scrolling to", this.state.index);
-          flatList.scrollToIndex({
-            animated: false,
-            index: this.state.index,
-          });
-        });
-      });
-      () => interactionPromise.cancel();
-    }
+    this.flatList.current?.scrollToIndex({
+      animated: true,
+      index: this.state.index,
+    });
   };
 
-  scrollToIndexFailed = (error) => {
-    // console.log("scrollToIndexFailed");
-    const offset = error.averageItemLength * error.index;
+  scrollByErrorIndex = () => {
+    console.log("attempting to scroll to index");
 
-    const flatList = this.props.bibleSectionsRef.current;
+    this.flatList.current?.scrollToIndex({
+      animated: false,
+      index: error.index,
+    });
+  };
 
-    if (flatList) {
-      console.log("attempting to scroll to offset");
-      flatList.scrollToOffset({ animated: false, offset: offset });
-      setTimeout(() => {
-        console.log("attempting to scroll to index");
-        flatList.scrollToIndex({ animated: false, index: error.index });
-      }, 100); // You may choose to skip this line if the above typically works well because your average item height is accurate.
-    }
+  scrollToChapter = () => {
+    //important to have this interaction manager
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      setTimeout(this.scrollByIndex, 100);
+    });
+    () => interactionPromise.cancel();
+  };
+
+  scrollToIndexFailed = (info) => {
+    console.log(info);
+    const offset = info.averageItemLength * info.index;
+    this.flatList.current?.scrollToOffset({ animated: true, offset: offset });
+
+    // this.flatList.current?.scrollToIndex({
+    //   animated: false,
+    //   index: info.highestMeasuredFrameIndex,
+    // });
+
+    this.scrollToChapter();
   };
 
   onViewRef = (viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
-      // console.log(v.item._num);
+      console.log(v.item._num);
       this.props.bibleScreen.current.setState({ currentChapter: v.item._num });
       // sendVerseToToolBar(v.item.chapter, v.item.title);
     }
@@ -162,39 +187,17 @@ export default class ParagraphBible extends Component {
     };
 
     return (
-      // <AnimatedFlatList
-      //   bounces={false}
-      //   data={this.state.sections}
-      //   getItemLayout={this.getItemLayout}
-      //   initialNumToRender={20}
-      //   initialScrollIndex={this.state.sections >= 39 ? 39 : 5}
-      //   keyExtractor={this.keyExtractor}
-      //   maxToRenderPerBatch={20}
-      //   // numColumns={2}
-      //   // onEndReached={() => console.log("onEndReached")}
-      //   // onEndReachedThreshold={0.75}
-      //   // onContentSizeChange={this.contentSizeChange}
-      //   onScroll={this.scroll}
-      //   onScrollToIndexFailed={this.scrollToIndexFailed}
-      //   ref={bibleSectionsRef}
-      //   // removeClippedSubviews
-      //   renderItem={this.renderItem}
-      //   showsVerticalScrollIndicator={false}
-      //   snapToAlignment={"start"}
-      //   style={[styles.bibleTextView, defaultStyles.paddingText]}
-      //   updateCellsBatchingPeriod={25}
-      //   windowSize={31}
-      // />
       <AnimatedFlatList
         bounces={false}
         data={this.state.sections}
         decelerationRate={"normal"}
-        getItemLayout={this.getItemLayout}
-        initialNumToRender={3}
+        // getItemLayout={this.getItemLayout}
+        // initialNumToRender={3}
         keyExtractor={this.keyExtractor}
-        maxToRenderPerBatch={3}
+        // maxToRenderPerBatch={3}
         onViewableItemsChanged={this.onViewRef}
         onScroll={this.scroll}
+        onScrollToIndexFailed={this.scrollToIndexFailed}
         ref={bibleSectionsRef}
         removeClippedSubviews
         renderItem={this.renderItem}
@@ -205,7 +208,7 @@ export default class ParagraphBible extends Component {
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         updateCellsBatchingPeriod={25}
         viewabilityConfig={this.viewConfigRef}
-        windowSize={7}
+        windowSize={11}
       />
     );
   }

@@ -59,6 +59,8 @@ function AppPicker({
     />
   );
 
+  const keyExtractor = (item) => item.value.toString();
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
@@ -89,7 +91,7 @@ function AppPicker({
         <Button title="Close" onPress={() => setModalVisible(false)} />
         <FlatList
           data={items}
-          keyExtractor={(item) => item.value.toString()}
+          keyExtractor={keyExtractor}
           numColumns={numberOfColumns}
           renderItem={renderItem}
         />

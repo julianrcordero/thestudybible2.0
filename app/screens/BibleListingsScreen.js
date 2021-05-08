@@ -38,12 +38,14 @@ function BibleListingsScreen({ navigation }) {
     />
   );
 
+  const keyExtractor = (listing) => listing.id.toString();
+
   return (
     <View style={styles.screen}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={listings}
-        keyExtractor={(listing) => listing.id.toString()}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
       />
     </View>

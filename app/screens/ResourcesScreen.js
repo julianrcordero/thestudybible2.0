@@ -57,10 +57,12 @@ function ResourcesScreen(props) {
     />
   );
 
+  const keyExtractor = (message) => message.id.toString();
+
   return (
     <FlatList
       data={messages}
-      keyExtractor={(message) => message.id.toString()}
+      keyExtractor={keyExtractor}
       renderItem={renderItem}
       ItemSeparatorComponent={ListItemSeparator}
       refreshing={refreshing}

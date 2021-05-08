@@ -1,7 +1,6 @@
 import React, { PureComponent, useRef, useState } from "react";
 import {
   Image,
-  FlatList,
   View,
   StyleSheet,
   Text,

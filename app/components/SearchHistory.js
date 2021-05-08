@@ -52,13 +52,15 @@ export default class SearchHistory extends PureComponent {
     );
   };
 
+  keyExtractor = (item) => item.id.toString();
+
   render() {
     return (
       <FlatList
         data={this.state.searchHistory}
         extraData={this.props}
         renderItem={this.renderSearchItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={this.keyExtractor}
         ListEmptyComponent={() => this.listEmptyComponent()}
       />
     );

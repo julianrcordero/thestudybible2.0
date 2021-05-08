@@ -41,6 +41,8 @@ function BibleMoreScreen({ route, navigation }) {
     />
   );
 
+  const keyExtractor = (menuItem) => menuItem.title;
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.light }}>
       <View style={styles.container}>
@@ -54,7 +56,7 @@ function BibleMoreScreen({ route, navigation }) {
       <View style={styles.container}>
         <FlatList
           data={menuItems}
-          keyExtractor={(menuItem) => menuItem.title}
+          keyExtractor={keyExtractor}
           ItemSeparatorComponent={ListItemSeparatorComponent}
           renderItem={renderItem}
         />

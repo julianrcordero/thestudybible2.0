@@ -42,24 +42,28 @@ function MessagesScreen(props) {
     />
   );
 
+  const keyExtractor = (message) => message.id.toString();
+
+  const onRefresh = () => {
+    setMessages([
+      {
+        id: 2,
+        title: "T2",
+        description: "D2",
+        image: require("../../assets/macarthurProfile.jpg"),
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={messages}
-        keyExtractor={(message) => message.id.toString()}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
-        onRefresh={() => {
-          setMessages([
-            {
-              id: 2,
-              title: "T2",
-              description: "D2",
-              image: require("../../assets/macarthurProfile.jpg"),
-            },
-          ]);
-        }}
+        onRefresh={onRefresh}
       />
     </View>
   );

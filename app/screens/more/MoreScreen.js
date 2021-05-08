@@ -118,12 +118,14 @@ function MoreScreen({ navigation }) {
     />
   );
 
+  const keyExtractor = (menuItem) => menuItem.title;
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
         <FlatList
           data={menuItems}
-          keyExtractor={(menuItem) => menuItem.title}
+          keyExtractor={keyExtractor}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={renderItem}
         />

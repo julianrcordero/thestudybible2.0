@@ -1,5 +1,5 @@
 import React, { PureComponent, useState } from "react";
-import { TouchableOpacity, View, Switch } from "react-native";
+import { Dimensions, TouchableOpacity, View, Switch } from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
 import defaultStyles from "../config/styles";
@@ -7,13 +7,15 @@ import defaultStyles from "../config/styles";
 import Text from "../components/Text";
 
 import Slider from "@react-native-community/slider";
+import Constants from "expo-constants";
+const { height, width } = Dimensions.get("window");
 
-export const SettingsScreen = ({ bibleScreen, studyScreen, top }) => {
+export const SettingsScreen = ({ bibleScreen, studyScreen }) => {
   const { setScheme, isDark, colors } = useTheme();
 
   const [showCrossReferences, setShowCrossReferences] = useState(false);
   const [fontSize, setFontSize] = useState(
-    bibleScreen.current ? bibleScreen.current.state.fontSize : 16
+    bibleScreen.current ? bibleScreen.current.state.fontSize : 18
   );
   const [fontFamily, setFontFamily] = useState(
     bibleScreen.current ? bibleScreen.current.state.fontFamily : "Avenir"
@@ -97,7 +99,7 @@ export const SettingsScreen = ({ bibleScreen, studyScreen, top }) => {
       style={[
         {
           backgroundColor: colors.background,
-          height: top - 50,
+          height: height - Constants.statusBarHeight - 50,
         },
         defaultStyles.paddingText,
       ]}

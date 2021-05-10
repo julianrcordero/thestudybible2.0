@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect } from "react";
 import {
   FlatList,
   InteractionManager,
@@ -11,13 +11,10 @@ import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
 
 export default function ChaptersGridScreen({
-  close,
-  changeBibleBook,
   chapters,
-  goBack = false,
-  navigation,
+  paragraphBibleRef,
   route,
-  scrollToChapter,
+  topPanel,
   width,
 }) {
   const { colors } = useTheme();
@@ -36,29 +33,19 @@ export default function ChaptersGridScreen({
     });
   }
 
-  const changeBook = (book, chapter, value) => {
-    changeBibleBook({
-      label: book,
-      value: value,
+  const changeBook = (chapter) => {
+    topPanel.current.setState({ collapsed: true });
+    topPanel.current.changeBibleBook({
+      label: route.params.title,
+      value: chapter,
       backgroundColor: "#345171",
       icon: "apps",
     });
-    close();
-    const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        scrollToChapter(chapter);
-        if (goBack) navigation.goBack();
-      });
-    });
-    () => interactionPromise.cancel();
+    paragraphBibleRef.current.setState({ index: chapter - 1 });
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() =>
-        changeBook(route.params.title, item.title, route.params.value)
-      }
-    >
+    <TouchableOpacity onPress={() => changeBook(item.title)}>
       <BiblePickerItem
         item={item}
         label={item.short}
@@ -67,6 +54,13 @@ export default function ChaptersGridScreen({
       />
     </TouchableOpacity>
   );
+
+  const columnWrapperStyle = {
+    justifyContent: "flex-start",
+    width: "14.2857%",
+  };
+
+  const keyExtractor = (item) => item.id;
 
   return (
     <View
@@ -77,13 +71,10 @@ export default function ChaptersGridScreen({
     >
       <FlatList
         data={DATA}
-        keyExtractor={(item) => item.id}
+        keyExtractor={keyExtractor}
         numColumns={7}
         renderItem={renderItem}
-        columnWrapperStyle={{
-          justifyContent: "flex-start",
-          width: "14.2857%",
-        }}
+        columnWrapperStyle={columnWrapperStyle}
         showsVerticalScrollIndicator={false}
       />
     </View>

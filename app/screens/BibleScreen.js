@@ -23,7 +23,7 @@ export default class BibleScreen extends Component {
     },
     currentChapter: 1,
     currentVerse: 1,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Avenir",
     formatting: "Default",
   };
@@ -47,6 +47,8 @@ export default class BibleScreen extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.currentBook !== nextState.currentBook) {
+      return true;
+    } else if (this.state.currentChapter !== nextState.currentChapter) {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
       return true;
@@ -85,6 +87,7 @@ export default class BibleScreen extends Component {
 
   render() {
     const {
+      bibleScreen,
       bibleSectionsRef,
       bottomSheetContentRef,
       carousel,
@@ -132,6 +135,7 @@ export default class BibleScreen extends Component {
           topPanel={topPanel}
         /> */}
         <ParagraphBible
+          bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}
           darkMode={darkMode}

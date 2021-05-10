@@ -79,10 +79,8 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <ChaptersGridScreen
                     {...props}
-                    changeBibleBook={this.changeBibleBook}
-                    close={this.close}
-                    goBack={true}
-                    scrollToChapter={this.scrollToChapter}
+                    paragraphBibleRef={this.props.paragraphBibleRef}
+                    topPanel={this.props.topPanel}
                   />
                 )}
               </Stack.Screen>
@@ -108,9 +106,11 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <BooksListScreen
                     {...props}
-                    changeBibleBook={this.changeBibleBook}
-                    close={this.close}
-                    scrollToChapter={this.scrollToChapter}
+                    // changeBibleBook={this.changeBibleBook}
+                    // close={this.close}
+                    paragraphBibleRef={this.props.paragraphBibleRef}
+                    // scrollToChapter={this.scrollToChapter}
+                    topPanel={this.props.topPanel}
                     width={this.props.width - 30}
                   />
                 )}
@@ -131,6 +131,7 @@ class TopSheetNavigation extends Component {
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
+      console.log("changeBibleBook");
       this.props.paragraphBibleRef.current.setState({
         sections: bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
       });
@@ -172,7 +173,6 @@ class TopSheetNavigation extends Component {
   // };
 
   scrollToChapter = (chapter) => {
-    console.log("setting state to", chapter - 1);
     this.props.paragraphBibleRef.current.setState({ index: chapter - 1 });
   };
 

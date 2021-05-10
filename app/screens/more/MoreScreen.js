@@ -36,7 +36,7 @@ function MoreScreen({ navigation }) {
       },
       image: user ? require("../../assets/gtylogo.jpg") : null,
       targetScreen: routes.ACCOUNT,
-      titleSize: user ? 16 : null,
+      titleSize: user ? 18 : null,
     },
     {
       title: "NOTIFICATIONS",
@@ -118,12 +118,14 @@ function MoreScreen({ navigation }) {
     />
   );
 
+  const keyExtractor = (menuItem) => menuItem.title;
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
         <FlatList
           data={menuItems}
-          keyExtractor={(menuItem) => menuItem.title}
+          keyExtractor={keyExtractor}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={renderItem}
         />

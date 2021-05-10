@@ -27,7 +27,7 @@ function AppButton({
     text: {
       // backgroundColor: "green",
       color: colors.secondary,
-      fontSize: 16,
+      fontSize: 18,
       textTransform: "uppercase",
       fontWeight: "bold",
       textAlign: "center",

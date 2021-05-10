@@ -186,7 +186,7 @@ class BiblePicker extends Component {
                 <MaterialCommunityIcons
                   name="close-circle"
                   color={colors.icon}
-                  size={16}
+                  size={18}
                 />
               </TouchableOpacity>
             </View>

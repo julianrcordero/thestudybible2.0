@@ -67,6 +67,7 @@ const AppNavigator = (props) =>
           name="Bible"
           children={() => (
             <BibleScreen
+              bibleScreen={bibleScreen}
               bibleSectionsRef={bibleSectionsRef}
               bottomSheetRef={bottomSheetRef}
               bottomSheetContentRef={bottomSheetContentRef}

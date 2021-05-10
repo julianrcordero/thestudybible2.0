@@ -4,7 +4,7 @@ import { Dimensions } from "react-native";
 export default {
   bibleText: {
     color: "darkslategrey", //colors.medium, //cau
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     // lineHeight: 32,
     // textAlign: "justify",

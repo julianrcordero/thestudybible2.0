@@ -572,6 +572,13 @@ export default function BooksGridScreen({ navigation }) {
     </TouchableOpacity>
   );
 
+  const keyExtractor = (item) => item.value.toString();
+
+  const columnWrapperStyle = {
+    justifyContent: "flex-start",
+    width: "14.2857%",
+  };
+
   return (
     <View
       style={{
@@ -584,13 +591,10 @@ export default function BooksGridScreen({ navigation }) {
       </View>
       <FlatList
         data={books.slice(0, 39)}
-        keyExtractor={(item) => item.value.toString()}
+        keyExtractor={keyExtractor}
         numColumns={7}
         renderItem={renderItem}
-        columnWrapperStyle={{
-          justifyContent: "flex-start",
-          width: "14.2857%",
-        }}
+        columnWrapperStyle={columnWrapperStyle}
         showsVerticalScrollIndicator={false}
       />
       <View style={styles.titleCard}>
@@ -598,13 +602,10 @@ export default function BooksGridScreen({ navigation }) {
       </View>
       <FlatList
         data={books.slice(39, 66)}
-        keyExtractor={(item) => item.value.toString()}
+        keyExtractor={keyExtractor}
         numColumns={7}
         renderItem={renderItem}
-        columnWrapperStyle={{
-          justifyContent: "flex-start",
-          width: "14.2857%",
-        }}
+        columnWrapperStyle={columnWrapperStyle}
         showsVerticalScrollIndicator={false}
       />
     </View>

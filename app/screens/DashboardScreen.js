@@ -53,6 +53,8 @@ function DashboardScreen({ navigation }) {
     />
   );
 
+  const keyExtractor = (item, index) => item + index;
+
   return (
     <Screen style={styles.screen}>
       {getDashboardApi.error && (
@@ -65,7 +67,7 @@ function DashboardScreen({ navigation }) {
       <Indicator animating={getDashboardApi.loading} size={"large"} />
       <FlatList
         data={getDashboardApi.data}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
       />
     </Screen>

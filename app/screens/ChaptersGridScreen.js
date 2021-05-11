@@ -1,11 +1,13 @@
 import React, { PureComponent, useEffect } from "react";
 import {
+  Dimensions,
   FlatList,
   InteractionManager,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { View } from "react-native-animatable";
+const { height, width } = Dimensions.get("window");
 
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
@@ -15,7 +17,6 @@ export default function ChaptersGridScreen({
   paragraphBibleRef,
   route,
   topPanel,
-  width,
 }) {
   const { colors } = useTheme();
 
@@ -41,7 +42,10 @@ export default function ChaptersGridScreen({
       backgroundColor: "#345171",
       icon: "apps",
     });
-    paragraphBibleRef.current.setState({ index: chapter - 1 });
+    paragraphBibleRef.current.setState({
+      index: chapter - 1,
+      initialScrollIndex: chapter - 1,
+    });
   };
 
   const renderItem = ({ item }) => (
@@ -63,12 +67,7 @@ export default function ChaptersGridScreen({
   const keyExtractor = (item) => item.id;
 
   return (
-    <View
-      style={[
-        { backgroundColor: colors.background },
-        width ? { width: width } : null,
-      ]}
-    >
+    <View style={[{ backgroundColor: colors.background, width: width - 30 }]}>
       <FlatList
         data={DATA}
         keyExtractor={keyExtractor}

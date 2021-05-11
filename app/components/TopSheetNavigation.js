@@ -109,7 +109,6 @@ class TopSheetNavigation extends Component {
                     // changeBibleBook={this.changeBibleBook}
                     // close={this.close}
                     paragraphBibleRef={this.props.paragraphBibleRef}
-                    // scrollToChapter={this.scrollToChapter}
                     topPanel={this.props.topPanel}
                     width={this.props.width - 30}
                   />
@@ -131,9 +130,38 @@ class TopSheetNavigation extends Component {
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
-      console.log("changeBibleBook");
+      // console.log("changeBibleBook");
+
+      const chapters =
+        bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+      // const myChapters = [];
+
       this.props.paragraphBibleRef.current.setState({
-        sections: bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
+        sections: chapters.map((c) => {
+          // const verses = [];
+
+          return {
+            chapterNum: c["_num"],
+            chapterHeading: c["heading"],
+            verses: c["verse"].map((v) => {
+              return {
+                verseNum: v["_num"],
+                verseText: v["crossref"]
+                  ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
+                      Array.isArray(v["crossref"])
+                        ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+                        : v["crossref"]["_let"]
+                    )
+                  : reactStringReplace(
+                      v["__text"],
+                      /(\n)/g,
+                      (match, i) => match
+                    ),
+              };
+            }),
+          };
+        }),
+        // bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
       });
 
       let bibleScreen = this.props.bibleScreen;
@@ -141,39 +169,8 @@ class TopSheetNavigation extends Component {
         bibleScreen.current.setState({ currentBook: newBook });
 
       this.setState({ currentBook: newBook });
+      // console.log("changeBibleBook finished");
     }
-  };
-
-  // changeBibleBook = (newBook) => {
-  //   if (this.state.currentBook.label !== newBook.label) {
-  //     const chapters =
-  //       bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
-  //     const sections = [];
-
-  //     chapters.map((chapter) => {
-  //       sections.push({
-  //         chapter: chapter["_num"],
-  //         title: Array.isArray(chapter["heading"])
-  //           ? chapter["heading"][0]
-  //           : chapter["heading"],
-  //         data: chapter["verse"],
-  //       });
-  //     });
-
-  //     this.props.paragraphBibleRef.current.setState({
-  //       sections: sections,
-  //     });
-
-  //     let bibleScreen = this.props.bibleScreen;
-  //     if (bibleScreen.current)
-  //       bibleScreen.current.setState({ currentBook: newBook });
-
-  //     this.setState({ currentBook: newBook });
-  //   }
-  // };
-
-  scrollToChapter = (chapter) => {
-    this.props.paragraphBibleRef.current.setState({ index: chapter - 1 });
   };
 
   changeStudyScreenBook = (newBook) => {
@@ -184,7 +181,7 @@ class TopSheetNavigation extends Component {
     const chapters =
       bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
     chapters.map((chapter) => {
-      chapter["verse"].forEach((verse) => {
+      chapter["verse"].map((verse) => {
         let referenceCode =
           ("00" + newBook.value).substr(-2) +
           ("000" + chapter["_num"]).substr(-3) +
@@ -228,8 +225,37 @@ class TopSheetNavigation extends Component {
       });
     });
 
+    // console.log("changeStudyScreenBook finished");
     return verses;
   };
+
+  // changeBibleBook = (newBook) => {
+  //   if (this.state.currentBook.label !== newBook.label) {
+  //     const chapters =
+  //       bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+  //     const sections = [];
+
+  //     chapters.map((chapter) => {
+  //       sections.push({
+  //         chapter: chapter["_num"],
+  //         title: Array.isArray(chapter["heading"])
+  //           ? chapter["heading"][0]
+  //           : chapter["heading"],
+  //         data: chapter["verse"],
+  //       });
+  //     });
+
+  //     this.props.paragraphBibleRef.current.setState({
+  //       sections: sections,
+  //     });
+
+  //     let bibleScreen = this.props.bibleScreen;
+  //     if (bibleScreen.current)
+  //       bibleScreen.current.setState({ currentBook: newBook });
+
+  //     this.setState({ currentBook: newBook });
+  //   }
+  // };
 
   styles = StyleSheet.create({
     search: {

@@ -47,11 +47,11 @@ export default class Paragraph extends Component {
   );
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.itemNum !== nextProps.itemNum) {
+    if (this.props.chapterNum !== nextProps.chapterNum) {
       return true;
-    } else if (this.props.itemHeading !== nextProps.itemHeading) {
+    } else if (this.props.chapterHeading !== nextProps.chapterHeading) {
       return true;
-    } else if (this.props.itemVerse !== nextProps.itemVerse) {
+    } else if (this.props.verses !== nextProps.verses) {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
       return true;
@@ -60,64 +60,59 @@ export default class Paragraph extends Component {
     } else if (this.props.verseTextStyle !== nextProps.verseTextStyle) {
       return true;
     }
-    //   else if (this.props.fontFamily !== nextProps.fontFamily) {
-    //   return true;
-    // } else if (this.props.fontSize !== nextProps.fontSize) {
-    //   return true;
-    // } else if (this.props.formatting !== nextProps.formatting) {
-    //   return true;
-    // }
     return false;
   }
 
   render() {
     const {
+      chapterHeading,
       chapterNum,
       colors,
-      // item,
-      itemNum,
-      itemHeading,
-      itemVerse,
       searchWords,
       onPress,
       paragraphStyle,
       titleSize,
+      verses,
       verseTextStyle,
     } = this.props;
 
     const title =
-      itemNum +
+      chapterNum +
       "\t" +
-      (Array.isArray(itemHeading) ? itemHeading[0] : itemHeading);
+      (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      // <View
-      //   // onLayout={(event) => {
-      //   //   const { height } = event.nativeEvent.layout;
-      //   //   console.log(height);
-      //   // }}
-      //   style={paragraphStyle}
-      // >
-      //   <AnimatedSectionHeader
-      //     colors={colors}
-      //     title={title}
-      //     titleSize={titleSize}
-      //   />
+      <View
+      // onLayout={(event) => {
+      //   const { height } = event.nativeEvent.layout;
+      //   console.log(height);
+      // }}
+      // style={paragraphStyle}
+      >
+        <AnimatedSectionHeader
+          colors={colors}
+          title={title}
+          titleSize={titleSize}
+        />
 
-      <Text style={[defaultStyles.bibleText, verseTextStyle, paragraphStyle]}>
-        {itemVerse.map((verse, j) => (
-          <Verse
-            key={j}
-            // chapterNum={chapterNum}
-            verseNumber={verse["_num"]}
-            verseText={verse["__text"]}
-            onPress={() => onPress(chapterNum, j + 1)}
-            // searchWords={searchWords}
-            // style={style}
-          />
-        ))}
-      </Text>
-      // </View>
+        <Text style={[defaultStyles.bibleText, verseTextStyle, paragraphStyle]}>
+          {verses.map(
+            (verse, j) => verse.verseText
+
+            // (
+            //   <Verse
+            //     key={j}
+            //     // chapterNum={chapterNum}
+            //     verseNumber={verse.verseNumber}
+            //     verseText={verse.verseText}
+            //     onPress={() => onPress(chapterNum, j + 1)}
+            //     // searchWords={searchWords}
+            //     // style={style}
+            //   />
+            // )
+          )}
+        </Text>
+      </View>
     );
   }
 }

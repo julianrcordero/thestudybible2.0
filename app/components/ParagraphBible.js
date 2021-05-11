@@ -29,6 +29,7 @@ export default class ParagraphBible extends Component {
 
   state = {
     index: 0,
+    initialScrollIndex: 0,
     sections: [],
   };
 
@@ -40,6 +41,10 @@ export default class ParagraphBible extends Component {
     // if (prevState.sections.length !== this.state.sections.length) {
     //   console.log(this.state.sections.length, "elements in paragraph Bible");
     // }
+
+    if (prevState.initialScrollIndex !== this.state.initialScrollIndex) {
+      console.log("initialScrollIndex:", this.state.initialScrollIndex);
+    }
     if (prevState.index !== this.state.index) {
       // this.scrollByIndex();
       this.scrollToChapter();
@@ -63,6 +68,8 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.state.index !== nextState.index) {
       return true;
+    } else if (this.state.initialScrollIndex !== nextState.initialScrollIndex) {
+      return true;
     }
     return false;
   }
@@ -80,20 +87,18 @@ export default class ParagraphBible extends Component {
 
   renderItem = ({ item, i }) => (
     <Paragraph
-      chapterNum={Number(item["_num"])}
+      chapterHeading={item.chapterHeading}
+      chapterNum={Number(item.chapterNum)}
       colors={this.props.colors}
       fontFamily={this.props.fontFamily}
       fontSize={this.props.fontSize}
       formatting={this.props.formatting}
-      // item={item}
-      itemNum={item["_num"]}
-      itemHeading={item["heading"]}
-      itemVerse={item["verse"]}
       key={i}
-      paragraphStyle={this.paragraphStyle}
+      // paragraphStyle={this.paragraphStyle}
       // searchWords={searchWords}
       onPress={this.props.toggleSlideView}
       titleSize={this.props.fontSize * 1.75}
+      verses={item.verses}
       verseTextStyle={{
         color: this.props.colors.text,
         fontSize: this.props.fontSize,
@@ -103,7 +108,7 @@ export default class ParagraphBible extends Component {
     />
   );
 
-  keyExtractor = (item) => item["_num"];
+  keyExtractor = (item) => item.chapterNum;
 
   contentSizeChange = () => {
     console.log("contentSizeChange");
@@ -128,12 +133,12 @@ export default class ParagraphBible extends Component {
 
     this.flatList.current?.scrollToIndex({
       animated: false,
-      index: this.state.index,
+      index: this.state.initialScrollIndex, //this.state.index,
     });
   };
 
   scrollByErrorIndex = () => {
-    console.log("attempting to scroll to index");
+    console.log("scrollByErrorIndex", error.index);
 
     this.flatList.current?.scrollToIndex({
       animated: false,
@@ -142,6 +147,7 @@ export default class ParagraphBible extends Component {
   };
 
   scrollToOffset = () => {
+    console.log("scrollToOffset");
     this.flatList.current?.scrollTo({
       x: 0,
       y: this.state.index * height,
@@ -158,24 +164,44 @@ export default class ParagraphBible extends Component {
     () => interactionPromise.cancel();
   };
 
-  // scrollToIndexFailed = (info) => {
-  //   console.log(info);
-  //   const offset = info.averageItemLength * info.index;
-  //   this.flatList.current?.scrollToOffset({ animated: true, offset: offset });
+  // (error) => {
+  //   this.flatListRef.scrollToOffset({ offset: error.averageItemLength * error.index, animated: true });
+  //   setTimeout(() => {
+  //     if (this.state.data.length !== 0 && this.flatListRef !== null) {
+  //       this.flatListRef.scrollToIndex({ index: error.index, animated: true });
+  //     }
+  //   }, 100);
+  // }
 
-  //   // this.flatList.current?.scrollToIndex({
-  //   //   animated: false,
-  //   //   index: info.highestMeasuredFrameIndex,
-  //   // });
+  scrollToIndexFailed = (info) => {
+    this.scrollToChapter();
 
-  //   this.scrollToChapter();
-  // };
+    const offset = info.averageItemLength * info.index;
+    console.log("scrollToIndexFailed", offset);
+    this.flatList.current?.scrollToOffset({ animated: false, offset: offset });
+    // this.flatList.current?.scrollToIndex({
+    //   animated: false,
+    //   index: info.highestMeasuredFrameIndex,
+    // });
+
+    setTimeout(() => {
+      this.flatList.current?.scrollToIndex({
+        index: info.index,
+        animated: false,
+      });
+    });
+    // }, 200);
+
+    // this.scrollToChapter();
+  };
 
   onViewRef = (viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
-      console.log(v.item._num);
-      this.props.bibleScreen.current.setState({ currentChapter: v.item._num });
+      // console.log(v);
+      this.props.bibleScreen.current.setState({
+        currentChapter: v.item.chapterNum,
+      });
       // sendVerseToToolBar(v.item.chapter, v.item.title);
     }
     // Use viewable items in state or as intended
@@ -187,29 +213,29 @@ export default class ParagraphBible extends Component {
     itemVisiblePercentThreshold: 75,
   };
 
-  mapFunction = (item, index) => (
-    <Paragraph
-      chapterNum={Number(item["_num"])}
-      colors={this.props.colors}
-      fontFamily={this.props.fontFamily}
-      fontSize={this.props.fontSize}
-      formatting={this.props.formatting}
-      itemNum={item["_num"]}
-      itemHeading={item["heading"]}
-      itemVerse={item["verse"]}
-      key={index}
-      paragraphStyle={this.paragraphStyle}
-      // searchWords={searchWords}
-      onPress={this.props.toggleSlideView}
-      titleSize={this.props.fontSize * 1.75}
-      verseTextStyle={{
-        color: this.props.colors.text,
-        fontSize: this.props.fontSize,
-        lineHeight: this.props.fontSize * 2,
-        fontFamily: this.props.fontFamily,
-      }}
-    />
-  );
+  // mapFunction = (item, index) => (
+  //   <Paragraph
+  //     chapterNum={Number(item["_num"])}
+  //     colors={this.props.colors}
+  //     fontFamily={this.props.fontFamily}
+  //     fontSize={this.props.fontSize}
+  //     formatting={this.props.formatting}
+  //     itemNum={item["_num"]}
+  //     itemHeading={item["heading"]}
+  //     itemVerse={item["verse"]}
+  //     key={index}
+  //     paragraphStyle={this.paragraphStyle}
+  //     // searchWords={searchWords}
+  //     onPress={this.props.toggleSlideView}
+  //     titleSize={this.props.fontSize * 1.75}
+  //     verseTextStyle={{
+  //       color: this.props.colors.text,
+  //       fontSize: this.props.fontSize,
+  //       lineHeight: this.props.fontSize * 2,
+  //       fontFamily: this.props.fontFamily,
+  //     }}
+  //   />
+  // );
 
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
@@ -227,13 +253,14 @@ export default class ParagraphBible extends Component {
         bounces={false}
         data={this.state.sections}
         decelerationRate={"normal"}
-        getItemLayout={this.getItemLayout}
-        // initialNumToRender={3}
+        // getItemLayout={this.getItemLayout}
+        initialNumToRender={50}
+        initialScrollIndex={this.state.initialScrollIndex}
         keyExtractor={this.keyExtractor}
         // maxToRenderPerBatch={3}
         onViewableItemsChanged={this.onViewRef}
         onScroll={this.scroll}
-        // onScrollToIndexFailed={this.scrollToIndexFailed}
+        onScrollToIndexFailed={this.scrollToIndexFailed}
         ref={bibleSectionsRef}
         removeClippedSubviews
         renderItem={this.renderItem}
@@ -244,7 +271,7 @@ export default class ParagraphBible extends Component {
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         updateCellsBatchingPeriod={25}
         viewabilityConfig={this.viewConfigRef}
-        windowSize={11}
+        // windowSize={11}
       />
       // <AnimatedScrollView
       //   bounces={false}

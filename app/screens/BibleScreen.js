@@ -35,17 +35,17 @@ export default class BibleScreen extends Component {
   }
 
   //Study Screen
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.currentBook.label !== this.state.currentBook.label) {
-  //     this.props.studyScreen.current.setState({
-  //       bookFilter: this.state.currentBook.value,
-  //       currentBook: this.state.currentBook,
-  //       verseList: this.props.topPanel.current.changeStudyScreenBook(
-  //         this.state.currentBook
-  //       ),
-  //     });
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentBook.label !== this.state.currentBook.label) {
+      this.props.studyScreen.current.setState({
+        bookFilter: this.state.currentBook.value,
+        currentBook: this.state.currentBook,
+        verseList: this.props.topPanel.current.changeStudyScreenBook(
+          this.state.currentBook
+        ),
+      });
+    }
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.currentBook !== nextState.currentBook) {
@@ -146,7 +146,7 @@ export default class BibleScreen extends Component {
           HEADER_HEIGHT={HEADER_HEIGHT}
           ref={paragraphBibleRef}
           scrollY={scrollY}
-          toggleSlideView={this.toggleSlideView}
+          // toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         />
       </>

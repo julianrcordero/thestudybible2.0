@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 import { useTheme } from "../config/ThemeProvider";
 
 import defaultStyles from "../config/styles";
-import Paragraph from "./Paragraph";
+import Chapter from "./Chapter";
 import Verse from "./Verse";
 
 class SectionHeader extends PureComponent {
@@ -91,7 +91,7 @@ export default class VerseByVerseBible extends Component {
   renderItem = ({ item, index, section }) => (
     // <Text>{section.data[index]["__text"]}</Text>
     <VerseText verseText={section.data[index]["__text"]} />
-    // <Paragraph
+    // <Chapter
     //   chapterNum={Number(item["_num"])}
     //   colors={this.props.colors}
     //   fontFamily={this.props.fontFamily}

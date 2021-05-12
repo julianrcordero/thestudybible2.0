@@ -1,9 +1,8 @@
-import React, { Component, PureComponent } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import React, { Component } from "react";
+import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
-import reactStringReplace from "react-string-replace";
 import VerseFormatted from "./VerseFormatted";
-import defaultStyles from "../config/styles";
+// import { Text } from "react-native-paper";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -21,6 +20,13 @@ export default class Verse extends Component {
     } else {
       this.setState({ backgroundColor: "transparent" });
     }
+  };
+
+  _openStudyScreen = () => {
+    this.props.bibleScreen.current?.toggleSlideView(
+      this.props.chapterNum,
+      Number(this.props.verseNumber)
+    );
   };
 
   // _toggleUnderline = () => {
@@ -44,25 +50,10 @@ export default class Verse extends Component {
   render() {
     const {
       // focusedVerse,
+      // searchWords,
       verseNumber,
       verseText,
-      // searchWords,
-      onPress,
     } = this.props;
-
-    styles = {
-      container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F5FCFF",
-        flexDirection: "row",
-      },
-    };
-
-    const isFirst = verseNumber === "1";
-
-    // const textStyle = [defaultStyles.bibleText, style];
 
     const verseNumberStyle = {
       fontWeight: "bold",
@@ -78,16 +69,13 @@ export default class Verse extends Component {
     return (
       <Text
         onPress={this._toggleHighlight}
-        onLongPress={onPress}
+        onLongPress={this._openStudyScreen}
         style={verseTextStyle}
       >
-        <Text style={verseNumberStyle}>{verseNumber}</Text>
-
-        {/* <Text style={verseTextStyle}> */}
+        {/* <Text style={verseNumberStyle}>{verseNumber + " "}</Text> */}
 
         {verseText}
         {/* <VerseFormatted verse={verse} /> */}
-        {/* </Text> */}
       </Text>
     );
   }
@@ -100,17 +88,17 @@ export default class Verse extends Component {
           textToHighlight={parsedVerse}
         /> */
 }
-class HighlightComponent extends PureComponent {
-  render() {
-    const { style, highlightStyle, searchWords, textToHighlight } = this.props;
+// class HighlightComponent extends PureComponent {
+//   render() {
+//     const { style, highlightStyle, searchWords, textToHighlight } = this.props;
 
-    return (
-      <Highlighter
-        style={style}
-        highlightStyle={highlightStyle}
-        searchWords={searchWords}
-        textToHighlight={textToHighlight}
-      />
-    );
-  }
-}
+//     return (
+//       <Highlighter
+//         style={style}
+//         highlightStyle={highlightStyle}
+//         searchWords={searchWords}
+//         textToHighlight={textToHighlight}
+//       />
+//     );
+//   }
+// }

@@ -106,7 +106,6 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <BooksListScreen
                     {...props}
-                    // close={this.close}
                     paragraphBibleRef={this.props.paragraphBibleRef}
                     topPanel={this.props.topPanel}
                     width={this.props.width - 30}
@@ -129,6 +128,7 @@ class TopSheetNavigation extends Component {
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
+      console.log("change book");
       const chapters =
         bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
 

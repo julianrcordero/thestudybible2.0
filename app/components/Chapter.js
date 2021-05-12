@@ -5,6 +5,7 @@ import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeProvider";
 import AppText from "./Text";
 import Animated from "react-native-reanimated";
+import { Paragraph } from "react-native-paper";
 
 class SectionHeader extends PureComponent {
   constructor(props) {
@@ -27,7 +28,7 @@ class SectionHeader extends PureComponent {
 
 const AnimatedSectionHeader = Animated.createAnimatedComponent(SectionHeader);
 
-export default class Paragraph extends Component {
+export default class Chapter extends Component {
   constructor(props) {
     super(props);
   }
@@ -63,14 +64,36 @@ export default class Paragraph extends Component {
     return false;
   }
 
+  mapVerse = (verse, i) => verse.verseNum + " " + verse.verseText;
+  // (
+  //   <Verse
+  //     chapterNum={chapterNum}
+  //     bibleScreen={bibleScreen}
+  //     key={i}
+  //     verseNumber={verse.verseNum}
+  //     verseText={verse.verseText}
+  //     // searchWords={searchWords}
+  //   />
+  // )
+
+  mapVerseObject = (verse, j) => (
+    <Verse
+      chapterNum={this.props.chapterNum}
+      bibleScreen={this.props.bibleScreen}
+      key={j}
+      verseNumber={verse.verseNum}
+      verseText={verse.verseText}
+      // searchWords={searchWords}
+    />
+  );
+
   render() {
     const {
       chapterHeading,
       chapterNum,
       colors,
       searchWords,
-      onPress,
-      paragraphStyle,
+      // onPress,
       titleSize,
       verses,
       verseTextStyle,
@@ -82,37 +105,17 @@ export default class Paragraph extends Component {
       (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      <View
-      // onLayout={(event) => {
-      //   const { height } = event.nativeEvent.layout;
-      //   console.log(height);
-      // }}
-      // style={paragraphStyle}
-      >
-        <AnimatedSectionHeader
-          colors={colors}
-          title={title}
-          titleSize={titleSize}
-        />
-
-        <Text style={[defaultStyles.bibleText, verseTextStyle, paragraphStyle]}>
-          {verses.map(
-            (verse, j) => verse.verseText
-
-            // (
-            //   <Verse
-            //     key={j}
-            //     // chapterNum={chapterNum}
-            //     verseNumber={verse.verseNumber}
-            //     verseText={verse.verseText}
-            //     onPress={() => onPress(chapterNum, j + 1)}
-            //     // searchWords={searchWords}
-            //     // style={style}
-            //   />
-            // )
-          )}
-        </Text>
-      </View>
+      <Paragraph style={verseTextStyle}>
+        {verses.map(this.mapVerseObject)}
+      </Paragraph>
+      // <View>
+      //   <AnimatedSectionHeader
+      //     colors={colors}
+      //     title={title}
+      //     titleSize={titleSize}
+      //   />
+      //   <Text style={verseTextStyle}>{verses.map(this.mapVerseObject)}</Text>
+      // </View>
     );
   }
 }

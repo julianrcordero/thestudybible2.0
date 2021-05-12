@@ -35,7 +35,6 @@ export default function ChaptersGridScreen({
   }
 
   const changeBook = (chapter) => {
-    topPanel.current.setState({ collapsed: true });
     topPanel.current.changeBibleBook({
       label: route.params.title,
       value: chapter,
@@ -44,8 +43,8 @@ export default function ChaptersGridScreen({
     });
     paragraphBibleRef.current.setState({
       index: chapter - 1,
-      initialScrollIndex: chapter - 1,
     });
+    topPanel.current.setState({ collapsed: true });
   };
 
   const renderItem = ({ item }) => (

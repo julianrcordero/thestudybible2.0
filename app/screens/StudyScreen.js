@@ -257,7 +257,7 @@ export default class StudyScreen extends Component {
     // Use viewable items in state or as intended
   };
   viewConfigRef = {
-    waitForInteraction: true,
+    waitForInteraction: false,
     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
     // viewAreaCoveragePercentThreshold: 95,
     itemVisiblePercentThreshold: 75,

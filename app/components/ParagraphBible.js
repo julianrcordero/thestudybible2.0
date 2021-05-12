@@ -10,7 +10,7 @@ import {
 import Animated from "react-native-reanimated";
 
 import defaultStyles from "../config/styles";
-import Paragraph from "./Paragraph";
+import Chapter from "./Chapter";
 
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
@@ -29,7 +29,6 @@ export default class ParagraphBible extends Component {
 
   state = {
     index: 0,
-    initialScrollIndex: 0,
     loading: false,
     sections: [],
   };
@@ -39,9 +38,6 @@ export default class ParagraphBible extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (prevState.initialScrollIndex !== this.state.initialScrollIndex) {
-    //   console.log("initialScrollIndex:", this.state.initialScrollIndex);
-    // }
     // console.log("componentDidUpdate");
     if (prevState.index !== this.state.index) {
       this.scrollToChapter();
@@ -65,41 +61,42 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.state.index !== nextState.index) {
       return true;
-    } else if (this.state.initialScrollIndex !== nextState.initialScrollIndex) {
-      return true;
     }
     return false;
   }
 
-  paragraphStyle = { height: this.height };
-
-  renderItem = ({ item, i }) =>
-    this.state.loading ? (
-      <View
-        style={{ backgroundColor: "red", height: height, width: width }}
-      ></View>
-    ) : (
-      <Paragraph
-        chapterHeading={item.chapterHeading}
-        chapterNum={Number(item.chapterNum)}
-        colors={this.props.colors}
-        fontFamily={this.props.fontFamily}
-        fontSize={this.props.fontSize}
-        formatting={this.props.formatting}
-        key={i}
-        // paragraphStyle={this.paragraphStyle}
-        // searchWords={searchWords}
-        onPress={this.props.toggleSlideView}
-        titleSize={this.props.fontSize * 1.75}
-        verses={item.verses}
-        verseTextStyle={{
+  renderItem = ({ item, i }) => (
+    // this.state.loading ? (
+    //   <View
+    //     style={{ backgroundColor: "red", height: height, width: width }}
+    //   ></View>
+    // ) : (
+    <Chapter
+      bibleScreen={this.props.bibleScreen}
+      chapterHeading={item.chapterHeading}
+      chapterNum={Number(item.chapterNum)}
+      colors={this.props.colors}
+      fontFamily={this.props.fontFamily}
+      fontSize={this.props.fontSize}
+      formatting={this.props.formatting}
+      key={i}
+      // searchWords={searchWords}
+      // onPress={this.props.toggleSlideView}
+      titleSize={this.props.fontSize * 1.75}
+      verses={item.verses}
+      verseTextStyle={[
+        defaultStyles.bibleText,
+        {
           color: this.props.colors.text,
           fontSize: this.props.fontSize,
           lineHeight: this.props.fontSize * 2,
           fontFamily: this.props.fontFamily,
-        }}
-      />
-    );
+          // height: this.height,
+        },
+      ]}
+    />
+  );
+  // );
 
   keyExtractor = (item) => item.chapterNum;
 
@@ -113,16 +110,14 @@ export default class ParagraphBible extends Component {
   );
 
   scrollByIndex = () => {
-    console.log("scrollByIndex", this.state.index);
-
-    this.setState({ loading: true });
+    // this.setState({ loading: true });
     setTimeout(() =>
       this.flatList.current?.scrollToIndex({
         animated: false,
         index: this.state.index, //this.state.index,
       })
     );
-    this.setState({ loading: false });
+    // this.setState({ loading: false });
   };
 
   scrollByErrorIndex = () => {
@@ -165,10 +160,8 @@ export default class ParagraphBible extends Component {
   };
 
   onViewRef = (viewableItems) => {
-    console.log(viewableItems);
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
-      console.log(v);
       this.props.bibleScreen.current.setState({
         currentChapter: v.item.chapterNum,
       });
@@ -177,28 +170,10 @@ export default class ParagraphBible extends Component {
     // Use viewable items in state or as intended
   };
   viewConfigRef = {
-    waitForInteraction: true,
+    waitForInteraction: false,
     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
-    // viewAreaCoveragePercentThreshold: 95,
-    itemVisiblePercentThreshold: 75,
-  };
-
-  onViewRef = (viewableItems) => {
-    if (viewableItems.viewableItems[0]) {
-      const v = viewableItems.viewableItems[0];
-
-      if (this.props.bibleScreen.current)
-        this.props.bibleScreen.current.setState({
-          currentChapter: v.index + 1,
-        });
-    }
-    // Use viewable items in state or as intended
-  };
-  viewConfigRef = {
-    waitForInteraction: true,
-    // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
-    // viewAreaCoveragePercentThreshold: 95,
-    itemVisiblePercentThreshold: 75,
+    viewAreaCoveragePercentThreshold: 75,
+    // itemVisiblePercentThreshold: 75,
   };
 
   render() {
@@ -217,10 +192,10 @@ export default class ParagraphBible extends Component {
         bounces={false}
         data={this.state.sections}
         decelerationRate={"normal"}
-        extraData={this.state}
+        extraData={this.state.index}
         // getItemLayout={this.getItemLayout}
         initialNumToRender={50}
-        initialScrollIndex={this.state.initialScrollIndex}
+        initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
         ListEmptyComponent={
           <View
@@ -239,9 +214,9 @@ export default class ParagraphBible extends Component {
         // snapToAlignment={"center"}
         // snapToInterval={this.height}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
-        updateCellsBatchingPeriod={25}
+        updateCellsBatchingPeriod={10}
         viewabilityConfig={this.viewConfigRef}
-        // windowSize={11}
+        windowSize={101}
       />
     );
   }

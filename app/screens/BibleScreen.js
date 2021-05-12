@@ -28,22 +28,24 @@ export default class BibleScreen extends Component {
     formatting: "Default",
   };
 
+  //Bible Screen
   componentDidMount() {
     let currentBook = this.state.currentBook;
     this.props.topPanel.current.changeBibleBook(currentBook);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentBook.label !== this.state.currentBook.label) {
-      this.props.studyScreen.current.setState({
-        bookFilter: this.state.currentBook.value,
-        currentBook: this.state.currentBook,
-        verseList: this.props.topPanel.current.changeStudyScreenBook(
-          this.state.currentBook
-        ),
-      });
-    }
-  }
+  //Study Screen
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.currentBook.label !== this.state.currentBook.label) {
+  //     this.props.studyScreen.current.setState({
+  //       bookFilter: this.state.currentBook.value,
+  //       currentBook: this.state.currentBook,
+  //       verseList: this.props.topPanel.current.changeStudyScreenBook(
+  //         this.state.currentBook
+  //       ),
+  //     });
+  //   }
+  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.currentBook !== nextState.currentBook) {

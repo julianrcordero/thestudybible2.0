@@ -11,19 +11,6 @@ class SectionHeader extends PureComponent {
     super(props);
   }
 
-<<<<<<< HEAD
-  render() {
-    return (
-      <Text
-        style={[
-          defaultStyles.bibleText,
-          {
-            color: this.props.colors.primary,
-            fontSize: this.props.titleSize,
-          },
-        ]}
-      >
-=======
   sectionStyle = {
     color: this.props.colors.primary,
     fontSize: this.props.titleSize,
@@ -32,7 +19,6 @@ class SectionHeader extends PureComponent {
   render() {
     return (
       <Text style={[defaultStyles.bibleText, this.sectionStyle]}>
->>>>>>> 5f6585c0cf76d231af1eb2f05199ea16f8c56ca6
         {this.props.title}
       </Text>
     );
@@ -82,13 +68,6 @@ export default class Paragraph extends Component {
       chapterHeading,
       chapterNum,
       colors,
-<<<<<<< HEAD
-      fontFamily,
-      fontSize,
-      height,
-      item,
-=======
->>>>>>> 5f6585c0cf76d231af1eb2f05199ea16f8c56ca6
       searchWords,
       onPress,
       paragraphStyle,
@@ -103,40 +82,6 @@ export default class Paragraph extends Component {
       (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-<<<<<<< HEAD
-      <View style={{ height: height }}>
-        <AnimatedSectionHeader
-          colors={this.props.colors}
-          title={
-            item["_num"] +
-            "\t" +
-            (Array.isArray(item["heading"])
-              ? item["heading"][0]
-              : item["heading"])
-          }
-          titleSize={this.props.fontSize * 1.75}
-        />
-        <Text
-          style={[
-            defaultStyles.bibleText,
-            {
-              color: colors.text,
-              fontSize: fontSize,
-              lineHeight: fontSize * 2,
-              fontFamily: fontFamily,
-            },
-          ]}
-        >
-          {item["verse"].map((data, j) => (
-            <Verse
-              key={j}
-              // chapterNum={chapterNum}
-              verse={data}
-              onPress={() => onPress(chapterNum, j + 1)}
-              // searchWords={searchWords}
-            />
-          ))}
-=======
       <View
       // onLayout={(event) => {
       //   const { height } = event.nativeEvent.layout;
@@ -166,7 +111,6 @@ export default class Paragraph extends Component {
             //   />
             // )
           )}
->>>>>>> 5f6585c0cf76d231af1eb2f05199ea16f8c56ca6
         </Text>
       </View>
     );

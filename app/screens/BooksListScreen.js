@@ -585,7 +585,6 @@ export default function BooksListScreen({
   const _renderContent = (section) => {
     return (
       <ChaptersGridScreen
-        // changeBibleBook={changeBibleBook}
         chapters={section.chapters}
         paragraphBibleRef={paragraphBibleRef}
         route={route}

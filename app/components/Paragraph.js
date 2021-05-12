@@ -1,5 +1,5 @@
 import React, { Component, PureComponent } from "react";
-import { FlatList, Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
 import { useTheme } from "../config/ThemeProvider";
@@ -11,6 +11,7 @@ class SectionHeader extends PureComponent {
     super(props);
   }
 
+<<<<<<< HEAD
   render() {
     return (
       <Text
@@ -22,6 +23,16 @@ class SectionHeader extends PureComponent {
           },
         ]}
       >
+=======
+  sectionStyle = {
+    color: this.props.colors.primary,
+    fontSize: this.props.titleSize,
+  };
+
+  render() {
+    return (
+      <Text style={[defaultStyles.bibleText, this.sectionStyle]}>
+>>>>>>> 5f6585c0cf76d231af1eb2f05199ea16f8c56ca6
         {this.props.title}
       </Text>
     );
@@ -50,15 +61,17 @@ export default class Paragraph extends Component {
   );
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.section !== nextProps.section) {
+    if (this.props.chapterNum !== nextProps.chapterNum) {
+      return true;
+    } else if (this.props.chapterHeading !== nextProps.chapterHeading) {
+      return true;
+    } else if (this.props.verses !== nextProps.verses) {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
       return true;
-    } else if (this.props.fontFamily !== nextProps.fontFamily) {
+    } else if (this.props.titleSize !== nextProps.titleSize) {
       return true;
-    } else if (this.props.fontSize !== nextProps.fontSize) {
-      return true;
-    } else if (this.props.formatting !== nextProps.formatting) {
+    } else if (this.props.verseTextStyle !== nextProps.verseTextStyle) {
       return true;
     }
     return false;
@@ -66,17 +79,31 @@ export default class Paragraph extends Component {
 
   render() {
     const {
+      chapterHeading,
       chapterNum,
       colors,
+<<<<<<< HEAD
       fontFamily,
       fontSize,
       height,
       item,
+=======
+>>>>>>> 5f6585c0cf76d231af1eb2f05199ea16f8c56ca6
       searchWords,
       onPress,
+      paragraphStyle,
+      titleSize,
+      verses,
+      verseTextStyle,
     } = this.props;
 
+    const title =
+      chapterNum +
+      "\t" +
+      (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
+
     return (
+<<<<<<< HEAD
       <View style={{ height: height }}>
         <AnimatedSectionHeader
           colors={this.props.colors}
@@ -109,6 +136,37 @@ export default class Paragraph extends Component {
               // searchWords={searchWords}
             />
           ))}
+=======
+      <View
+      // onLayout={(event) => {
+      //   const { height } = event.nativeEvent.layout;
+      //   console.log(height);
+      // }}
+      // style={paragraphStyle}
+      >
+        <AnimatedSectionHeader
+          colors={colors}
+          title={title}
+          titleSize={titleSize}
+        />
+
+        <Text style={[defaultStyles.bibleText, verseTextStyle, paragraphStyle]}>
+          {verses.map(
+            (verse, j) => verse.verseText
+
+            // (
+            //   <Verse
+            //     key={j}
+            //     // chapterNum={chapterNum}
+            //     verseNumber={verse.verseNumber}
+            //     verseText={verse.verseText}
+            //     onPress={() => onPress(chapterNum, j + 1)}
+            //     // searchWords={searchWords}
+            //     // style={style}
+            //   />
+            // )
+          )}
+>>>>>>> 5f6585c0cf76d231af1eb2f05199ea16f8c56ca6
         </Text>
       </View>
     );

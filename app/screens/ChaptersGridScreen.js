@@ -1,24 +1,22 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect } from "react";
 import {
+  Dimensions,
   FlatList,
   InteractionManager,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { View } from "react-native-animatable";
+const { height, width } = Dimensions.get("window");
 
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
 
 export default function ChaptersGridScreen({
-  close,
-  changeBibleBook,
   chapters,
-  goBack = false,
-  navigation,
+  paragraphBibleRef,
   route,
-  scrollToChapter,
-  width,
+  topPanel,
 }) {
   const { colors } = useTheme();
 
@@ -36,29 +34,22 @@ export default function ChaptersGridScreen({
     });
   }
 
-  const changeBook = (book, chapter, value) => {
-    changeBibleBook({
-      label: book,
-      value: value,
+  const changeBook = (chapter) => {
+    topPanel.current.setState({ collapsed: true });
+    topPanel.current.changeBibleBook({
+      label: route.params.title,
+      value: chapter,
       backgroundColor: "#345171",
       icon: "apps",
     });
-    close();
-    const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        scrollToChapter(chapter);
-        if (goBack) navigation.goBack();
-      });
+    paragraphBibleRef.current.setState({
+      index: chapter - 1,
+      initialScrollIndex: chapter - 1,
     });
-    () => interactionPromise.cancel();
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() =>
-        changeBook(route.params.title, item.title, route.params.value)
-      }
-    >
+    <TouchableOpacity onPress={() => changeBook(item.title)}>
       <BiblePickerItem
         item={item}
         label={item.short}
@@ -68,22 +59,21 @@ export default function ChaptersGridScreen({
     </TouchableOpacity>
   );
 
+  const columnWrapperStyle = {
+    justifyContent: "flex-start",
+    width: "14.2857%",
+  };
+
+  const keyExtractor = (item) => item.id;
+
   return (
-    <View
-      style={[
-        { backgroundColor: colors.background },
-        width ? { width: width } : null,
-      ]}
-    >
+    <View style={[{ backgroundColor: colors.background, width: width - 30 }]}>
       <FlatList
         data={DATA}
-        keyExtractor={(item) => item.id}
+        keyExtractor={keyExtractor}
         numColumns={7}
         renderItem={renderItem}
-        columnWrapperStyle={{
-          justifyContent: "flex-start",
-          width: "14.2857%",
-        }}
+        columnWrapperStyle={columnWrapperStyle}
         showsVerticalScrollIndicator={false}
       />
     </View>

@@ -1,5 +1,5 @@
 import React, { Component, PureComponent } from "react";
-import { FlatList, InteractionManager, Text, SectionList } from "react-native";
+import { Text, SectionList } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useTheme } from "../config/ThemeProvider";

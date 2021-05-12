@@ -566,12 +566,13 @@ export default function App() {
               bibleSectionsRef={bibleSectionsRef}
               bibleScreen={bibleScreen}
               books={books}
-              ref={topPanel}
               height={top - getBottomSpace()}
-              width={width}
               paragraphBibleRef={paragraphBibleRef}
+              ref={topPanel}
               searchHistoryRef={searchHistoryRef}
               studyScreen={studyScreen}
+              topPanel={topPanel}
+              width={width}
             />
           </Screen>
 

@@ -8,15 +8,16 @@ import { AccordionList } from "accordion-collapse-react-native";
 import { useTheme } from "../config/ThemeProvider";
 
 export default function BooksListScreen({
-  changeBibleBook,
-  close,
   navigation,
   route,
+  paragraphBibleRef,
+  topPanel,
   width,
 }) {
   const { colors, isDark } = useTheme();
   const [rightOpen, setRightOpen] = useState(false);
   const headerHeight = 55;
+  const buttonWidth = (width - 15) / 2;
 
   const books = [
     ////
@@ -550,15 +551,9 @@ export default function BooksListScreen({
     },
   ];
 
-  const buttonWidth = (width - 15) / 2;
-
   const _renderLeftHeader = (section) => {
     return (
-      <View
-        style={{
-          marginVertical: 3,
-        }}
-      >
+      <View style={styles.leftHeader}>
         {rightOpen ? (
           <View></View>
         ) : (
@@ -576,12 +571,7 @@ export default function BooksListScreen({
 
   const _renderRightHeader = (section) => {
     return (
-      <View
-        style={{
-          marginVertical: 3,
-          alignItems: "flex-end",
-        }}
-      >
+      <View style={styles.rightHeader}>
         <BiblePickerItem
           item={section}
           label={section.label}
@@ -595,67 +585,89 @@ export default function BooksListScreen({
   const _renderContent = (section) => {
     return (
       <ChaptersGridScreen
-        changeBibleBook={changeBibleBook}
+        // changeBibleBook={changeBibleBook}
         chapters={section.chapters}
-        close={close}
-        navigation={navigation}
+        paragraphBibleRef={paragraphBibleRef}
         route={route}
+        topPanel={topPanel}
         width={width}
       />
     );
   };
 
   const styles = StyleSheet.create({
+    background: { backgroundColor: colors.background, height: "100%" },
+    body: {
+      flexDirection: "row",
+      paddingBottom: headerHeight,
+      justifyContent: "space-between",
+    },
     sectionTitle: {
       color: colors.text,
       fontSize: 20,
     },
-    header: {},
+    header: {
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "space-around",
+      height: headerHeight,
+    },
     column1: {
       flexGrow: 1,
     },
     column2: {
       flexGrow: 1,
     },
+    leftHeader: {
+      marginVertical: 3,
+    },
+    rightHeader: {
+      marginVertical: 3,
+      alignItems: "flex-end",
+    },
   });
 
-  const openChapters = (title, gridChapters) => {
+  // const openChapters = (title, gridChapters) => {
+  //   console.log("openChapters:", title, gridChapters);
+  //   navigation.setParams({
+  //     title: title,
+  //     gridChapters: gridChapters,
+  //   });
+  // };
+
+  const onToggleLeft = (item, index, isExpanded) =>
+    // openChapters(books[index].label, books[index].chapters);
     navigation.setParams({
-      title: title,
-      gridChapters: gridChapters,
+      title: books[index].label,
+      gridChapters: books[index].chapters,
     });
+
+  const onToggleRight = (item, index, isExpanded) => {
+    // openChapters(books[index + 39].label, books[index + 39].chapters);
+    navigation.setParams({
+      title: books[index + 39].label,
+      gridChapters: books[index + 39].chapters,
+    });
+    setRightOpen(isExpanded);
   };
 
+  const keyExtractor = (item) => `${item.value}`;
+
   return (
-    <View style={{ backgroundColor: colors.background, height: "100%" }}>
-      <View
-        style={{
-          alignItems: "center",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          height: headerHeight,
-        }}
-      >
+    <View style={styles.background}>
+      <View style={styles.header}>
         <AppText style={[styles.sectionTitle]}>Old Testament</AppText>
         <AppText style={[styles.sectionTitle]}>New Testament</AppText>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          paddingBottom: headerHeight,
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={styles.body}>
         <View style={styles.column1}>
           <AccordionList
             list={books.slice(0, 39)}
             header={_renderLeftHeader}
             body={_renderContent}
-            keyExtractor={(item) => `${item.value}`}
+            keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}
-            onToggle={(item, index, isExpanded) =>
-              openChapters(books[index].label, books[index].chapters)
-            }
+            onToggle={onToggleLeft}
           />
         </View>
         <View style={styles.column2}>
@@ -663,12 +675,9 @@ export default function BooksListScreen({
             list={books.slice(39, 66)}
             header={_renderRightHeader}
             body={_renderContent}
-            keyExtractor={(item) => `${item.value}`}
+            keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}
-            onToggle={(item, index, isExpanded) => {
-              openChapters(books[index + 39].label, books[index + 39].chapters);
-              setRightOpen(isExpanded);
-            }}
+            onToggle={onToggleRight}
           />
         </View>
       </View>

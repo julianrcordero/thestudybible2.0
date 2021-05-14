@@ -143,6 +143,7 @@ export default class BibleScreen extends Component {
           darkMode={darkMode}
           fontFamily={this.state.fontFamily}
           fontSize={this.state.fontSize}
+          paragraphBibleRef={paragraphBibleRef}
           HEADER_HEIGHT={HEADER_HEIGHT}
           ref={paragraphBibleRef}
           scrollY={scrollY}

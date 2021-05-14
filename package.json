@@ -71,6 +71,7 @@
     "react-string-replace": "^0.4.4",
     "react-xml-parser": "^1.1.8",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "recyclerlistview": "^3.0.5",
     "rn-vertical-slider": "^2.0.2",
     "yup": "^0.32.8"
   },

@@ -67,16 +67,18 @@ export default class Verse extends Component {
     };
 
     return (
-      <Text
-        onPress={this._toggleHighlight}
-        onLongPress={this._openStudyScreen}
-        style={verseTextStyle}
-      >
-        {/* <Text style={verseNumberStyle}>{verseNumber + " "}</Text> */}
-
-        {verseText}
-        {/* <VerseFormatted verse={verse} /> */}
-      </Text>
+      <>
+        {verseNumber + " "}
+        <Text
+          onPress={this._toggleHighlight}
+          onLongPress={this._openStudyScreen}
+          style={verseTextStyle}
+        >
+          {/* <Text style={verseNumberStyle}>{verseNumber + " "}</Text> */}
+          {verseText}
+          {/* <VerseFormatted verse={verse} /> */}
+        </Text>
+      </>
     );
   }
 }

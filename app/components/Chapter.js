@@ -92,6 +92,7 @@ export default class Chapter extends Component {
       chapterHeading,
       chapterNum,
       colors,
+      paragraphBibleRef,
       searchWords,
       // onPress,
       titleSize,
@@ -105,9 +106,24 @@ export default class Chapter extends Component {
       (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      <Paragraph style={verseTextStyle}>
-        {verses.map(this.mapVerseObject)}
-      </Paragraph>
+      <View
+        onLayout={({ nativeEvent: { layout } }) => {
+          paragraphBibleRef.current?.addToLayoutsMap(
+            layout,
+            Number(chapterNum) - 1
+          );
+        }}
+      >
+        <Paragraph style={verseTextStyle}>
+          {verses.map(this.mapVerse)}
+        </Paragraph>
+      </View>
+      //   <AnimatedSectionHeader
+      //     colors={colors}
+      //     title={title}
+      //     titleSize={titleSize}
+      //   />
+      // </>
       // <View>
       //   <AnimatedSectionHeader
       //     colors={colors}
@@ -115,7 +131,6 @@ export default class Chapter extends Component {
       //     titleSize={titleSize}
       //   />
       //   <Text style={verseTextStyle}>{verses.map(this.mapVerseObject)}</Text>
-      // </View>
     );
   }
 }

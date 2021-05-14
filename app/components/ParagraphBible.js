@@ -22,20 +22,13 @@ const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const AnimatedRecyclerListView =
+  Animated.createAnimatedComponent(RecyclerListView);
 
 export default class ParagraphBible extends Component {
   constructor(props) {
     super(props);
 
-    ///////////////////////////////////////////////////////////////////
-    let { width } = Dimensions.get("window");
-
-    //Create the layout provider
-    //First method: Given an index return the type of item e.g ListItemType1, ListItemType2 in case you have variety of items in your list/grid
-    //Second: Given a type and object set the exact height and width for that type on given object, if you're using non deterministic rendering provide close estimates
-    //If you need data based check you can access your data provider here
-    //You'll need data in most cases, we don't provide it by default to enable things like data virtualization in the future
-    //NOTE: For complex lists LayoutProvider will also be complex it would then make sense to move it to a different file
     this._layoutProvider = new LayoutProvider(
       (index) => {
         return 0;
@@ -48,9 +41,19 @@ export default class ParagraphBible extends Component {
 
     this._rowRenderer = this._rowRenderer.bind(this);
 
-    //Since component should always render once data has changed, make data provider part of the state
     this.state = {
-      dataProvider: this.dataProvider.cloneWithRows(this.state.sections),
+      dataProvider: this.dataProvider.cloneWithRows([
+        {
+          chapterNum: 1,
+          chapterHeading: "chapter heading",
+          verses: [
+            {
+              verseNum: 1,
+              verseText: "verse text",
+            },
+          ],
+        },
+      ]),
       index: 0,
     };
   }
@@ -106,33 +109,6 @@ export default class ParagraphBible extends Component {
     return false;
   }
 
-  renderItem = ({ item, i }) => (
-    <Chapter
-      bibleScreen={this.props.bibleScreen}
-      chapterHeading={item.chapterHeading}
-      chapterNum={Number(item.chapterNum)}
-      colors={this.props.colors}
-      fontFamily={this.props.fontFamily}
-      fontSize={this.props.fontSize}
-      formatting={this.props.formatting}
-      key={i}
-      // searchWords={searchWords}
-      // onPress={this.props.toggleSlideView}
-      titleSize={this.props.fontSize * 1.75}
-      verses={item.verses}
-      verseTextStyle={[
-        defaultStyles.bibleText,
-        {
-          color: this.props.colors.text,
-          fontSize: this.props.fontSize,
-          lineHeight: this.props.fontSize * 2,
-          fontFamily: this.props.fontFamily,
-          // height: this.height,
-        },
-      ]}
-    />
-  );
-
   keyExtractor = (item) => item.chapterNum;
 
   scroll = Animated.event(
@@ -155,15 +131,6 @@ export default class ParagraphBible extends Component {
     // this.setState({ loading: false });
   };
 
-  scrollByErrorIndex = () => {
-    console.log("scrollByErrorIndex", error.index);
-
-    this.paragraphBible.current?.scrollToIndex({
-      animated: false,
-      index: error.index,
-    });
-  };
-
   scrollToChapter = () => {
     //important to have this interaction manager
     const interactionPromise = InteractionManager.runAfterInteractions(
@@ -172,30 +139,6 @@ export default class ParagraphBible extends Component {
     );
 
     () => interactionPromise.cancel();
-  };
-
-  scrollToIndexFailed = (info) => {
-    console.log("scrollToIndexFailed");
-    this.scrollToChapter();
-
-    const offset = info.averageItemLength * info.index;
-    console.log("scrollToIndexFailed", offset);
-    this.paragraphBible.current?.scrollToOffset({
-      animated: false,
-      offset: offset,
-    });
-    // scrollToIndex({
-    //   animated: false,
-    //   index: info.highestMeasuredFrameIndex,
-    // });
-
-    setTimeout(() => {
-      this.paragraphBible.current?.scrollToIndex({
-        index: info.index,
-        animated: false,
-      });
-    });
-    // }, 200);
   };
 
   onViewRef = (viewableItems) => {
@@ -288,22 +231,25 @@ export default class ParagraphBible extends Component {
       bibleTextView: {
         backgroundColor: colors.background,
         paddingTop: HEADER_HEIGHT,
+        flex: 1,
+        // paddingHorizontal: width * 0.075,
         // paddingBottom: HEADER_HEIGHT + 500,
       },
     };
 
     return (
-      <RecyclerListView
+      <AnimatedRecyclerListView
         layoutProvider={this._layoutProvider}
         dataProvider={this.state.dataProvider}
         initialRenderIndex={this.state.index}
         rowRenderer={this._rowRenderer}
         forceNonDeterministicRendering={true}
-        // onItemLayout={}
+        onScroll={this.scroll}
+        scrollThrottle={16}
         scrollViewProps={{
           ref: bibleSectionsRef,
         }}
-        style={[styles.bibleTextView]}
+        style={styles.bibleTextView}
       />
       // <AnimatedFlatList
       //   bounces={false}

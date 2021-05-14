@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
-import { InteractionManager } from "react-native";
+import { InteractionManager, View } from "react-native";
 
 import userMarkupApi from "../api/userMarkup";
 import { useTheme } from "../config/ThemeProvider";
@@ -8,6 +8,8 @@ import BibleScreenToolBar from "../components/BibleScreenToolBar";
 import ParagraphBible from "../components/ParagraphBible";
 import useAuth from "../auth/useAuth";
 import VerseByVerseBible from "../components/VerseByVerseBible";
+
+import defaultStyles from "../config/styles";
 
 export default class BibleScreen extends Component {
   constructor(props) {
@@ -136,6 +138,7 @@ export default class BibleScreen extends Component {
           toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         /> */}
+        {/* <View style={defaultStyles.paddingText}> */}
         <ParagraphBible
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
@@ -150,6 +153,7 @@ export default class BibleScreen extends Component {
           // toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         />
+        {/* </View> */}
       </>
     );
   }

@@ -87,6 +87,13 @@ export default class Chapter extends Component {
     />
   );
 
+  onLayout = ({ nativeEvent: { layout } }) => {
+    this.props.paragraphBibleRef.current?.addToLayoutsMap(
+      layout,
+      Number(this.props.chapterNum) - 1
+    );
+  };
+
   render() {
     const {
       chapterHeading,
@@ -106,16 +113,14 @@ export default class Chapter extends Component {
       (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      <View
-        onLayout={({ nativeEvent: { layout } }) => {
-          paragraphBibleRef.current?.addToLayoutsMap(
-            layout,
-            Number(chapterNum) - 1
-          );
-        }}
-      >
+      <View onLayout={this.onLayout}>
+        <AnimatedSectionHeader
+          colors={colors}
+          title={title}
+          titleSize={titleSize}
+        />
         <Paragraph style={verseTextStyle}>
-          {verses.map(this.mapVerse)}
+          {verses.map(this.mapVerseObject)}
         </Paragraph>
       </View>
       //   <AnimatedSectionHeader

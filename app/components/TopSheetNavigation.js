@@ -128,33 +128,35 @@ class TopSheetNavigation extends Component {
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
-      console.log("change book");
-      const chapters =
+      let chapters =
         bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
 
-      this.props.paragraphBibleRef.current.setState({
-        sections: chapters.map((c) => {
-          return {
-            chapterNum: c["_num"],
-            chapterHeading: c["heading"],
-            verses: c["verse"].map((v) => {
-              return {
-                verseNum: v["_num"],
-                verseText: v["crossref"]
-                  ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
-                      Array.isArray(v["crossref"])
-                        ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-                        : v["crossref"]["_let"]
-                    )
-                  : reactStringReplace(
-                      v["__text"],
-                      /(\n)/g,
-                      (match, i) => match
-                    ),
-              };
-            }),
-          };
-        }),
+      let mySections = chapters.map((c) => {
+        return {
+          chapterNum: c["_num"],
+          chapterHeading: c["heading"],
+          verses: c["verse"].map((v) => {
+            return {
+              verseNum: v["_num"],
+              verseText: v["crossref"]
+                ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
+                    Array.isArray(v["crossref"])
+                      ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+                      : v["crossref"]["_let"]
+                  )
+                : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match),
+            };
+          }),
+        };
+      });
+
+      console.log("change book:", mySections.length, "sections");
+      this.props.paragraphBibleRef.current?.setState({
+        // dataProvider:
+        //   this.props.paragraphBibleRef.current?.dataProvider.cloneWithRows(
+        //     mySections
+        //   ),
+        sections: mySections,
         // bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
       });
 

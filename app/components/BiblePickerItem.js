@@ -19,10 +19,10 @@ class BiblePickerItem extends PureComponent {
   render() {
     const {
       aspectRatio = 1,
+      backgroundColor,
       borderWidth = 1,
       flex,
       height,
-      item,
       label,
       width = "100%",
     } = this.props;
@@ -32,7 +32,7 @@ class BiblePickerItem extends PureComponent {
         style={[
           this.styles.container,
           {
-            backgroundColor: item.backgroundColor,
+            backgroundColor: backgroundColor,
             borderWidth,
             aspectRatio,
             height,

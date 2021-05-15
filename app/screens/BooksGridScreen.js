@@ -568,7 +568,10 @@ export default function BooksGridScreen({ navigation }) {
     <TouchableOpacity
       onPress={() => navigateToChapters(item.label, item.chapters, item.value)}
     >
-      <BiblePickerItem item={item} label={item.short} />
+      <BiblePickerItem
+        backgroundColor={item.backgroundColor}
+        label={item.short}
+      />
     </TouchableOpacity>
   );
 
@@ -579,13 +582,13 @@ export default function BooksGridScreen({ navigation }) {
     width: "14.2857%",
   };
 
+  const booksGridStyle = {
+    backgroundColor: colors.background,
+    height: "100%",
+  };
+
   return (
-    <View
-      style={{
-        backgroundColor: colors.background,
-        height: "100%",
-      }}
-    >
+    <View style={booksGridStyle}>
       <View style={styles.titleCard}>
         <AppText style={styles.sectionTitle}>Old Testament</AppText>
       </View>

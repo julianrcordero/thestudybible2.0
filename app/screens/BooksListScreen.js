@@ -555,10 +555,10 @@ export default function BooksListScreen({
     return (
       <View style={styles.leftHeader}>
         {rightOpen ? (
-          <View></View>
+          <></>
         ) : (
           <BiblePickerItem
-            item={section}
+            backgroundColor={section.backgroundColor}
             label={section.label}
             aspectRatio={5}
             width={buttonWidth}
@@ -573,10 +573,11 @@ export default function BooksListScreen({
     return (
       <View style={styles.rightHeader}>
         <BiblePickerItem
-          item={section}
+          backgroundColor={section.backgroundColor}
           label={section.label}
           aspectRatio={5}
           width={buttonWidth}
+          textColor={colors.text}
         />
       </View>
     );

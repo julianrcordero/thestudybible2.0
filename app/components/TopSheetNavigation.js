@@ -152,12 +152,8 @@ class TopSheetNavigation extends Component {
 
       console.log("change book:", mySections.length, "sections");
       this.props.paragraphBibleRef.current?.setState({
-        // dataProvider:
-        //   this.props.paragraphBibleRef.current?.dataProvider.cloneWithRows(
-        //     mySections
-        //   ),
         sections: mySections,
-        // bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"],
+        // layoutsRendered: false,
       });
 
       let bibleScreen = this.props.bibleScreen;

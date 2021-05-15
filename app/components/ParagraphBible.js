@@ -22,8 +22,9 @@ const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-const AnimatedRecyclerListView =
-  Animated.createAnimatedComponent(RecyclerListView);
+const AnimatedRecyclerListView = Animated.createAnimatedComponent(
+  RecyclerListView
+);
 
 export default class ParagraphBible extends Component {
   constructor(props) {
@@ -34,15 +35,15 @@ export default class ParagraphBible extends Component {
         return 0;
       },
       (type, dim) => {
-        dim.width = width * 0.075;
-        dim.height = 140;
+        dim.width = 1;
+        dim.height = 300;
       }
     );
 
     this._rowRenderer = this._rowRenderer.bind(this);
 
     this.state = {
-      dataProvider: this.dataProvider.cloneWithRows([
+      dataProvider: this.provideData.cloneWithRows([
         {
           chapterNum: 1,
           chapterHeading: "chapter heading",
@@ -55,12 +56,24 @@ export default class ParagraphBible extends Component {
         },
       ]),
       index: 0,
+      sections: [],
+      // layoutsRendered: true,
     };
   }
 
+  static getDerivedStateFromProps = (props, state) => {
+    // console.log(state);
+    return {
+      dataProvider: new DataProvider((r1, r2) => {
+        return r1 !== r2;
+      }).cloneWithRows(state.sections),
+    };
+    // return { favoritecolor: props.verses };
+  };
+
   //Create the data provider and provide method which takes in two rows of data and return if those two are different or not.
   //THIS IS VERY IMPORTANT, FORGET PERFORMANCE IF THIS IS MESSED UP
-  dataProvider = new DataProvider((r1, r2) => {
+  provideData = new DataProvider((r1, r2) => {
     return r1 !== r2;
   });
 
@@ -70,7 +83,6 @@ export default class ParagraphBible extends Component {
 
   state = {
     loading: false,
-    sections: [],
   };
 
   componentDidMount() {
@@ -79,13 +91,14 @@ export default class ParagraphBible extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // console.log("componentDidUpdate");
-    if (prevState.index !== this.state.index) {
-      this.scrollToChapter();
-    } else if (prevState.sections !== this.state.sections) {
-      this.setState({
-        dataProvider: this.dataProvider.cloneWithRows(this.state.sections),
-      });
-    }
+    //need to set layoutsRendered to true when list has loaded
+    // if (
+    //   prevState.layoutsRendered !== this.state.layoutsRendered &&
+    //   this.state.layoutsRendered
+    // )
+    // if (prevState.index !== this.state.index) {
+    //
+    // }
   }
 
   getItemLayout = (data, index) => ({
@@ -104,6 +117,8 @@ export default class ParagraphBible extends Component {
     } else if (this.props.colors !== nextProps.colors) {
       return true;
     } else if (this.state.index !== nextState.index) {
+      return true;
+    } else if (this.state.dataProvider !== nextState.dataProvider) {
       return true;
     }
     return false;
@@ -131,14 +146,18 @@ export default class ParagraphBible extends Component {
     // this.setState({ loading: false });
   };
 
-  scrollToChapter = () => {
-    //important to have this interaction manager
-    const interactionPromise = InteractionManager.runAfterInteractions(
-      // this.scrollByIndex //FLATLIST
-      this.scrollToComment
+  // Gets the comment object and if it is a comment
+  // is in the list, then scrolls to it
+  scrollToOffset = (index) => {
+    const offset = this.getOffsetByIndex(index);
+    console.log("index:", index, "offset:", offset);
+    setTimeout(() =>
+      this.props.bibleSectionsRef.current?._scrollViewRef.scrollTo({
+        x: 0,
+        y: offset,
+        animated: false,
+      })
     );
-
-    () => interactionPromise.cancel();
   };
 
   onViewRef = (viewableItems) => {
@@ -202,24 +221,10 @@ export default class ParagraphBible extends Component {
     return offset;
   };
 
-  // Gets the comment object and if it is a comment
-  // is in the list, then scrolls to it
-  scrollToComment = () => {
-    console.log(this.state.index);
-    const offset = this.getOffsetByIndex(this.state.index);
-    console.log(offset);
-    setTimeout(() =>
-      this.props.bibleSectionsRef.current?._scrollViewRef.scrollTo({
-        x: 0,
-        y: offset,
-        animated: false,
-      })
-    );
-  };
-
   // Fill the list of objects with element sizes
   addToLayoutsMap(layout, index) {
     this._layouts[index] = layout;
+    // this.setState({ _layouts: [...this._layouts, layout] });
   }
 
   _layouts = [];
@@ -229,6 +234,7 @@ export default class ParagraphBible extends Component {
 
     const styles = {
       bibleTextView: {
+        // alignItems: "center",
         backgroundColor: colors.background,
         paddingTop: HEADER_HEIGHT,
         flex: 1,
@@ -239,6 +245,8 @@ export default class ParagraphBible extends Component {
 
     return (
       <AnimatedRecyclerListView
+        bounces={false}
+        // extendedState={this._layouts}
         layoutProvider={this._layoutProvider}
         dataProvider={this.state.dataProvider}
         initialRenderIndex={this.state.index}

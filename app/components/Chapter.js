@@ -65,16 +65,6 @@ export default class Chapter extends Component {
   }
 
   mapVerse = (verse, i) => verse.verseNum + " " + verse.verseText;
-  // (
-  //   <Verse
-  //     chapterNum={chapterNum}
-  //     bibleScreen={bibleScreen}
-  //     key={i}
-  //     verseNumber={verse.verseNum}
-  //     verseText={verse.verseText}
-  //     // searchWords={searchWords}
-  //   />
-  // )
 
   mapVerseObject = (verse, j) => (
     <Verse

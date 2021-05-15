@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
 const HEADER_HEIGHT = 70;
 const scrollY = new Animated.Value(0);
 const diffClampScrollY = Animated.diffClamp(scrollY, 0, HEADER_HEIGHT);
-const headerY = Animated.interpolate(diffClampScrollY, {
+const headerY = Animated.interpolateNode(diffClampScrollY, {
   inputRange: [0, HEADER_HEIGHT],
   outputRange: [0, -HEADER_HEIGHT],
 });
@@ -111,22 +111,22 @@ const AppNavigator = (props) =>
 function MyTabBar({ state, descriptors, navigation }) {
   const { colors } = useTheme();
 
+  const tabBarStyle = {
+    backgroundColor: colors.background,
+    borderColor: colors.medium,
+    borderTopWidth: 0.3,
+    flexDirection: "row",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 70,
+    transform: [{ translateY: navigationY }],
+    zIndex: 0,
+  };
+
   return (
-    <Animated.View
-      style={{
-        backgroundColor: colors.background,
-        borderColor: colors.medium,
-        borderTopWidth: 0.3,
-        flexDirection: "row",
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: 70,
-        transform: [{ translateY: navigationY }],
-        zIndex: 0,
-      }}
-    >
+    <Animated.View style={tabBarStyle}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =

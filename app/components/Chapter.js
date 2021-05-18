@@ -38,15 +38,6 @@ export default class Chapter extends Component {
 
   keyExtractor = (item, index) => item + index;
 
-  renderVerseItem = ({ item, i }) => (
-    <Verse
-      key={i}
-      verse={item}
-      // onPress={() => onPress(chapterNum, j + 1)}
-      // searchWords={searchWords}
-    />
-  );
-
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.chapterNum !== nextProps.chapterNum) {
       return true;

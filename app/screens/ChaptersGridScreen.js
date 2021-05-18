@@ -43,17 +43,21 @@ export default function ChaptersGridScreen({
   );
 
   const changeBook = (chapter) => {
-    topPanel.current?.changeBibleBook({
-      label: route.params.title,
-      value: chapter,
-      backgroundColor: "#345171",
-      icon: "apps",
-    });
-    paragraphBibleRef.current?.scrollToOffset(chapter - 1);
-    // paragraphBibleRef.current.setState({
-    //   index: chapter - 1,
-    // });
     topPanel.current.setState({ collapsed: true });
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      setTimeout(() => {
+        topPanel.current?.changeBibleBook({
+          label: route.params.title,
+          value: chapter,
+          backgroundColor: "#345171",
+          icon: "apps",
+        });
+        // paragraphBibleRef.current?.scrollToOffset(chapter - 1);
+        // paragraphBibleRef.current?.scrollByIndex(chapter - 1);
+        paragraphBibleRef.current?.setState({ index: chapter });
+      });
+    });
+    () => interactionPromise.cancel();
   };
 
   const columnWrapperStyle = {

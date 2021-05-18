@@ -39,13 +39,17 @@ export default class BibleScreen extends Component {
   //Study Screen
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentBook.label !== this.state.currentBook.label) {
+      let verses = this.props.topPanel.current.changeStudyScreenBook(
+        this.state.currentBook
+      );
+
       this.props.studyScreen.current.setState({
         bookFilter: this.state.currentBook.value,
         currentBook: this.state.currentBook,
-        verseList: this.props.topPanel.current.changeStudyScreenBook(
-          this.state.currentBook
-        ),
+        verseList: verses,
       });
+
+      this.props.paragraphBibleRef.current.setState({ verses: verses });
     }
   }
 

@@ -16,6 +16,7 @@ import {
 
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
+import Verse from "./Verse";
 
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
@@ -57,6 +58,7 @@ export default class ParagraphBible extends Component {
       ]),
       index: 0,
       sections: [],
+      verses: [],
       // layoutsRendered: true,
     };
   }
@@ -96,9 +98,24 @@ export default class ParagraphBible extends Component {
     //   prevState.layoutsRendered !== this.state.layoutsRendered &&
     //   this.state.layoutsRendered
     // )
-    // if (prevState.index !== this.state.index) {
-    //
-    // }
+    if (prevState.index !== this.state.index) {
+      console.log("scrolling to chapter", this.state.index);
+      // this.scrollByIndex(this.state.index);  //FLATLIST
+      // this.scrollToOffset(this.state.index); //RECYCLERLISTVIEW
+
+      const interactionPromise = InteractionManager.runAfterInteractions(() => {
+        let myIndex = this.state.verses.findIndex(
+          (obj) => obj.chapter === this.state.index && obj.title === 1
+        );
+
+        console.log("index of chapter", this.state.index, ":", myIndex);
+
+        setTimeout(() => {
+          this.scrollByIndex(myIndex);
+        });
+      });
+      () => interactionPromise.cancel();
+    }
   }
 
   getItemLayout = (data, index) => ({
@@ -120,6 +137,8 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.state.dataProvider !== nextState.dataProvider) {
       return true;
+    } else if (this.state.verses !== nextState.verses) {
+      return true;
     }
     return false;
   }
@@ -135,14 +154,14 @@ export default class ParagraphBible extends Component {
     { useNativeDriver: true }
   );
 
-  scrollByIndex = () => {
+  scrollByIndex = (index) => {
     // this.setState({ loading: true });
-    setTimeout(() =>
-      this.paragraphBible.current?.scrollToIndex({
-        animated: false,
-        index: this.state.index, //this.state.index,
-      })
-    );
+    // setTimeout(() =>
+    this.props.bibleSectionsRef.current?.scrollToIndex({
+      animated: false,
+      index: index, //this.state.index,
+    });
+    // );
     // this.setState({ loading: false });
   };
 
@@ -158,6 +177,30 @@ export default class ParagraphBible extends Component {
         animated: false,
       })
     );
+  };
+
+  scrollToIndexFailed = (info) => {
+    console.log("scrollToIndexFailed");
+    // this.scrollToChapter();
+
+    // const offset = info.averageItemLength * info.index;
+    // console.log("scrollToIndexFailed", offset);
+    // this.paragraphBible.current?.scrollToOffset({
+    //   animated: false,
+    //   offset: offset,
+    // });
+    // // scrollToIndex({
+    // //   animated: false,
+    // //   index: info.highestMeasuredFrameIndex,
+    // // });
+
+    // setTimeout(() => {
+    //   this.paragraphBible.current?.scrollToIndex({
+    //     index: info.index,
+    //     animated: false,
+    //   });
+    // });
+    // }, 200);
   };
 
   onViewRef = (viewableItems) => {
@@ -176,6 +219,41 @@ export default class ParagraphBible extends Component {
     viewAreaCoveragePercentThreshold: 75,
     // itemVisiblePercentThreshold: 75,
   };
+
+  renderItem = ({ item, i }) => (
+    // <Chapter
+    //   bibleScreen={this.props.bibleScreen}
+    //   chapterHeading={item.chapterHeading}
+    //   chapterNum={Number(item.chapterNum)}
+    //   colors={this.props.colors}
+    //   fontFamily={this.props.fontFamily}
+    //   fontSize={this.props.fontSize}
+    //   formatting={this.props.formatting}
+    //   key={i}
+    //   // searchWords={searchWords}
+    //   // onPress={this.props.toggleSlideView}
+    //   titleSize={this.props.fontSize * 1.75}
+    //   verses={item.verses}
+    //   verseTextStyle={[
+    //     defaultStyles.bibleText,
+    //     {
+    //       color: this.props.colors.text,
+    //       fontSize: this.props.fontSize,
+    //       lineHeight: this.props.fontSize * 2,
+    //       fontFamily: this.props.fontFamily,
+    //       // height: this.height,
+    //     },
+    //   ]}
+    // />
+    <Verse
+      chapterNum={item.chapter}
+      bibleScreen={this.props.bibleScreen}
+      key={i}
+      verseNumber={item.title}
+      verseText={item.content}
+      // searchWords={searchWords}
+    />
+  );
 
   //Given type and data return the view component
   _rowRenderer(type, item) {
@@ -244,51 +322,52 @@ export default class ParagraphBible extends Component {
     };
 
     return (
-      <AnimatedRecyclerListView
-        bounces={false}
-        // extendedState={this._layouts}
-        layoutProvider={this._layoutProvider}
-        dataProvider={this.state.dataProvider}
-        initialRenderIndex={this.state.index}
-        rowRenderer={this._rowRenderer}
-        forceNonDeterministicRendering={true}
-        onScroll={this.scroll}
-        scrollThrottle={16}
-        scrollViewProps={{
-          ref: bibleSectionsRef,
-        }}
-        style={styles.bibleTextView}
-      />
-      // <AnimatedFlatList
+      // <AnimatedRecyclerListView
       //   bounces={false}
-      //   data={this.state.sections}
-      //   decelerationRate={"normal"}
-      //   extraData={this.state.index}
-      //   // getItemLayout={this.getItemLayout}
-      //   initialNumToRender={50}
-      //   initialScrollIndex={this.state.index}
-      //   keyExtractor={this.keyExtractor}
-      //   ListEmptyComponent={
-      //     <View
-      //       style={{ backgroundColor: "green", height: height, width: width }}
-      //     ></View>
-      //   }
-      //   // maxToRenderPerBatch={3}
-      //   onViewableItemsChanged={this.onViewRef}
+      //   canChangeSize={true}
+      //   // extendedState={this._layouts}
+      //   layoutProvider={this._layoutProvider}
+      //   dataProvider={this.state.dataProvider}
+      //   initialRenderIndex={this.state.index}
+      //   rowRenderer={this._rowRenderer}
+      //   forceNonDeterministicRendering={true}
       //   onScroll={this.scroll}
-      //   onScrollToIndexFailed={this.scrollToIndexFailed}
-      //   ref={bibleSectionsRef}
-      //   // removeClippedSubviews
-      //   renderItem={this.renderItem}
-      //   scrollEventThrottle={16}
-      //   showsVerticalScrollIndicator={false}
-      //   // snapToAlignment={"center"}
-      //   // snapToInterval={this.height}
-      //   style={[styles.bibleTextView, defaultStyles.paddingText]}
-      //   updateCellsBatchingPeriod={10}
-      //   viewabilityConfig={this.viewConfigRef}
-      //   // windowSize={101}
+      //   scrollThrottle={16}
+      //   scrollViewProps={{
+      //     ref: bibleSectionsRef,
+      //   }}
+      //   style={styles.bibleTextView}
       // />
+      <AnimatedFlatList
+        bounces={false}
+        data={this.state.verses}
+        decelerationRate={"normal"}
+        extraData={this.state.index}
+        // getItemLayout={this.getItemLayout}
+        initialNumToRender={50}
+        initialScrollIndex={this.state.index}
+        keyExtractor={this.keyExtractor}
+        ListEmptyComponent={
+          <View
+            style={{ backgroundColor: "green", height: height, width: width }}
+          ></View>
+        }
+        // maxToRenderPerBatch={3}
+        onViewableItemsChanged={this.onViewRef}
+        onScroll={this.scroll}
+        onScrollToIndexFailed={this.scrollToIndexFailed}
+        ref={bibleSectionsRef}
+        // removeClippedSubviews
+        renderItem={this.renderItem}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        // snapToAlignment={"center"}
+        // snapToInterval={this.height}
+        style={[styles.bibleTextView, defaultStyles.paddingText]}
+        updateCellsBatchingPeriod={10}
+        viewabilityConfig={this.viewConfigRef}
+        // windowSize={101}
+      />
     );
   }
 }

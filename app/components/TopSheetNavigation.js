@@ -128,37 +128,35 @@ class TopSheetNavigation extends Component {
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
-      let chapters =
-        bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+      // let chapters =
+      //   bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
 
-      let mySections = chapters.map((c) => {
-        return {
-          chapterNum: c["_num"],
-          chapterHeading: c["heading"],
-          verses: c["verse"].map((v) => {
-            return {
-              verseNum: v["_num"],
-              verseText: v["crossref"]
-                ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
-                    Array.isArray(v["crossref"])
-                      ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-                      : v["crossref"]["_let"]
-                  )
-                : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match),
-            };
-          }),
-        };
-      });
+      // let mySections = chapters.map((c) => {
+      //   return {
+      //     chapterNum: c["_num"],
+      //     chapterHeading: c["heading"],
+      //     verses: c["verse"].map((v) => {
+      //       return {
+      //         verseNum: v["_num"],
+      //         verseText: v["crossref"]
+      //           ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
+      //               Array.isArray(v["crossref"])
+      //                 ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+      //                 : v["crossref"]["_let"]
+      //             )
+      //           : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match),
+      //       };
+      //     }),
+      //   };
+      // });
 
-      console.log("change book:", mySections.length, "sections");
-      this.props.paragraphBibleRef.current?.setState({
-        sections: mySections,
-        // layoutsRendered: false,
-      });
+      // console.log("change book:", mySections.length, "sections");
+      // this.props.paragraphBibleRef.current?.setState({
+      //   sections: mySections,
+      //   // layoutsRendered: false,
+      // });
 
-      let bibleScreen = this.props.bibleScreen;
-      if (bibleScreen.current)
-        bibleScreen.current.setState({ currentBook: newBook });
+      this.props.bibleScreen.current?.setState({ currentBook: newBook });
 
       this.setState({ currentBook: newBook });
     }

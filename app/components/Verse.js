@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Text } from "react-native";
+// import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
-// import { Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -23,6 +23,7 @@ export default class Verse extends Component {
   };
 
   _openStudyScreen = () => {
+    // console.log(this.props.chapterNum, this.props.verseNumber);
     this.props.bibleScreen.current?.toggleSlideView(
       this.props.chapterNum,
       Number(this.props.verseNumber)
@@ -47,12 +48,20 @@ export default class Verse extends Component {
     return false;
   }
 
+  // onLayout = ({ nativeEvent: { layout } }) => {
+  //   this.props.paragraphBibleRef.current?.addToLayoutsMap(
+  //     layout,
+  //     Number(this.props.chapterNum) - 1
+  //   );
+  // };
+
   render() {
     const {
       // focusedVerse,
       // searchWords,
       verseNumber,
       verseText,
+      verseTextStyle,
     } = this.props;
 
     const verseNumberStyle = {
@@ -60,7 +69,7 @@ export default class Verse extends Component {
       color: "#00aeef",
     };
 
-    const verseTextStyle = {
+    const verseStyle = {
       backgroundColor: this.state.backgroundColor,
       // textDecorationLine: this.state.textDecorationLine,
       // focusedVerse == Number(verse["_num"]) ? "underline" : "none",
@@ -72,7 +81,8 @@ export default class Verse extends Component {
       <Text
         onPress={this._toggleHighlight}
         onLongPress={this._openStudyScreen}
-        style={verseTextStyle}
+        style={[verseTextStyle, verseStyle]}
+        // onLayout={this.onLayout}
       >
         <Text style={verseNumberStyle}>{verseNumber + " "}</Text>
         {verseText}

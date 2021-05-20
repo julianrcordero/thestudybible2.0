@@ -13,12 +13,14 @@ class BiblePickerItem extends PureComponent {
       // borderColor: colors.white,
       justifyContent: "center",
     },
-    text: { color: this.props.textColor },
+    text: {
+      color: this.props.textColor,
+    },
   };
 
   render() {
     const {
-      aspectRatio = 1,
+      aspectRatio = 1.2,
       backgroundColor,
       borderWidth = 1,
       flex,

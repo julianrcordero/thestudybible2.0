@@ -39,6 +39,8 @@ class TopSheetNavigation extends Component {
     },
     pickerType: 0,
     collapsed: true,
+    sections: [],
+    verses: [],
   };
 
   close = () => this.setState({ collapsed: true });
@@ -126,49 +128,74 @@ class TopSheetNavigation extends Component {
     }
   };
 
-  changeBibleBook = (newBook) => {
-    if (this.state.currentBook.label !== newBook.label) {
-      // let chapters =
-      //   bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+  componentDidMount() {
+    let newBook = {
+      label: "Genesis",
+      value: 1,
+      backgroundColor: "#345171",
+      icon: "apps",
+    };
+    this.setState({ currentBook: newBook });
+    this.setSections(newBook);
+    this.setVerses(newBook);
+  }
 
-      // let mySections = chapters.map((c) => {
-      //   return {
-      //     chapterNum: c["_num"],
-      //     chapterHeading: c["heading"],
-      //     verses: c["verse"].map((v) => {
-      //       return {
-      //         verseNum: v["_num"],
-      //         verseText: v["crossref"]
-      //           ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
-      //               Array.isArray(v["crossref"])
-      //                 ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-      //                 : v["crossref"]["_let"]
-      //             )
-      //           : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match),
-      //       };
-      //     }),
-      //   };
-      // });
-
-      // console.log("change book:", mySections.length, "sections");
-      // this.props.paragraphBibleRef.current?.setState({
-      //   sections: mySections,
-      //   // layoutsRendered: false,
-      // });
-
-      this.props.bibleScreen.current?.setState({ currentBook: newBook });
-
-      this.setState({ currentBook: newBook });
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.sections !== this.state.sections) {
+      // console.log("topPanel sections update");
+      this.props.paragraphBibleRef.current?.setState({
+        // verses: this.state.verses,
+        sections: this.state.sections,
+      });
+    } else if (prevState.currentBook !== this.state.currentBook) {
+      // console.log("topPanel currentBook update");
+      this.props.bibleScreen.current?.setState({
+        currentBook: this.state.currentBook,
+      });
+    } else if (prevState.verses !== this.state.verses) {
+      // console.log("topPanel verses update");
+      this.props.studyScreen.current?.setState({
+        bookFilter: this.state.currentBook.value,
+        currentBook: this.state.currentBook,
+        verseList: this.state.verses,
+      });
     }
+  }
+
+  setSections = (newBook) => {
+    let chapters =
+      bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+
+    let mySections = chapters.map((c) => {
+      return {
+        chapterNum: c["_num"],
+        chapterHeading: c["heading"],
+        verses: c["verse"].map((v) => {
+          return {
+            verseNum: v["_num"],
+            verseText: v["crossref"]
+              ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
+                  Array.isArray(v["crossref"])
+                    ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
+                    : v["crossref"]["_let"]
+                )
+              : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match),
+          };
+        }),
+      };
+    });
+
+    this.setState({ sections: mySections });
   };
 
-  changeStudyScreenBook = (newBook) => {
+  setVerses = (newBook) => {
     let verses = [];
     let johnsNote = "";
     let crossrefs = "";
     const notes = notesArray[newBook.value - 1]["note"];
     const chapters =
       bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+
     chapters.map((chapter) => {
       chapter["verse"].map((verse) => {
         let referenceCode =
@@ -214,7 +241,20 @@ class TopSheetNavigation extends Component {
       });
     });
 
-    return verses;
+    this.setState({ verses: verses });
+  };
+
+  changeBibleBook = (newBook) => {
+    if (this.state.currentBook.label !== newBook.label) {
+      console.log(this.state.currentBook.label, "-->", newBook.label);
+      this.setState({ currentBook: newBook });
+      this.setSections(newBook);
+      this.setVerses(newBook);
+    }
+  };
+
+  changeStudyScreenBook = (newBook) => {
+    return this.state.verses;
   };
 
   styles = StyleSheet.create({

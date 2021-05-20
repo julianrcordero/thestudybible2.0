@@ -18,6 +18,7 @@ import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
 
 import Constants from "expo-constants";
+import Verse from "./Verse";
 const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -26,13 +27,14 @@ const AnimatedRecyclerListView = Animated.createAnimatedComponent(
   RecyclerListView
 );
 
-export default class ParagraphBible extends Component {
+export default class VerseBible extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       index: 0,
       sections: [],
+      verses: [],
       // layoutsRendered: true,
     };
   }
@@ -57,7 +59,7 @@ export default class ParagraphBible extends Component {
     //   this.state.layoutsRendered
     // )
     if (prevState.index !== this.state.index) {
-      console.log("scrolling to", this.state.index);
+      //   console.log("scrolling to", this.state.index);
       this.scrollByIndex(this.state.index);
     }
   }
@@ -73,7 +75,7 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.props.fontSize !== nextProps.fontSize) {
       return true;
-    } else if (this.state.sections !== nextState.sections) {
+    } else if (this.state.verses !== nextState.verses) {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
       return true;
@@ -85,7 +87,7 @@ export default class ParagraphBible extends Component {
     return false;
   }
 
-  keyExtractor = (item) => item.chapterNum;
+  keyExtractor = (item, index) => index.toString();
 
   scroll = Animated.event(
     [
@@ -97,38 +99,53 @@ export default class ParagraphBible extends Component {
   );
 
   scrollByIndex = (index) => {
-    // this.setState({ loading: true });
-    // setTimeout(() =>
-    this.props.bibleSectionsRef.current?.scrollToIndex({
-      animated: false,
-      index: index, //this.state.index,
+    // this.props.bibleSectionsRef.current?.scrollToIndex({
+    //   animated: false,
+    //   index: index, //this.state.index,
+    // });
+    console.log("requested chapter", index + 1);
+
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      let myIndex = this.state.verses.findIndex(
+        (obj) => obj.chapter === index + 1 && obj.title === 1
+      );
+      console.log(myIndex);
+
+      // this.props.verseList.findIndex(
+      //   (obj) => obj.chapter === chapter && obj.title === verse
+      // );
+      setTimeout(() => {
+        this.props.bibleSectionsRef.current?.scrollToIndex({
+          animated: false,
+          index: myIndex,
+        });
+      });
     });
-    // );
-    // this.setState({ loading: false });
+    () => interactionPromise.cancel();
   };
 
   scrollToIndexFailed = (info) => {
-    console.log("scrollToIndexFailed");
+    console.log(info);
     // this.scrollToChapter();
 
-    // const offset = info.averageItemLength * info.index;
-    // console.log("scrollToIndexFailed", offset);
-    // this.paragraphBible.current?.scrollToOffset({
-    //   animated: false,
-    //   offset: offset,
-    // });
-    // // scrollToIndex({
-    // //   animated: false,
-    // //   index: info.highestMeasuredFrameIndex,
-    // // });
+    const offset = info.averageItemLength * info.index;
+    console.log("scrollToIndexFailed", offset);
+    this.props.bibleSectionsRef.current?.scrollToOffset({
+      animated: false,
+      offset: offset,
+    });
 
-    // setTimeout(() => {
-    //   this.paragraphBible.current?.scrollToIndex({
-    //     index: info.index,
-    //     animated: false,
-    //   });
+    // scrollToIndex({
+    //   animated: false,
+    //   index: info.highestMeasuredFrameIndex,
     // });
-    // }, 200);
+
+    setTimeout(() => {
+      this.props.bibleSectionsRef.current?.scrollToIndex({
+        index: info.index,
+        animated: false,
+      });
+    });
   };
 
   onViewRef = (viewableItems) => {
@@ -149,19 +166,13 @@ export default class ParagraphBible extends Component {
   };
 
   renderItem = ({ item, i }) => (
-    <Chapter
-      bibleScreen={this.props.bibleScreen}
-      chapterHeading={item.chapterHeading}
-      chapterNum={Number(item.chapterNum)}
-      colors={this.props.colors}
-      fontFamily={this.props.fontFamily}
-      fontSize={this.props.fontSize}
-      formatting={this.props.formatting}
+    <Verse
+      chapterNum={item.chapter}
+      bibleScreen={item.bibleScreen}
       key={i}
-      // searchWords={searchWords}
-      // onPress={this.props.toggleSlideView}
-      titleSize={this.props.fontSize * 1.75}
-      verses={item.verses}
+      paragraphBibleRef={this.props.paragraphBibleRef}
+      verseNumber={item.title}
+      verseText={item.content}
       verseTextStyle={[
         defaultStyles.bibleText,
         {
@@ -172,6 +183,7 @@ export default class ParagraphBible extends Component {
           // height: this.height,
         },
       ]}
+      // searchWords={searchWords}
     />
   );
 
@@ -187,6 +199,13 @@ export default class ParagraphBible extends Component {
     }
     return offset;
   };
+
+  addToLayoutsMap(layout, index) {
+    this._heights[index] = layout;
+    // this.setState({ _heights: [...this._heights, layout] });
+  }
+
+  _heights = [];
 
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
@@ -205,11 +224,11 @@ export default class ParagraphBible extends Component {
     return (
       <AnimatedFlatList
         bounces={false}
-        data={this.state.sections}
+        data={this.state.verses}
         decelerationRate={"normal"}
         extraData={this.state.index}
         // getItemLayout={this.getItemLayout}
-        initialNumToRender={50}
+        // initialNumToRender={50}
         initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
         ListEmptyComponent={
@@ -229,9 +248,9 @@ export default class ParagraphBible extends Component {
         // snapToAlignment={"center"}
         // snapToInterval={this.height}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
-        updateCellsBatchingPeriod={10}
+        // updateCellsBatchingPeriod={10}
         viewabilityConfig={this.viewConfigRef}
-        // windowSize={101}
+        windowSize={11}
       />
     );
   }

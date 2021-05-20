@@ -54,7 +54,7 @@ export default function ChaptersGridScreen({
         });
         // paragraphBibleRef.current?.scrollToOffset(chapter - 1);
         // paragraphBibleRef.current?.scrollByIndex(chapter - 1);
-        paragraphBibleRef.current?.setState({ index: chapter });
+        paragraphBibleRef.current?.setState({ index: chapter - 1 });
       });
     });
     () => interactionPromise.cancel();

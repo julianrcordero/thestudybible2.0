@@ -10,6 +10,8 @@ import useAuth from "../auth/useAuth";
 import VerseByVerseBible from "../components/VerseByVerseBible";
 
 import defaultStyles from "../config/styles";
+import RecyclerListBible from "../components/RecyclerListBible";
+import VerseBible from "../components/VerseBible";
 
 export default class BibleScreen extends Component {
   constructor(props) {
@@ -31,27 +33,27 @@ export default class BibleScreen extends Component {
   };
 
   //Bible Screen
-  componentDidMount() {
-    let currentBook = this.state.currentBook;
-    this.props.topPanel.current.changeBibleBook(currentBook);
-  }
+  // componentDidMount() {
+  //   let currentBook = this.state.currentBook;
+  //   this.props.topPanel.current.changeBibleBook(currentBook);
+  // }
 
   //Study Screen
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentBook.label !== this.state.currentBook.label) {
-      let verses = this.props.topPanel.current.changeStudyScreenBook(
-        this.state.currentBook
-      );
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.currentBook.label !== this.state.currentBook.label) {
+  //     let verses = this.props.topPanel.current.changeStudyScreenBook(
+  //       this.state.currentBook
+  //     );
 
-      this.props.studyScreen.current.setState({
-        bookFilter: this.state.currentBook.value,
-        currentBook: this.state.currentBook,
-        verseList: verses,
-      });
+  //     this.props.studyScreen.current.setState({
+  //       bookFilter: this.state.currentBook.value,
+  //       currentBook: this.state.currentBook,
+  //       verseList: verses,
+  //     });
 
-      this.props.paragraphBibleRef.current.setState({ verses: verses });
-    }
-  }
+  //     // this.props.paragraphBibleRef.current.setState({ verses: verses });
+  //   }
+  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.currentBook !== nextState.currentBook) {
@@ -143,7 +145,7 @@ export default class BibleScreen extends Component {
           topPanel={topPanel}
         /> */}
         {/* <View style={defaultStyles.paddingText}> */}
-        <ParagraphBible
+        <RecyclerListBible
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}

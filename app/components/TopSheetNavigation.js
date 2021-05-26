@@ -144,7 +144,6 @@ class TopSheetNavigation extends Component {
     if (prevState.sections !== this.state.sections) {
       // console.log("topPanel sections update");
       this.props.paragraphBibleRef.current?.setState({
-        // verses: this.state.verses,
         sections: this.state.sections,
       });
     } else if (prevState.currentBook !== this.state.currentBook) {
@@ -153,7 +152,7 @@ class TopSheetNavigation extends Component {
         currentBook: this.state.currentBook,
       });
     } else if (prevState.verses !== this.state.verses) {
-      // console.log("topPanel verses update");
+      console.log("topPanel verses update");
       this.props.studyScreen.current?.setState({
         bookFilter: this.state.currentBook.value,
         currentBook: this.state.currentBook,
@@ -186,7 +185,22 @@ class TopSheetNavigation extends Component {
     });
 
     this.setState({ sections: mySections });
+    console.log("set sections");
   };
+
+  // {
+  //   "chapterNum": 4,
+  //   "chapterHeading": "Cain and Abel",
+  //   "verses": [
+  //     {
+  //       "verseNum": 1,
+  //       "verseText": ["Now Adam knew Eve his wife, and she conceived and bore Cain, saying, ",//q1
+  //       "I have gotten",
+  //       " a man with the help of the ",
+  //       "."]//q2
+  //     }
+  //   ]
+  // }
 
   setVerses = (newBook) => {
     let verses = [];
@@ -242,18 +256,36 @@ class TopSheetNavigation extends Component {
     });
 
     this.setState({ verses: verses });
+    console.log("set verses");
   };
+
+  // {
+  //   chapterNum: 4,
+  //   verseNum: 1,
+  //   content: ["Now Adam knew Eve his wife, and she conceived and bore Cain, saying, ",
+  //         "I have gotten",
+  //         " a man with the help of the ",
+  //         "."],
+  //         johnsNote: "I'm John MacArthur and I approve this message.",
+  //         crossrefs: [{
+  //           title: "a",
+  //           text: "",
+  //         }, {
+  //           title: "b",
+  //           text: "",
+  //         }]
+  // }
 
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
-      console.log(this.state.currentBook.label, "-->", newBook.label);
+      // console.log(this.state.currentBook.label, "-->", newBook.label);
       this.setState({ currentBook: newBook });
       this.setSections(newBook);
       this.setVerses(newBook);
     }
   };
 
-  changeStudyScreenBook = (newBook) => {
+  changeStudyScreenBook = () => {
     return this.state.verses;
   };
 

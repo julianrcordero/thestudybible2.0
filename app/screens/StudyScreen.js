@@ -155,18 +155,6 @@ export default class StudyScreen extends Component {
     if (!this.state.user) {
       this.setState({ user: myUser });
     }
-
-    let currentBook = this.props.bibleScreen.current.state.currentBook;
-
-    if (this.state.currentBook.label !== currentBook.label) {
-      this.setState({
-        bookFilter: currentBook.value,
-        currentBook: currentBook,
-        verseList: this.props.topPanel.current.changeStudyScreenBook(
-          currentBook
-        ),
-      });
-    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {

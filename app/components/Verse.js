@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-// import { Text } from "react-native";
+import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
-import { Text } from "react-native-paper";
+// import { Text } from "react-native-paper";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -76,19 +76,19 @@ export default class Verse extends Component {
     };
 
     return (
-      // <>
-      //   {verseNumber + " "}
-      <Text
-        onPress={this._toggleHighlight}
-        onLongPress={this._openStudyScreen}
-        style={[verseTextStyle, verseStyle]}
-        // onLayout={this.onLayout}
-      >
-        <Text style={verseNumberStyle}>{verseNumber + " "}</Text>
-        {verseText}
-        {/* <VerseFormatted verse={verse} /> */}
-      </Text>
-      // </>
+      <>
+        {verseNumber + " "}
+        <Text
+          onPress={this._toggleHighlight}
+          onLongPress={this._openStudyScreen}
+          style={[verseTextStyle, verseStyle]}
+          // onLayout={this.onLayout}
+        >
+          {/* <Text style={verseNumberStyle}>{verseNumber + " "}</Text> */}
+          {verseText}
+          {/* <VerseFormatted verse={verse} /> */}
+        </Text>
+      </>
     );
   }
 }

@@ -53,6 +53,7 @@ export default class BibleScreenToolBar extends Component {
       fontFamily,
       fontSize,
       headerContentRef,
+      headerOpacity,
       HEADER_HEIGHT,
       paragraphBibleRef,
       bottomSheetRef,
@@ -64,6 +65,7 @@ export default class BibleScreenToolBar extends Component {
       <Animated.View
         style={{
           justifyContent: "center",
+          opacity: headerOpacity,
           position: "absolute",
           transform: [{ translateY: headerY }],
           width: "100%",

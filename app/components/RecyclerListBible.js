@@ -1,14 +1,8 @@
-import React, { Component, PureComponent } from "react";
-import {
-  Dimensions,
-  FlatList,
-  InteractionManager,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import React, { Component } from "react";
+import { Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import {
+  ContextProvider,
   RecyclerListView,
   DataProvider,
   LayoutProvider,
@@ -18,13 +12,35 @@ import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
 
 import Constants from "expo-constants";
-const { height, width } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 const AnimatedRecyclerListView = Animated.createAnimatedComponent(
   RecyclerListView
 );
+
+class ContextHelper extends ContextProvider {
+  constructor(uniqueKey) {
+    super();
+    this._contextStore = {};
+    this._uniqueKey = uniqueKey;
+  }
+
+  getUniqueKey() {
+    return this._uniqueKey;
+  }
+
+  save(key, value) {
+    this._contextStore[key] = value;
+  }
+
+  get(key) {
+    return this._contextStore[key];
+  }
+
+  remove(key) {
+    delete this._contextStore[key];
+  }
+}
 
 export default class RecyclerListBible extends Component {
   constructor(props) {
@@ -36,13 +52,14 @@ export default class RecyclerListBible extends Component {
       },
       (type, dim) => {
         dim.width = 1;
-        dim.height = 300;
+        dim.height = 1300;
       }
     );
 
     this._rowRenderer = this._rowRenderer.bind(this);
 
     this.state = {
+      contextProvider: new ContextHelper("PARENT"),
       dataProvider: this.provideData.cloneWithRows([
         {
           chapterNum: 1,
@@ -91,6 +108,7 @@ export default class RecyclerListBible extends Component {
     } else if (prevState.sections !== this.state.sections) {
       //   console.log("heights array:", this._heights.length);
       this.setState({
+        contextProvider: new ContextHelper("PARENT"),
         dataProvider: this.provideData.cloneWithRows(this.state.sections),
       });
     }
@@ -130,7 +148,7 @@ export default class RecyclerListBible extends Component {
   // is in the list, then scrolls to it
   scrollToOffset = (index) => {
     const offset = this.getOffsetByIndex(index);
-    console.log("index:", index, "offset:", offset);
+    // console.log("index:", index, "offset:", offset);
     setTimeout(() =>
       this.props.bibleSectionsRef.current?._scrollViewRef.scrollTo({
         x: 0,
@@ -148,10 +166,6 @@ export default class RecyclerListBible extends Component {
 
   onRecreate = (OnRecreateParams) => {
     console.log(OnRecreateParams);
-  };
-
-  contextProvider = (ContextProvider) => {
-    console.log(ContextProvider);
   };
 
   //Given type and data return the view component
@@ -230,7 +244,7 @@ export default class RecyclerListBible extends Component {
         // applyWindowCorrection={this.applyWindowCorrection}
         bounces={false}
         canChangeSize={true}
-        // contextProvider={this.contextProvider}
+        contextProvider={this.state.contextProvider}
         // extendedState={this._heights}
         layoutProvider={this._layoutProvider}
         dataProvider={this.state.dataProvider}

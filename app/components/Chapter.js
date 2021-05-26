@@ -1,10 +1,7 @@
 import React, { Component, PureComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
-import { useTheme } from "../config/ThemeProvider";
-import AppText from "./Text";
-import Animated from "react-native-reanimated";
 import { Paragraph, Text } from "react-native-paper";
 
 class SectionHeader extends PureComponent {
@@ -26,8 +23,6 @@ class SectionHeader extends PureComponent {
   }
 }
 
-const AnimatedSectionHeader = Animated.createAnimatedComponent(SectionHeader);
-
 export default class Chapter extends Component {
   constructor(props) {
     super(props);
@@ -40,11 +35,11 @@ export default class Chapter extends Component {
   //   console.log("Chapter componentDidMount");
   // };
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevProps.verses !== this.props.verses) {
-      console.log("Chapter verses componentDidUpdate", this.props.chapterNum);
-    }
-  };
+  // componentDidUpdate = (prevProps, prevState) => {
+  //   if (prevProps.verses !== this.props.verses) {
+  //     console.log("Chapter verses componentDidUpdate", this.props.chapterNum);
+  //   }
+  // };
 
   keyExtractor = (item, index) => item + index;
 
@@ -65,7 +60,7 @@ export default class Chapter extends Component {
     return false;
   }
 
-  mapVerse = (verse, i) => verse.verseNum + " " + verse.verseText;
+  mapVerse = (verse) => verse.verseNum + " " + verse.verseText;
 
   mapVerseObject = (verse, j) => (
     <Verse
@@ -92,8 +87,6 @@ export default class Chapter extends Component {
       chapterHeading,
       chapterNum,
       colors,
-      paragraphBibleRef,
-      searchWords,
       // onPress,
       titleSize,
       verses,
@@ -107,13 +100,9 @@ export default class Chapter extends Component {
 
     return (
       <View onLayout={this.onLayout}>
-        <AnimatedSectionHeader
-          colors={colors}
-          title={title}
-          titleSize={titleSize}
-        />
+        <SectionHeader colors={colors} title={title} titleSize={titleSize} />
         <Paragraph style={verseTextStyle}>
-          {verses.map(this.mapVerse)}
+          {verses.map(this.mapVerseObject)}
         </Paragraph>
       </View>
       //   <AnimatedSectionHeader

@@ -1,18 +1,6 @@
-import React, { Component, PureComponent } from "react";
-import {
-  Dimensions,
-  FlatList,
-  InteractionManager,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import React, { Component } from "react";
+import { Dimensions, FlatList, View } from "react-native";
 import Animated from "react-native-reanimated";
-import {
-  RecyclerListView,
-  DataProvider,
-  LayoutProvider,
-} from "recyclerlistview";
 
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
@@ -21,10 +9,6 @@ import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-const AnimatedRecyclerListView = Animated.createAnimatedComponent(
-  RecyclerListView
-);
 
 export default class ParagraphBible extends Component {
   constructor(props) {
@@ -107,7 +91,7 @@ export default class ParagraphBible extends Component {
     // this.setState({ loading: false });
   };
 
-  scrollToIndexFailed = (info) => {
+  scrollToIndexFailed = () => {
     console.log("scrollToIndexFailed");
     // this.scrollToChapter();
 
@@ -189,7 +173,7 @@ export default class ParagraphBible extends Component {
   };
 
   render() {
-    const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
+    const { bibleSectionsRef, colors, HEADER_HEIGHT } = this.props;
 
     const styles = {
       bibleTextView: {

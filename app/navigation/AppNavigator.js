@@ -8,7 +8,9 @@ import ListingEditScreen from "../screens/ListingEditScreen";
 import BibleScreen from "../screens/BibleScreen";
 
 import useNotifications from "../hooks/useNotifications";
-import Animated from "react-native-reanimated";
+import Animated, { Easing } from "react-native-reanimated";
+const { Value, diffClamp, interpolateNode, multiply, timing } = Animated;
+
 import MenuButton from "../components/MenuButton";
 import { useTheme } from "../config/ThemeProvider";
 
@@ -17,13 +19,20 @@ import { useTheme } from "../config/ThemeProvider";
 const Tab = createBottomTabNavigator();
 
 const HEADER_HEIGHT = 70;
-const scrollY = new Animated.Value(0);
-const diffClampScrollY = Animated.diffClamp(scrollY, 0, HEADER_HEIGHT);
-const headerY = Animated.interpolateNode(diffClampScrollY, {
+
+const scrollY = new Value(0);
+const diffClampScrollY = diffClamp(scrollY, 0, HEADER_HEIGHT);
+const headerY = interpolateNode(diffClampScrollY, {
   inputRange: [0, HEADER_HEIGHT],
   outputRange: [0, -HEADER_HEIGHT],
+  extrapolate: "clamp",
 });
-const navigationY = Animated.multiply(headerY, -1);
+const headerOpacity = interpolateNode(diffClampScrollY, {
+  inputRange: [0, HEADER_HEIGHT],
+  outputRange: [1, 0],
+  extrapolate: "clamp",
+});
+const navigationY = multiply(headerY, -1);
 
 const AppNavigator = (props) =>
   // { user }
@@ -77,6 +86,7 @@ const AppNavigator = (props) =>
               headerContentRef={headerContentRef}
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
+              headerOpacity={headerOpacity}
               paragraphBibleRef={paragraphBibleRef}
               ref={bibleScreen}
               scrollY={scrollY}
@@ -121,6 +131,7 @@ function MyTabBar({ state, descriptors, navigation }) {
     right: 0,
     bottom: 0,
     height: 70,
+    opacity: headerOpacity,
     transform: [{ translateY: navigationY }],
     zIndex: 0,
   };

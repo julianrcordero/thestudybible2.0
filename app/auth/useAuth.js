@@ -35,7 +35,6 @@ export default useAuth = () => {
 
   const getUserMarkup = async (user) => {
     if (user) {
-      console.log("Loading data for", user.sub);
       const result = await userMarkupApi.getUserMarkup(
         user.sub
         //     ,(progress) => setProgress(progress)
@@ -45,34 +44,8 @@ export default useAuth = () => {
         return result.data;
       } else return alert("Could not retrieve user markup");
     } else {
-      console.log("You are not logged in");
     }
   };
 
   return { user, getUserMarkup, logIn, logOut };
 };
-
-// export default useAuth = () => {
-//   const { user, setUser } = useContext(AuthContext);
-
-//   const logIn = (idToken, accessToken) => {
-//     const user = jwtDecode(idToken);
-//     setUser(user);
-//     authStorage.storeAccessToken(accessToken);
-//     authStorage.storeIdToken(idToken);
-//   };
-
-//   const logOut = async () => {
-//     const accessToken = await authStorage.getAccessToken();
-//     const result = await cognitoAuthApi.signout(accessToken);
-//     result.ok
-//       ? console.log("Successfully signed out via Cognito")
-//       : console.log("Couldn't sign out via Cognito");
-
-//     setUser(null);
-//     authStorage.removeIdToken();
-//     authStorage.removeAccessToken();
-//   };
-
-//   return { user, logIn, logOut };
-// };

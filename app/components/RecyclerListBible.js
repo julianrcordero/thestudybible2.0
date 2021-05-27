@@ -59,7 +59,7 @@ export default class RecyclerListBible extends Component {
     this._rowRenderer = this._rowRenderer.bind(this);
 
     this.state = {
-      contextProvider: new ContextHelper("PARENT"),
+      // contextProvider: new ContextHelper("PARENT"),
       dataProvider: this.provideData.cloneWithRows([
         {
           chapterNum: 1,
@@ -77,6 +77,15 @@ export default class RecyclerListBible extends Component {
       verses: [],
     };
   }
+
+  // let dataProvider = new DataProvider(
+  //   (r1, r2) => {
+  //     return r1 !== r2;
+  //   },
+  //   index => {
+  //     return data[index].id;
+  //   }
+  // );
 
   provideData = new DataProvider((r1, r2) => {
     return r1 !== r2;
@@ -108,7 +117,7 @@ export default class RecyclerListBible extends Component {
     } else if (prevState.sections !== this.state.sections) {
       //   console.log("heights array:", this._heights.length);
       this.setState({
-        contextProvider: new ContextHelper("PARENT"),
+        // contextProvider: new ContextHelper("PARENT"),
         dataProvider: this.provideData.cloneWithRows(this.state.sections),
       });
     }
@@ -127,8 +136,6 @@ export default class RecyclerListBible extends Component {
       return true;
     } else if (this.state.dataProvider !== nextState.dataProvider) {
       return true;
-    } else if (this.props._heights !== nextProps._heights) {
-      console.log("height arrays are different");
     }
     return false;
   }
@@ -168,21 +175,33 @@ export default class RecyclerListBible extends Component {
     console.log(OnRecreateParams);
   };
 
+  // renderItem = (type, item, index, extendedState) => {
+  //   if (type === ViewTypes.HEADER) {
+  //     return <Text style={styles.headerStyle}>Header</Text>;
+  //   } else {
+  //     //let isSelected = (index in extendedState.selected) ? true : false;
+  //     return (
+  //       <ListItem
+  //         item={item}
+  //         index={index}
+  //         extendedState={extendedState}
+  //         onPressItem={this.onPressItem}
+  //       />
+  //     );
+  //   }
+  // };
+
   //Given type and data return the view component
-  _rowRenderer(type, item) {
+  _rowRenderer(type, item, index, extendedState) {
     return (
       <Chapter
         bibleScreen={this.props.bibleScreen}
         chapterHeading={item.chapterHeading}
-        chapterNum={Number(item.chapterNum)}
+        chapterNum={index + 1}
         colors={this.props.colors}
-        fontFamily={this.props.fontFamily}
-        fontSize={this.props.fontSize}
-        formatting={this.props.formatting}
+        // extendedState={extendedState}
         // key={i}
         // searchWords={searchWords}
-        // onPress={this.props.toggleSlideView}
-        // paragraphBibleRef={this.props.paragraphBibleRef}
         _heights={this._heights}
         titleSize={this.props.fontSize * 1.75}
         verses={item.verses}
@@ -193,7 +212,6 @@ export default class RecyclerListBible extends Component {
             fontSize: this.props.fontSize,
             lineHeight: this.props.fontSize * 2,
             fontFamily: this.props.fontFamily,
-            // height: this.height,
           },
         ]}
       />
@@ -226,7 +244,7 @@ export default class RecyclerListBible extends Component {
   };
 
   render() {
-    const { bibleSectionsRef, colors, HEADER_HEIGHT } = this.props;
+    const { bibleSectionsRef, colors, fontSize, HEADER_HEIGHT } = this.props;
 
     const styles = {
       bibleTextView: {
@@ -245,7 +263,7 @@ export default class RecyclerListBible extends Component {
         bounces={false}
         canChangeSize={true}
         contextProvider={this.state.contextProvider}
-        // extendedState={this._heights}
+        // extendedState={fontSize}
         layoutProvider={this._layoutProvider}
         dataProvider={this.state.dataProvider}
         initialRenderIndex={this.state.index}

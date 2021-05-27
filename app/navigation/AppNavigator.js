@@ -51,6 +51,7 @@ const AppNavigator = (props) =>
       searchHistoryRef,
       studyScreen,
       titleSize,
+      toolBar,
       topPanel,
     } = props;
 
@@ -93,6 +94,7 @@ const AppNavigator = (props) =>
               searchHistoryRef={searchHistoryRef}
               studyScreen={studyScreen}
               titleSize={titleSize}
+              toolBar={toolBar}
               topPanel={topPanel}
             />
           )}

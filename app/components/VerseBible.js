@@ -64,8 +64,6 @@ export default class VerseBible extends Component {
       return true;
     } else if (this.state.index !== nextState.index) {
       return true;
-    } else if (this.state.dataProvider !== nextState.dataProvider) {
-      return true;
     }
     return false;
   }

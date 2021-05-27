@@ -22,14 +22,6 @@ export default class Verse extends Component {
     }
   };
 
-  _openStudyScreen = () => {
-    // console.log(this.props.chapterNum, this.props.verseNumber);
-    this.props.bibleScreen.current?.toggleSlideView(
-      this.props.chapterNum,
-      Number(this.props.verseNumber)
-    );
-  };
-
   // _toggleUnderline = () => {
   //   if (this.state.textDecorationLine === "none") {
   //     this.setState({ textDecorationLine: "underline" });
@@ -37,6 +29,7 @@ export default class Verse extends Component {
   //     this.setState({ textDecorationLine: "none" });
   //   }
   // };
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.verseNumber !== nextProps.verseNumber) {
       return true;
@@ -57,8 +50,7 @@ export default class Verse extends Component {
 
   render() {
     const {
-      // focusedVerse,
-      // searchWords,
+      _openStudyScreen,
       verseNumber,
       verseText,
       verseTextStyle,
@@ -80,7 +72,7 @@ export default class Verse extends Component {
         {verseNumber + " "}
         <Text
           onPress={this._toggleHighlight}
-          onLongPress={this._openStudyScreen}
+          onLongPress={() => _openStudyScreen(verseNumber)}
           style={[verseTextStyle, verseStyle]}
           // onLayout={this.onLayout}
         >

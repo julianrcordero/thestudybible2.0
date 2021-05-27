@@ -35,7 +35,9 @@ class BiblePicker extends Component {
 
   toggleSearch = () => {
     this.setState({ searchOn: !this.state.searchOn });
-    this.props.setHistoryVisible(!this.state.searchOn);
+    this.props.toolBar.current?.setState({
+      historyVisible: !this.state.searchOn,
+    });
   };
 
   search = (search) => {

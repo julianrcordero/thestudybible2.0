@@ -66,10 +66,6 @@ export default class Highlight extends Component {
     ]);
 
     if (!result.ok) {
-      console.log(
-        "Could not create the highlight at",
-        this.props.referenceFilter
-      );
       this.recursiveHighlightAdd(dummyHighlight);
     } else {
       console.log(

@@ -63,8 +63,6 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.state.index !== nextState.index) {
       return true;
-    } else if (this.state.dataProvider !== nextState.dataProvider) {
-      return true;
     }
     return false;
   }

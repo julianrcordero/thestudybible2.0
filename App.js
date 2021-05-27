@@ -40,6 +40,7 @@ export default function App() {
   const searchHistoryRef = useRef();
   const studyScreen = useRef();
   const studyToolBar = useRef();
+  const toolBar = useRef();
   const topPanel = useRef();
 
   const books = [
@@ -588,6 +589,7 @@ export default function App() {
                 paragraphBibleRef={paragraphBibleRef}
                 searchHistoryRef={searchHistoryRef}
                 studyScreen={studyScreen}
+                toolBar={toolBar}
                 topPanel={topPanel}
               />
             </NavigationContainer>

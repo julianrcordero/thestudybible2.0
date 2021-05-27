@@ -28,29 +28,24 @@ export default class Chapter extends Component {
     super(props);
   }
 
-  ConditionalWrapper = ({ wrapper, children }) =>
-    this.props.formatting == "Default" ? wrapper(children) : children;
-
   // componentDidMount = () => {
-  //   console.log("Chapter componentDidMount");
   // };
 
   // componentDidUpdate = (prevProps, prevState) => {
   //   if (prevProps.verses !== this.props.verses) {
-  //     console.log("Chapter verses componentDidUpdate", this.props.chapterNum);
   //   }
   // };
 
-  keyExtractor = (item, index) => item + index;
+  keyExtractor = (item, index) => index.toString();
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.chapterNum !== nextProps.chapterNum) {
+    if (this.props.chapterHeading !== nextProps.chapterHeading) {
       return true;
-    } else if (this.props.chapterHeading !== nextProps.chapterHeading) {
-      return true;
-    } else if (this.props.verses !== nextProps.verses) {
+    } else if (this.props.chapterNum !== nextProps.chapterNum) {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
+      return true;
+    } else if (this.props.verses !== nextProps.verses) {
       return true;
     } else if (this.props.titleSize !== nextProps.titleSize) {
       return true;
@@ -60,19 +55,26 @@ export default class Chapter extends Component {
     return false;
   }
 
-  mapVerse = (verse) => verse.verseNum + " " + verse.verseText;
+  mapVerse = (verse, i) => i + 1 + " " + verse;
 
-  mapVerseObject = (verse, j) => (
+  mapVerseObject = (verse, i) => (
     <Verse
       chapterNum={this.props.chapterNum}
-      bibleScreen={this.props.bibleScreen}
-      key={j}
-      verseNumber={verse.verseNum}
-      verseText={verse.verseText}
+      key={i}
+      _openStudyScreen={this._openStudyScreen}
+      verseNumber={i + 1}
+      verseText={verse}
       verseTextStyle={this.props.verseTextStyle}
       // searchWords={searchWords}
     />
   );
+
+  _openStudyScreen = (verseNumber) => {
+    this.props.bibleScreen.current?.toggleSlideView(
+      this.props.chapterNum,
+      verseNumber
+    );
+  };
 
   onLayout = ({ nativeEvent: { layout } }) => {
     // this.props.paragraphBibleRef.current?.addToLayoutsMap(
@@ -87,7 +89,6 @@ export default class Chapter extends Component {
       chapterHeading,
       chapterNum,
       colors,
-      // onPress,
       titleSize,
       verses,
       verseTextStyle,
@@ -105,19 +106,6 @@ export default class Chapter extends Component {
           {verses.map(this.mapVerseObject)}
         </Paragraph>
       </View>
-      //   <AnimatedSectionHeader
-      //     colors={colors}
-      //     title={title}
-      //     titleSize={titleSize}
-      //   />
-      // </>
-      // <View>
-      //   <AnimatedSectionHeader
-      //     colors={colors}
-      //     title={title}
-      //     titleSize={titleSize}
-      //   />
-      //   <Text style={verseTextStyle}>{verses.map(this.mapVerseObject)}</Text>
     );
   }
 }

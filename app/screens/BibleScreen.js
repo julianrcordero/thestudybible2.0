@@ -4,7 +4,7 @@ import { InteractionManager, View } from "react-native";
 import userMarkupApi from "../api/userMarkup";
 import { useTheme } from "../config/ThemeProvider";
 
-import BibleScreenToolBar from "../components/BibleScreenToolBar";
+import ToolBar from "../components/ToolBar";
 import ParagraphBible from "../components/ParagraphBible";
 import useAuth from "../auth/useAuth";
 import VerseByVerseBible from "../components/VerseByVerseBible";
@@ -21,8 +21,8 @@ export default class BibleScreen extends Component {
 
   state = {
     currentBook: {
-      label: "Genesis",
-      value: 1,
+      label: "Ecclesiastes",
+      value: 21,
       backgroundColor: "#345171",
       icon: "apps",
     },
@@ -109,7 +109,6 @@ export default class BibleScreen extends Component {
       bibleScreen,
       bibleSectionsRef,
       bottomSheetContentRef,
-      carousel,
       colors,
       darkMode,
       headerContentRef,
@@ -120,12 +119,13 @@ export default class BibleScreen extends Component {
       bottomSheetRef,
       paragraphBibleRef,
       searchHistoryRef,
+      toolBar,
       topPanel,
     } = this.props;
 
     return (
       <>
-        <BibleScreenToolBar
+        <ToolBar
           bottomSheetContentRef={bottomSheetContentRef}
           bottomSheetRef={bottomSheetRef}
           colors={colors}
@@ -137,10 +137,12 @@ export default class BibleScreen extends Component {
           fontSize={this.state.fontSize}
           headerContentRef={headerContentRef}
           headerOpacity={headerOpacity}
-          HEADER_HEIGHT={HEADER_HEIGHT}
           headerY={headerY}
+          HEADER_HEIGHT={HEADER_HEIGHT}
           paragraphBibleRef={paragraphBibleRef}
+          ref={toolBar}
           searchHistoryRef={searchHistoryRef}
+          toolBar={toolBar}
           topPanel={topPanel}
         />
         <RecyclerListBible

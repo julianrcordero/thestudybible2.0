@@ -31,14 +31,7 @@ export default class Favorite extends Component {
         );
 
         if (!result.ok) {
-          console.log(result);
         } else {
-          console.log(
-            "deleted favorite with id:",
-            theFavorite.id,
-            "on ",
-            theFavorite.start_ref
-          );
         }
       }
     } else {
@@ -72,12 +65,6 @@ export default class Favorite extends Component {
       if (!result.ok) {
         return alert("Could not create the note.");
       } else {
-        console.log(
-          "created favorite with id:",
-          result.data,
-          "on ",
-          newFavorite.start_ref
-        );
       }
     }
   };

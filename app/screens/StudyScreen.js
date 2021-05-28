@@ -52,7 +52,7 @@ class VerseHyperlink extends PureComponent {
     const { cr } = this.props;
     return (
       <TouchableOpacity onPress={goToVerse}>
-        <Text style={this.styles.verseLink}>{cr["text"] + ",\t\t"}</Text>
+        <Text style={this.styles.verseLink}>{cr.text + ",\t\t"}</Text>
       </TouchableOpacity>
     );
   }
@@ -63,30 +63,31 @@ class CrossRef extends Component {
     super(props);
   }
 
+  containerStyle = {
+    alignItems: "center",
+    flexDirection: "row",
+    paddingBottom: 12.5,
+  };
+
+  linkStyle = { flexWrap: "wrap", flexDirection: "row" };
+
+  keyExtractor = (item, index) => item.for;
+
   render() {
     const { colors, myObject } = this.props;
 
     return (
-      <View
-        style={{
-          alignItems: "center",
-          flexDirection: "row",
-          paddingBottom: 12.5,
-        }}
-      >
+      <View style={this.containerStyle}>
         <AppText style={{ color: colors.text }}>
-          {myObject["title"] + "\t"}
+          {myObject.title + "\t"}
         </AppText>
-        <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-          {Array.isArray(myObject["refs"]["ref"]) ? (
-            myObject["refs"]["ref"].map((cr) => (
-              <VerseHyperlink key={cr["for"]} cr={cr} />
+        <View style={this.linkStyle}>
+          {Array.isArray(myObject.refs.ref) ? (
+            myObject.refs.ref.map((cr) => (
+              <VerseHyperlink key={cr.for} cr={cr} />
             ))
           ) : (
-            <VerseHyperlink
-              key={myObject["for"]}
-              cr={myObject["refs"]["ref"]}
-            />
+            <VerseHyperlink key={myObject.for} cr={myObject.refs.ref} />
           )}
         </View>
       </View>
@@ -106,13 +107,14 @@ function CrossRefList({ currentCrossrefs }) {
         defaultStyles.paddingText,
       ]}
     >
-      {Array.isArray(currentCrossrefs) ? (
-        currentCrossrefs.map((crossref) => (
-          <CrossRef colors={colors} key={crossref["id"]} myObject={crossref} />
-        ))
-      ) : currentCrossrefs["title"] == "" ? null : (
-        <CrossRef colors={colors} myObject={currentCrossrefs} />
-      )}
+      {currentCrossrefs &&
+        (Array.isArray(currentCrossrefs) ? (
+          currentCrossrefs.map((crossref) => (
+            <CrossRef colors={colors} key={crossref.id} myObject={crossref} />
+          ))
+        ) : currentCrossrefs.title === "" ? null : (
+          <CrossRef colors={colors} myObject={currentCrossrefs} />
+        ))}
     </View>
   );
 }
@@ -156,9 +158,31 @@ export default class StudyScreen extends Component {
       this.setState({ user: myUser });
     }
   }
-
   shouldComponentUpdate(nextProps, nextState) {
-    return true;
+    if (this.state.currentNotes !== nextState.currentNotes) {
+      return true;
+    } else if (this.state.currentFavorites !== nextState.currentFavorites) {
+      return true;
+    } else if (this.state.currentHighlights !== nextState.currentHighlights) {
+      return true;
+    } else if (this.state.currentCrossrefs !== nextState.currentCrossrefs) {
+      return true;
+    } else if (this.state.currentJohnsNote !== nextState.currentJohnsNote) {
+      return true;
+    } else if (this.state.currentReference !== nextState.currentReference) {
+      return true;
+    }
+    // else if (this.state.user !== nextState.user) {
+    //   return false;
+    // }
+    // else if (this.state.currentBook !== nextState.currentBook) {
+    //   return true;
+    // }
+    else if (this.state.verseList !== nextState.verseList) {
+      return true;
+    }
+
+    return false;
   }
 
   async loadUserMarkup(user) {
@@ -202,7 +226,7 @@ export default class StudyScreen extends Component {
     index,
   });
 
-  keyExtractor = (item, index) => item + index;
+  keyExtractor = (item, index) => index.toString();
 
   referenceCode = (chapter, verse) => {
     return Number(
@@ -234,13 +258,14 @@ export default class StudyScreen extends Component {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
 
+      // console.log(v);
       this.setState({
-        currentReference: v.item.chapter + " : " + v.item.title,
+        currentReference: v.item.chapter + " : " + v.item.verse,
         currentCrossrefs: v.item.crossrefs,
-        referenceFilter: this.referenceCode(v.item.chapter, v.item.title),
+        referenceFilter: this.referenceCode(v.item.chapter, v.item.verse),
         currentJohnsNote: v.item.johnsNote,
       });
-      // sendVerseToToolBar(v.item.chapter, v.item.title);
+      // sendVerseToToolBar(v.item.chapter, v.item.verse);
     }
     // Use viewable items in state or as intended
   };
@@ -280,13 +305,13 @@ export default class StudyScreen extends Component {
           // colorPaletteVisible={this.state.colorPaletteVisible}
           currentHighlights={this.state.currentHighlights}
           setCurrentHighlights={this.setCurrentHighlights}
-          referenceFilter={this.referenceCode(item.chapter, item.title)}
+          referenceFilter={this.referenceCode(item.chapter, item.verse)}
           verseTextStyle={{
             fontFamily: this.state.fontFamily,
             fontSize: this.state.fontSize,
             lineHeight: this.state.fontSize * 2,
           }}
-          text={item.content}
+          text={item.text}
           username={this.state.user ? this.state.user.sub : ""}
         />
       </Text>

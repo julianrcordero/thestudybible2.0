@@ -49,7 +49,8 @@ export default class Chapter extends Component {
       return true;
     } else if (this.props.titleSize !== nextProps.titleSize) {
       return true;
-    } else if (this.props.verseTextStyle !== nextProps.verseTextStyle) {
+    } else if (this.props.fontSize !== nextProps.fontSize) {
+      // console.log("fontSize changed");
       return true;
     }
     return false;
@@ -89,6 +90,8 @@ export default class Chapter extends Component {
       chapterHeading,
       chapterNum,
       colors,
+      fontSize,
+      style,
       titleSize,
       verses,
       verseTextStyle,
@@ -100,9 +103,9 @@ export default class Chapter extends Component {
       (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      <View onLayout={this.onLayout}>
+      <View onLayout={this.onLayout} style={style}>
         <SectionHeader colors={colors} title={title} titleSize={titleSize} />
-        <Paragraph style={verseTextStyle}>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
           {verses.map(this.mapVerseObject)}
         </Paragraph>
       </View>

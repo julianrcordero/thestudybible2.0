@@ -15,14 +15,41 @@ import SearchHistory from "./SearchHistory";
 import bookPaths from "../json/bible/Bible";
 
 import reactStringReplace from "react-string-replace";
+import parser from "fast-xml-parser";
+import xml_data from "../xml/Genesis.js";
+
+var he = require("he");
+var options = {
+  attributeNamePrefix: "",
+  // attrNodeName: "attr", //default is 'false'
+  textNodeName: "text",
+  ignoreAttributes: false,
+  ignoreNameSpace: false,
+  allowBooleanAttributes: false,
+  parseNodeValue: false,
+  parseAttributeValue: false,
+  trimValues: false,
+  cdataTagName: "__cdata", //default is 'false'
+  cdataPositionChar: "\\c",
+  parseTrueNumberOnly: false,
+  arrayMode: true,
+  attrValueProcessor: (val, attrName) =>
+    he.decode(val, { isAttributeValue: true }), //default is a=>a
+  tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+  stopNodes: ["heading", "verse"],
+};
+
+if (parser.validate(xml_data) === true) {
+  //optional (it'll return an object in case it's not valid)
+  var jsonObj = parser.parse(xml_data, options);
+  console.log(jsonObj);
+}
 
 const notesArray = require("../json/bible/esvmsb.notes.json")[
   "crossway-studynotes"
-]["book"];
+].book;
 
-const crossrefsJsonObject = require("../json/bible/GenesisCrossrefs.json")[
-  "book"
-];
+const crossrefsJsonObject = require("../json/bible/GenesisCrossrefs.json").book;
 
 class TopSheetNavigation extends Component {
   constructor(props) {
@@ -152,7 +179,6 @@ class TopSheetNavigation extends Component {
         currentBook: this.state.currentBook,
       });
     } else if (prevState.verses !== this.state.verses) {
-      console.log("topPanel verses update");
       this.props.studyScreen.current?.setState({
         bookFilter: this.state.currentBook.value,
         currentBook: this.state.currentBook,
@@ -173,19 +199,21 @@ class TopSheetNavigation extends Component {
                 return text;
               })
             : v["#text"];
-          // v["crossref"]
-          //   ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
-          //       Array.isArray(v["crossref"])
-          //         ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-          //         : v["crossref"]["_let"]
+          // v.crossref
+          //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
+          //       Array.isArray(v.crossref)
+          //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
+          //         : v.crossref._let
           //     )
-          //   : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match);
+          //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
         }),
       };
     });
 
     this.setState({ sections: mySections });
-    console.log("set sections");
+    // for (let i = 0; i < 4; i++) {
+    //   console.log(mySections[i]);
+    // }
   };
 
   // {
@@ -205,9 +233,6 @@ class TopSheetNavigation extends Component {
   setVerses = (newBook) => {
     // console.log(newBook);
     let verses = [];
-    let johnsNote = "";
-    let crossrefs = "";
-    console.log(newBook.value - 1);
     const notes = notesArray[newBook.value - 1].note;
     const chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
 
@@ -217,47 +242,34 @@ class TopSheetNavigation extends Component {
           ("00" + newBook.value).substr(-2) +
           ("000" + (i + 1)).substr(-3) +
           ("000" + (j + 1)).substr(-3);
-        let noteCode = "n" + referenceCode;
+
         let note = notes.find(
-          (el) => el._start === noteCode && !el._id.includes("introduction")
+          (el) =>
+            el._start === "n" + referenceCode &&
+            !el._id.includes("introduction")
         );
-        if (note) {
-          const pTag = note.content.p[0];
-          const parsedNote = pTag.__text;
-          johnsNote = parsedNote;
-          // console.log(noteCode, parsedNote.substr(20));
-        } else {
-          johnsNote = "There is no note for this passage";
-        }
         let crossrefList = crossrefsJsonObject?.chapter[i].verse.find(
           (el) => el.id === referenceCode
         );
-        if (crossrefList) {
-          crossrefs = crossrefList.letter;
-        } else {
-          crossrefs = {
-            title: "",
-            text: "",
-          };
-        }
+
         verses.push({
           chapter: i + 1,
-          title: j + 1,
-          content: v.crossref
+          verse: j + 1,
+          text: v.crossref
             ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
                 Array.isArray(v.crossref)
                   ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
                   : v.crossref._let
               )
             : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match),
-          johnsNote: johnsNote,
-          crossrefs: crossrefs,
+          johnsNote:
+            note?.content.p[0].__text ?? "There is no note for this passage",
+          crossrefs: crossrefList?.letter,
         });
       });
     });
 
     this.setState({ verses: verses });
-    console.log("set verses");
   };
 
   // {
@@ -289,6 +301,8 @@ class TopSheetNavigation extends Component {
   changeStudyScreenBook = () => {
     return this.state.verses;
   };
+
+  values = ["GRID", "LIST", "RECENT"];
 
   styles = StyleSheet.create({
     search: {
@@ -369,7 +383,7 @@ class TopSheetNavigation extends Component {
             <Button title={"Cancel"} onPress={this.close}></Button>
           </View>
           <SegmentedControl
-            values={["GRID", "LIST", "RECENT"]}
+            values={this.values}
             selectedIndex={this.state.pickerType}
             // tintColor={"green"}
             onChange={(event) => {

@@ -12,7 +12,7 @@ import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
 
 import Constants from "expo-constants";
-const { height } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
 const AnimatedRecyclerListView = Animated.createAnimatedComponent(
   RecyclerListView
@@ -104,7 +104,6 @@ export default class RecyclerListBible extends Component {
       this.state.sections.length !==
       this.props.topPanel.current?.state.sections.length
     ) {
-      console.log("paragraphBible componentDidMount");
       this.setState({
         sections: this.props.topPanel.current?.state.sections,
       });
@@ -191,6 +190,10 @@ export default class RecyclerListBible extends Component {
   //   }
   // };
 
+  chapterStyle = {
+    paddingHorizontal: width * 0.075,
+  };
+
   //Given type and data return the view component
   _rowRenderer(type, item, index, extendedState) {
     return (
@@ -200,16 +203,18 @@ export default class RecyclerListBible extends Component {
         chapterNum={index + 1}
         colors={this.props.colors}
         // extendedState={extendedState}
+        fontSize={this.props.fontSize}
         // key={i}
         // searchWords={searchWords}
         _heights={this._heights}
+        style={this.chapterStyle}
         titleSize={this.props.fontSize * 1.75}
         verses={item.verses}
         verseTextStyle={[
           defaultStyles.bibleText,
           {
             color: this.props.colors.text,
-            fontSize: this.props.fontSize,
+            // fontSize: this.props.fontSize,
             lineHeight: this.props.fontSize * 2,
             fontFamily: this.props.fontFamily,
           },

@@ -590,6 +590,7 @@ export default function BooksListScreen({
         paragraphBibleRef={paragraphBibleRef}
         route={route}
         topPanel={topPanel}
+        value={section.value}
         width={width}
       />
     );

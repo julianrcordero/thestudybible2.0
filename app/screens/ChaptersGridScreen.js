@@ -17,6 +17,7 @@ export default function ChaptersGridScreen({
   paragraphBibleRef,
   route,
   topPanel,
+  value,
 }) {
   const { colors } = useTheme();
 
@@ -41,12 +42,13 @@ export default function ChaptersGridScreen({
   );
 
   const changeTopPanelBook = () => {
-    topPanel.current?.changeBibleBook({
+    let newBook = {
       label: route?.params.title,
-      value: route?.params.value, //
+      value: route?.params.value ?? value, //
       backgroundColor: "#345171",
       icon: "apps",
-    });
+    };
+    topPanel.current?.changeBibleBook(newBook);
   };
 
   const changeBook = (chapter) => {

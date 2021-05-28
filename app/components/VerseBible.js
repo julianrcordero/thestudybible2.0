@@ -152,8 +152,8 @@ export default class VerseBible extends Component {
       bibleScreen={item.bibleScreen}
       key={i}
       paragraphBibleRef={this.props.paragraphBibleRef}
-      verseNumber={item.title}
-      verseText={item.content}
+      verseNumber={item.verse}
+      verseText={item.text}
       verseTextStyle={[
         defaultStyles.bibleText,
         {

@@ -90,7 +90,7 @@ export default class BibleScreen extends Component {
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       let myIndex = this.props.topPanel.current.state.verses.findIndex(
-        (obj) => obj.chapter === chapter && obj.title === verse
+        (obj) => obj.chapter === chapter && obj.verse === verse
       );
 
       setTimeout(() => {

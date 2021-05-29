@@ -14,17 +14,19 @@ import {
   LayoutProvider,
 } from "recyclerlistview";
 
+import parser from "fast-xml-parser";
+
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
+import xmlData from "../json/bible/Genesis.xml";
 
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-const AnimatedRecyclerListView = Animated.createAnimatedComponent(
-  RecyclerListView
-);
+const AnimatedRecyclerListView =
+  Animated.createAnimatedComponent(RecyclerListView);
 
 export default class ParagraphBible extends Component {
   constructor(props) {
@@ -47,6 +49,34 @@ export default class ParagraphBible extends Component {
 
   componentDidMount() {
     console.log("paragraphBible componentDidMount");
+
+    var he = require("he");
+
+    var options = {
+      attributeNamePrefix: "@_",
+      attrNodeName: "attr", //default is 'false'
+      textNodeName: "#text",
+      ignoreAttributes: true,
+      ignoreNameSpace: false,
+      allowBooleanAttributes: false,
+      parseNodeValue: true,
+      parseAttributeValue: false,
+      trimValues: true,
+      cdataTagName: "__cdata", //default is 'false'
+      cdataPositionChar: "\\c",
+      parseTrueNumberOnly: false,
+      arrayMode: false, //"strict"
+      attrValueProcessor: (val, attrName) =>
+        he.decode(val, { isAttributeValue: true }), //default is a=>a
+      tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+      stopNodes: ["parse-me-as-string"],
+    };
+
+    if (parser.validate(xmlData) === true) {
+      //optional (it'll return an object in case it's not valid)
+      var jsonObj = parser.parse(xmlData, options);
+      console.log(jsonObj);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {

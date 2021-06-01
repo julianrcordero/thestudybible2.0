@@ -15,14 +15,41 @@ import SearchHistory from "./SearchHistory";
 import bookPaths from "../json/bible/Bible";
 
 import reactStringReplace from "react-string-replace";
+import parser from "fast-xml-parser";
+import genesis from "../xml/Genesis.js";
+
+var he = require("he");
+var options = {
+  attributeNamePrefix: "",
+  // attrNodeName: "attr", //default is 'false'
+  textNodeName: "text",
+  ignoreAttributes: false,
+  ignoreNameSpace: false,
+  allowBooleanAttributes: false,
+  parseNodeValue: false,
+  parseAttributeValue: false,
+  trimValues: true,
+  cdataTagName: "__cdata", //default is 'false'
+  cdataPositionChar: "\\c",
+  parseTrueNumberOnly: false,
+  arrayMode: true,
+  // attrValueProcessor: (val, attrName) => {
+  //   return val;
+  // },
+  // tagValueProcessor: (val, tagName) => {
+  //   return val;
+  // },
+  // attrValueProcessor: (val, attrName) =>
+  //   he.decode(val, { isAttributeValue: true }), //default is a=>a
+  // tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+  stopNodes: ["heading", "verse"],
+};
 
 const notesArray = require("../json/bible/esvmsb.notes.json")[
   "crossway-studynotes"
-]["book"];
+].book;
 
-const crossrefsJsonObject = require("../json/bible/GenesisCrossrefs.json")[
-  "book"
-];
+const crossrefsJsonObject = require("../json/bible/GenesisCrossrefs.json").book;
 
 class TopSheetNavigation extends Component {
   constructor(props) {
@@ -130,21 +157,20 @@ class TopSheetNavigation extends Component {
 
   componentDidMount() {
     let newBook = {
-      label: "Genesis",
-      value: 1,
+      label: "Ecclesiastes",
+      value: 21,
       backgroundColor: "#345171",
       icon: "apps",
     };
     this.setState({ currentBook: newBook });
     this.setSections(newBook);
-    this.setVerses(newBook);
+    // this.setVerses(newBook);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.sections !== this.state.sections) {
       // console.log("topPanel sections update");
       this.props.paragraphBibleRef.current?.setState({
-        // verses: this.state.verses,
         sections: this.state.sections,
       });
     } else if (prevState.currentBook !== this.state.currentBook) {
@@ -153,7 +179,6 @@ class TopSheetNavigation extends Component {
         currentBook: this.state.currentBook,
       });
     } else if (prevState.verses !== this.state.verses) {
-      // console.log("topPanel verses update");
       this.props.studyScreen.current?.setState({
         bookFilter: this.state.currentBook.value,
         currentBook: this.state.currentBook,
@@ -163,80 +188,87 @@ class TopSheetNavigation extends Component {
   }
 
   setSections = (newBook) => {
-    let chapters =
-      bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+    if (parser.validate(genesis) === true) {
+      //optional (it'll return an object in case it's not valid)
+      var jsonObj = parser.parse(genesis, options);
+      let sections = jsonObj["crossway-bible"][0].book[0].chapter;
+      this.setState({ sections: sections });
+      console.log("LOADED!");
+    }
+    // let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
 
-    let mySections = chapters.map((c) => {
-      return {
-        chapterNum: c["_num"],
-        chapterHeading: c["heading"],
-        verses: c["verse"].map((v) => {
-          return {
-            verseNum: v["_num"],
-            verseText: v["crossref"]
-              ? reactStringReplace(v["__text"], /(\n)/g, (match, i) =>
-                  Array.isArray(v["crossref"])
-                    ? v["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-                    : v["crossref"]["_let"]
-                )
-              : reactStringReplace(v["__text"], /(\n)/g, (match, i) => match),
-          };
-        }),
-      };
-    });
+    // let mySections = chapters.map((c) => {
+    //   return {
+    //     chapterHeading: c.heading,
+    //     verses: c.verse.map((v) => {
+    //       return Array.isArray(v["#text"])
+    //         ? v["#text"].map((text) => {
+    //             return text;
+    //           })
+    //         : v["#text"];
+    //       // v.crossref
+    //       //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
+    //       //       Array.isArray(v.crossref)
+    //       //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
+    //       //         : v.crossref._let
+    //       //     )
+    //       //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
+    //     }),
+    //   };
+    // });
 
-    this.setState({ sections: mySections });
+    // this.setState({ sections: mySections });
   };
 
-  setVerses = (newBook) => {
-    let verses = [];
-    let johnsNote = "";
-    let crossrefs = "";
-    const notes = notesArray[newBook.value - 1]["note"];
-    const chapters =
-      bookPaths[newBook.label]["crossway-bible"]["book"]["chapter"];
+  // {
+  //   "chapterNum": 4,
+  //   "chapterHeading": "Cain and Abel",
+  //   "verses": [
+  //     {
+  //       "verseNum": 1,
+  //       "verseText": ["Now Adam knew Eve his wife, and she conceived and bore Cain, saying, ",//q1
+  //       "I have gotten",
+  //       " a man with the help of the ",
+  //       "."]//q2
+  //     }
+  //   ]
+  // }
 
-    chapters.map((chapter) => {
-      chapter["verse"].map((verse) => {
+  setVerses = (newBook) => {
+    // console.log(newBook);
+    let verses = [];
+    const notes = notesArray[newBook.value - 1].note;
+    const chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
+
+    chapters.map((chapter, i) => {
+      chapter.verse.map((v, j) => {
         let referenceCode =
           ("00" + newBook.value).substr(-2) +
-          ("000" + chapter["_num"]).substr(-3) +
-          ("000" + verse["_num"]).substr(-3);
-        let noteCode = "n" + referenceCode;
+          ("000" + (i + 1)).substr(-3) +
+          ("000" + (j + 1)).substr(-3);
+
         let note = notes.find(
           (el) =>
-            el["_start"] === noteCode && !el["_id"].includes("introduction")
+            el._start === "n" + referenceCode &&
+            !el._id.includes("introduction")
         );
-        if (note) {
-          const pTag = note["content"]["p"][0];
-          const parsedNote = pTag["__text"];
-          johnsNote = parsedNote;
-        } else {
-          johnsNote = "There is no note for this passage";
-        }
-        let crossrefList = crossrefsJsonObject["chapter"][
-          Number(chapter["_num"]) - 1
-        ]["verse"].find((el) => el["id"] === referenceCode);
-        if (crossrefList) {
-          crossrefs = crossrefList["letter"];
-        } else {
-          crossrefs = {
-            title: "",
-            text: "",
-          };
-        }
+        let crossrefList = crossrefsJsonObject?.chapter[i].verse.find(
+          (el) => el.id === referenceCode
+        );
+
         verses.push({
-          chapter: Number(chapter["_num"]),
-          title: Number(verse["_num"]),
-          content: verse["crossref"]
-            ? reactStringReplace(verse["__text"], /(\n)/g, (match, i) =>
-                Array.isArray(verse["crossref"])
-                  ? verse["crossref"][0]["_let"] // can't index, quotes must be replaced with quote literals
-                  : verse["crossref"]["_let"]
+          chapter: i + 1,
+          verse: j + 1,
+          text: v.crossref
+            ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
+                Array.isArray(v.crossref)
+                  ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
+                  : v.crossref._let
               )
-            : reactStringReplace(verse["__text"], /(\n)/g, (match, i) => match),
-          johnsNote: johnsNote,
-          crossrefs: crossrefs,
+            : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match),
+          johnsNote:
+            note?.content.p[0].__text ?? "There is no note for this passage",
+          crossrefs: crossrefList?.letter,
         });
       });
     });
@@ -244,18 +276,37 @@ class TopSheetNavigation extends Component {
     this.setState({ verses: verses });
   };
 
+  // {
+  //   chapterNum: 4,
+  //   verseNum: 1,
+  //   content: ["Now Adam knew Eve his wife, and she conceived and bore Cain, saying, ",
+  //         "I have gotten",
+  //         " a man with the help of the ",
+  //         "."],
+  //         johnsNote: "I'm John MacArthur and I approve this message.",
+  //         crossrefs: [{
+  //           title: "a",
+  //           text: "",
+  //         }, {
+  //           title: "b",
+  //           text: "",
+  //         }]
+  // }
+
   changeBibleBook = (newBook) => {
     if (this.state.currentBook.label !== newBook.label) {
-      console.log(this.state.currentBook.label, "-->", newBook.label);
+      // console.log(this.state.currentBook.label, "-->", newBook.label);
       this.setState({ currentBook: newBook });
       this.setSections(newBook);
-      this.setVerses(newBook);
+      // this.setVerses(newBook);
     }
   };
 
-  changeStudyScreenBook = (newBook) => {
+  changeStudyScreenBook = () => {
     return this.state.verses;
   };
+
+  values = ["GRID", "LIST", "RECENT"];
 
   styles = StyleSheet.create({
     search: {
@@ -336,7 +387,7 @@ class TopSheetNavigation extends Component {
             <Button title={"Cancel"} onPress={this.close}></Button>
           </View>
           <SegmentedControl
-            values={["GRID", "LIST", "RECENT"]}
+            values={this.values}
             selectedIndex={this.state.pickerType}
             // tintColor={"green"}
             onChange={(event) => {

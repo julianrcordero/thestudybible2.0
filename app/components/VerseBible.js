@@ -1,31 +1,14 @@
-import React, { Component, PureComponent } from "react";
-import {
-  Dimensions,
-  FlatList,
-  InteractionManager,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import React, { Component } from "react";
+import { Dimensions, FlatList, InteractionManager, View } from "react-native";
 import Animated from "react-native-reanimated";
-import {
-  RecyclerListView,
-  DataProvider,
-  LayoutProvider,
-} from "recyclerlistview";
 
 import defaultStyles from "../config/styles";
-import Chapter from "./Chapter";
 
 import Constants from "expo-constants";
 import Verse from "./Verse";
 const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-const AnimatedRecyclerListView = Animated.createAnimatedComponent(
-  RecyclerListView
-);
 
 export default class VerseBible extends Component {
   constructor(props) {
@@ -80,8 +63,6 @@ export default class VerseBible extends Component {
     } else if (this.props.colors !== nextProps.colors) {
       return true;
     } else if (this.state.index !== nextState.index) {
-      return true;
-    } else if (this.state.dataProvider !== nextState.dataProvider) {
       return true;
     }
     return false;
@@ -171,8 +152,8 @@ export default class VerseBible extends Component {
       bibleScreen={item.bibleScreen}
       key={i}
       paragraphBibleRef={this.props.paragraphBibleRef}
-      verseNumber={item.title}
-      verseText={item.content}
+      verseNumber={item.verse}
+      verseText={item.text}
       verseTextStyle={[
         defaultStyles.bibleText,
         {
@@ -208,7 +189,7 @@ export default class VerseBible extends Component {
   _heights = [];
 
   render() {
-    const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
+    const { bibleSectionsRef, colors, HEADER_HEIGHT } = this.props;
 
     const styles = {
       bibleTextView: {

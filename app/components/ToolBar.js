@@ -2,7 +2,7 @@ import React, { useState, Component } from "react";
 import { View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import BiblePicker from "../components/BiblePicker";
+import BiblePicker from "./BiblePicker";
 
 import { useTheme } from "../config/ThemeProvider";
 
@@ -10,7 +10,7 @@ import BiblePickerItem from "./BiblePickerItem";
 import AppText from "./Text";
 import SearchHistory from "./SearchHistory";
 
-export default class BibleScreenToolBar extends Component {
+export default class ToolBar extends Component {
   constructor(props) {
     super(props);
   }
@@ -37,7 +37,6 @@ export default class BibleScreenToolBar extends Component {
     }
     return false;
   }
-  // const [historyVisible, setHistoryVisible] = useState(false);
 
   // const { colors, isDark } = useTheme();
 
@@ -53,10 +52,12 @@ export default class BibleScreenToolBar extends Component {
       fontFamily,
       fontSize,
       headerContentRef,
+      headerOpacity,
       HEADER_HEIGHT,
       paragraphBibleRef,
       bottomSheetRef,
       searchHistoryRef,
+      toolBar,
       topPanel,
     } = this.props;
 
@@ -64,6 +65,7 @@ export default class BibleScreenToolBar extends Component {
       <Animated.View
         style={{
           justifyContent: "center",
+          opacity: headerOpacity,
           position: "absolute",
           transform: [{ translateY: headerY }],
           width: "100%",
@@ -86,7 +88,7 @@ export default class BibleScreenToolBar extends Component {
           PickerItemComponent={BiblePickerItem}
           bottomSheetRef={bottomSheetRef}
           searchHistoryRef={searchHistoryRef}
-          // setHistoryVisible={setHistoryVisible}
+          toolBar={toolBar}
           topPanel={topPanel}
         />
         {

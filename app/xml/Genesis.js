@@ -1,4 +1,4 @@
-<?xml version="1.0" standalone="no"?>
+const genesis = `<?xml version="1.0" standalone="no"?>
 <!DOCTYPE crossway-bible SYSTEM "schema/crossway.bibles.dtd">
 <crossway-bible translation="English Standard Version" revision="2006-10-26" xmlns="http://www.crosswaybibles.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="schema/crossway.bibles.xsd"> 
 <book title="Genesis" num="1">
@@ -46,7 +46,7 @@
     <marker class="begin-verse" mid="v01001015"/>
     <verse num="15">and let them be lights in the expanse of the heavens to give light upon the earth.<q class="end-double" qid="01001015.1" from="01001014.1" to="01001015.1"/> And it was so.</verse>
     <marker class="begin-verse" mid="v01001016"/>
-    <verse num="16">And God <crossref let="k" cid="c01001016.1"/>made the two great lights&emdash;the greater light to rule the day and the lesser light to rule the night&emdash;and the stars.</verse>
+    <verse num="16">And God <crossref let="k" cid="c01001016.1"/>made the two great lights&#8212;the greater light to rule the day and the lesser light to rule the night&#8212;and the stars.</verse>
     <marker class="begin-verse" mid="v01001017"/>
     <verse num="17">And God set them in the expanse of the heavens to give light on the earth,</verse>
     <marker class="begin-verse" mid="v01001018"/>
@@ -66,7 +66,7 @@
     <end-paragraph/>
     <marker class="begin-verse" mid="v01001024"/>
     <begin-paragraph/>
-    <verse num="24">And God said, <q class="begin-double" qid="01001024.1" from="01001024.1" to="01001024.2"/>Let the earth bring forth living creatures according to their kinds&emdash;livestock and creeping things and beasts of the earth according to their kinds.<q class="end-double" qid="01001024.2" from="01001024.1" to="01001024.2"/> And it was so.</verse>
+    <verse num="24">And God said, <q class="begin-double" qid="01001024.1" from="01001024.1" to="01001024.2"/>Let the earth bring forth living creatures according to their kinds&#8212;livestock and creeping things and beasts of the earth according to their kinds.<q class="end-double" qid="01001024.2" from="01001024.1" to="01001024.2"/> And it was so.</verse>
     <marker class="begin-verse" mid="v01001025"/>
     <verse num="25">And God made the beasts of the earth according to their kinds and the livestock according to their kinds, and everything that creeps on the ground according to its kind. And God saw that it was good.</verse>
     <end-paragraph/>
@@ -118,9 +118,9 @@
     <end-block-indent/>
     <marker class="begin-verse" mid="v01002005"/>
     <begin-paragraph/>
-    <verse num="5">When no <crossref let="z" cid="c01002005.1"/>bush of the field<note nid="n01002005.1"/> was yet in the land<note nid="n01002005.2"/> and no small plant of the field had yet sprung up&emdash;for the <span class="divine-name">Lord</span> God had not caused it to rain on the land, and there was no man <crossref let="a" cid="c01002005.2"/>to work the ground,</verse>
+    <verse num="5">When no <crossref let="z" cid="c01002005.1"/>bush of the field<note nid="n01002005.1"/> was yet in the land<note nid="n01002005.2"/> and no small plant of the field had yet sprung up&#8212;for the <span class="divine-name">Lord</span> God had not caused it to rain on the land, and there was no man <crossref let="a" cid="c01002005.2"/>to work the ground,</verse>
     <marker class="begin-verse" mid="v01002006"/>
-    <verse num="6">and a mist<note nid="n01002006.1"/> was going up from the land and was watering the whole face of the ground&emdash;</verse>
+    <verse num="6">and a mist<note nid="n01002006.1"/> was going up from the land and was watering the whole face of the ground&#8212;</verse>
     <marker class="begin-verse" mid="v01002007"/>
     <verse num="7">then the <span class="divine-name">Lord</span> God formed the man of <crossref let="b" cid="c01002007.1"/>dust from the ground and <crossref let="c" cid="c01002007.2"/>breathed into his <crossref let="d" cid="c01002007.3"/>nostrils the breath of life, and <crossref let="e" cid="c01002007.4"/>the man became a living creature.</verse>
     <marker class="begin-verse" mid="v01002008"/>
@@ -285,7 +285,7 @@
     <end-paragraph/>
     <marker class="begin-verse" mid="v01003022"/>
     <begin-paragraph/>
-    <verse num="22">Then the <span class="divine-name">Lord</span> God said, <crossref let="q" cid="c01003022.1"/><q class="begin-double" qid="01003022.1" from="01003022.1" to="01003022.2"/>Behold, the man has become like one of us in knowing good and evil. Now, lest he reach out his hand <crossref let="r" cid="c01003022.2"/>and take also of the tree of life and eat, and live forever&emdash;<q class="end-double" qid="01003022.2" from="01003022.1" to="01003022.2"/></verse>
+    <verse num="22">Then the <span class="divine-name">Lord</span> God said, <crossref let="q" cid="c01003022.1"/><q class="begin-double" qid="01003022.1" from="01003022.1" to="01003022.2"/>Behold, the man has become like one of us in knowing good and evil. Now, lest he reach out his hand <crossref let="r" cid="c01003022.2"/>and take also of the tree of life and eat, and live forever&#8212;<q class="end-double" qid="01003022.2" from="01003022.1" to="01003022.2"/></verse>
     <marker class="begin-verse" mid="v01003023"/>
     <verse num="23">therefore the <span class="divine-name">Lord</span> God sent him out from the garden of Eden <crossref let="s" cid="c01003023.1"/>to work the ground from which he was taken.</verse>
     <marker class="begin-verse" mid="v01003024"/>
@@ -610,7 +610,7 @@
     <marker class="begin-verse" mid="v01008016"/>
     <verse num="16"><q class="begin-double" qid="01008016.1" from="01008016.1" to="01008017.1"/>Go out from the ark, <crossref let="i" cid="c01008016.1"/>you and your wife, and your sons and your sons&apos; wives with you.</verse>
     <marker class="begin-verse" mid="v01008017"/>
-    <verse num="17">Bring out with you every living thing that is with you of all flesh&emdash;birds and animals and every creeping thing that creeps on the earth&emdash;that they may swarm on the earth, and <crossref let="j" cid="c01008017.1"/>be fruitful and multiply on the earth.<q class="end-double" qid="01008017.1" from="01008016.1" to="01008017.1"/></verse>
+    <verse num="17">Bring out with you every living thing that is with you of all flesh&#8212;birds and animals and every creeping thing that creeps on the earth&#8212;that they may swarm on the earth, and <crossref let="j" cid="c01008017.1"/>be fruitful and multiply on the earth.<q class="end-double" qid="01008017.1" from="01008016.1" to="01008017.1"/></verse>
     <marker class="begin-verse" mid="v01008018"/>
     <verse num="18">So Noah went out, and his sons and his wife and his sons&apos; wives with him.</verse>
     <marker class="begin-verse" mid="v01008019"/>
@@ -1257,7 +1257,7 @@
     <marker class="begin-verse" mid="v01018004"/>
     <verse num="4">Let a <crossref let="q" cid="c01018004.1"/>little water be brought, and wash your feet, and rest yourselves under the tree,</verse>
     <marker class="begin-verse" mid="v01018005"/>
-    <verse num="5">while I bring a morsel of bread, that <crossref let="r" cid="c01018005.1"/>you may refresh yourselves, and after that you may pass on&emdash;<crossref let="s" cid="c01018005.2"/>since you have come to your servant.<q class="end-double" qid="01018005.1" from="01018003.1" to="01018005.1"/> So they said, <q class="begin-double" qid="01018005.2" from="01018005.2" to="01018005.3"/>Do as you have said.<q class="end-double" qid="01018005.3" from="01018005.2" to="01018005.3"/></verse>
+    <verse num="5">while I bring a morsel of bread, that <crossref let="r" cid="c01018005.1"/>you may refresh yourselves, and after that you may pass on&#8212;<crossref let="s" cid="c01018005.2"/>since you have come to your servant.<q class="end-double" qid="01018005.1" from="01018003.1" to="01018005.1"/> So they said, <q class="begin-double" qid="01018005.2" from="01018005.2" to="01018005.3"/>Do as you have said.<q class="end-double" qid="01018005.3" from="01018005.2" to="01018005.3"/></verse>
     <marker class="begin-verse" mid="v01018006"/>
     <verse num="6">And Abraham went quickly into the tent to Sarah and said, <q class="begin-double" qid="01018006.1" from="01018006.1" to="01018006.2"/>Quick! Three seahs<note nid="n01018006.1"/> of fine flour! Knead it, and make cakes.<q class="end-double" qid="01018006.2" from="01018006.1" to="01018006.2"/></verse>
     <marker class="begin-verse" mid="v01018007"/>
@@ -1373,7 +1373,7 @@
     <marker class="begin-verse" mid="v01019019"/>
     <verse num="19">Behold, your servant has found favor in your sight, and you have shown me great kindness in saving my life. But I cannot escape to the hills, lest the disaster overtake me and I die.</verse>
     <marker class="begin-verse" mid="v01019020"/>
-    <verse num="20">Behold, this city is near enough to flee to, and it is a little one. Let me escape there&emdash;is it not a little one?&emdash;and my life will be saved!<q class="end-double" qid="01019020.1" from="01019018.1" to="01019020.1"/></verse>
+    <verse num="20">Behold, this city is near enough to flee to, and it is a little one. Let me escape there&#8212;is it not a little one?&#8212;and my life will be saved!<q class="end-double" qid="01019020.1" from="01019018.1" to="01019020.1"/></verse>
     <marker class="begin-verse" mid="v01019021"/>
     <verse num="21">He said to him, <q class="begin-double" qid="01019021.1" from="01019021.1" to="01019022.1"/>Behold, I grant you this favor also, that I will not overthrow the city of which you have spoken.</verse>
     <marker class="begin-verse" mid="v01019022"/>
@@ -1692,7 +1692,7 @@
     <marker class="begin-verse" mid="v01024013"/>
     <verse num="13">Behold, <crossref let="a" cid="c01024013.1"/>I am standing by the spring of water, and the daughters of the men of the city are coming out to draw water.</verse>
     <marker class="begin-verse" mid="v01024014"/>
-    <verse num="14">Let the young woman to whom I shall say, <q class="begin-single" qid="01024014.1" from="01024014.1" to="01024014.2"/>Please let down your jar that I may drink,<q class="end-single" qid="01024014.2" from="01024014.1" to="01024014.2"/> and who shall say, <q class="begin-single" qid="01024014.3" from="01024014.3" to="01024014.4"/>Drink, and I will water your camels<q class="end-single" qid="01024014.4" from="01024014.3" to="01024014.4"/>&emdash;let her be the one whom you have appointed for your servant Isaac. <crossref let="b" cid="c01024014.1"/>By this<note nid="n01024014.1"/> I shall know that you have shown steadfast love to my master.<q class="end-double" qid="01024014.5" from="01024012.1" to="01024014.5"/></verse>
+    <verse num="14">Let the young woman to whom I shall say, <q class="begin-single" qid="01024014.1" from="01024014.1" to="01024014.2"/>Please let down your jar that I may drink,<q class="end-single" qid="01024014.2" from="01024014.1" to="01024014.2"/> and who shall say, <q class="begin-single" qid="01024014.3" from="01024014.3" to="01024014.4"/>Drink, and I will water your camels<q class="end-single" qid="01024014.4" from="01024014.3" to="01024014.4"/>&#8212;let her be the one whom you have appointed for your servant Isaac. <crossref let="b" cid="c01024014.1"/>By this<note nid="n01024014.1"/> I shall know that you have shown steadfast love to my master.<q class="end-double" qid="01024014.5" from="01024012.1" to="01024014.5"/></verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01024015"/>
     <begin-paragraph/>
@@ -2148,7 +2148,7 @@
     <marker class="begin-verse" mid="v01027043"/>
     <verse num="43">Now therefore, my son, obey my voice. Arise, flee to Laban my brother in Haran</verse>
     <marker class="begin-verse" mid="v01027044"/>
-    <verse num="44">and stay with him a while, until your brother&apos;s fury turns away&emdash;</verse>
+    <verse num="44">and stay with him a while, until your brother&apos;s fury turns away&#8212;</verse>
     <marker class="begin-verse" mid="v01027045"/>
     <verse num="45">until your brother&apos;s anger turns away from you, and he forgets what you have done to him. Then I will send and bring you from there. Why should I be bereft of you both in one day?<q class="end-double" qid="01027045.1" from="01027042.1" to="01027045.1"/></verse>
     <end-paragraph/>
@@ -2709,7 +2709,7 @@
     <marker class="begin-verse" mid="v01034014"/>
     <verse num="14">They said to them, <q class="begin-double" qid="01034014.1" from="01034014.1" to="01034017.1"/>We cannot do this thing, to give our sister to one who is uncircumcised, for <crossref let="q" cid="c01034014.1"/>that would be a disgrace to us.</verse>
     <marker class="begin-verse" mid="v01034015"/>
-    <verse num="15">Only on this condition will we agree with you&emdash;that you will become as we are by every male among you being circumcised.</verse>
+    <verse num="15">Only on this condition will we agree with you&#8212;that you will become as we are by every male among you being circumcised.</verse>
     <marker class="begin-verse" mid="v01034016"/>
     <verse num="16">Then we will give our daughters to you, and we will take your daughters to ourselves, and we will dwell with you and become one people.</verse>
     <marker class="begin-verse" mid="v01034017"/>
@@ -2725,7 +2725,7 @@
     <marker class="begin-verse" mid="v01034021"/>
     <verse num="21"><q class="begin-double" qid="01034021.1" from="01034021.1" to="01034023.1"/>These men are at peace with us; let them dwell in the land and <crossref let="t" cid="c01034021.1"/>trade in it, for behold, the land is large enough for them. Let us take their daughters as wives, and let us give them our daughters.</verse>
     <marker class="begin-verse" mid="v01034022"/>
-    <verse num="22">Only on this condition will the men agree to dwell with us to become one people&emdash;when every male among us is circumcised as they are circumcised.</verse>
+    <verse num="22">Only on this condition will the men agree to dwell with us to become one people&#8212;when every male among us is circumcised as they are circumcised.</verse>
     <marker class="begin-verse" mid="v01034023"/>
     <verse num="23">Will not their livestock, their property and all their beasts be ours? Only let us agree with them, and they will dwell with us.<q class="end-double" qid="01034023.1" from="01034021.1" to="01034023.1"/></verse>
     <marker class="begin-verse" mid="v01034024"/>
@@ -2990,7 +2990,7 @@
     <marker class="begin-verse" mid="v01037021"/>
     <verse num="21">But when <crossref let="v" cid="c01037021.1"/>Reuben heard it, he rescued him out of their hands, saying, <q class="begin-double" qid="01037021.1" from="01037021.1" to="01037021.2"/>Let us not take his life.<q class="end-double" qid="01037021.2" from="01037021.1" to="01037021.2"/></verse>
     <marker class="begin-verse" mid="v01037022"/>
-    <verse num="22">And Reuben said to them, <q class="begin-double" qid="01037022.1" from="01037022.1" to="01037022.2"/>Shed no blood; throw him into this pit here in the wilderness, but do not lay a hand on him<q class="end-double" qid="01037022.2" from="01037022.1" to="01037022.2"/>&emdash;<crossref let="w" cid="c01037022.1"/>that he might rescue him out of their hand to restore him to his father.</verse>
+    <verse num="22">And Reuben said to them, <q class="begin-double" qid="01037022.1" from="01037022.1" to="01037022.2"/>Shed no blood; throw him into this pit here in the wilderness, but do not lay a hand on him<q class="end-double" qid="01037022.2" from="01037022.1" to="01037022.2"/>&#8212;<crossref let="w" cid="c01037022.1"/>that he might rescue him out of their hand to restore him to his father.</verse>
     <marker class="begin-verse" mid="v01037023"/>
     <verse num="23">So when Joseph came to his brothers, they stripped him of his robe, <crossref let="x" cid="c01037023.1"/>the robe of many colors that he wore.</verse>
     <marker class="begin-verse" mid="v01037024"/>
@@ -3051,7 +3051,7 @@
     <marker class="begin-verse" mid="v01038010"/>
     <verse num="10">And what he did was wicked in the sight of the <span class="divine-name">Lord</span>, and he put him to death also.</verse>
     <marker class="begin-verse" mid="v01038011"/>
-    <verse num="11">Then Judah said to Tamar his daughter-in-law, <crossref let="v" cid="c01038011.1"/><q class="begin-double" qid="01038011.1" from="01038011.1" to="01038011.2"/>Remain a widow in your father&apos;s house, till Shelah my son grows up<q class="end-double" qid="01038011.2" from="01038011.1" to="01038011.2"/>&emdash;for he feared that he would die, like his brothers. So Tamar went and remained <crossref let="w" cid="c01038011.2"/>in her father&apos;s house.</verse>
+    <verse num="11">Then Judah said to Tamar his daughter-in-law, <crossref let="v" cid="c01038011.1"/><q class="begin-double" qid="01038011.1" from="01038011.1" to="01038011.2"/>Remain a widow in your father&apos;s house, till Shelah my son grows up<q class="end-double" qid="01038011.2" from="01038011.1" to="01038011.2"/>&#8212;for he feared that he would die, like his brothers. So Tamar went and remained <crossref let="w" cid="c01038011.2"/>in her father&apos;s house.</verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01038012"/>
     <begin-paragraph/>
@@ -3065,7 +3065,7 @@
     <marker class="begin-verse" mid="v01038016"/>
     <verse num="16">He turned to her at the roadside and said, <q class="begin-double" qid="01038016.1" from="01038016.1" to="01038016.2"/>Come, let me come in to you,<q class="end-double" qid="01038016.2" from="01038016.1" to="01038016.2"/> for he did not know that she was his daughter-in-law. She said, <q class="begin-double" qid="01038016.3" from="01038016.3" to="01038016.4"/>What will you give me, that you may come in to me?<q class="end-double" qid="01038016.4" from="01038016.3" to="01038016.4"/></verse>
     <marker class="begin-verse" mid="v01038017"/>
-    <verse num="17">He answered, <q class="begin-double" qid="01038017.1" from="01038017.1" to="01038017.2"/>I will send you a young goat from the flock.<q class="end-double" qid="01038017.2" from="01038017.1" to="01038017.2"/> And she said, <q class="begin-double" qid="01038017.3" from="01038017.3" to="01038017.4"/>If you give me a pledge, until you send it&emdash;<q class="end-double" qid="01038017.4" from="01038017.3" to="01038017.4"/></verse>
+    <verse num="17">He answered, <q class="begin-double" qid="01038017.1" from="01038017.1" to="01038017.2"/>I will send you a young goat from the flock.<q class="end-double" qid="01038017.2" from="01038017.1" to="01038017.2"/> And she said, <q class="begin-double" qid="01038017.3" from="01038017.3" to="01038017.4"/>If you give me a pledge, until you send it&#8212;<q class="end-double" qid="01038017.4" from="01038017.3" to="01038017.4"/></verse>
     <marker class="begin-verse" mid="v01038018"/>
     <verse num="18">He said, <q class="begin-double" qid="01038018.1" from="01038018.1" to="01038018.2"/>What pledge shall I give you?<q class="end-double" qid="01038018.2" from="01038018.1" to="01038018.2"/> She replied, <crossref let="c" cid="c01038018.1"/><q class="begin-double" qid="01038018.3" from="01038018.3" to="01038018.4"/>Your signet and your cord and your staff that is in your hand.<q class="end-double" qid="01038018.4" from="01038018.3" to="01038018.4"/> So he gave them to her and went in to her, and she conceived by him.</verse>
     <marker class="begin-verse" mid="v01038019"/>
@@ -3172,7 +3172,7 @@
     <end-paragraph/>
     <marker class="begin-verse" mid="v01040005"/>
     <begin-paragraph/>
-    <verse num="5">And one night they both dreamed&emdash;the cupbearer and the baker of the king of Egypt, who were confined in the prison&emdash;each his own dream, and each dream with its own interpretation.</verse>
+    <verse num="5">And one night they both dreamed&#8212;the cupbearer and the baker of the king of Egypt, who were confined in the prison&#8212;each his own dream, and each dream with its own interpretation.</verse>
     <marker class="begin-verse" mid="v01040006"/>
     <verse num="6">When Joseph came to them in the morning, he saw that they were troubled.</verse>
     <marker class="begin-verse" mid="v01040007"/>
@@ -3204,7 +3204,7 @@
     <marker class="begin-verse" mid="v01040018"/>
     <verse num="18">And Joseph answered and said, <crossref let="o" cid="c01040018.1"/><q class="begin-double" qid="01040018.1" from="01040018.1" to="01040019.1"/>This is its interpretation: the three baskets are three days.</verse>
     <marker class="begin-verse" mid="v01040019"/>
-    <verse num="19"><crossref let="p" cid="c01040019.1"/>In three days Pharaoh will lift up your head&emdash;from you!&emdash;and <crossref let="q" cid="c01040019.2"/>hang you on a tree. And the birds will eat the flesh from you.<q class="end-double" qid="01040019.1" from="01040018.1" to="01040019.1"/></verse>
+    <verse num="19"><crossref let="p" cid="c01040019.1"/>In three days Pharaoh will lift up your head&#8212;from you!&#8212;and <crossref let="q" cid="c01040019.2"/>hang you on a tree. And the birds will eat the flesh from you.<q class="end-double" qid="01040019.1" from="01040018.1" to="01040019.1"/></verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01040020"/>
     <begin-paragraph/>
@@ -3725,7 +3725,7 @@
     <marker class="begin-verse" mid="v01046017"/>
     <verse num="17"><crossref let="y" cid="c01046017.1"/>The sons of Asher: Imnah, Ishvah, Ishvi, Beriah, with Serah their sister. And the sons of Beriah: Heber and Malchiel.</verse>
     <marker class="begin-verse" mid="v01046018"/>
-    <verse num="18"><crossref let="z" cid="c01046018.1"/>These are the sons of Zilpah, <crossref let="a" cid="c01046018.2"/>whom Laban gave to Leah his daughter; and these she bore to Jacob&emdash;sixteen persons.</verse>
+    <verse num="18"><crossref let="z" cid="c01046018.1"/>These are the sons of Zilpah, <crossref let="a" cid="c01046018.2"/>whom Laban gave to Leah his daughter; and these she bore to Jacob&#8212;sixteen persons.</verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01046019"/>
     <begin-paragraph/>
@@ -3735,7 +3735,7 @@
     <marker class="begin-verse" mid="v01046021"/>
     <verse num="21">And <crossref let="d" cid="c01046021.1"/>the sons of Benjamin: Bela, Becher, Ashbel, Gera, Naaman, Ehi, Rosh, Muppim, Huppim, and Ard.</verse>
     <marker class="begin-verse" mid="v01046022"/>
-    <verse num="22">These are the sons of Rachel, who were born to Jacob&emdash;fourteen persons in all.</verse>
+    <verse num="22">These are the sons of Rachel, who were born to Jacob&#8212;fourteen persons in all.</verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01046023"/>
     <begin-paragraph/>
@@ -3743,7 +3743,7 @@
     <marker class="begin-verse" mid="v01046024"/>
     <verse num="24"><crossref let="e" cid="c01046024.1"/>The sons of Naphtali: Jahzeel, Guni, Jezer, and Shillem.</verse>
     <marker class="begin-verse" mid="v01046025"/>
-    <verse num="25"><crossref let="f" cid="c01046025.1"/>These are the sons of Bilhah, <crossref let="g" cid="c01046025.2"/>whom Laban gave to Rachel his daughter, and these she bore to Jacob&emdash;seven persons in all.</verse>
+    <verse num="25"><crossref let="f" cid="c01046025.1"/>These are the sons of Bilhah, <crossref let="g" cid="c01046025.2"/>whom Laban gave to Rachel his daughter, and these she bore to Jacob&#8212;seven persons in all.</verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01046026"/>
     <begin-paragraph/>
@@ -3947,7 +3947,7 @@
     <verse num="4">
         <begin-line/>Unstable as water, you shall not have preeminence,<end-line class="br"/>
         <begin-line class="indent"/>because you <crossref let="a" cid="c01049004.1"/>went up to your father&apos;s bed;<end-line class="br"/>
-        <begin-line class="indent"/>then you defiled it&emdash;he went up to my couch!<end-line/>
+        <begin-line class="indent"/>then you defiled it&#8212;he went up to my couch!<end-line/>
     </verse>
     <end-paragraph/>
     <marker class="begin-verse" mid="v01049005"/>
@@ -4120,7 +4120,7 @@
     <marker class="begin-verse" mid="v01049030"/>
     <verse num="30">in the cave that is in the field at Machpelah, to the east of Mamre, in the land of Canaan, <crossref let="r" cid="c01049030.1"/>which Abraham bought with the field from Ephron the Hittite to possess as a burying place.</verse>
     <marker class="begin-verse" mid="v01049031"/>
-    <verse num="31"><crossref let="s" cid="c01049031.1"/>There they buried Abraham and Sarah his wife. There <crossref let="t" cid="c01049031.2"/>they buried Isaac and Rebekah his wife, and there I buried Leah&emdash;</verse>
+    <verse num="31"><crossref let="s" cid="c01049031.1"/>There they buried Abraham and Sarah his wife. There <crossref let="t" cid="c01049031.2"/>they buried Isaac and Rebekah his wife, and there I buried Leah&#8212;</verse>
     <marker class="begin-verse" mid="v01049032"/>
     <verse num="32">the field and the cave that is in it were bought from the Hittites.<q class="end-double" qid="01049032.1" from="01049029.1" to="01049032.1"/></verse>
     <marker class="begin-verse" mid="v01049033"/>
@@ -4192,4 +4192,6 @@
     <end-paragraph/>
   </chapter>
 </book>
-</crossway-bible>
+</crossway-bible>`;
+
+export default genesis;

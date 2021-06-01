@@ -571,6 +571,7 @@ export default function BooksGridScreen({ navigation }) {
       <BiblePickerItem
         backgroundColor={item.backgroundColor}
         label={item.short}
+        value={item.value}
       />
     </TouchableOpacity>
   );

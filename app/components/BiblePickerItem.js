@@ -29,20 +29,17 @@ class BiblePickerItem extends PureComponent {
       width = "100%",
     } = this.props;
 
+    const myStyle = {
+      backgroundColor: backgroundColor,
+      borderWidth,
+      aspectRatio,
+      height,
+      flex,
+      width,
+    };
+
     return (
-      <View
-        style={[
-          this.styles.container,
-          {
-            backgroundColor: backgroundColor,
-            borderWidth,
-            aspectRatio,
-            height,
-            flex,
-            width,
-          },
-        ]}
-      >
+      <View style={[this.styles.container, myStyle]}>
         <AppText style={this.styles.text}>{label}</AppText>
       </View>
     );

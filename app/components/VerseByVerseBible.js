@@ -2,11 +2,7 @@ import React, { Component, PureComponent } from "react";
 import { Text, SectionList } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useTheme } from "../config/ThemeProvider";
-
 import defaultStyles from "../config/styles";
-import Chapter from "./Chapter";
-import Verse from "./Verse";
 
 class SectionHeader extends PureComponent {
   constructor(props) {
@@ -88,7 +84,7 @@ export default class VerseByVerseBible extends Component {
     return false;
   }
 
-  renderItem = ({ item, index, section }) => (
+  renderItem = ({ index, section }) => (
     // <Text>{section.data[index]["__text"]}</Text>
     <VerseText verseText={section.data[index]["__text"]} />
     // <Chapter
@@ -166,7 +162,7 @@ export default class VerseByVerseBible extends Component {
             nativeEvent: { contentOffset: { y: scrollY } },
           },
         ])}
-        onScrollToIndexFailed={(info) => {
+        onScrollToIndexFailed={() => {
           const wait = new Promise((resolve) => setTimeout(resolve, 200));
           wait.then(() => {
             console.log("trying again");

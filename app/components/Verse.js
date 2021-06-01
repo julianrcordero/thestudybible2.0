@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-// import { Text } from "react-native";
+import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
-import { Text } from "react-native-paper";
+// import { Text } from "react-native-paper";
+import reactStringReplace from "react-string-replace";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -22,14 +23,6 @@ export default class Verse extends Component {
     }
   };
 
-  _openStudyScreen = () => {
-    // console.log(this.props.chapterNum, this.props.verseNumber);
-    this.props.bibleScreen.current?.toggleSlideView(
-      this.props.chapterNum,
-      Number(this.props.verseNumber)
-    );
-  };
-
   // _toggleUnderline = () => {
   //   if (this.state.textDecorationLine === "none") {
   //     this.setState({ textDecorationLine: "underline" });
@@ -37,6 +30,7 @@ export default class Verse extends Component {
   //     this.setState({ textDecorationLine: "none" });
   //   }
   // };
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.verseNumber !== nextProps.verseNumber) {
       return true;
@@ -56,13 +50,8 @@ export default class Verse extends Component {
   // };
 
   render() {
-    const {
-      // focusedVerse,
-      // searchWords,
-      verseNumber,
-      verseText,
-      verseTextStyle,
-    } = this.props;
+    const { _openStudyScreen, verseNumber, verseText, verseTextStyle } =
+      this.props;
 
     const verseNumberStyle = {
       fontWeight: "bold",
@@ -76,19 +65,19 @@ export default class Verse extends Component {
     };
 
     return (
-      // <>
-      //   {verseNumber + " "}
-      <Text
-        onPress={this._toggleHighlight}
-        onLongPress={this._openStudyScreen}
-        style={[verseTextStyle, verseStyle]}
-        // onLayout={this.onLayout}
-      >
-        <Text style={verseNumberStyle}>{verseNumber + " "}</Text>
-        {verseText}
-        {/* <VerseFormatted verse={verse} /> */}
-      </Text>
-      // </>
+      <>
+        {verseNumber + " "}
+        <Text
+          onPress={this._toggleHighlight}
+          onLongPress={() => _openStudyScreen(verseNumber)}
+          style={[verseTextStyle, verseStyle]}
+          // onLayout={this.onLayout}
+        >
+          {/* {verseText} */}
+          {reactStringReplace(verseText, /<(.*)\/>/g, (match, i) => i)}
+          {/* <VerseFormatted verse={verse} /> */}
+        </Text>
+      </>
     );
   }
 }

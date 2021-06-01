@@ -4,7 +4,7 @@ import { InteractionManager, View } from "react-native";
 import userMarkupApi from "../api/userMarkup";
 import { useTheme } from "../config/ThemeProvider";
 
-import BibleScreenToolBar from "../components/BibleScreenToolBar";
+import ToolBar from "../components/ToolBar";
 import ParagraphBible from "../components/ParagraphBible";
 import useAuth from "../auth/useAuth";
 import VerseByVerseBible from "../components/VerseByVerseBible";
@@ -12,6 +12,7 @@ import VerseByVerseBible from "../components/VerseByVerseBible";
 import defaultStyles from "../config/styles";
 import RecyclerListBible from "../components/RecyclerListBible";
 import VerseBible from "../components/VerseBible";
+import { useStickyHeader } from "react-use-sticky-header";
 
 export default class BibleScreen extends Component {
   constructor(props) {
@@ -20,8 +21,8 @@ export default class BibleScreen extends Component {
 
   state = {
     currentBook: {
-      label: "Genesis",
-      value: 1,
+      label: "Ecclesiastes",
+      value: 21,
       backgroundColor: "#345171",
       icon: "apps",
     },
@@ -76,14 +77,22 @@ export default class BibleScreen extends Component {
   toggleSlideView = (chapter, verse) => {
     this.props.headerContentRef.current.setState({ settingsMode: false });
     this.props.bottomSheetContentRef.current.setState({ settingsMode: false });
+
+    let studyScreen = this.props.studyScreen.current;
+    let topPanel = this.props.topPanel.current;
+    if (studyScreen.state.verseList.length === 0) {
+      console.log("setting study screen now to", topPanel.state.verses.length);
+      studyScreen.setState({
+        currentBook: topPanel.state.currentBook,
+        verseList: topPanel.state.verses,
+      });
+    }
+
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      let myIndex = this.props.studyScreen.current.state.verseList.findIndex(
-        (obj) => obj.chapter === chapter && obj.title === verse
+      let myIndex = this.props.topPanel.current.state.verses.findIndex(
+        (obj) => obj.chapter === chapter && obj.verse === verse
       );
 
-      // this.props.verseList.findIndex(
-      //   (obj) => obj.chapter === chapter && obj.title === verse
-      // );
       setTimeout(() => {
         this.props.bottomSheetRef.current.snapTo(0);
         this.props.carousel.current.scrollToIndex({
@@ -100,51 +109,42 @@ export default class BibleScreen extends Component {
       bibleScreen,
       bibleSectionsRef,
       bottomSheetContentRef,
-      carousel,
       colors,
       darkMode,
       headerContentRef,
       HEADER_HEIGHT,
+      headerOpacity,
       scrollY,
       headerY,
       bottomSheetRef,
       paragraphBibleRef,
       searchHistoryRef,
+      toolBar,
       topPanel,
     } = this.props;
 
     return (
       <>
-        <BibleScreenToolBar
+        <ToolBar
           bottomSheetContentRef={bottomSheetContentRef}
+          bottomSheetRef={bottomSheetRef}
           colors={colors}
-          headerContentRef={headerContentRef}
-          HEADER_HEIGHT={HEADER_HEIGHT}
-          headerY={headerY}
           currentBook={this.state.currentBook}
           currentChapter={this.state.currentChapter}
           currentVerse={this.state.currentVerse}
           darkMode={darkMode}
           fontFamily={this.state.fontFamily}
           fontSize={this.state.fontSize}
-          bottomSheetRef={bottomSheetRef}
-          paragraphBibleRef={paragraphBibleRef}
-          topPanel={topPanel}
-          searchHistoryRef={searchHistoryRef}
-        />
-        {/* <VerseByVerseBible
-          bibleSectionsRef={bibleSectionsRef}
-          colors={colors}
-          darkMode={darkMode}
-          fontFamily={this.state.fontFamily}
-          fontSize={this.state.fontSize}
+          headerContentRef={headerContentRef}
+          headerOpacity={headerOpacity}
+          headerY={headerY}
           HEADER_HEIGHT={HEADER_HEIGHT}
-          ref={paragraphBibleRef}
-          scrollY={scrollY}
-          toggleSlideView={this.toggleSlideView}
+          paragraphBibleRef={paragraphBibleRef}
+          ref={toolBar}
+          searchHistoryRef={searchHistoryRef}
+          toolBar={toolBar}
           topPanel={topPanel}
-        /> */}
-        {/* <View style={defaultStyles.paddingText}> */}
+        />
         <RecyclerListBible
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
@@ -159,7 +159,6 @@ export default class BibleScreen extends Component {
           // toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         />
-        {/* </View> */}
       </>
     );
   }

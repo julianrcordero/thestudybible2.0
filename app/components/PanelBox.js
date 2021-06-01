@@ -170,8 +170,7 @@ export default function PanelBox({
             ? reactStringReplace(johnsNote, /\n/, (match, i) => (
                 <Text key={i}>{"REF"}</Text>
               ))
-            : //johnsNote
-              "John's Notes from The Macarthur Study Bible can help you enrich your study of this passage."}
+            : "John's Notes from The Macarthur Study Bible can help you enrich your study of this passage."}
         </Text>
         {user ? null : (
           <ButtonBox

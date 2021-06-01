@@ -1,32 +1,14 @@
-import React, { Component, PureComponent } from "react";
-import {
-  Dimensions,
-  FlatList,
-  InteractionManager,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import React, { Component } from "react";
+import { Dimensions, FlatList, View } from "react-native";
 import Animated from "react-native-reanimated";
-import {
-  RecyclerListView,
-  DataProvider,
-  LayoutProvider,
-} from "recyclerlistview";
-
-import parser from "fast-xml-parser";
 
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
-import xmlData from "../json/bible/Genesis.xml";
 
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-const AnimatedRecyclerListView =
-  Animated.createAnimatedComponent(RecyclerListView);
 
 export default class ParagraphBible extends Component {
   constructor(props) {
@@ -49,34 +31,6 @@ export default class ParagraphBible extends Component {
 
   componentDidMount() {
     console.log("paragraphBible componentDidMount");
-
-    var he = require("he");
-
-    var options = {
-      attributeNamePrefix: "@_",
-      attrNodeName: "attr", //default is 'false'
-      textNodeName: "#text",
-      ignoreAttributes: true,
-      ignoreNameSpace: false,
-      allowBooleanAttributes: false,
-      parseNodeValue: true,
-      parseAttributeValue: false,
-      trimValues: true,
-      cdataTagName: "__cdata", //default is 'false'
-      cdataPositionChar: "\\c",
-      parseTrueNumberOnly: false,
-      arrayMode: false, //"strict"
-      attrValueProcessor: (val, attrName) =>
-        he.decode(val, { isAttributeValue: true }), //default is a=>a
-      tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
-      stopNodes: ["parse-me-as-string"],
-    };
-
-    if (parser.validate(xmlData) === true) {
-      //optional (it'll return an object in case it's not valid)
-      var jsonObj = parser.parse(xmlData, options);
-      console.log(jsonObj);
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -109,8 +63,6 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.state.index !== nextState.index) {
       return true;
-    } else if (this.state.dataProvider !== nextState.dataProvider) {
-      return true;
     }
     return false;
   }
@@ -137,7 +89,7 @@ export default class ParagraphBible extends Component {
     // this.setState({ loading: false });
   };
 
-  scrollToIndexFailed = (info) => {
+  scrollToIndexFailed = () => {
     console.log("scrollToIndexFailed");
     // this.scrollToChapter();
 
@@ -219,7 +171,7 @@ export default class ParagraphBible extends Component {
   };
 
   render() {
-    const { bibleSectionsRef, colors, HEADER_HEIGHT, scrollY } = this.props;
+    const { bibleSectionsRef, colors, HEADER_HEIGHT } = this.props;
 
     const styles = {
       bibleTextView: {

@@ -1,8 +1,8 @@
 import React, { Component, PureComponent } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
-import { Paragraph, Text } from "react-native-paper";
+// import { Paragraph, Text } from "react-native-paper";
 
 class SectionHeader extends PureComponent {
   constructor(props) {
@@ -64,7 +64,7 @@ export default class Chapter extends Component {
       key={i}
       _openStudyScreen={this._openStudyScreen}
       verseNumber={i + 1}
-      verseText={verse.text}
+      verseText={verse}
       verseTextStyle={this.props.verseTextStyle}
       // searchWords={searchWords}
     />
@@ -82,33 +82,36 @@ export default class Chapter extends Component {
     //   layout.height,
     //   Number(this.props.chapterNum) - 1
     // );
-    this.props._heights[Number(this.props.chapterNum) - 1] = layout.height;
+    this.props._heights[this.props.chapterNum - 1] = layout.height;
   };
 
   render() {
     const {
-      chapterHeading,
-      chapterNum,
-      colors,
+      // chapterHeading,
+      // chapterNum,
+      // colors,
       fontSize,
-      style,
-      titleSize,
+      // titleSize,
       verses,
       verseTextStyle,
     } = this.props;
 
-    const title =
-      chapterNum +
-      "\t" +
-      (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
+    // const title =
+    //   chapterNum +
+    //   "\t" +
+    //   (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      <View onLayout={this.onLayout} style={style}>
-        <SectionHeader colors={colors} title={title} titleSize={titleSize} />
-        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
-          {verses.map(this.mapVerseObject)}
-        </Paragraph>
-      </View>
+      // <View onLayout={this.onLayout}>
+      <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
+        {/* {verses.text} */}
+        {verses.map(this.mapVerseObject)}
+      </Text>
+      // </View>
     );
   }
+}
+
+{
+  /* <SectionHeader colors={colors} title={title} titleSize={titleSize} /> */
 }

@@ -116,8 +116,9 @@ export default class ParagraphBible extends Component {
   onViewRef = (viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
+      console.log(v);
       this.props.bibleScreen.current.setState({
-        currentChapter: v.item.chapterNum,
+        currentChapter: v.index + 1,
       });
       // sendVerseToToolBar(v.item.chapter, v.item.title);
     }
@@ -130,20 +131,20 @@ export default class ParagraphBible extends Component {
     // itemVisiblePercentThreshold: 75,
   };
 
-  renderItem = ({ item, i }) => (
+  keyExtractor = (item, index) => index.toString();
+
+  renderItem = ({ item, index }) => (
     <Chapter
       bibleScreen={this.props.bibleScreen}
-      chapterHeading={item.chapterHeading}
-      chapterNum={Number(item.chapterNum)}
-      colors={this.props.colors}
-      fontFamily={this.props.fontFamily}
+      // chapterHeading={item.heading}
+      chapterNum={index + 1}
+      // colors={this.props.colors}
       fontSize={this.props.fontSize}
-      formatting={this.props.formatting}
-      key={i}
+      key={this.keyExtractor}
       // searchWords={searchWords}
       // onPress={this.props.toggleSlideView}
-      titleSize={this.props.fontSize * 1.75}
-      verses={item.verses}
+      // titleSize={this.props.fontSize * 1.75}
+      verses={item.verse}
       verseTextStyle={[
         defaultStyles.bibleText,
         {
@@ -191,7 +192,7 @@ export default class ParagraphBible extends Component {
         decelerationRate={"normal"}
         extraData={this.state.index}
         // getItemLayout={this.getItemLayout}
-        initialNumToRender={50}
+        initialNumToRender={3}
         initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
         ListEmptyComponent={
@@ -213,7 +214,7 @@ export default class ParagraphBible extends Component {
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         updateCellsBatchingPeriod={10}
         viewabilityConfig={this.viewConfigRef}
-        // windowSize={101}
+        windowSize={3}
       />
     );
   }

@@ -14,9 +14,8 @@ import Chapter from "./Chapter";
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
-const AnimatedRecyclerListView = Animated.createAnimatedComponent(
-  RecyclerListView
-);
+const AnimatedRecyclerListView =
+  Animated.createAnimatedComponent(RecyclerListView);
 
 class ContextHelper extends ContextProvider {
   constructor(uniqueKey) {
@@ -114,9 +113,7 @@ export default class RecyclerListBible extends Component {
     if (prevState.index !== this.state.index) {
       this.scrollToOffset(this.state.index);
     } else if (prevState.sections !== this.state.sections) {
-      //   console.log("heights array:", this._heights.length);
       this.setState({
-        // contextProvider: new ContextHelper("PARENT"),
         dataProvider: this.provideData.cloneWithRows(this.state.sections),
       });
     }
@@ -194,12 +191,41 @@ export default class RecyclerListBible extends Component {
     paddingHorizontal: width * 0.075,
   };
 
+  // //Given type and data return the view component
+  // _rowRenderer(type, item, index, extendedState) {
+  //   return (
+  //     <Chapter
+  //       bibleScreen={this.props.bibleScreen}
+  //       chapterHeading={item.chapterHeading}
+  //       chapterNum={index + 1}
+  //       colors={this.props.colors}
+  //       // extendedState={extendedState}
+  //       fontSize={this.props.fontSize}
+  //       // key={i}
+  //       // searchWords={searchWords}
+  //       _heights={this._heights}
+  //       style={this.chapterStyle}
+  //       titleSize={this.props.fontSize * 1.75}
+  //       verses={item.verses}
+  //       verseTextStyle={[
+  //         defaultStyles.bibleText,
+  //         {
+  //           color: this.props.colors.text,
+  //           // fontSize: this.props.fontSize,
+  //           lineHeight: this.props.fontSize * 2,
+  //           fontFamily: this.props.fontFamily,
+  //         },
+  //       ]}
+  //     />
+  //   );
+  // }
+
   //Given type and data return the view component
   _rowRenderer(type, item, index, extendedState) {
     return (
       <Chapter
         bibleScreen={this.props.bibleScreen}
-        chapterHeading={item.chapterHeading}
+        chapterHeading={item.heading}
         chapterNum={index + 1}
         colors={this.props.colors}
         // extendedState={extendedState}
@@ -209,7 +235,7 @@ export default class RecyclerListBible extends Component {
         _heights={this._heights}
         style={this.chapterStyle}
         titleSize={this.props.fontSize * 1.75}
-        verses={item.verses}
+        verses={item.verse}
         verseTextStyle={[
           defaultStyles.bibleText,
           {

@@ -16,7 +16,7 @@ import bookPaths from "../json/bible/Bible";
 
 import reactStringReplace from "react-string-replace";
 import parser from "fast-xml-parser";
-import xml_data from "../xml/Genesis.js";
+import genesis from "../xml/Genesis.js";
 
 var he = require("he");
 var options = {
@@ -28,22 +28,22 @@ var options = {
   allowBooleanAttributes: false,
   parseNodeValue: false,
   parseAttributeValue: false,
-  trimValues: false,
+  trimValues: true,
   cdataTagName: "__cdata", //default is 'false'
   cdataPositionChar: "\\c",
   parseTrueNumberOnly: false,
   arrayMode: true,
-  attrValueProcessor: (val, attrName) =>
-    he.decode(val, { isAttributeValue: true }), //default is a=>a
-  tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+  // attrValueProcessor: (val, attrName) => {
+  //   return val;
+  // },
+  // tagValueProcessor: (val, tagName) => {
+  //   return val;
+  // },
+  // attrValueProcessor: (val, attrName) =>
+  //   he.decode(val, { isAttributeValue: true }), //default is a=>a
+  // tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
   stopNodes: ["heading", "verse"],
 };
-
-if (parser.validate(xml_data) === true) {
-  //optional (it'll return an object in case it's not valid)
-  var jsonObj = parser.parse(xml_data, options);
-  console.log(jsonObj);
-}
 
 const notesArray = require("../json/bible/esvmsb.notes.json")[
   "crossway-studynotes"
@@ -164,7 +164,7 @@ class TopSheetNavigation extends Component {
     };
     this.setState({ currentBook: newBook });
     this.setSections(newBook);
-    this.setVerses(newBook);
+    // this.setVerses(newBook);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -188,32 +188,36 @@ class TopSheetNavigation extends Component {
   }
 
   setSections = (newBook) => {
-    let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
+    if (parser.validate(genesis) === true) {
+      //optional (it'll return an object in case it's not valid)
+      var jsonObj = parser.parse(genesis, options);
+      let sections = jsonObj["crossway-bible"][0].book[0].chapter;
+      this.setState({ sections: sections });
+      console.log("LOADED!");
+    }
+    // let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
 
-    let mySections = chapters.map((c) => {
-      return {
-        chapterHeading: c.heading,
-        verses: c.verse.map((v) => {
-          return Array.isArray(v["#text"])
-            ? v["#text"].map((text) => {
-                return text;
-              })
-            : v["#text"];
-          // v.crossref
-          //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
-          //       Array.isArray(v.crossref)
-          //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
-          //         : v.crossref._let
-          //     )
-          //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
-        }),
-      };
-    });
+    // let mySections = chapters.map((c) => {
+    //   return {
+    //     chapterHeading: c.heading,
+    //     verses: c.verse.map((v) => {
+    //       return Array.isArray(v["#text"])
+    //         ? v["#text"].map((text) => {
+    //             return text;
+    //           })
+    //         : v["#text"];
+    //       // v.crossref
+    //       //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
+    //       //       Array.isArray(v.crossref)
+    //       //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
+    //       //         : v.crossref._let
+    //       //     )
+    //       //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
+    //     }),
+    //   };
+    // });
 
-    this.setState({ sections: mySections });
-    // for (let i = 0; i < 4; i++) {
-    //   console.log(mySections[i]);
-    // }
+    // this.setState({ sections: mySections });
   };
 
   // {
@@ -294,7 +298,7 @@ class TopSheetNavigation extends Component {
       // console.log(this.state.currentBook.label, "-->", newBook.label);
       this.setState({ currentBook: newBook });
       this.setSections(newBook);
-      this.setVerses(newBook);
+      // this.setVerses(newBook);
     }
   };
 

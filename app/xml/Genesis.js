@@ -1,4 +1,4 @@
-const xml_data = `<?xml version="1.0" standalone="no"?>
+const genesis = `<?xml version="1.0" standalone="no"?>
 <!DOCTYPE crossway-bible SYSTEM "schema/crossway.bibles.dtd">
 <crossway-bible translation="English Standard Version" revision="2006-10-26" xmlns="http://www.crosswaybibles.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="schema/crossway.bibles.xsd"> 
 <book title="Genesis" num="1">
@@ -4194,4 +4194,4 @@ const xml_data = `<?xml version="1.0" standalone="no"?>
 </book>
 </crossway-bible>`;
 
-export default xml_data;
+export default genesis;

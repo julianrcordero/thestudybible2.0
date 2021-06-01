@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
 // import { Text } from "react-native-paper";
+import reactStringReplace from "react-string-replace";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -49,12 +50,8 @@ export default class Verse extends Component {
   // };
 
   render() {
-    const {
-      _openStudyScreen,
-      verseNumber,
-      verseText,
-      verseTextStyle,
-    } = this.props;
+    const { _openStudyScreen, verseNumber, verseText, verseTextStyle } =
+      this.props;
 
     const verseNumberStyle = {
       fontWeight: "bold",
@@ -76,8 +73,8 @@ export default class Verse extends Component {
           style={[verseTextStyle, verseStyle]}
           // onLayout={this.onLayout}
         >
-          {/* <Text style={verseNumberStyle}>{verseNumber + " "}</Text> */}
-          {verseText}
+          {/* {verseText} */}
+          {reactStringReplace(verseText, /<(.*)\/>/g, (match, i) => i)}
           {/* <VerseFormatted verse={verse} /> */}
         </Text>
       </>

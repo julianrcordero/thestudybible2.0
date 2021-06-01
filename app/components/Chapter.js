@@ -64,7 +64,7 @@ export default class Chapter extends Component {
       key={i}
       _openStudyScreen={this._openStudyScreen}
       verseNumber={i + 1}
-      verseText={verse}
+      verseText={verse.text}
       verseTextStyle={this.props.verseTextStyle}
       // searchWords={searchWords}
     />

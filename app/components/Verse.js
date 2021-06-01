@@ -50,8 +50,12 @@ export default class Verse extends Component {
   // };
 
   render() {
-    const { _openStudyScreen, verseNumber, verseText, verseTextStyle } =
-      this.props;
+    const {
+      _openStudyScreen,
+      verseNumber,
+      verseText,
+      verseTextStyle,
+    } = this.props;
 
     const verseNumberStyle = {
       fontWeight: "bold",
@@ -73,8 +77,8 @@ export default class Verse extends Component {
           style={[verseTextStyle, verseStyle]}
           // onLayout={this.onLayout}
         >
-          {/* {verseText} */}
-          {reactStringReplace(verseText, /<(.*)\/>/g, (match, i) => i)}
+          {verseText}
+          {/* {reactStringReplace(verseText, /<(.*)\/>/g, (match, i) => i)} */}
           {/* <VerseFormatted verse={verse} /> */}
         </Text>
       </>

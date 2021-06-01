@@ -12,19 +12,17 @@ import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import SearchHistory from "./SearchHistory";
 
-import bookPaths from "../json/bible/Bible";
-
+import bookPaths from "../xml/Bible";
 import reactStringReplace from "react-string-replace";
 import parser from "fast-xml-parser";
-import genesis from "../xml/Genesis.js";
 
 var he = require("he");
 var options = {
   attributeNamePrefix: "",
   // attrNodeName: "attr", //default is 'false'
   textNodeName: "text",
-  ignoreAttributes: false,
-  ignoreNameSpace: false,
+  ignoreAttributes: true,
+  ignoreNameSpace: true,
   allowBooleanAttributes: false,
   parseNodeValue: false,
   parseAttributeValue: false,
@@ -32,16 +30,16 @@ var options = {
   cdataTagName: "__cdata", //default is 'false'
   cdataPositionChar: "\\c",
   parseTrueNumberOnly: false,
-  arrayMode: true,
+  arrayMode: false,
   // attrValueProcessor: (val, attrName) => {
   //   return val;
   // },
   // tagValueProcessor: (val, tagName) => {
   //   return val;
   // },
-  // attrValueProcessor: (val, attrName) =>
-  //   he.decode(val, { isAttributeValue: true }), //default is a=>a
-  // tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+  attrValueProcessor: (val, attrName) =>
+    he.decode(val, { isAttributeValue: true }), //default is a=>a
+  tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
   stopNodes: ["heading", "verse"],
 };
 
@@ -57,13 +55,14 @@ class TopSheetNavigation extends Component {
   }
 
   state = {
-    currentBook: {
-      label: "",
-      short: "",
-      value: 0,
-      backgroundColor: "",
-      icon: "",
-    },
+    currentBook: null,
+    // {
+    //   label: "",
+    //   short: "",
+    //   value: 0,
+    //   backgroundColor: "",
+    //   icon: "",
+    // }
     pickerType: 0,
     collapsed: true,
     sections: [],
@@ -156,15 +155,17 @@ class TopSheetNavigation extends Component {
   };
 
   componentDidMount() {
-    let newBook = {
-      label: "Ecclesiastes",
-      value: 21,
-      backgroundColor: "#345171",
-      icon: "apps",
-    };
-    this.setState({ currentBook: newBook });
-    this.setSections(newBook);
-    // this.setVerses(newBook);
+    if (!this.state.currentBook) {
+      let newBook = {
+        label: "Ecclesiastes",
+        value: 21,
+        backgroundColor: "#345171",
+        icon: "apps",
+      };
+      this.setState({ currentBook: newBook });
+      this.setSections(newBook);
+      // this.setVerses(newBook);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -188,12 +189,16 @@ class TopSheetNavigation extends Component {
   }
 
   setSections = (newBook) => {
-    if (parser.validate(genesis) === true) {
+    let myBook = bookPaths[newBook.label];
+    if (parser.validate(myBook)) {
       //optional (it'll return an object in case it's not valid)
-      var jsonObj = parser.parse(genesis, options);
-      let sections = jsonObj["crossway-bible"][0].book[0].chapter;
+      var jsonObj = parser.parse(myBook, options);
+      let sections = jsonObj["crossway-bible"].book.chapter;
+      console.log(sections);
       this.setState({ sections: sections });
       console.log("LOADED!");
+    } else {
+      console.log("Not validated");
     }
     // let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
 
@@ -220,22 +225,7 @@ class TopSheetNavigation extends Component {
     // this.setState({ sections: mySections });
   };
 
-  // {
-  //   "chapterNum": 4,
-  //   "chapterHeading": "Cain and Abel",
-  //   "verses": [
-  //     {
-  //       "verseNum": 1,
-  //       "verseText": ["Now Adam knew Eve his wife, and she conceived and bore Cain, saying, ",//q1
-  //       "I have gotten",
-  //       " a man with the help of the ",
-  //       "."]//q2
-  //     }
-  //   ]
-  // }
-
   setVerses = (newBook) => {
-    // console.log(newBook);
     let verses = [];
     const notes = notesArray[newBook.value - 1].note;
     const chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;

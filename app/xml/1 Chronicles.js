@@ -1,4 +1,4 @@
-<?xml version="1.0" standalone="no"?>
+export default IChronicles = `<?xml version="1.0" standalone="no"?>
 <!DOCTYPE crossway-bible SYSTEM "schema/crossway.bibles.dtd">
 <crossway-bible translation="English Standard Version" revision="2006-10-26" xmlns="http://www.crosswaybibles.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="schema/crossway.bibles.xsd"> 
 <book title="1 Chronicles" num="13">
@@ -2411,4 +2411,4 @@
     <end-paragraph/>
   </chapter>
 </book>
-</crossway-bible>
+</crossway-bible>`;

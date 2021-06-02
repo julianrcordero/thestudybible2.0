@@ -297,7 +297,7 @@ export default function BooksGridScreen({ navigation }) {
       chapters: 3,
     },
     {
-      label: "Habbakuk",
+      label: "Habakkuk",
       short: "Hab",
       value: 35,
       backgroundColor: "#89F0AA",

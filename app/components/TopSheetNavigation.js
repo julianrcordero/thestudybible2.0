@@ -194,7 +194,7 @@ class TopSheetNavigation extends Component {
       //optional (it'll return an object in case it's not valid)
       var jsonObj = parser.parse(myBook, options);
       let sections = jsonObj["crossway-bible"].book.chapter;
-      console.log(sections);
+      // console.log(sections);
       this.setState({ sections: sections });
       console.log("LOADED!");
     } else {

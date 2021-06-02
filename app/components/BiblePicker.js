@@ -207,7 +207,7 @@ class BiblePicker extends Component {
                   }}
                 >
                   {
-                    currentBook.label + " " + currentChapter // +" : " +currentVerse
+                    currentBook + " " + currentChapter // +" : " +currentVerse
                   }
                 </AppText>
                 <MaterialCommunityIcons

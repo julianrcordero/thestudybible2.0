@@ -20,12 +20,7 @@ export default class BibleScreen extends Component {
   }
 
   state = {
-    currentBook: {
-      label: "Ecclesiastes",
-      value: 21,
-      backgroundColor: "#345171",
-      icon: "apps",
-    },
+    currentBook: "Ecclesiastes",
     currentChapter: 1,
     currentVerse: 1,
     fontSize: 18,
@@ -145,7 +140,7 @@ export default class BibleScreen extends Component {
           toolBar={toolBar}
           topPanel={topPanel}
         />
-        <ParagraphBible
+        <RecyclerListBible
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}

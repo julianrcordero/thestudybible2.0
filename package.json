@@ -82,6 +82,7 @@
     "rn-custom-sticky-parallax-header": "^0.2.19",
     "rn-vertical-slider": "^2.0.2",
     "typescript": "^4.3.2",
+    "use-elapsed-time": "^2.1.8",
     "yup": "^0.32.8"
   },
   "devDependencies": {

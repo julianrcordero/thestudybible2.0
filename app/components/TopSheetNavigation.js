@@ -65,6 +65,7 @@ class TopSheetNavigation extends Component {
     // }
     pickerType: 0,
     collapsed: true,
+    isPlaying: false,
     sections: [],
     verses: [],
   };
@@ -156,14 +157,9 @@ class TopSheetNavigation extends Component {
 
   componentDidMount() {
     if (!this.state.currentBook) {
-      let newBook = {
-        label: "Ecclesiastes",
-        value: 21,
-        backgroundColor: "#345171",
-        icon: "apps",
-      };
-      this.setState({ currentBook: newBook });
-      this.setSections(newBook);
+      let startingBook = "Ecclesiastes";
+      this.setState({ currentBook: startingBook });
+      this.setSections(startingBook);
       // this.setVerses(newBook);
     }
   }
@@ -189,17 +185,15 @@ class TopSheetNavigation extends Component {
   }
 
   setSections = (newBook) => {
-    let myBook = bookPaths[newBook.label];
-    if (parser.validate(myBook)) {
-      //optional (it'll return an object in case it's not valid)
-      var jsonObj = parser.parse(myBook, options);
-      let sections = jsonObj["crossway-bible"].book.chapter;
-      // console.log(sections);
-      this.setState({ sections: sections });
-      console.log("LOADED!");
-    } else {
-      console.log("Not validated");
-    }
+    let myBook = bookPaths[newBook];
+
+    // requestAnimationFrame(() => {
+    let sections = parser.parse(myBook, options)?.["crossway-bible"].book
+      .chapter;
+    this.setState({ sections: sections });
+    console.log(sections);
+    // });
+
     // let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
 
     // let mySections = chapters.map((c) => {
@@ -284,7 +278,7 @@ class TopSheetNavigation extends Component {
   // }
 
   changeBibleBook = (newBook) => {
-    if (this.state.currentBook.label !== newBook.label) {
+    if (this.state.currentBook !== newBook) {
       // console.log(this.state.currentBook.label, "-->", newBook.label);
       this.setState({ currentBook: newBook });
       this.setSections(newBook);

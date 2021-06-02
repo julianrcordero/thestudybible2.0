@@ -42,19 +42,14 @@ export default function ChaptersGridScreen({
   );
 
   const changeTopPanelBook = () => {
-    let newBook = {
-      label: route?.params.title,
-      value: route?.params.value ?? value, //
-      backgroundColor: "#345171",
-      icon: "apps",
-    };
-    topPanel.current?.changeBibleBook(newBook);
+    topPanel.current?.changeBibleBook(route?.params.title);
   };
 
   const changeBook = (chapter) => {
     topPanel.current.setState({ collapsed: true });
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      setTimeout(changeTopPanelBook);
+      // setTimeout(changeTopPanelBook);
+      changeTopPanelBook();
 
       // paragraphBibleRef.current?.scrollToOffset(chapter - 1);
       // paragraphBibleRef.current?.scrollByIndex(chapter - 1);

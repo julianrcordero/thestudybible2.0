@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from "react";
 import { Text, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
+import HTML from "react-native-render-html";
 // import { Paragraph, Text } from "react-native-paper";
 
 class SectionHeader extends PureComponent {
@@ -91,6 +92,7 @@ export default class Chapter extends Component {
       // chapterNum,
       // colors,
       fontSize,
+      style,
       // titleSize,
       verses,
       verseTextStyle,
@@ -102,12 +104,51 @@ export default class Chapter extends Component {
     //   (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      // <View onLayout={this.onLayout}>
-      <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
-        {/* {verses.text} */}
+      // <HTML
+      //   // color={colors.text}
+      //   source={{
+      //     html: verses,
+      //   }}
+      //   renderers={{
+      //     // "begin-paragraph": (
+      //     //   htmlAttribs,
+      //     //   children,
+      //     //   convertedCSSStyles,
+      //     //   passProps
+      //     // ) => <Text key={this.keyExtractor}>{"\t"}</Text>,
+      //     verse: {
+      //       renderer: (
+      //         htmlAttribs,
+      //         children,
+      //         convertedCSSStyles,
+      //         passProps
+      //       ) => {
+      //         return children;
+      //       },
+      //       wrapper: "Text",
+      //     },
+      //     // crossref: {
+      //     //   renderer: (
+      //     //     htmlAttribs,
+      //     //     children,
+      //     //     convertedCSSStyles,
+      //     //     passProps
+      //     //   ) => {
+      //     //     htmlAttribs.let ? `${htmlAttribs.let}` : "";
+      //     //   },
+      //     //   wrapper: "Text",
+      //     // },
+      //   }}
+      //   tagsStyles={{
+      //     heading: { color: "blue", fontSize: 16, lineHeight: 20 },
+      //   }}
+      // />
+      <Text
+        style={[{ fontSize: fontSize }, verseTextStyle, style]}
+        onLayout={this.onLayout}
+      >
         {verses.map(this.mapVerseObject)}
       </Text>
-      // </View>
     );
   }
 }

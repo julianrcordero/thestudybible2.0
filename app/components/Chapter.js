@@ -65,7 +65,7 @@ export default class Chapter extends Component {
       key={i}
       _openStudyScreen={this._openStudyScreen}
       verseNumber={i + 1}
-      verseText={verse}
+      verseText={verse["#text"]}
       verseTextStyle={this.props.verseTextStyle}
       // searchWords={searchWords}
     />
@@ -145,7 +145,7 @@ export default class Chapter extends Component {
       // />
       <Text
         style={[{ fontSize: fontSize }, verseTextStyle, style]}
-        onLayout={this.onLayout}
+        // onLayout={this.onLayout}
       >
         {verses.map(this.mapVerseObject)}
       </Text>

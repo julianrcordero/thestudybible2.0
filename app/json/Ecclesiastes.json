@@ -1,0 +1,3116 @@
+{
+  "crossway-bible": {
+    "@translation": "English Standard Version",
+    "@revision": "2006-10-26",
+    "@xmlns": "http://www.crosswaybibles.org",
+    "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+    "@xsi:schemaLocation": "schema/crossway.bibles.xsd",
+    "book": {
+      "@title": "Ecclesiastes",
+      "@num": "21",
+      "marker": [
+        { "@class": "begin-verse", "@mid": "v21001001" },
+        { "@class": "begin-verse", "@mid": "v21002001" },
+        { "@class": "begin-verse", "@mid": "v21003001" },
+        { "@class": "begin-verse", "@mid": "v21004001" },
+        { "@class": "begin-verse", "@mid": "v21005001" },
+        { "@class": "begin-verse", "@mid": "v21006001" },
+        { "@class": "begin-verse", "@mid": "v21007001" },
+        { "@class": "begin-verse", "@mid": "v21008001" },
+        { "@class": "begin-verse", "@mid": "v21009001" },
+        { "@class": "begin-verse", "@mid": "v21010001" },
+        { "@class": "begin-verse", "@mid": "v21011001" },
+        { "@class": "begin-verse", "@mid": "v21012001" }
+      ],
+      "chapter": [
+        {
+          "@num": "1",
+          "heading": ["All Is Vanity", "The Vanity of Wisdom"],
+          "begin-paragraph": [
+            null,
+            { "@class": "line-group" },
+            null,
+            { "@class": "line-group" },
+            null,
+            { "@class": "line-group" }
+          ],
+          "verse": [
+            {
+              "@num": "1",
+              "#text": [
+                "The words of ",
+                "the Preacher,",
+                " the son of David, ",
+                "king in Jerusalem."
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21001001.1" },
+                { "@let": "b", "@cid": "c21001001.2" }
+              ],
+              "note": { "@nid": "n21001001.1" }
+            },
+            {
+              "@num": "2",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "c", "@cid": "c21001002.1" },
+                { "@let": "a", "@cid": "c21001002.2" },
+                { "@let": "c", "@cid": "c21001002.3" },
+                { "@let": "d", "@cid": "c21001002.4" }
+              ],
+              "#text": [
+                "Vanity",
+                " of vanities, says ",
+                "the Preacher,",
+                "vanity of vanities! ",
+                "All is vanity."
+              ],
+              "note": { "@nid": "n21001002.1" },
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "3",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "e", "@cid": "c21001003.1" },
+                { "@let": "f", "@cid": "c21001003.2" }
+              ],
+              "#text": [
+                "What ",
+                "does man gain by all the toil",
+                "at which he toils under the sun?"
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "4",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "A generation goes, and a generation comes,",
+                "but ",
+                "the earth remains forever."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "crossref": { "@let": "g", "@cid": "c21001004.1" }
+            },
+            {
+              "@num": "5",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": { "@let": "h", "@cid": "c21001005.1" },
+              "#text": [
+                "The sun rises, and the sun goes down,",
+                "and hastens",
+                " to the place where it rises."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "note": { "@nid": "n21001005.1" }
+            },
+            {
+              "@num": "6",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "crossref": { "@let": "i", "@cid": "c21001006.1" },
+              "#text": [
+                "The wind blows to the south",
+                "and goes around to the north;",
+                "around and around goes the wind,",
+                "and on its circuits the wind returns."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ]
+            },
+            {
+              "@num": "7",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "All ",
+                "streams run to the sea,",
+                "but the sea is not full;",
+                "to the place where the streams flow,",
+                "there they flow again."
+              ],
+              "crossref": { "@let": "j", "@cid": "c21001007.1" },
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ]
+            },
+            {
+              "@num": "8",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "All things are full of weariness;",
+                "a man cannot utter it;",
+                "the eye is not satisfied with seeing,",
+                "nor the ear filled with hearing."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "crossref": { "@let": "k", "@cid": "c21001008.1" }
+            },
+            {
+              "@num": "9",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                { "@class": "indent" }
+              ],
+              "crossref": { "@let": "l", "@cid": "c21001009.1" },
+              "#text": [
+                "What has been is what will be,",
+                "and what has been done is what will be done,",
+                "and there is nothing new under the sun."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ]
+            },
+            {
+              "@num": "10",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "Is there a thing of which it is said,",
+                "See, this is new",
+                "?",
+                "It has been ",
+                "already",
+                "in the ages before us."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21001010.1",
+                  "@from": "21001010.1",
+                  "@to": "21001010.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21001010.2",
+                  "@from": "21001010.1",
+                  "@to": "21001010.2"
+                }
+              ],
+              "crossref": { "@let": "m", "@cid": "c21001010.1" }
+            },
+            {
+              "@num": "11",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "There is no ",
+                "remembrance of former things,",
+                "nor will there be any remembrance",
+                "of later things",
+                " yet to be",
+                "among those who come after."
+              ],
+              "crossref": { "@let": "n", "@cid": "c21001011.1" },
+              "note": [{ "@nid": "n21001011.1" }, { "@nid": "n21001011.2" }],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                null
+              ]
+            },
+            {
+              "@num": "12",
+              "#text": [
+                "I ",
+                "the Preacher have been king over Israel in Jerusalem."
+              ],
+              "crossref": { "@let": "o", "@cid": "c21001012.1" }
+            },
+            {
+              "@num": "13",
+              "#text": [
+                "And I ",
+                "applied my heart",
+                " to seek and to search out by wisdom all that is done under heaven. It is an unhappy ",
+                "business that God has given to the children of man to be busy with."
+              ],
+              "crossref": [
+                { "@let": "p", "@cid": "c21001013.1" },
+                { "@let": "q", "@cid": "c21001013.2" }
+              ],
+              "note": { "@nid": "n21001013.1" }
+            },
+            {
+              "@num": "14",
+              "#text": [
+                "I have seen everything that is done under the sun, and behold, all is ",
+                "vanity",
+                " and a striving after wind."
+              ],
+              "crossref": { "@let": "r", "@cid": "c21001014.1" },
+              "note": [{ "@nid": "n21001014.1" }, { "@nid": "n21001014.2" }]
+            },
+            {
+              "@num": "15",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": { "@let": "s", "@cid": "c21001015.1" },
+              "#text": [
+                "What is crooked cannot be made straight,",
+                "and what is lacking cannot be counted."
+              ],
+              "end-line": [{ "@class": "br" }, null]
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "I said in my heart, ",
+                "I have acquired great ",
+                "wisdom, surpassing all who were over Jerusalem before me, and my heart has had great experience of wisdom and knowledge."
+              ],
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21001016.1",
+                  "@from": "21001016.1",
+                  "@to": "21001016.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21001016.2",
+                  "@from": "21001016.1",
+                  "@to": "21001016.2"
+                }
+              ],
+              "crossref": { "@let": "t", "@cid": "c21001016.1" }
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "And I ",
+                "applied my heart to know wisdom and to know ",
+                "madness and folly. I perceived that this also is but ",
+                "a striving after wind."
+              ],
+              "crossref": [
+                { "@let": "u", "@cid": "c21001017.1" },
+                { "@let": "v", "@cid": "c21001017.2" },
+                { "@let": "r", "@cid": "c21001017.3" }
+              ]
+            },
+            {
+              "@num": "18",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "For ",
+                "in much wisdom is much vexation,",
+                "and he who increases knowledge increases sorrow."
+              ],
+              "crossref": { "@let": "w", "@cid": "c21001018.1" },
+              "end-line": [{ "@class": "br" }, null]
+            }
+          ],
+          "end-paragraph": [null, null, null, null, null, null],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21001002" },
+            { "@class": "begin-verse", "@mid": "v21001003" },
+            { "@class": "begin-verse", "@mid": "v21001004" },
+            { "@class": "begin-verse", "@mid": "v21001005" },
+            { "@class": "begin-verse", "@mid": "v21001006" },
+            { "@class": "begin-verse", "@mid": "v21001007" },
+            { "@class": "begin-verse", "@mid": "v21001008" },
+            { "@class": "begin-verse", "@mid": "v21001009" },
+            { "@class": "begin-verse", "@mid": "v21001010" },
+            { "@class": "begin-verse", "@mid": "v21001011" },
+            { "@class": "begin-verse", "@mid": "v21001012" },
+            { "@class": "begin-verse", "@mid": "v21001013" },
+            { "@class": "begin-verse", "@mid": "v21001014" },
+            { "@class": "begin-verse", "@mid": "v21001015" },
+            { "@class": "begin-verse", "@mid": "v21001016" },
+            { "@class": "begin-verse", "@mid": "v21001017" },
+            { "@class": "begin-verse", "@mid": "v21001018" }
+          ],
+          "begin-block-indent": [null, null, null],
+          "end-block-indent": [null, null, null]
+        },
+        {
+          "@num": "2",
+          "heading": [
+            "The Vanity of Self-Indulgence",
+            "The Vanity of Living Wisely",
+            "The Vanity of Toil"
+          ],
+          "begin-paragraph": [null, null, null, null, null],
+          "verse": [
+            {
+              "@num": "1",
+              "#text": [
+                "I ",
+                "said in my heart, ",
+                "Come now, I will test you with pleasure; enjoy yourself.",
+                " But behold, this also was vanity."
+              ],
+              "crossref": { "@let": "x", "@cid": "c21002001.1" },
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21002001.1",
+                  "@from": "21002001.1",
+                  "@to": "21002001.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21002001.2",
+                  "@from": "21002001.1",
+                  "@to": "21002001.2"
+                }
+              ],
+              "note": { "@nid": "n21002001.1" }
+            },
+            {
+              "@num": "2",
+              "#text": [
+                "I ",
+                "said of laughter, ",
+                "It is mad,",
+                " and of pleasure, ",
+                "What use is it?"
+              ],
+              "crossref": { "@let": "y", "@cid": "c21002002.1" },
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21002002.1",
+                  "@from": "21002002.1",
+                  "@to": "21002002.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21002002.2",
+                  "@from": "21002002.1",
+                  "@to": "21002002.2"
+                },
+                {
+                  "@class": "begin-double",
+                  "@qid": "21002002.3",
+                  "@from": "21002002.3",
+                  "@to": "21002002.4"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21002002.4",
+                  "@from": "21002002.3",
+                  "@to": "21002002.4"
+                }
+              ]
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "I ",
+                "searched with my heart how to cheer my body with wine—my heart still guiding me with wisdom—and how to lay hold on ",
+                "folly, till I might see what was good for the children of man to do under heaven during the few days of their life."
+              ],
+              "crossref": [
+                { "@let": "z", "@cid": "c21002003.1" },
+                { "@let": "a", "@cid": "c21002003.2" }
+              ]
+            },
+            {
+              "@num": "4",
+              "#text": [
+                "I made great works. I ",
+                "built houses and planted ",
+                "vineyards for myself."
+              ],
+              "crossref": [
+                { "@let": "b", "@cid": "c21002004.1" },
+                { "@let": "c", "@cid": "c21002004.2" }
+              ]
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "I made myself ",
+                "gardens and parks, and planted in them all kinds of fruit trees."
+              ],
+              "crossref": { "@let": "d", "@cid": "c21002005.1" }
+            },
+            {
+              "@num": "6",
+              "#text": "I made myself pools from which to water the forest of growing trees."
+            },
+            {
+              "@num": "7",
+              "#text": [
+                "I bought male and female slaves, and had ",
+                "slaves who were born in my house. I had also great possessions of ",
+                "herds and flocks, more than any who had been before me in Jerusalem."
+              ],
+              "crossref": [
+                { "@let": "e", "@cid": "c21002007.1" },
+                { "@let": "f", "@cid": "c21002007.2" }
+              ]
+            },
+            {
+              "@num": "8",
+              "#text": [
+                "I also gathered for myself silver and ",
+                "gold and the treasure of ",
+                "kings and ",
+                "provinces. I got ",
+                "singers, both men and women, and many ",
+                "concubines,",
+                " the delight of the sons of man."
+              ],
+              "crossref": [
+                { "@let": "g", "@cid": "c21002008.1" },
+                { "@let": "h", "@cid": "c21002008.2" },
+                { "@let": "i", "@cid": "c21002008.3" },
+                { "@let": "j", "@cid": "c21002008.4" },
+                { "@let": "k", "@cid": "c21002008.5" }
+              ],
+              "note": { "@nid": "n21002008.1" }
+            },
+            {
+              "@num": "9",
+              "#text": [
+                "So I became great and ",
+                "surpassed all who were before me in Jerusalem. Also my ",
+                "wisdom remained with me."
+              ],
+              "crossref": [
+                { "@let": "l", "@cid": "c21002009.1" },
+                { "@let": "l", "@cid": "c21002009.2" }
+              ]
+            },
+            {
+              "@num": "10",
+              "#text": [
+                "And whatever my eyes desired I did not keep from them. I kept my heart from no pleasure, for my heart ",
+                "found pleasure in all my toil, and this was my ",
+                "reward for all my toil."
+              ],
+              "crossref": [
+                { "@let": "m", "@cid": "c21002010.1" },
+                { "@let": "n", "@cid": "c21002010.2" }
+              ]
+            },
+            {
+              "@num": "11",
+              "#text": [
+                "Then I considered all that my hands had done and the toil I had expended in doing it, and behold, all was ",
+                "vanity and a striving after wind, and there was nothing ",
+                "to be gained under the sun."
+              ],
+              "crossref": [
+                { "@let": "o", "@cid": "c21002011.1" },
+                { "@let": "p", "@cid": "c21002011.2" }
+              ]
+            },
+            {
+              "@num": "12",
+              "crossref": [
+                { "@let": "q", "@cid": "c21002012.1" },
+                { "@let": "r", "@cid": "c21002012.2" },
+                { "@let": "s", "@cid": "c21002012.3" }
+              ],
+              "#text": [
+                "So I turned to consider ",
+                "wisdom and madness and folly. For what can the man do who comes after the king? Only ",
+                "what has already been done."
+              ]
+            },
+            {
+              "@num": "13",
+              "#text": "Then I saw that there is more gain in wisdom than in folly, as there is more gain in light than in darkness."
+            },
+            {
+              "@num": "14",
+              "crossref": [
+                { "@let": "t", "@cid": "c21002014.1" },
+                { "@let": "u", "@cid": "c21002014.2" }
+              ],
+              "#text": [
+                "The wise person has his eyes in his head, but the fool walks in darkness. And yet I perceived that the ",
+                "same event happens to all of them."
+              ]
+            },
+            {
+              "@num": "15",
+              "#text": [
+                "Then I said in my heart, ",
+                "What happens to the fool will happen to me also. Why then have I been so very wise?",
+                " And I said in my heart that this also is vanity."
+              ],
+              "crossref": { "@let": "v", "@cid": "c21002015.1" },
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21002015.1",
+                  "@from": "21002015.1",
+                  "@to": "21002015.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21002015.2",
+                  "@from": "21002015.1",
+                  "@to": "21002015.2"
+                }
+              ]
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "For of the wise as of the fool there is ",
+                "no enduring remembrance, seeing that in the days to come all will have been long forgotten. ",
+                "How the wise dies just like the fool!"
+              ],
+              "crossref": [
+                { "@let": "w", "@cid": "c21002016.1" },
+                { "@let": "x", "@cid": "c21002016.2" }
+              ]
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "So I hated life, because what is done under the sun was grievous to me, for ",
+                "all is vanity and a striving after wind."
+              ],
+              "crossref": { "@let": "o", "@cid": "c21002017.1" }
+            },
+            {
+              "@num": "18",
+              "#text": [
+                "I hated ",
+                "all my toil in which I toil under the sun, seeing that I must ",
+                "leave it to the man who will come after me,"
+              ],
+              "crossref": [
+                { "@let": "y", "@cid": "c21002018.1" },
+                { "@let": "z", "@cid": "c21002018.2" }
+              ]
+            },
+            {
+              "@num": "19",
+              "#text": "and who knows whether he will be wise or a fool? Yet he will be master of all for which I toiled and used my wisdom under the sun. This also is vanity."
+            },
+            {
+              "@num": "20",
+              "#text": [
+                "So I ",
+                "turned about and gave my heart up to despair ",
+                "over all the toil of my labors under the sun,"
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21002020.1" },
+                { "@let": "b", "@cid": "c21002020.2" }
+              ]
+            },
+            {
+              "@num": "21",
+              "#text": "because sometimes a person who has toiled with wisdom and knowledge and skill must leave everything to be enjoyed by someone who did not toil for it. This also is vanity and a great evil."
+            },
+            {
+              "@num": "22",
+              "#text": [
+                "What has a man from ",
+                "all the toil and striving of heart with which he toils beneath the sun?"
+              ],
+              "crossref": { "@let": "c", "@cid": "c21002022.1" }
+            },
+            {
+              "@num": "23",
+              "#text": [
+                "For ",
+                "all his days are full of sorrow, and his ",
+                "work is a vexation. Even in the night his heart does not rest. This also is vanity."
+              ],
+              "crossref": [
+                { "@let": "d", "@cid": "c21002023.1" },
+                { "@let": "e", "@cid": "c21002023.2" }
+              ]
+            },
+            {
+              "@num": "24",
+              "crossref": [
+                { "@let": "f", "@cid": "c21002024.1" },
+                { "@let": "g", "@cid": "c21002024.2" },
+                { "@let": "h", "@cid": "c21002024.3" }
+              ],
+              "#text": [
+                "There is nothing better for a person than that he should ",
+                "eat and drink and find enjoyment",
+                " in his toil. This also, I saw, is ",
+                "from the hand of God,"
+              ],
+              "note": { "@nid": "n21002024.1" }
+            },
+            {
+              "@num": "25",
+              "#text": [
+                "for apart from him",
+                " who can eat or who can have enjoyment?"
+              ],
+              "note": { "@nid": "n21002025.1" }
+            },
+            {
+              "@num": "26",
+              "#text": [
+                "For to the one who pleases him ",
+                "God has given wisdom and knowledge and joy, but to the sinner he has given ",
+                "the business of gathering and collecting, ",
+                "only to give to one who pleases God. ",
+                "This also is vanity and a striving after wind."
+              ],
+              "crossref": [
+                { "@let": "i", "@cid": "c21002026.1" },
+                { "@let": "e", "@cid": "c21002026.2" },
+                { "@let": "j", "@cid": "c21002026.3" },
+                { "@let": "k", "@cid": "c21002026.4" }
+              ]
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21002002" },
+            { "@class": "begin-verse", "@mid": "v21002003" },
+            { "@class": "begin-verse", "@mid": "v21002004" },
+            { "@class": "begin-verse", "@mid": "v21002005" },
+            { "@class": "begin-verse", "@mid": "v21002006" },
+            { "@class": "begin-verse", "@mid": "v21002007" },
+            { "@class": "begin-verse", "@mid": "v21002008" },
+            { "@class": "begin-verse", "@mid": "v21002009" },
+            { "@class": "begin-verse", "@mid": "v21002010" },
+            { "@class": "begin-verse", "@mid": "v21002011" },
+            { "@class": "begin-verse", "@mid": "v21002012" },
+            { "@class": "begin-verse", "@mid": "v21002013" },
+            { "@class": "begin-verse", "@mid": "v21002014" },
+            { "@class": "begin-verse", "@mid": "v21002015" },
+            { "@class": "begin-verse", "@mid": "v21002016" },
+            { "@class": "begin-verse", "@mid": "v21002017" },
+            { "@class": "begin-verse", "@mid": "v21002018" },
+            { "@class": "begin-verse", "@mid": "v21002019" },
+            { "@class": "begin-verse", "@mid": "v21002020" },
+            { "@class": "begin-verse", "@mid": "v21002021" },
+            { "@class": "begin-verse", "@mid": "v21002022" },
+            { "@class": "begin-verse", "@mid": "v21002023" },
+            { "@class": "begin-verse", "@mid": "v21002024" },
+            { "@class": "begin-verse", "@mid": "v21002025" },
+            { "@class": "begin-verse", "@mid": "v21002026" }
+          ],
+          "end-paragraph": [null, null, null, null, null]
+        },
+        {
+          "@num": "3",
+          "heading": [
+            "A Time for Everything",
+            "The God-Given Task",
+            "From Dust to Dust"
+          ],
+          "begin-paragraph": [
+            null,
+            { "@class": "line-group" },
+            null,
+            null,
+            null
+          ],
+          "verse": [
+            {
+              "@num": "1",
+              "#text": [
+                "For everything there is a season, and ",
+                "a time for every matter under heaven:"
+              ],
+              "crossref": { "@let": "l", "@cid": "c21003001.1" }
+            },
+            {
+              "@num": "2",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to be born, and a time to ",
+                "die;",
+                "a time to plant, and a time to pluck up what is planted;"
+              ],
+              "crossref": { "@let": "m", "@cid": "c21003002.1" },
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "3",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to kill, and a time to heal;",
+                "a time to break down, and a time to build up;"
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "4",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to ",
+                "weep, and a time to laugh;",
+                "a time to mourn, and a time to ",
+                "dance;"
+              ],
+              "crossref": [
+                { "@let": "n", "@cid": "c21003004.1" },
+                { "@let": "o", "@cid": "c21003004.2" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "5",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to ",
+                "cast away stones, and a time to ",
+                "gather stones together;",
+                "a time to embrace, and a time to ",
+                "refrain from embracing;"
+              ],
+              "crossref": [
+                { "@let": "p", "@cid": "c21003005.1" },
+                { "@let": "q", "@cid": "c21003005.2" },
+                { "@let": "r", "@cid": "c21003005.3" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "6",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to seek, and a time to ",
+                "lose;",
+                "a time to keep, and a time to ",
+                "cast away;"
+              ],
+              "crossref": [
+                { "@let": "s", "@cid": "c21003006.1" },
+                { "@let": "t", "@cid": "c21003006.2" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "7",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to ",
+                "tear, and a time to sew;",
+                "a time to ",
+                "keep silence, and a time to speak;"
+              ],
+              "crossref": [
+                { "@let": "u", "@cid": "c21003007.1" },
+                { "@let": "v", "@cid": "c21003007.2" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "8",
+              "begin-line": [null, null],
+              "#text": [
+                "a time to love, and a time to ",
+                "hate;",
+                "a time for war, and a time for peace."
+              ],
+              "crossref": { "@let": "w", "@cid": "c21003008.1" },
+              "end-line": [{ "@class": "br" }, null]
+            },
+            {
+              "@num": "9",
+              "#text": ["What ", "gain has the worker from his toil?"],
+              "crossref": { "@let": "x", "@cid": "c21003009.1" }
+            },
+            {
+              "@num": "10",
+              "#text": [
+                "I have seen ",
+                "the business that ",
+                "God has given to the children of man to be busy with."
+              ],
+              "crossref": [
+                { "@let": "y", "@cid": "c21003010.1" },
+                { "@let": "z", "@cid": "c21003010.2" }
+              ]
+            },
+            {
+              "@num": "11",
+              "#text": [
+                "He has ",
+                "made everything beautiful in its time. Also, he has put eternity into man's heart, yet so that he cannot ",
+                "find out what God has done from the beginning to the end."
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21003011.1" },
+                { "@let": "b", "@cid": "c21003011.2" }
+              ]
+            },
+            {
+              "@num": "12",
+              "#text": [
+                "I perceived that there is ",
+                "nothing better for them than to be joyful and to ",
+                "do good as long as they live;"
+              ],
+              "crossref": [
+                { "@let": "c", "@cid": "c21003012.1" },
+                { "@let": "d", "@cid": "c21003012.2" }
+              ]
+            },
+            {
+              "@num": "13",
+              "#text": [
+                "also ",
+                "that everyone should eat and drink and take pleasure in all his toil—this is ",
+                "God's gift to man."
+              ],
+              "crossref": [
+                { "@let": "e", "@cid": "c21003013.1" },
+                { "@let": "f", "@cid": "c21003013.2" }
+              ]
+            },
+            {
+              "@num": "14",
+              "#text": [
+                "I perceived that whatever God does endures forever; ",
+                "nothing can be added to it, nor anything taken from it. God has done it, so that people fear before him."
+              ],
+              "crossref": { "@let": "g", "@cid": "c21003014.1" }
+            },
+            {
+              "@num": "15",
+              "#text": [
+                "That which is, ",
+                "already has been; that which is to be, already has been; and God ",
+                "seeks what has been driven away."
+              ],
+              "crossref": [
+                { "@let": "h", "@cid": "c21003015.1" },
+                { "@let": "i", "@cid": "c21003015.2" }
+              ],
+              "note": { "@nid": "n21003015.1" }
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "Moreover, ",
+                "I saw under the sun that in the place of justice, even ",
+                "there was wickedness, and in the place of righteousness, even there was wickedness."
+              ],
+              "crossref": [
+                { "@let": "j", "@cid": "c21003016.1" },
+                { "@let": "k", "@cid": "c21003016.2" }
+              ]
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "I said in my heart, ",
+                "God will judge the righteous and the wicked, for there is ",
+                "a time for every matter and for every work."
+              ],
+              "crossref": [
+                { "@let": "l", "@cid": "c21003017.1" },
+                { "@let": "m", "@cid": "c21003017.2" }
+              ]
+            },
+            {
+              "@num": "18",
+              "#text": [
+                "I said in my heart with regard to the children of man that God is testing them that they may see that they themselves are but ",
+                "beasts."
+              ],
+              "crossref": { "@let": "n", "@cid": "c21003018.1" }
+            },
+            {
+              "@num": "19",
+              "crossref": { "@let": "o", "@cid": "c21003019.1" },
+              "#text": "For what happens to the children of man and what happens to the beasts is the same; as one dies, so dies the other. They all have the same breath, and man has no advantage over the beasts, for all is vanity.",
+              "note": { "@nid": "n21003019.1" }
+            },
+            {
+              "@num": "20",
+              "#text": [
+                "All go to one place. All are from ",
+                "the dust, and to dust all return."
+              ],
+              "crossref": { "@let": "p", "@cid": "c21003020.1" }
+            },
+            {
+              "@num": "21",
+              "#text": [
+                "Who knows whether ",
+                "the spirit of man goes upward and the spirit of the beast goes down into the earth?"
+              ],
+              "crossref": { "@let": "q", "@cid": "c21003021.1" }
+            },
+            {
+              "@num": "22",
+              "#text": [
+                "So I saw that there is ",
+                "nothing better than that a man should rejoice in his work, for ",
+                "that is his lot. Who can bring him to see ",
+                "what will be after him?"
+              ],
+              "crossref": [
+                { "@let": "r", "@cid": "c21003022.1" },
+                { "@let": "s", "@cid": "c21003022.2" },
+                { "@let": "t", "@cid": "c21003022.3" }
+              ]
+            }
+          ],
+          "end-paragraph": [null, null, null, null, null],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21003002" },
+            { "@class": "begin-verse", "@mid": "v21003003" },
+            { "@class": "begin-verse", "@mid": "v21003004" },
+            { "@class": "begin-verse", "@mid": "v21003005" },
+            { "@class": "begin-verse", "@mid": "v21003006" },
+            { "@class": "begin-verse", "@mid": "v21003007" },
+            { "@class": "begin-verse", "@mid": "v21003008" },
+            { "@class": "begin-verse", "@mid": "v21003009" },
+            { "@class": "begin-verse", "@mid": "v21003010" },
+            { "@class": "begin-verse", "@mid": "v21003011" },
+            { "@class": "begin-verse", "@mid": "v21003012" },
+            { "@class": "begin-verse", "@mid": "v21003013" },
+            { "@class": "begin-verse", "@mid": "v21003014" },
+            { "@class": "begin-verse", "@mid": "v21003015" },
+            { "@class": "begin-verse", "@mid": "v21003016" },
+            { "@class": "begin-verse", "@mid": "v21003017" },
+            { "@class": "begin-verse", "@mid": "v21003018" },
+            { "@class": "begin-verse", "@mid": "v21003019" },
+            { "@class": "begin-verse", "@mid": "v21003020" },
+            { "@class": "begin-verse", "@mid": "v21003021" },
+            { "@class": "begin-verse", "@mid": "v21003022" }
+          ],
+          "begin-block-indent": null,
+          "end-block-indent": null
+        },
+        {
+          "@num": "4",
+          "heading": "Evil Under the Sun",
+          "begin-paragraph": [null, null, null, null, null, null, null],
+          "verse": [
+            {
+              "@num": "1",
+              "crossref": [
+                { "@let": "u", "@cid": "c21004001.1" },
+                { "@let": "v", "@cid": "c21004001.2" },
+                { "@let": "w", "@cid": "c21004001.3" },
+                { "@let": "x", "@cid": "c21004001.4" }
+              ],
+              "#text": [
+                "Again I ",
+                "saw all ",
+                "the oppressions that are done under the sun. And behold, the tears of the oppressed, and they had ",
+                "no one to comfort them! On the side of their oppressors there was power, and there was no one to comfort them."
+              ]
+            },
+            {
+              "@num": "2",
+              "#text": [
+                "And I ",
+                "thought the dead who are already dead more fortunate than the living who are still alive."
+              ],
+              "crossref": { "@let": "y", "@cid": "c21004002.1" }
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "But ",
+                "better than both is he who has not yet been and has not seen the evil deeds that are done under the sun."
+              ],
+              "crossref": { "@let": "z", "@cid": "c21004003.1" }
+            },
+            {
+              "@num": "4",
+              "#text": [
+                "Then I saw that all toil and all skill in work come from a man's envy of his neighbor. This also is ",
+                "vanity",
+                " and a striving after wind."
+              ],
+              "crossref": { "@let": "a", "@cid": "c21004004.1" },
+              "note": { "@nid": "n21004004.1" }
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "The fool ",
+                "folds his hands and ",
+                "eats his own flesh."
+              ],
+              "crossref": [
+                { "@let": "b", "@cid": "c21004005.1" },
+                { "@let": "c", "@cid": "c21004005.2" }
+              ]
+            },
+            {
+              "@num": "6",
+              "crossref": [
+                { "@let": "d", "@cid": "c21004006.1" },
+                { "@let": "e", "@cid": "c21004006.2" }
+              ],
+              "#text": [
+                "Better is a handful of ",
+                "quietness than two hands full of toil and a striving after wind."
+              ]
+            },
+            {
+              "@num": "7",
+              "crossref": { "@let": "u", "@cid": "c21004007.1" },
+              "#text": "Again, I saw vanity under the sun:"
+            },
+            {
+              "@num": "8",
+              "#text": [
+                "one person who has no other, either son or brother, yet there is no end to all his toil, and his ",
+                "eyes are never satisfied with riches, so that he never asks, ",
+                "For whom am I toiling and depriving myself of pleasure?",
+                " This also is vanity and an unhappy ",
+                "business."
+              ],
+              "crossref": [
+                { "@let": "f", "@cid": "c21004008.1" },
+                { "@let": "g", "@cid": "c21004008.2" },
+                { "@let": "h", "@cid": "c21004008.3" }
+              ],
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21004008.1",
+                  "@from": "21004008.1",
+                  "@to": "21004008.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21004008.2",
+                  "@from": "21004008.1",
+                  "@to": "21004008.2"
+                }
+              ]
+            },
+            {
+              "@num": "9",
+              "#text": "Two are better than one, because they have a good reward for their toil."
+            },
+            {
+              "@num": "10",
+              "#text": "For if they fall, one will lift up his fellow. But woe to him who is alone when he falls and has not another to lift him up!"
+            },
+            {
+              "@num": "11",
+              "#text": [
+                "Again, if two lie together, they keep warm, ",
+                "but how can one keep warm alone?"
+              ],
+              "crossref": { "@let": "i", "@cid": "c21004011.1" }
+            },
+            {
+              "@num": "12",
+              "#text": "And though a man might prevail against one who is alone, two will withstand him—a threefold cord is not quickly broken."
+            },
+            {
+              "@num": "13",
+              "#text": [
+                "Better was ",
+                "a poor and wise youth than an old and foolish king who no longer knew how ",
+                "to take advice."
+              ],
+              "crossref": [
+                { "@let": "j", "@cid": "c21004013.1" },
+                { "@let": "k", "@cid": "c21004013.2" }
+              ]
+            },
+            {
+              "@num": "14",
+              "#text": [
+                "For he went ",
+                "from prison to the throne, though in his own kingdom he had been born poor."
+              ],
+              "crossref": { "@let": "l", "@cid": "c21004014.1" }
+            },
+            {
+              "@num": "15",
+              "#text": [
+                "I saw all the living who move about under the sun, along with that",
+                " youth who was to stand in the king's",
+                " place."
+              ],
+              "note": [{ "@nid": "n21004015.1" }, { "@nid": "n21004015.2" }]
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "There was no end of all the people, all of whom he led. Yet those who come later will not rejoice in him. Surely this also is ",
+                "vanity and a striving after wind."
+              ],
+              "crossref": { "@let": "m", "@cid": "c21004016.1" }
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21004002" },
+            { "@class": "begin-verse", "@mid": "v21004003" },
+            { "@class": "begin-verse", "@mid": "v21004004" },
+            { "@class": "begin-verse", "@mid": "v21004005" },
+            { "@class": "begin-verse", "@mid": "v21004006" },
+            { "@class": "begin-verse", "@mid": "v21004007" },
+            { "@class": "begin-verse", "@mid": "v21004008" },
+            { "@class": "begin-verse", "@mid": "v21004009" },
+            { "@class": "begin-verse", "@mid": "v21004010" },
+            { "@class": "begin-verse", "@mid": "v21004011" },
+            { "@class": "begin-verse", "@mid": "v21004012" },
+            { "@class": "begin-verse", "@mid": "v21004013" },
+            { "@class": "begin-verse", "@mid": "v21004014" },
+            { "@class": "begin-verse", "@mid": "v21004015" },
+            { "@class": "begin-verse", "@mid": "v21004016" }
+          ],
+          "end-paragraph": [null, null, null, null, null, null, null]
+        },
+        {
+          "@num": "5",
+          "heading": ["Fear God", "The Vanity of Wealth and Honor"],
+          "begin-paragraph": [null, null, null, null, null, null],
+          "verse": [
+            {
+              "@num": "1",
+              "note": { "@nid": "n21005001.1" },
+              "crossref": [
+                { "@let": "n", "@cid": "c21005001.1" },
+                { "@let": "o", "@cid": "c21005001.2" },
+                { "@let": "p", "@cid": "c21005001.3" }
+              ],
+              "#text": [
+                "Guard your steps when you go to ",
+                "the house of God. To draw near to listen is better than to ",
+                "offer the sacrifice of fools, for they do not know that they are doing evil."
+              ]
+            },
+            {
+              "@num": "2",
+              "note": { "@nid": "n21005002.1" },
+              "#text": [
+                " Be not rash with your mouth, nor let your heart be hasty to utter a word before God, for God is in heaven and you are on earth. Therefore ",
+                "let your words be few."
+              ],
+              "crossref": { "@let": "q", "@cid": "c21005002.1" }
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "For a dream comes with much business, and a fool's voice with ",
+                "many words."
+              ],
+              "crossref": { "@let": "r", "@cid": "c21005003.1" }
+            },
+            {
+              "@num": "4",
+              "#text": [
+                "When ",
+                "you vow a vow to God, ",
+                "do not delay paying it, for he has no pleasure in fools. ",
+                "Pay what you vow."
+              ],
+              "crossref": [
+                { "@let": "s", "@cid": "c21005004.1" },
+                { "@let": "t", "@cid": "c21005004.2" },
+                { "@let": "u", "@cid": "c21005004.3" }
+              ]
+            },
+            {
+              "@num": "5",
+              "crossref": { "@let": "v", "@cid": "c21005005.1" },
+              "#text": "It is better that you should not vow than that you should vow and not pay."
+            },
+            {
+              "@num": "6",
+              "#text": [
+                "Let not your mouth lead you",
+                " into sin, and do not say before ",
+                "the messenger",
+                " that it was ",
+                "a mistake. Why should God be angry at your voice and destroy the work of your hands?"
+              ],
+              "note": [{ "@nid": "n21005006.1" }, { "@nid": "n21005006.2" }],
+              "crossref": [
+                { "@let": "w", "@cid": "c21005006.1" },
+                { "@let": "x", "@cid": "c21005006.2" }
+              ]
+            },
+            {
+              "@num": "7",
+              "#text": [
+                "For when dreams increase and words grow many, there is vanity;",
+                " but",
+                "God is the one you must fear."
+              ],
+              "note": [{ "@nid": "n21005007.1" }, { "@nid": "n21005007.2" }],
+              "crossref": { "@let": "y", "@cid": "c21005007.1" }
+            },
+            {
+              "@num": "8",
+              "crossref": [
+                { "@let": "z", "@cid": "c21005008.1" },
+                { "@let": "a", "@cid": "c21005008.2" },
+                { "@let": "b", "@cid": "c21005008.3" }
+              ],
+              "#text": [
+                "If you see in a province the oppression of the poor and the violation of justice and righteousness, ",
+                "do not be amazed at the matter, ",
+                "for the high official is watched by a higher, and there are yet higher ones over them."
+              ]
+            },
+            {
+              "@num": "9",
+              "#text": "But this is gain for a land in every way: a king committed to cultivated fields.",
+              "note": { "@nid": "n21005009.1" }
+            },
+            {
+              "@num": "10",
+              "#text": "He who loves money will not be satisfied with money, nor he who loves wealth with his income; this also is vanity."
+            },
+            {
+              "@num": "11",
+              "#text": "When goods increase, they increase who eat them, and what advantage has their owner but to see them with his eyes?"
+            },
+            {
+              "@num": "12",
+              "#text": "Sweet is the sleep of a laborer, whether he eats little or much, but the full stomach of the rich will not let him sleep."
+            },
+            {
+              "@num": "13",
+              "crossref": { "@let": "c", "@cid": "c21005013.1" },
+              "#text": "There is a grievous evil that I have seen under the sun: riches were kept by their owner to his hurt,"
+            },
+            {
+              "@num": "14",
+              "#text": "and those riches were lost in a bad venture. And he is father of a son, but he has nothing in his hand."
+            },
+            {
+              "@num": "15",
+              "crossref": { "@let": "d", "@cid": "c21005015.1" },
+              "#text": "As he came from his mother's womb he shall go again, naked as he came, and shall take nothing for his toil that he may carry away in his hand."
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "This also is a grievous evil: just as he came, so shall he go, and what ",
+                "gain is there to him who ",
+                "toils for the wind?"
+              ],
+              "crossref": [
+                { "@let": "e", "@cid": "c21005016.1" },
+                { "@let": "f", "@cid": "c21005016.2" }
+              ]
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "Moreover, all his days he ",
+                "eats in darkness in much vexation and sickness and anger."
+              ],
+              "crossref": { "@let": "g", "@cid": "c21005017.1" }
+            },
+            {
+              "@num": "18",
+              "#text": [
+                "Behold, what I have seen to be ",
+                "good and fitting is to eat and drink and find enjoyment",
+                " in all the toil with which one toils under the sun the few days of his life that God has given him, for this is his ",
+                "lot."
+              ],
+              "crossref": [
+                { "@let": "h", "@cid": "c21005018.1" },
+                { "@let": "i", "@cid": "c21005018.2" }
+              ],
+              "note": { "@nid": "n21005018.1" }
+            },
+            {
+              "@num": "19",
+              "#text": [
+                "Everyone also to whom ",
+                "God has given ",
+                "wealth and possessions ",
+                "and power to enjoy them, and to accept his lot and rejoice in his toil—this is ",
+                "the gift of God."
+              ],
+              "crossref": [
+                { "@let": "j", "@cid": "c21005019.1" },
+                { "@let": "k", "@cid": "c21005019.2" },
+                { "@let": "l", "@cid": "c21005019.3" },
+                { "@let": "m", "@cid": "c21005019.4" }
+              ]
+            },
+            {
+              "@num": "20",
+              "#text": "For he will not much remember the days of his life because God keeps him occupied with joy in his heart."
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21005002" },
+            { "@class": "begin-verse", "@mid": "v21005003" },
+            { "@class": "begin-verse", "@mid": "v21005004" },
+            { "@class": "begin-verse", "@mid": "v21005005" },
+            { "@class": "begin-verse", "@mid": "v21005006" },
+            { "@class": "begin-verse", "@mid": "v21005007" },
+            { "@class": "begin-verse", "@mid": "v21005008" },
+            { "@class": "begin-verse", "@mid": "v21005009" },
+            { "@class": "begin-verse", "@mid": "v21005010" },
+            { "@class": "begin-verse", "@mid": "v21005011" },
+            { "@class": "begin-verse", "@mid": "v21005012" },
+            { "@class": "begin-verse", "@mid": "v21005013" },
+            { "@class": "begin-verse", "@mid": "v21005014" },
+            { "@class": "begin-verse", "@mid": "v21005015" },
+            { "@class": "begin-verse", "@mid": "v21005016" },
+            { "@class": "begin-verse", "@mid": "v21005017" },
+            { "@class": "begin-verse", "@mid": "v21005018" },
+            { "@class": "begin-verse", "@mid": "v21005019" },
+            { "@class": "begin-verse", "@mid": "v21005020" }
+          ],
+          "end-paragraph": [null, null, null, null, null, null]
+        },
+        {
+          "@num": "6",
+          "begin-paragraph": [null, null, null],
+          "verse": [
+            {
+              "@num": "1",
+              "crossref": { "@let": "n", "@cid": "c21006001.1" },
+              "#text": "There is an evil that I have seen under the sun, and it lies heavy on mankind:"
+            },
+            {
+              "@num": "2",
+              "#text": [
+                "a man ",
+                "to whom ",
+                "God gives wealth, possessions, and honor, so that he ",
+                "lacks nothing of all that he desires, yet God ",
+                "does not give him power to enjoy them, but a stranger enjoys them. This is vanity;",
+                " it is a grievous evil."
+              ],
+              "crossref": [
+                { "@let": "o", "@cid": "c21006002.1" },
+                { "@let": "p", "@cid": "c21006002.2" },
+                { "@let": "q", "@cid": "c21006002.3" },
+                { "@let": "r", "@cid": "c21006002.4" }
+              ],
+              "note": { "@nid": "n21006002.1" }
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "If a man fathers a hundred children and lives many years, so that ",
+                "the days of his years are many, but his soul is not satisfied with life's ",
+                "good things, and he also has no ",
+                "burial, I say that ",
+                "a stillborn child is better off than he."
+              ],
+              "crossref": [
+                { "@let": "s", "@cid": "c21006003.1" },
+                { "@let": "t", "@cid": "c21006003.2" },
+                { "@let": "u", "@cid": "c21006003.3" },
+                { "@let": "v", "@cid": "c21006003.4" }
+              ]
+            },
+            {
+              "@num": "4",
+              "#text": "For it comes in vanity and goes in darkness, and in darkness its name is covered."
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "Moreover, it has not ",
+                "seen the sun or known anything, yet it finds ",
+                "rest rather than he."
+              ],
+              "crossref": [
+                { "@let": "w", "@cid": "c21006005.1" },
+                { "@let": "x", "@cid": "c21006005.2" }
+              ]
+            },
+            {
+              "@num": "6",
+              "#text": [
+                "Even though he should live a thousand years twice over, yet enjoy",
+                " no good—do not all go to the one place?"
+              ],
+              "note": { "@nid": "n21006006.1" }
+            },
+            {
+              "@num": "7",
+              "crossref": { "@let": "y", "@cid": "c21006007.1" },
+              "#text": "All the toil of man is for his mouth, yet his appetite is not satisfied.",
+              "note": { "@nid": "n21006007.1" }
+            },
+            {
+              "@num": "8",
+              "#text": [
+                "For what advantage has the wise man ",
+                "over the fool? And what does the poor man have who knows how to conduct himself before the living?"
+              ],
+              "crossref": { "@let": "z", "@cid": "c21006008.1" }
+            },
+            {
+              "@num": "9",
+              "#text": [
+                "Better ",
+                "is the sight of the eyes than the wandering of the appetite: this also is ",
+                "vanity and a striving after wind."
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21006009.1" },
+                { "@let": "b", "@cid": "c21006009.2" }
+              ]
+            },
+            {
+              "@num": "10",
+              "#text": [
+                "Whatever has come to be has ",
+                "already been named, and it is known what man is, and that he is not able to ",
+                "dispute with one stronger than he."
+              ],
+              "crossref": [
+                { "@let": "c", "@cid": "c21006010.1" },
+                { "@let": "d", "@cid": "c21006010.2" }
+              ]
+            },
+            {
+              "@num": "11",
+              "#text": "The more words, the more vanity, and what is the advantage to man?"
+            },
+            {
+              "@num": "12",
+              "#text": [
+                "For who knows what is good for man while he lives the few days of his ",
+                "vain",
+                " life, which he passes like ",
+                "a shadow? For who can tell man what will be ",
+                "after him under the sun?"
+              ],
+              "crossref": [
+                { "@let": "e", "@cid": "c21006012.1" },
+                { "@let": "f", "@cid": "c21006012.2" },
+                { "@let": "g", "@cid": "c21006012.3" }
+              ],
+              "note": { "@nid": "n21006012.1" }
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21006002" },
+            { "@class": "begin-verse", "@mid": "v21006003" },
+            { "@class": "begin-verse", "@mid": "v21006004" },
+            { "@class": "begin-verse", "@mid": "v21006005" },
+            { "@class": "begin-verse", "@mid": "v21006006" },
+            { "@class": "begin-verse", "@mid": "v21006007" },
+            { "@class": "begin-verse", "@mid": "v21006008" },
+            { "@class": "begin-verse", "@mid": "v21006009" },
+            { "@class": "begin-verse", "@mid": "v21006010" },
+            { "@class": "begin-verse", "@mid": "v21006011" },
+            { "@class": "begin-verse", "@mid": "v21006012" }
+          ],
+          "end-paragraph": [null, null, null]
+        },
+        {
+          "@num": "7",
+          "heading": "The Contrast of Wisdom and Folly",
+          "begin-block-indent": null,
+          "begin-paragraph": [
+            { "@class": "line-group" },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "verse": [
+            {
+              "@num": "1",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "h", "@cid": "c21007001.1" },
+                { "@let": "i", "@cid": "c21007001.2" }
+              ],
+              "#text": [
+                "A good name is better than precious ointment,",
+                "and ",
+                "the day of death than the day of birth."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "2",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "It is better to go to the house of mourning",
+                "than to go to the house of feasting,",
+                "for this is the end of all mankind,",
+                "and the living will ",
+                "lay it to heart."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "crossref": { "@let": "j", "@cid": "c21007002.1" }
+            },
+            {
+              "@num": "3",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Sorrow is better than laughter,",
+                "for by sadness of face the heart is made glad."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "crossref": { "@let": "k", "@cid": "c21007003.1" }
+            },
+            {
+              "@num": "4",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "The heart of the wise is in the house of mourning,",
+                "but the heart of fools is in the house of mirth."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "5",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "It is ",
+                "better for a man to hear the rebuke of the wise",
+                "than to hear the song of fools."
+              ],
+              "crossref": { "@let": "l", "@cid": "c21007005.1" },
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "6",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                { "@class": "indent" }
+              ],
+              "crossref": [
+                { "@let": "m", "@cid": "c21007006.1" },
+                { "@let": "n", "@cid": "c21007006.2" }
+              ],
+              "#text": [
+                "For as the crackling of ",
+                "thorns under a pot,",
+                "so is the laughter of the fools;",
+                "this also is vanity."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "note": { "@nid": "n21007006.1" }
+            },
+            {
+              "@num": "7",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Surely ",
+                "oppression drives the wise into madness,",
+                "and ",
+                "a bribe corrupts the heart."
+              ],
+              "crossref": [
+                { "@let": "o", "@cid": "c21007007.1" },
+                { "@let": "p", "@cid": "c21007007.2" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "8",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Better is the end of a thing than its beginning,",
+                "and ",
+                "the patient in spirit is better than the proud in spirit."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "crossref": { "@let": "q", "@cid": "c21007008.1" }
+            },
+            {
+              "@num": "9",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "r", "@cid": "c21007009.1" },
+                { "@let": "s", "@cid": "c21007009.2" }
+              ],
+              "#text": [
+                "Be not quick in your spirit to become angry,",
+                "for anger lodges in the heart",
+                " of fools."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "note": { "@nid": "n21007009.1" }
+            },
+            {
+              "@num": "10",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Say not, ",
+                "Why were the former days better than these?",
+                "For it is not from wisdom that you ask this."
+              ],
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21007010.1",
+                  "@from": "21007010.1",
+                  "@to": "21007010.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21007010.2",
+                  "@from": "21007010.1",
+                  "@to": "21007010.2"
+                }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "11",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Wisdom is good with an inheritance,",
+                "an advantage to those who ",
+                "see the sun."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "crossref": { "@let": "t", "@cid": "c21007011.1" }
+            },
+            {
+              "@num": "12",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "For the protection of wisdom is like ",
+                "the protection of money,",
+                "and the advantage of knowledge is that ",
+                "wisdom preserves the life of him who has it."
+              ],
+              "crossref": [
+                { "@let": "u", "@cid": "c21007012.1" },
+                { "@let": "v", "@cid": "c21007012.2" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "13",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Consider ",
+                "the work of God:",
+                "who can make straight what he has made crooked?"
+              ],
+              "crossref": [
+                { "@let": "w", "@cid": "c21007013.1" },
+                { "@let": "x", "@cid": "c21007013.2" }
+              ],
+              "end-line": [{ "@class": "br" }, null]
+            },
+            {
+              "@num": "14",
+              "crossref": [
+                { "@let": "y", "@cid": "c21007014.1" },
+                { "@let": "z", "@cid": "c21007014.2" }
+              ],
+              "#text": [
+                "In the day of prosperity be joyful, and in the day of adversity consider: God has made the one as well as the other, ",
+                "so that man may not find out anything that will be after him."
+              ]
+            },
+            {
+              "@num": "15",
+              "#text": [
+                "In my ",
+                "vain",
+                " life I have seen everything. There is ",
+                "a righteous man who perishes in his righteousness, and there is a wicked man who ",
+                "prolongs his life in his evildoing."
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21007015.1" },
+                { "@let": "b", "@cid": "c21007015.2" },
+                { "@let": "c", "@cid": "c21007015.3" }
+              ],
+              "note": { "@nid": "n21007015.1" }
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "Be not overly righteous, and do not ",
+                "make yourself too wise. Why should you destroy yourself?"
+              ],
+              "crossref": { "@let": "d", "@cid": "c21007016.1" }
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "Be not overly wicked, neither be a fool. ",
+                "Why should you die before your time?"
+              ],
+              "crossref": { "@let": "e", "@cid": "c21007017.1" }
+            },
+            {
+              "@num": "18",
+              "#text": [
+                "It is good that you should take hold of ",
+                "this, and from ",
+                "that ",
+                "withhold not your hand, for the one who fears God shall come out from both of them."
+              ],
+              "crossref": [
+                { "@let": "f", "@cid": "c21007018.1" },
+                { "@let": "g", "@cid": "c21007018.2" },
+                { "@let": "h", "@cid": "c21007018.3" }
+              ]
+            },
+            {
+              "@num": "19",
+              "crossref": { "@let": "i", "@cid": "c21007019.1" },
+              "#text": "Wisdom gives strength to the wise man more than ten rulers who are in a city."
+            },
+            {
+              "@num": "20",
+              "#text": [
+                "Surely ",
+                "there is not a righteous man on earth who does good and never sins."
+              ],
+              "crossref": { "@let": "j", "@cid": "c21007020.1" }
+            },
+            {
+              "@num": "21",
+              "#text": [
+                "Do not take to heart all the things that people say, lest you hear ",
+                "your servant cursing you."
+              ],
+              "crossref": { "@let": "k", "@cid": "c21007021.1" }
+            },
+            {
+              "@num": "22",
+              "#text": [
+                "Your heart knows that ",
+                "many times you yourself have cursed others."
+              ],
+              "crossref": { "@let": "l", "@cid": "c21007022.1" }
+            },
+            {
+              "@num": "23",
+              "#text": [
+                "All this I have tested by wisdom. ",
+                "I said, ",
+                "I will be wise,",
+                " but it was far from me."
+              ],
+              "crossref": { "@let": "m", "@cid": "c21007023.1" },
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21007023.1",
+                  "@from": "21007023.1",
+                  "@to": "21007023.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21007023.2",
+                  "@from": "21007023.1",
+                  "@to": "21007023.2"
+                }
+              ]
+            },
+            {
+              "@num": "24",
+              "#text": [
+                "That which has been is far off, and ",
+                "deep, very deep; ",
+                "who can find it out?"
+              ],
+              "crossref": [
+                { "@let": "n", "@cid": "c21007024.1" },
+                { "@let": "o", "@cid": "c21007024.2" }
+              ]
+            },
+            {
+              "@num": "25",
+              "crossref": { "@let": "p", "@cid": "c21007025.1" },
+              "#text": "I turned my heart to know and to search out and to seek wisdom and the scheme of things, and to know the wickedness of folly and the foolishness that is madness."
+            },
+            {
+              "@num": "26",
+              "#text": [
+                "And I find something more ",
+                "bitter than death: ",
+                "the woman whose heart is ",
+                "snares and nets, and whose hands are fetters. He who pleases God escapes her, but ",
+                "the sinner is taken by her."
+              ],
+              "crossref": [
+                { "@let": "q", "@cid": "c21007026.1" },
+                { "@let": "r", "@cid": "c21007026.2" },
+                { "@let": "s", "@cid": "c21007026.3" },
+                { "@let": "t", "@cid": "c21007026.4" }
+              ]
+            },
+            {
+              "@num": "27",
+              "#text": [
+                "Behold, this is what I found, says ",
+                "the Preacher, while adding one thing to another to find the scheme of things—"
+              ],
+              "crossref": { "@let": "u", "@cid": "c21007027.1" }
+            },
+            {
+              "@num": "28",
+              "#text": [
+                "which my soul has sought repeatedly, but I have not found. ",
+                "One man among a thousand I found, but ",
+                "a woman among all these I have not found."
+              ],
+              "crossref": [
+                { "@let": "v", "@cid": "c21007028.1" },
+                { "@let": "w", "@cid": "c21007028.2" }
+              ]
+            },
+            {
+              "@num": "29",
+              "#text": [
+                "See, this alone I found, that ",
+                "God made man upright, but ",
+                "they have sought out many schemes."
+              ],
+              "crossref": [
+                { "@let": "x", "@cid": "c21007029.1" },
+                { "@let": "y", "@cid": "c21007029.2" }
+              ]
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21007002" },
+            { "@class": "begin-verse", "@mid": "v21007003" },
+            { "@class": "begin-verse", "@mid": "v21007004" },
+            { "@class": "begin-verse", "@mid": "v21007005" },
+            { "@class": "begin-verse", "@mid": "v21007006" },
+            { "@class": "begin-verse", "@mid": "v21007007" },
+            { "@class": "begin-verse", "@mid": "v21007008" },
+            { "@class": "begin-verse", "@mid": "v21007009" },
+            { "@class": "begin-verse", "@mid": "v21007010" },
+            { "@class": "begin-verse", "@mid": "v21007011" },
+            { "@class": "begin-verse", "@mid": "v21007012" },
+            { "@class": "begin-verse", "@mid": "v21007013" },
+            { "@class": "begin-verse", "@mid": "v21007014" },
+            { "@class": "begin-verse", "@mid": "v21007015" },
+            { "@class": "begin-verse", "@mid": "v21007016" },
+            { "@class": "begin-verse", "@mid": "v21007017" },
+            { "@class": "begin-verse", "@mid": "v21007018" },
+            { "@class": "begin-verse", "@mid": "v21007019" },
+            { "@class": "begin-verse", "@mid": "v21007020" },
+            { "@class": "begin-verse", "@mid": "v21007021" },
+            { "@class": "begin-verse", "@mid": "v21007022" },
+            { "@class": "begin-verse", "@mid": "v21007023" },
+            { "@class": "begin-verse", "@mid": "v21007024" },
+            { "@class": "begin-verse", "@mid": "v21007025" },
+            { "@class": "begin-verse", "@mid": "v21007026" },
+            { "@class": "begin-verse", "@mid": "v21007027" },
+            { "@class": "begin-verse", "@mid": "v21007028" },
+            { "@class": "begin-verse", "@mid": "v21007029" }
+          ],
+          "end-paragraph": [null, null, null, null, null, null, null, null],
+          "end-block-indent": null
+        },
+        {
+          "@num": "8",
+          "heading": [
+            "Keep the King's Command",
+            "Those Who Fear God Will Do Well",
+            "Man Cannot Know God's Ways"
+          ],
+          "begin-block-indent": null,
+          "begin-paragraph": [
+            { "@class": "line-group" },
+            null,
+            null,
+            null,
+            null
+          ],
+          "verse": [
+            {
+              "@num": "1",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "Who is like the wise?",
+                "And who knows the interpretation of a thing?",
+                "A man's wisdom makes his face shine,",
+                "and ",
+                "the hardness of his face is changed."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                null
+              ],
+              "crossref": [
+                { "@let": "z", "@cid": "c21008001.1" },
+                { "@let": "a", "@cid": "c21008001.2" }
+              ]
+            },
+            {
+              "@num": "2",
+              "#text": [
+                "I say:",
+                " Keep the king's command, because of ",
+                "God's oath to him."
+              ],
+              "note": [{ "@nid": "n21008002.1" }, { "@nid": "n21008002.2" }],
+              "crossref": { "@let": "b", "@cid": "c21008002.1" }
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "Be not hasty to ",
+                "go from his presence. Do not take your stand in an evil cause, for he does whatever he pleases."
+              ],
+              "crossref": { "@let": "c", "@cid": "c21008003.1" }
+            },
+            {
+              "@num": "4",
+              "#text": [
+                "For the word of the king is supreme, and ",
+                "who may say to him, ",
+                "What are you doing?"
+              ],
+              "crossref": { "@let": "d", "@cid": "c21008004.1" },
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21008004.1",
+                  "@from": "21008004.1",
+                  "@to": "21008004.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21008004.2",
+                  "@from": "21008004.1",
+                  "@to": "21008004.2"
+                }
+              ]
+            },
+            {
+              "@num": "5",
+              "#text": "Whoever keeps a command will know no evil thing, and the wise heart will know the proper time and the just way.",
+              "note": { "@nid": "n21008005.1" }
+            },
+            {
+              "@num": "6",
+              "#text": [
+                "For there is a time and a way ",
+                "for everything, although man's trouble",
+                " lies heavy on him."
+              ],
+              "crossref": { "@let": "e", "@cid": "c21008006.1" },
+              "note": { "@nid": "n21008006.1" }
+            },
+            {
+              "@num": "7",
+              "#text": [
+                "For he ",
+                "does not know what is to be, for ",
+                "who can tell him how it will be?"
+              ],
+              "crossref": [
+                { "@let": "f", "@cid": "c21008007.1" },
+                { "@let": "g", "@cid": "c21008007.2" }
+              ]
+            },
+            {
+              "@num": "8",
+              "#text": [
+                "No man has power to ",
+                "retain the spirit, ",
+                "or power over the day of death. There is no ",
+                "discharge from war, nor will wickedness deliver those who are given to it."
+              ],
+              "crossref": [
+                { "@let": "h", "@cid": "c21008008.1" },
+                { "@let": "i", "@cid": "c21008008.2" },
+                { "@let": "j", "@cid": "c21008008.3" }
+              ]
+            },
+            {
+              "@num": "9",
+              "crossref": { "@let": "k", "@cid": "c21008009.1" },
+              "#text": "All this I observed while applying my heart to all that is done under the sun, when man had power over man to his hurt."
+            },
+            {
+              "@num": "10",
+              "#text": [
+                "Then I saw the wicked buried. They used to go in and out of ",
+                "the holy place and were ",
+                "praised",
+                " in the city where they had done such things. This also is vanity."
+              ],
+              "crossref": [
+                { "@let": "l", "@cid": "c21008010.1" },
+                { "@let": "m", "@cid": "c21008010.2" }
+              ],
+              "note": [{ "@nid": "n21008010.1" }, { "@nid": "n21008010.2" }]
+            },
+            {
+              "@num": "11",
+              "#text": [
+                "Because ",
+                "the sentence against an evil deed is not executed speedily, ",
+                "the heart of the children of man is fully set to do evil."
+              ],
+              "crossref": [
+                { "@let": "n", "@cid": "c21008011.1" },
+                { "@let": "o", "@cid": "c21008011.2" }
+              ]
+            },
+            {
+              "@num": "12",
+              "#text": [
+                "Though a sinner does evil a hundred times and ",
+                "prolongs his life, yet I know that ",
+                "it will be well with ",
+                "those who fear God, because they fear before him."
+              ],
+              "crossref": [
+                { "@let": "p", "@cid": "c21008012.1" },
+                { "@let": "q", "@cid": "c21008012.2" },
+                { "@let": "r", "@cid": "c21008012.3" }
+              ]
+            },
+            {
+              "@num": "13",
+              "#text": [
+                "But it will ",
+                "not be well with the wicked, neither will he prolong his days like ",
+                "a shadow, because he does not fear before God."
+              ],
+              "crossref": [
+                { "@let": "s", "@cid": "c21008013.1" },
+                { "@let": "t", "@cid": "c21008013.2" }
+              ]
+            },
+            {
+              "@num": "14",
+              "#text": [
+                "There is a vanity that takes place on earth, that there are righteous people ",
+                "to whom it happens according to the deeds of the wicked, and there are wicked people ",
+                "to whom it happens according to the deeds of the righteous. I said that this also is vanity."
+              ],
+              "crossref": [
+                { "@let": "u", "@cid": "c21008014.1" },
+                { "@let": "v", "@cid": "c21008014.2" }
+              ]
+            },
+            {
+              "@num": "15",
+              "#text": [
+                "And I commend joy, for man ",
+                "has nothing better under the sun but to ",
+                "eat and drink and be joyful, for this will go with him in his toil through the days of his life that God has given him under the sun."
+              ],
+              "crossref": [
+                { "@let": "w", "@cid": "c21008015.1" },
+                { "@let": "x", "@cid": "c21008015.2" }
+              ]
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "When I applied my heart to know wisdom, and to see ",
+                "the business that is done on earth, how neither ",
+                "day nor night do one's eyes see sleep,"
+              ],
+              "crossref": [
+                { "@let": "y", "@cid": "c21008016.1" },
+                { "@let": "z", "@cid": "c21008016.2" }
+              ]
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "then I saw all the work of God, that ",
+                "man cannot find out the work that is done under the sun. However much man may toil in seeking, he will not find it out. Even though a wise man claims to know, ",
+                "he cannot find it out."
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21008017.1" },
+                { "@let": "b", "@cid": "c21008017.2" }
+              ]
+            }
+          ],
+          "end-paragraph": [null, null, null, null, null],
+          "end-block-indent": null,
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21008002" },
+            { "@class": "begin-verse", "@mid": "v21008003" },
+            { "@class": "begin-verse", "@mid": "v21008004" },
+            { "@class": "begin-verse", "@mid": "v21008005" },
+            { "@class": "begin-verse", "@mid": "v21008006" },
+            { "@class": "begin-verse", "@mid": "v21008007" },
+            { "@class": "begin-verse", "@mid": "v21008008" },
+            { "@class": "begin-verse", "@mid": "v21008009" },
+            { "@class": "begin-verse", "@mid": "v21008010" },
+            { "@class": "begin-verse", "@mid": "v21008011" },
+            { "@class": "begin-verse", "@mid": "v21008012" },
+            { "@class": "begin-verse", "@mid": "v21008013" },
+            { "@class": "begin-verse", "@mid": "v21008014" },
+            { "@class": "begin-verse", "@mid": "v21008015" },
+            { "@class": "begin-verse", "@mid": "v21008016" },
+            { "@class": "begin-verse", "@mid": "v21008017" }
+          ]
+        },
+        {
+          "@num": "9",
+          "heading": [
+            "Death Comes to All",
+            "Enjoy Life with the One You Love",
+            "Wisdom Better Than Folly"
+          ],
+          "begin-paragraph": [null, null, null, null, null, null, null],
+          "verse": [
+            {
+              "@num": "1",
+              "#text": [
+                "But all this I laid to heart, examining it all, ",
+                "how the righteous and the wise and their deeds are ",
+                "in the hand of God. Whether it is love or hate, man does not know; both are before him."
+              ],
+              "crossref": [
+                { "@let": "c", "@cid": "c21009001.1" },
+                { "@let": "d", "@cid": "c21009001.2" }
+              ]
+            },
+            {
+              "@num": "2",
+              "crossref": [
+                { "@let": "e", "@cid": "c21009002.1" },
+                { "@let": "f", "@cid": "c21009002.2" },
+                { "@let": "g", "@cid": "c21009002.3" }
+              ],
+              "#text": [
+                "It is the same for all, since ",
+                "the same event happens to the righteous and the wicked, to the good and the evil,",
+                " to the clean and the unclean, to him who sacrifices and him who does not sacrifice. As the good one is, so is the sinner, and he who ",
+                "swears is as he who shuns an oath."
+              ],
+              "note": { "@nid": "n21009002.1" }
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "This is an evil in all that is done under the sun, that ",
+                "the same event happens to all. Also, the hearts of the children of man are full of evil, and ",
+                "madness is in their hearts while they live, and after that they go to the dead."
+              ],
+              "crossref": [
+                { "@let": "e", "@cid": "c21009003.1" },
+                { "@let": "h", "@cid": "c21009003.2" }
+              ]
+            },
+            {
+              "@num": "4",
+              "#text": "But he who is joined with all the living has hope, for a living dog is better than a dead lion."
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "For the living know that they will die, but ",
+                "the dead know nothing, and they have no more reward, for ",
+                "the memory of them is forgotten."
+              ],
+              "crossref": [
+                { "@let": "i", "@cid": "c21009005.1" },
+                { "@let": "j", "@cid": "c21009005.2" }
+              ]
+            },
+            {
+              "@num": "6",
+              "#text": "Their love and their hate and their envy have already perished, and forever they have no more share in all that is done under the sun."
+            },
+            {
+              "@num": "7",
+              "#text": [
+                "Go, ",
+                "eat your bread with joy, and drink your wine with a merry heart, for God has already approved what you do."
+              ],
+              "crossref": { "@let": "k", "@cid": "c21009007.1" }
+            },
+            {
+              "@num": "8",
+              "crossref": [
+                { "@let": "l", "@cid": "c21009008.1" },
+                { "@let": "m", "@cid": "c21009008.2" }
+              ],
+              "#text": [
+                "Let your garments be always white. Let not ",
+                "oil be lacking on your head."
+              ]
+            },
+            {
+              "@num": "9",
+              "#text": [
+                "Enjoy life with the wife whom you love, all the days of your ",
+                "vain",
+                " life that he has given you under the sun, because that is your ",
+                "portion in life and in your toil at which you toil under the sun."
+              ],
+              "crossref": [
+                { "@let": "n", "@cid": "c21009009.1" },
+                { "@let": "o", "@cid": "c21009009.2" }
+              ],
+              "note": { "@nid": "n21009009.1" }
+            },
+            {
+              "@num": "10",
+              "#text": [
+                "Whatever your hand finds to do, ",
+                "do it with your might,",
+                "for there is no work or thought or knowledge or wisdom in Sheol, to which you are going."
+              ],
+              "crossref": [
+                { "@let": "p", "@cid": "c21009010.1" },
+                { "@let": "q", "@cid": "c21009010.2" }
+              ],
+              "note": { "@nid": "n21009010.1" }
+            },
+            {
+              "@num": "11",
+              "crossref": [
+                { "@let": "r", "@cid": "c21009011.1" },
+                { "@let": "s", "@cid": "c21009011.2" },
+                { "@let": "t", "@cid": "c21009011.3" },
+                { "@let": "u", "@cid": "c21009011.4" },
+                { "@let": "v", "@cid": "c21009011.5" }
+              ],
+              "#text": [
+                "Again I saw that under the sun ",
+                "the race is not to the swift, nor ",
+                "the battle to the strong, nor bread to the wise, nor riches to the intelligent, nor favor to those with knowledge, but time and ",
+                "chance ",
+                "happen to them all."
+              ]
+            },
+            {
+              "@num": "12",
+              "#text": [
+                "For man ",
+                "does not know his time. Like fish that are taken in an evil net, and ",
+                "like birds that are caught in a snare, so the children of man are ",
+                "snared at an evil time, when it suddenly falls upon them."
+              ],
+              "crossref": [
+                { "@let": "w", "@cid": "c21009012.1" },
+                { "@let": "x", "@cid": "c21009012.2" },
+                { "@let": "y", "@cid": "c21009012.3" }
+              ]
+            },
+            {
+              "@num": "13",
+              "#text": "I have also seen this example of wisdom under the sun, and it seemed great to me."
+            },
+            {
+              "@num": "14",
+              "#text": "There was a little city with few men in it, and a great king came against it and besieged it, building great siegeworks against it."
+            },
+            {
+              "@num": "15",
+              "#text": [
+                "But there was found in it ",
+                "a poor, wise man, and he by his ",
+                "wisdom delivered the city. Yet no one remembered that poor man."
+              ],
+              "crossref": [
+                { "@let": "z", "@cid": "c21009015.1" },
+                { "@let": "a", "@cid": "c21009015.2" }
+              ]
+            },
+            {
+              "@num": "16",
+              "#text": [
+                "But I say that ",
+                "wisdom is better than might, though ",
+                "the poor man's wisdom is despised and his words are not heard."
+              ],
+              "crossref": [
+                { "@let": "b", "@cid": "c21009016.1" },
+                { "@let": "c", "@cid": "c21009016.2" }
+              ]
+            },
+            {
+              "@num": "17",
+              "#text": [
+                "The words of the wise heard in ",
+                "quiet are better than the shouting of a ruler among fools."
+              ],
+              "crossref": { "@let": "d", "@cid": "c21009017.1" }
+            },
+            {
+              "@num": "18",
+              "crossref": [
+                { "@let": "e", "@cid": "c21009018.1" },
+                { "@let": "f", "@cid": "c21009018.2" }
+              ],
+              "#text": [
+                "Wisdom is better than weapons of war, but ",
+                "one sinner destroys much good."
+              ]
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21009002" },
+            { "@class": "begin-verse", "@mid": "v21009003" },
+            { "@class": "begin-verse", "@mid": "v21009004" },
+            { "@class": "begin-verse", "@mid": "v21009005" },
+            { "@class": "begin-verse", "@mid": "v21009006" },
+            { "@class": "begin-verse", "@mid": "v21009007" },
+            { "@class": "begin-verse", "@mid": "v21009008" },
+            { "@class": "begin-verse", "@mid": "v21009009" },
+            { "@class": "begin-verse", "@mid": "v21009010" },
+            { "@class": "begin-verse", "@mid": "v21009011" },
+            { "@class": "begin-verse", "@mid": "v21009012" },
+            { "@class": "begin-verse", "@mid": "v21009013" },
+            { "@class": "begin-verse", "@mid": "v21009014" },
+            { "@class": "begin-verse", "@mid": "v21009015" },
+            { "@class": "begin-verse", "@mid": "v21009016" },
+            { "@class": "begin-verse", "@mid": "v21009017" },
+            { "@class": "begin-verse", "@mid": "v21009018" }
+          ],
+          "end-paragraph": [null, null, null, null, null, null, null]
+        },
+        {
+          "@num": "10",
+          "begin-block-indent": [null, null],
+          "begin-paragraph": [
+            { "@class": "line-group" },
+            null,
+            { "@class": "line-group" },
+            { "@class": "line-group" },
+            { "@class": "line-group" }
+          ],
+          "verse": [
+            {
+              "@num": "1",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Dead flies make ",
+                "the perfumer's ointment give off a stench;",
+                "so a little folly outweighs wisdom and honor."
+              ],
+              "crossref": { "@let": "g", "@cid": "c21010001.1" },
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "2",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": { "@let": "h", "@cid": "c21010002.1" },
+              "#text": [
+                "A wise man's heart inclines him to the right,",
+                "but a fool's heart to the left."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "3",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Even when the fool walks on the road, he lacks sense,",
+                "and he ",
+                "says to everyone that he is a fool."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }],
+              "crossref": { "@let": "i", "@cid": "c21010003.1" }
+            },
+            {
+              "@num": "4",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "If the anger of the ruler rises against you, ",
+                "do not leave your place,",
+                "for calmness",
+                " will lay great offenses to rest."
+              ],
+              "crossref": [
+                { "@let": "j", "@cid": "c21010004.1" },
+                { "@let": "k", "@cid": "c21010004.2" }
+              ],
+              "end-line": [{ "@class": "br" }, null],
+              "note": { "@nid": "n21010004.1" }
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "There is an evil that I have seen under the sun, as it were ",
+                "an error proceeding from the ruler:"
+              ],
+              "crossref": { "@let": "l", "@cid": "c21010005.1" }
+            },
+            {
+              "@num": "6",
+              "crossref": { "@let": "m", "@cid": "c21010006.1" },
+              "#text": "folly is set in many high places, and the rich sit in a low place."
+            },
+            {
+              "@num": "7",
+              "crossref": [
+                { "@let": "n", "@cid": "c21010007.1" },
+                { "@let": "o", "@cid": "c21010007.2" }
+              ],
+              "#text": [
+                "I have seen slaves ",
+                "on horses, and princes walking on the ground like slaves."
+              ]
+            },
+            {
+              "@num": "8",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "He who ",
+                "digs a pit will fall into it,",
+                "and ",
+                "a serpent will bite him who breaks through a wall."
+              ],
+              "crossref": [
+                { "@let": "p", "@cid": "c21010008.1" },
+                { "@let": "q", "@cid": "c21010008.2" }
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "9",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "r", "@cid": "c21010009.1" },
+                { "@let": "s", "@cid": "c21010009.2" }
+              ],
+              "#text": [
+                "He who quarries stones is hurt by them,",
+                "and he who ",
+                "splits logs is endangered by them."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "10",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "If the iron is blunt, and one does not sharpen the edge,",
+                "he must use more strength,",
+                "but wisdom helps one to succeed."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "note": { "@nid": "n21010010.1" }
+            },
+            {
+              "@num": "11",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "If the serpent bites before it is ",
+                "charmed,",
+                "there is no advantage to the charmer."
+              ],
+              "crossref": { "@let": "t", "@cid": "c21010011.1" },
+              "end-line": [{ "@class": "br" }, null]
+            },
+            {
+              "@num": "12",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "The words of a wise man's mouth ",
+                "win him favor,",
+                "but ",
+                "the lips of a fool consume him."
+              ],
+              "crossref": [
+                { "@let": "u", "@cid": "c21010012.1" },
+                { "@let": "v", "@cid": "c21010012.2" }
+              ],
+              "note": { "@nid": "n21010012.1" },
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "13",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "The beginning of the words of his mouth is foolishness,",
+                "and the end of his talk is evil madness."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "14",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                { "@class": "indent" }
+              ],
+              "crossref": [
+                { "@let": "w", "@cid": "c21010014.1" },
+                { "@let": "x", "@cid": "c21010014.2" }
+              ],
+              "#text": [
+                "A fool multiplies words,",
+                "though no man knows what is to be,",
+                "and who can tell him ",
+                "what will be after him?"
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ]
+            },
+            {
+              "@num": "15",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "The toil of a fool wearies him,",
+                "for he does not know ",
+                "the way to the city."
+              ],
+              "end-line": [{ "@class": "br" }, null],
+              "crossref": { "@let": "y", "@cid": "c21010015.1" }
+            },
+            {
+              "@num": "16",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": { "@let": "z", "@cid": "c21010016.1" },
+              "#text": [
+                "Woe to you, O land, when your king is a child,",
+                "and your princes feast in the morning!"
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "17",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "Happy are you, O land, when your king is the son of the nobility,",
+                "and your princes feast at the proper time,",
+                "for strength, and not for ",
+                "drunkenness!"
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "crossref": { "@let": "a", "@cid": "c21010017.1" }
+            },
+            {
+              "@num": "18",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "Through sloth the roof sinks in,",
+                "and through indolence the house leaks."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "19",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "Bread is made for laughter,",
+                "and ",
+                "wine gladdens life,",
+                "and ",
+                "money answers everything."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ],
+              "crossref": [
+                { "@let": "b", "@cid": "c21010019.1" },
+                { "@let": "c", "@cid": "c21010019.2" }
+              ]
+            },
+            {
+              "@num": "20",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "Even in your thoughts, ",
+                "do not curse the king,",
+                "nor in your ",
+                "bedroom curse the rich,",
+                "for a bird of the air will carry your voice,",
+                "or some winged creature tell the matter."
+              ],
+              "crossref": [
+                { "@let": "d", "@cid": "c21010020.1" },
+                { "@let": "e", "@cid": "c21010020.2" }
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                null
+              ]
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21010002" },
+            { "@class": "begin-verse", "@mid": "v21010003" },
+            { "@class": "begin-verse", "@mid": "v21010004" },
+            { "@class": "begin-verse", "@mid": "v21010005" },
+            { "@class": "begin-verse", "@mid": "v21010006" },
+            { "@class": "begin-verse", "@mid": "v21010007" },
+            { "@class": "begin-verse", "@mid": "v21010008" },
+            { "@class": "begin-verse", "@mid": "v21010009" },
+            { "@class": "begin-verse", "@mid": "v21010010" },
+            { "@class": "begin-verse", "@mid": "v21010011" },
+            { "@class": "begin-verse", "@mid": "v21010012" },
+            { "@class": "begin-verse", "@mid": "v21010013" },
+            { "@class": "begin-verse", "@mid": "v21010014" },
+            { "@class": "begin-verse", "@mid": "v21010015" },
+            { "@class": "begin-verse", "@mid": "v21010016" },
+            { "@class": "begin-verse", "@mid": "v21010017" },
+            { "@class": "begin-verse", "@mid": "v21010018" },
+            { "@class": "begin-verse", "@mid": "v21010019" },
+            { "@class": "begin-verse", "@mid": "v21010020" }
+          ],
+          "end-paragraph": [null, null, null, null, null],
+          "end-block-indent": [null, null]
+        },
+        {
+          "@num": "11",
+          "heading": "Cast Your Bread upon the Waters",
+          "begin-block-indent": null,
+          "begin-paragraph": [
+            { "@class": "line-group" },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "verse": [
+            {
+              "@num": "1",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "f", "@cid": "c21011001.1" },
+                { "@let": "g", "@cid": "c21011001.2" }
+              ],
+              "#text": [
+                "Cast your bread upon the waters,",
+                "for you will find it after many days."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "2",
+              "begin-line": [null, { "@class": "indent" }],
+              "crossref": [
+                { "@let": "h", "@cid": "c21011002.1" },
+                { "@let": "i", "@cid": "c21011002.2" },
+                { "@let": "j", "@cid": "c21011002.3" }
+              ],
+              "#text": [
+                "Give a portion to ",
+                "seven, or even to eight,",
+                "for you know not what disaster may happen on earth."
+              ],
+              "end-line": [{ "@class": "br" }, { "@class": "br" }]
+            },
+            {
+              "@num": "3",
+              "begin-line": [
+                null,
+                { "@class": "indent" },
+                null,
+                { "@class": "indent" }
+              ],
+              "#text": [
+                "If the clouds are full of rain,",
+                "they empty themselves on the earth,",
+                "and if a tree falls to the south or to the north,",
+                "in the place where the tree falls, there it will lie."
+              ],
+              "end-line": [
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" },
+                { "@class": "br" }
+              ]
+            },
+            {
+              "@num": "4",
+              "begin-line": [null, { "@class": "indent" }],
+              "#text": [
+                "He who observes the wind will not sow,",
+                "and he who regards the clouds will not reap."
+              ],
+              "end-line": [{ "@class": "br" }, null]
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "As you do not know the way ",
+                "the spirit comes to ",
+                "the bones in the womb",
+                " of a woman with child, so you do not know the work of God who makes everything."
+              ],
+              "crossref": [
+                { "@let": "k", "@cid": "c21011005.1" },
+                { "@let": "l", "@cid": "c21011005.2" }
+              ],
+              "note": { "@nid": "n21011005.1" }
+            },
+            {
+              "@num": "6",
+              "#text": [
+                "In the morning sow your seed, and at evening ",
+                "withhold not your hand, for you do not know which will prosper, this or that, or whether both alike will be good."
+              ],
+              "crossref": { "@let": "m", "@cid": "c21011006.1" }
+            },
+            {
+              "@num": "7",
+              "#text": [
+                "Light is sweet, and it is pleasant for the eyes to ",
+                "see the sun."
+              ],
+              "crossref": { "@let": "n", "@cid": "c21011007.1" }
+            },
+            {
+              "@num": "8",
+              "#text": [
+                "So if a person lives many years, let him rejoice in them all; but let him remember ",
+                "that the days of darkness will be many. All that comes is ",
+                "vanity."
+              ],
+              "crossref": [
+                { "@let": "o", "@cid": "c21011008.1" },
+                { "@let": "p", "@cid": "c21011008.2" }
+              ],
+              "note": { "@nid": "n21011008.1" }
+            },
+            {
+              "@num": "9",
+              "crossref": [
+                { "@let": "q", "@cid": "c21011009.1" },
+                { "@let": "r", "@cid": "c21011009.2" },
+                { "@let": "s", "@cid": "c21011009.3" },
+                { "@let": "t", "@cid": "c21011009.4" }
+              ],
+              "#text": [
+                "Rejoice, O young man, in your youth, and let your heart cheer you in the days of your youth. ",
+                "Walk in the ways of your heart and ",
+                "the sight of your eyes. But know that for all these things ",
+                "God will bring you into judgment."
+              ]
+            },
+            {
+              "@num": "10",
+              "#text": [
+                "Remove vexation from your heart, and ",
+                "put away pain",
+                " from your body, for youth and the dawn of life are vanity."
+              ],
+              "crossref": { "@let": "u", "@cid": "c21011010.1" },
+              "note": { "@nid": "n21011010.1" }
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21011002" },
+            { "@class": "begin-verse", "@mid": "v21011003" },
+            { "@class": "begin-verse", "@mid": "v21011004" },
+            { "@class": "begin-verse", "@mid": "v21011005" },
+            { "@class": "begin-verse", "@mid": "v21011006" },
+            { "@class": "begin-verse", "@mid": "v21011007" },
+            { "@class": "begin-verse", "@mid": "v21011008" },
+            { "@class": "begin-verse", "@mid": "v21011009" },
+            { "@class": "begin-verse", "@mid": "v21011010" }
+          ],
+          "end-paragraph": [null, null, null, null, null, null, null],
+          "end-block-indent": null
+        },
+        {
+          "@num": "12",
+          "heading": [
+            "Remember Your Creator in Your Youth",
+            "Fear God and Keep His Commandments"
+          ],
+          "begin-paragraph": [null, null, null, null],
+          "verse": [
+            {
+              "@num": "1",
+              "#text": [
+                "Remember also your Creator in ",
+                "the days of your youth, before ",
+                "the evil days come and the years draw near of which ",
+                "you will say, ",
+                "I have no pleasure in them",
+                ";"
+              ],
+              "crossref": [
+                { "@let": "v", "@cid": "c21012001.1" },
+                { "@let": "w", "@cid": "c21012001.2" },
+                { "@let": "x", "@cid": "c21012001.3" }
+              ],
+              "q": [
+                {
+                  "@class": "begin-double",
+                  "@qid": "21012001.1",
+                  "@from": "21012001.1",
+                  "@to": "21012001.2"
+                },
+                {
+                  "@class": "end-double",
+                  "@qid": "21012001.2",
+                  "@from": "21012001.1",
+                  "@to": "21012001.2"
+                }
+              ]
+            },
+            {
+              "@num": "2",
+              "#text": [
+                "before ",
+                "the sun and the light and the moon and the stars are darkened and the clouds return after the rain,"
+              ],
+              "crossref": { "@let": "y", "@cid": "c21012002.1" }
+            },
+            {
+              "@num": "3",
+              "#text": [
+                "in the day when the keepers of the house tremble, and the strong men are bent, and the grinders cease because they are few, and ",
+                "those who look through the windows are dimmed,"
+              ],
+              "crossref": { "@let": "z", "@cid": "c21012003.1" }
+            },
+            {
+              "@num": "4",
+              "#text": [
+                "and ",
+                "the doors on the street are shut—when ",
+                "the sound of the grinding is low, and one rises up at the sound of a bird, and all ",
+                "the daughters of song are brought low—"
+              ],
+              "crossref": [
+                { "@let": "a", "@cid": "c21012004.1" },
+                { "@let": "b", "@cid": "c21012004.2" },
+                { "@let": "c", "@cid": "c21012004.3" }
+              ]
+            },
+            {
+              "@num": "5",
+              "#text": [
+                "they are afraid also of what is high, and ",
+                "terrors are in the way; the almond tree blossoms, the grasshopper drags itself along,",
+                " and desire fails, because man is going to his ",
+                "eternal ",
+                "home, and the ",
+                "mourners go about the streets—"
+              ],
+              "crossref": [
+                { "@let": "d", "@cid": "c21012005.1" },
+                { "@let": "e", "@cid": "c21012005.2" },
+                { "@let": "f", "@cid": "c21012005.3" },
+                { "@let": "g", "@cid": "c21012005.4" }
+              ],
+              "note": { "@nid": "n21012005.1" }
+            },
+            {
+              "@num": "6",
+              "#text": [
+                "before the silver cord is snapped, or ",
+                "the golden bowl is broken, or the pitcher is ",
+                "shattered at the fountain, or the wheel broken at the cistern,"
+              ],
+              "crossref": [
+                { "@let": "h", "@cid": "c21012006.1" },
+                { "@let": "i", "@cid": "c21012006.2" }
+              ]
+            },
+            {
+              "@num": "7",
+              "#text": [
+                "and ",
+                "the dust returns to the earth as it was, and ",
+                "the spirit returns to God ",
+                "who gave it."
+              ],
+              "crossref": [
+                { "@let": "j", "@cid": "c21012007.1" },
+                { "@let": "k", "@cid": "c21012007.2" },
+                { "@let": "l", "@cid": "c21012007.3" }
+              ]
+            },
+            {
+              "@num": "8",
+              "crossref": [
+                { "@let": "m", "@cid": "c21012008.1" },
+                { "@let": "n", "@cid": "c21012008.2" }
+              ],
+              "#text": [
+                "Vanity",
+                " of vanities, says ",
+                "the Preacher; all is vanity."
+              ],
+              "note": { "@nid": "n21012008.1" }
+            },
+            {
+              "@num": "9",
+              "#text": [
+                "Besides being wise, ",
+                "the Preacher also taught the people knowledge, weighing and studying and arranging ",
+                "many proverbs with great care."
+              ],
+              "crossref": [
+                { "@let": "n", "@cid": "c21012009.1" },
+                { "@let": "o", "@cid": "c21012009.2" }
+              ]
+            },
+            {
+              "@num": "10",
+              "crossref": { "@let": "n", "@cid": "c21012010.1" },
+              "#text": "The Preacher sought to find words of delight, and uprightly he wrote words of truth."
+            },
+            {
+              "@num": "11",
+              "crossref": [
+                { "@let": "p", "@cid": "c21012011.1" },
+                { "@let": "q", "@cid": "c21012011.2" },
+                { "@let": "r", "@cid": "c21012011.3" },
+                { "@let": "s", "@cid": "c21012011.4" }
+              ],
+              "#text": [
+                "The words of the wise are like goads, and like ",
+                "nails firmly fixed are the collected sayings; they are ",
+                "given by ",
+                "one Shepherd."
+              ]
+            },
+            {
+              "@num": "12",
+              "#text": [
+                "My son, beware of anything beyond these. Of making ",
+                "many books there is no end, and ",
+                "much study is a weariness of the flesh."
+              ],
+              "crossref": [
+                { "@let": "u", "@cid": "c21012012.1" },
+                { "@let": "v", "@cid": "c21012012.2" }
+              ]
+            },
+            {
+              "@num": "13",
+              "#text": [
+                "The end of the matter; all has been heard. ",
+                "Fear God and keep his commandments, for this is the whole duty of man."
+              ],
+              "crossref": { "@let": "w", "@cid": "c21012013.1" },
+              "note": { "@nid": "n21012013.1" }
+            },
+            {
+              "@num": "14",
+              "#text": [
+                "For ",
+                "God will bring every deed into judgment, with",
+                " every secret thing, whether good or evil."
+              ],
+              "crossref": { "@let": "x", "@cid": "c21012014.1" },
+              "note": { "@nid": "n21012014.1" }
+            }
+          ],
+          "marker": [
+            { "@class": "begin-verse", "@mid": "v21012002" },
+            { "@class": "begin-verse", "@mid": "v21012003" },
+            { "@class": "begin-verse", "@mid": "v21012004" },
+            { "@class": "begin-verse", "@mid": "v21012005" },
+            { "@class": "begin-verse", "@mid": "v21012006" },
+            { "@class": "begin-verse", "@mid": "v21012007" },
+            { "@class": "begin-verse", "@mid": "v21012008" },
+            { "@class": "begin-verse", "@mid": "v21012009" },
+            { "@class": "begin-verse", "@mid": "v21012010" },
+            { "@class": "begin-verse", "@mid": "v21012011" },
+            { "@class": "begin-verse", "@mid": "v21012012" },
+            { "@class": "begin-verse", "@mid": "v21012013" },
+            { "@class": "begin-verse", "@mid": "v21012014" }
+          ],
+          "end-paragraph": [null, null, null, null]
+        }
+      ]
+    }
+  }
+}

@@ -23,7 +23,7 @@ export default class ParagraphBible extends Component {
 
   paragraphBible = this.props.bibleSectionsRef;
 
-  height = height - Constants.statusBarHeight;
+  height = (height - Constants.statusBarHeight - 70) / 2;
 
   state = {
     loading: false,
@@ -116,7 +116,7 @@ export default class ParagraphBible extends Component {
   onViewRef = (viewableItems) => {
     if (viewableItems.viewableItems[0]) {
       const v = viewableItems.viewableItems[0];
-      console.log(v);
+      // console.log(v);
       this.props.bibleScreen.current.setState({
         currentChapter: v.index + 1,
       });
@@ -139,8 +139,9 @@ export default class ParagraphBible extends Component {
       // chapterHeading={item.heading}
       chapterNum={index + 1}
       // colors={this.props.colors}
-      fontSize={this.props.fontSize}
+      // fontSize={this.props.fontSize}
       key={this.keyExtractor}
+      _heights={this._heights}
       // searchWords={searchWords}
       // onPress={this.props.toggleSlideView}
       // titleSize={this.props.fontSize * 1.75}
@@ -152,7 +153,7 @@ export default class ParagraphBible extends Component {
           fontSize: this.props.fontSize,
           lineHeight: this.props.fontSize * 2,
           fontFamily: this.props.fontFamily,
-          // height: this.height,
+          height: this.height,
         },
       ]}
     />
@@ -170,6 +171,8 @@ export default class ParagraphBible extends Component {
     }
     return offset;
   };
+
+  _heights = [];
 
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT } = this.props;
@@ -191,7 +194,7 @@ export default class ParagraphBible extends Component {
         data={this.state.sections}
         decelerationRate={"normal"}
         extraData={this.state.index}
-        // getItemLayout={this.getItemLayout}
+        getItemLayout={this.getItemLayout}
         initialNumToRender={3}
         initialScrollIndex={this.state.index}
         keyExtractor={this.keyExtractor}
@@ -203,7 +206,7 @@ export default class ParagraphBible extends Component {
         // maxToRenderPerBatch={3}
         onViewableItemsChanged={this.onViewRef}
         onScroll={this.scroll}
-        onScrollToIndexFailed={this.scrollToIndexFailed}
+        // onScrollToIndexFailed={this.scrollToIndexFailed}
         ref={bibleSectionsRef}
         // removeClippedSubviews
         renderItem={this.renderItem}

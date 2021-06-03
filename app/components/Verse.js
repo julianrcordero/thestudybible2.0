@@ -50,12 +50,7 @@ export default class Verse extends Component {
   // };
 
   render() {
-    const {
-      _openStudyScreen,
-      verseNumber,
-      verseText,
-      verseTextStyle,
-    } = this.props;
+    const { _openStudyScreen, verseNumber, verseText } = this.props;
 
     const verseNumberStyle = {
       fontWeight: "bold",
@@ -108,9 +103,11 @@ export default class Verse extends Component {
         <Text
           onPress={this._toggleHighlight}
           onLongPress={() => _openStudyScreen(verseNumber)}
-          style={[verseTextStyle, verseStyle]}
+          style={verseStyle}
         >
-          {verseText}
+          {Array.isArray(verseText)
+            ? verseText.map((phrase) => phrase)
+            : verseText}
         </Text>
       </>
     );

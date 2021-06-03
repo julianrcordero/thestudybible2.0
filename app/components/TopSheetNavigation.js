@@ -12,42 +12,44 @@ import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import SearchHistory from "./SearchHistory";
 
-import bookPaths from "../xml/Bible";
+// import bookPaths from "../xml/Bible";
+import bookPaths from "../json/bookPaths";
 import reactStringReplace from "react-string-replace";
 import parser from "fast-xml-parser";
 
 var he = require("he");
 var options = {
   attributeNamePrefix: "",
-  // attrNodeName: "attr", //default is 'false'
+  attrNodeName: "attr", //default is 'false'
   textNodeName: "text",
   ignoreAttributes: true,
   ignoreNameSpace: true,
   allowBooleanAttributes: false,
-  parseNodeValue: false,
-  parseAttributeValue: false,
+  parseNodeValue: true,
+  parseAttributeValue: true,
   trimValues: true,
   cdataTagName: "__cdata", //default is 'false'
   cdataPositionChar: "\\c",
   parseTrueNumberOnly: false,
   arrayMode: false,
-  // attrValueProcessor: (val, attrName) => {
-  //   return val;
-  // },
-  // tagValueProcessor: (val, tagName) => {
-  //   return val;
-  // },
+  // attrValueProcessor: (val, attrName) =>
+  //   attrName === "let"
+  //     ? console.log(val)
+  //     : he.decode(val, { isAttributeValue: true }),
+  // tagValueProcessor: (val, tagName) =>
+  //   tagName === "crossref" ? console.log(val) : he.decode(val),
   attrValueProcessor: (val, attrName) =>
     he.decode(val, { isAttributeValue: true }), //default is a=>a
   tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
-  stopNodes: ["heading", "verse"],
+  format: true,
+  supressEmptyNode: true,
+  stopNodes: ["heading", "verse"], //"crossref", "q", "note"],
 };
 
-const notesArray = require("../json/bible/esvmsb.notes.json")[
-  "crossway-studynotes"
-].book;
+const notesArray = require("../json/esvmsb.notes.json")["crossway-studynotes"]
+  .book;
 
-const crossrefsJsonObject = require("../json/bible/GenesisCrossrefs.json").book;
+const crossrefsJsonObject = require("../json/GenesisCrossrefs.json").book;
 
 class TopSheetNavigation extends Component {
   constructor(props) {
@@ -185,16 +187,15 @@ class TopSheetNavigation extends Component {
   }
 
   setSections = (newBook) => {
-    let myBook = bookPaths[newBook];
+    //   let myBook = bookPaths[newBook];
 
-    // requestAnimationFrame(() => {
-    let sections = parser.parse(myBook, options)?.["crossway-bible"].book
-      .chapter;
-    this.setState({ sections: sections });
-    console.log(sections);
-    // });
+    //   let sections = parser.parse(myBook, options)?.["crossway-bible"].book
+    //     .chapter;
+    //   this.setState({
+    //     sections: sections,
+    //   });
 
-    // let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
+    let chapters = bookPaths[newBook]["crossway-bible"].book.chapter;
 
     // let mySections = chapters.map((c) => {
     //   return {
@@ -216,7 +217,7 @@ class TopSheetNavigation extends Component {
     //   };
     // });
 
-    // this.setState({ sections: mySections });
+    this.setState({ sections: chapters });
   };
 
   setVerses = (newBook) => {

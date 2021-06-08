@@ -16,7 +16,7 @@ export default class ParagraphBible extends Component {
 
     this.state = {
       index: 0,
-      sections: [],
+      partialSections: [],
       // layoutsRendered: true,
     };
   }
@@ -40,10 +40,15 @@ export default class ParagraphBible extends Component {
     //   prevState.layoutsRendered !== this.state.layoutsRendered &&
     //   this.state.layoutsRendered
     // )
-    if (prevState.index !== this.state.index) {
-      console.log("scrolling to", this.state.index);
-      this.scrollByIndex(this.state.index);
-    }
+    // if (prevState.index !== this.state.index) {
+    //   let scrollToThis = Math.floor(this.state.partialSections.length / 2);
+    //   console.log("scrolling to", scrollToThis);
+    //   this.scrollByIndex(scrollToThis);
+    // }
+    // if (prevState.partialSections !== this.state.partialSections) {
+    //   let scrollToThis = Math.floor(this.state.partialSections.length / 2);
+    //   this.scrollByIndex(scrollToThis);
+    // }
   }
 
   getItemLayout = (data, index) => ({
@@ -57,7 +62,7 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.props.fontSize !== nextProps.fontSize) {
       return true;
-    } else if (this.state.sections !== nextState.sections) {
+    } else if (this.state.partialSections !== nextState.partialSections) {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
       return true;
@@ -91,61 +96,43 @@ export default class ParagraphBible extends Component {
 
   scrollToIndexFailed = () => {
     console.log("scrollToIndexFailed");
-    // this.scrollToChapter();
-
-    // const offset = info.averageItemLength * info.index;
-    // console.log("scrollToIndexFailed", offset);
-    // this.paragraphBible.current?.scrollToOffset({
-    //   animated: false,
-    //   offset: offset,
-    // });
-    // // scrollToIndex({
-    // //   animated: false,
-    // //   index: info.highestMeasuredFrameIndex,
-    // // });
-
-    // setTimeout(() => {
-    //   this.paragraphBible.current?.scrollToIndex({
-    //     index: info.index,
-    //     animated: false,
-    //   });
-    // });
-    // }, 200);
   };
 
-  onViewRef = (viewableItems) => {
-    if (viewableItems.viewableItems[0]) {
-      const v = viewableItems.viewableItems[0];
+  onViewRef = ({ viewableItems, changed }) => {
+    // console.log("viewable items", viewableItems);
+    if (viewableItems[0]) {
+      const v = viewableItems[0];
       // console.log(v);
       this.props.bibleScreen.current.setState({
-        currentChapter: v.index + 1,
+        currentChapter: v.item.chapter,
       });
-      // sendVerseToToolBar(v.item.chapter, v.item.title);
     }
     // Use viewable items in state or as intended
   };
   viewConfigRef = {
     waitForInteraction: false,
     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
-    viewAreaCoveragePercentThreshold: 75,
-    // itemVisiblePercentThreshold: 75,
+    // viewAreaCoveragePercentThreshold: 50,
+    itemVisiblePercentThreshold: 25,
   };
 
   keyExtractor = (item, index) => index.toString();
 
-  renderItem = ({ item, index }) => (
+  renderItem = ({ item, index, separators }) => (
     <Chapter
       bibleScreen={this.props.bibleScreen}
-      // chapterHeading={item.heading}
-      chapterNum={index + 1}
-      // colors={this.props.colors}
-      // fontSize={this.props.fontSize}
+      chapterHeading={item.heading}
+      chapterNum={item.chapter ?? index + 1}
+      colors={this.props.colors}
+      fontSize={this.props.fontSize}
       key={this.keyExtractor}
       _heights={this._heights}
       // searchWords={searchWords}
       // onPress={this.props.toggleSlideView}
-      // titleSize={this.props.fontSize * 1.75}
-      verses={item.verse}
+      // onShowUnderlay={separators.highlight}
+      // onHideUnderlay={separators.unhighlight}
+      titleSize={this.props.fontSize * 1.75}
+      verses={item.verses}
       verseTextStyle={[
         defaultStyles.bibleText,
         {
@@ -159,18 +146,8 @@ export default class ParagraphBible extends Component {
     />
   );
 
-  // Gets the total height of the elements that come before
-  // element with passed index
-  getOffsetByIndex = (index) => {
-    let offset = 0;
-    for (let i = 0; i < index; i += 1) {
-      const elementLayout = this._heights[i];
-      if (elementLayout && elementLayout.height) {
-        offset += this._heights[i].height;
-      }
-    }
-    return offset;
-  };
+  onEndReached = ({ distanceFromEnd }) =>
+    console.log("loading another chapter");
 
   _heights = [];
 
@@ -186,38 +163,44 @@ export default class ParagraphBible extends Component {
         // paddingHorizontal: width * 0.075,
         // paddingBottom: HEADER_HEIGHT + 500,
       },
+      separator: {},
     };
 
     return (
       <AnimatedFlatList
         bounces={false}
-        data={this.state.sections}
-        decelerationRate={"normal"}
+        data={this.state.partialSections}
+        // decelerationRate={"fast"}
         extraData={this.state.index}
-        getItemLayout={this.getItemLayout}
-        initialNumToRender={3}
-        initialScrollIndex={this.state.index}
+        // getItemLayout={this.getItemLayout}
+        initialNumToRender={10}
+        // initialScrollIndex={this.state.index}
+        ItemSeparatorComponent={({ highlighted }) => (
+          <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
+        )}
         keyExtractor={this.keyExtractor}
         ListEmptyComponent={
           <View
             style={{ backgroundColor: "green", height: height, width: width }}
           ></View>
         }
-        // maxToRenderPerBatch={3}
+        maxToRenderPerBatch={10}
+        onEndReached={this.onEndReached}
+        onEndReachedThreshold={3}
         onViewableItemsChanged={this.onViewRef}
         onScroll={this.scroll}
         // onScrollToIndexFailed={this.scrollToIndexFailed}
         ref={bibleSectionsRef}
-        // removeClippedSubviews
+        removeClippedSubviews
         renderItem={this.renderItem}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         // snapToAlignment={"center"}
         // snapToInterval={this.height}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
-        updateCellsBatchingPeriod={10}
+        updateCellsBatchingPeriod={25}
         viewabilityConfig={this.viewConfigRef}
-        windowSize={3}
+        windowSize={7}
       />
     );
   }

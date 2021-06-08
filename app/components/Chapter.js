@@ -2,7 +2,7 @@ import React, { Component, PureComponent } from "react";
 import { Text, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
-import HTML from "react-native-render-html";
+import { TouchableHighlight } from "react-native";
 // import { Paragraph, Text } from "react-native-paper";
 
 class SectionHeader extends PureComponent {
@@ -33,7 +33,7 @@ export default class Chapter extends Component {
   // };
 
   // componentDidUpdate = (prevProps, prevState) => {
-  //   if (prevProps.verses !== this.props.verses) {
+  //   if (prevProps.verse !== this.props.verse) {
   //   }
   // };
 
@@ -88,71 +88,35 @@ export default class Chapter extends Component {
 
   render() {
     const {
-      // chapterHeading,
-      // chapterNum,
-      // colors,
+      chapterHeading,
+      chapterNum,
+      colors,
       fontSize,
-      style,
-      // titleSize,
+      // onHideUnderlay,
+      // onShowUnderlay,
+      titleSize,
       verses,
       verseTextStyle,
     } = this.props;
 
-    // const title =
-    //   chapterNum +
-    //   "\t" +
-    //   (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
+    const title =
+      chapterNum +
+      "\t" +
+      (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      // <HTML
-      //   // color={colors.text}
-      //   source={{
-      //     html: verses,
-      //   }}
-      //   renderers={{
-      //     // "begin-paragraph": (
-      //     //   htmlAttribs,
-      //     //   children,
-      //     //   convertedCSSStyles,
-      //     //   passProps
-      //     // ) => <Text key={this.keyExtractor}>{"\t"}</Text>,
-      //     verse: {
-      //       renderer: (
-      //         htmlAttribs,
-      //         children,
-      //         convertedCSSStyles,
-      //         passProps
-      //       ) => {
-      //         return children;
-      //       },
-      //       wrapper: "Text",
-      //     },
-      //     // crossref: {
-      //     //   renderer: (
-      //     //     htmlAttribs,
-      //     //     children,
-      //     //     convertedCSSStyles,
-      //     //     passProps
-      //     //   ) => {
-      //     //     htmlAttribs.let ? `${htmlAttribs.let}` : "";
-      //     //   },
-      //     //   wrapper: "Text",
-      //     // },
-      //   }}
-      //   tagsStyles={{
-      //     heading: { color: "blue", fontSize: 16, lineHeight: 20 },
-      //   }}
-      // />
-      <Text
-        style={[{ fontSize: fontSize }, verseTextStyle, style]}
-        // onLayout={this.onLayout}
+      <
+        // TouchableHighlight
+        // onShowUnderlay={onShowUnderlay}
+        // onHideUnderlay={onHideUnderlay}
       >
-        {verses.map(this.mapVerseObject)}
-      </Text>
+        <SectionHeader colors={colors} title={title} titleSize={titleSize} />
+        <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.map(this.mapVerse)}
+        </Text>
+      </
+        // TouchableHighlight
+      >
     );
   }
-}
-
-{
-  /* <SectionHeader colors={colors} title={title} titleSize={titleSize} /> */
 }

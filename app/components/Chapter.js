@@ -1,28 +1,28 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import { Text, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
 import { TouchableHighlight } from "react-native";
 // import { Paragraph, Text } from "react-native-paper";
 
-class SectionHeader extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+// class SectionHeader extends PureComponent {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  sectionStyle = {
-    color: this.props.colors.primary,
-    fontSize: this.props.titleSize,
-  };
+//   sectionStyle = {
+//     color: this.props.colors.primary,
+//     fontSize: this.props.titleSize,
+//   };
 
-  render() {
-    return (
-      <Text style={[defaultStyles.bibleText, this.sectionStyle]}>
-        {this.props.title}
-      </Text>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <Text style={[defaultStyles.bibleText, this.sectionStyle]}>
+//         {this.props.title}
+//       </Text>
+//     );
+//   }
+// }
 
 export default class Chapter extends Component {
   constructor(props) {
@@ -57,7 +57,12 @@ export default class Chapter extends Component {
     return false;
   }
 
-  mapVerse = (verse, i) => i + 1 + " " + verse;
+  mapVerse = (verse, i) =>
+    i + 1 + " " + Array.isArray(verse["#text"])
+      ? verse["#text"].map((text) => {
+          return text;
+        })
+      : verse["#text"];
 
   mapVerseObject = (verse, i) => (
     <Verse
@@ -105,18 +110,17 @@ export default class Chapter extends Component {
       (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      <
-        // TouchableHighlight
-        // onShowUnderlay={onShowUnderlay}
-        // onHideUnderlay={onHideUnderlay}
-      >
-        <SectionHeader colors={colors} title={title} titleSize={titleSize} />
+      // <SectionHeader colors={colors} title={title} titleSize={titleSize} />
+      // <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
+      //   {verses.map(this.mapVerse)}
+      // </Text>
+      verses.length > 0 ? (
         <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
-          {verses.map(this.mapVerse)}
+          {verses.map(this.mapVerseObject)}
         </Text>
-      </
-        // TouchableHighlight
-      >
+      ) : (
+        <Text style={{ height: 0 }}>{"No verses"}</Text>
+      )
     );
   }
 }

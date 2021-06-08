@@ -17,7 +17,6 @@ export default class ParagraphBible extends Component {
     this.state = {
       index: 0,
       partialSections: [],
-      // layoutsRendered: true,
     };
   }
 
@@ -34,21 +33,18 @@ export default class ParagraphBible extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log("componentDidUpdate");
-    //need to set layoutsRendered to true when list has loaded
-    // if (
-    //   prevState.layoutsRendered !== this.state.layoutsRendered &&
-    //   this.state.layoutsRendered
-    // )
     // if (prevState.index !== this.state.index) {
-    //   let scrollToThis = Math.floor(this.state.partialSections.length / 2);
-    //   console.log("scrolling to", scrollToThis);
-    //   this.scrollByIndex(scrollToThis);
+    //   this.scrollByIndex(this.state.index);
     // }
-    // if (prevState.partialSections !== this.state.partialSections) {
-    //   let scrollToThis = Math.floor(this.state.partialSections.length / 2);
-    //   this.scrollByIndex(scrollToThis);
-    // }
+    if (prevState.partialSections !== this.state.partialSections) {
+      console.log(this.state.partialSections.length, "chapters loaded");
+      // let scrollToThis = Math.floor(this.state.partialSections.length / 2);
+      // console.log("scrolling to", this.state.index);
+      // this.scrollByIndex(this.state.index);
+      // this.scrollByIndex(this.state.index);
+    } else {
+      console.log("prevProps", prevProps);
+    }
   }
 
   getItemLayout = (data, index) => ({
@@ -102,9 +98,10 @@ export default class ParagraphBible extends Component {
     // console.log("viewable items", viewableItems);
     if (viewableItems[0]) {
       const v = viewableItems[0];
-      // console.log(v);
+      // console.log("addThis", v.index - this.state.index);
+      // this.setState({ addThis: v.index - this.state.index });
       this.props.bibleScreen.current.setState({
-        currentChapter: v.item.chapter,
+        currentChapter: v.item["@num"], //.chapter,
       });
     }
     // Use viewable items in state or as intended
@@ -112,27 +109,57 @@ export default class ParagraphBible extends Component {
   viewConfigRef = {
     waitForInteraction: false,
     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
-    // viewAreaCoveragePercentThreshold: 50,
-    itemVisiblePercentThreshold: 25,
+    viewAreaCoveragePercentThreshold: 50,
+    // itemVisiblePercentThreshold: 25,
   };
 
   keyExtractor = (item, index) => index.toString();
 
+  //preArranged
+  // renderItem = ({ item, index, separators }) => (
+  //   <Chapter
+  //     bibleScreen={this.props.bibleScreen}
+  //     chapterHeading={item.heading}
+  //     chapterNum={item.chapter ?? index + 1}
+  //     colors={this.props.colors}
+  //     fontSize={this.props.fontSize}
+  //     key={this.keyExtractor}
+  //     // _heights={this._heights}
+  //     // searchWords={searchWords}
+  //     // onPress={this.props.toggleSlideView}
+  //     // onShowUnderlay={separators.highlight}
+  //     // onHideUnderlay={separators.unhighlight}
+  //     titleSize={this.props.fontSize * 1.75}
+  //     verses={item.verses}
+  //     verseTextStyle={[
+  //       defaultStyles.bibleText,
+  //       {
+  //         color: this.props.colors.text,
+  //         fontSize: this.props.fontSize,
+  //         lineHeight: this.props.fontSize * 2,
+  //         fontFamily: this.props.fontFamily,
+  //         // height: this.height,
+  //       },
+  //     ]}
+  //   />
+  // );
+
   renderItem = ({ item, index, separators }) => (
+    // item.heading !== "" ? (
     <Chapter
       bibleScreen={this.props.bibleScreen}
       chapterHeading={item.heading}
-      chapterNum={item.chapter ?? index + 1}
+      chapterNum={item["@num"] ?? index + 1}
       colors={this.props.colors}
       fontSize={this.props.fontSize}
       key={this.keyExtractor}
-      _heights={this._heights}
+      // _heights={this._heights}
       // searchWords={searchWords}
       // onPress={this.props.toggleSlideView}
       // onShowUnderlay={separators.highlight}
       // onHideUnderlay={separators.unhighlight}
       titleSize={this.props.fontSize * 1.75}
-      verses={item.verses}
+      verses={item.verse}
       verseTextStyle={[
         defaultStyles.bibleText,
         {
@@ -145,11 +172,22 @@ export default class ParagraphBible extends Component {
       ]}
     />
   );
+  // ) : null;
 
   onEndReached = ({ distanceFromEnd }) =>
     console.log("loading another chapter");
 
   _heights = [];
+
+  // ItemSeparatorComponent = ({ leadingItem, section }) => {
+  //   return (
+  //     <SectionHeader
+  //       colors={colors}
+  //       title={leadingItem.heading}
+  //       titleSize={titleSize}
+  //     />
+  //   );
+  // };
 
   render() {
     const { bibleSectionsRef, colors, HEADER_HEIGHT } = this.props;
@@ -171,13 +209,11 @@ export default class ParagraphBible extends Component {
         bounces={false}
         data={this.state.partialSections}
         // decelerationRate={"fast"}
-        extraData={this.state.index}
-        // getItemLayout={this.getItemLayout}
+        extraData={this.state.partialSections}
+        getItemLayout={this.getItemLayout}
         initialNumToRender={10}
         // initialScrollIndex={this.state.index}
-        ItemSeparatorComponent={({ highlighted }) => (
-          <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
-        )}
+        // ItemSeparatorComponent={this.ItemSeparatorComponent}
         keyExtractor={this.keyExtractor}
         ListEmptyComponent={
           <View

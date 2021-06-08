@@ -570,15 +570,16 @@ export default function BooksGridScreen({ route, navigation }) {
 
     navigation.navigate("Chapters", passThis);
 
-    const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      route.params.topPanel.current?.setState({
-        currentBook: bookPaths[title]["crossway-bible"].book,
-      });
-      // setTimeout(() => {
+    // const interactionPromise = InteractionManager.runAfterInteractions(() => {
+    //   route.params.topPanel.current?.setState({
+    //     currentBook: bookPaths[title]["crossway-bible"].book,
+    //     partialSections: bookPaths[title]["crossway-bible"].book.chapter,
+    //   });
+    //   // setTimeout(() => {
 
-      // });
-    });
-    () => interactionPromise.cancel();
+    //   // });
+    // });
+    // () => interactionPromise.cancel();
   };
 
   const renderItem = ({ item }) => (

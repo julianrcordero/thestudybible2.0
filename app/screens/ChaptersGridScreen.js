@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { View } from "react-native-animatable";
+import bookPaths from "../json/Bible";
 const { height, width } = Dimensions.get("window");
 
 import BiblePickerItem from "../components/BiblePickerItem";
@@ -14,11 +15,29 @@ import { useTheme } from "../config/ThemeProvider";
 
 export default function ChaptersGridScreen({
   chapters,
-  paragraphBibleRef,
   route,
+  // bibleScreen,
+  paragraphBibleRef,
   topPanel,
   value,
 }) {
+  useEffect(() => {
+    let title = route?.params.title;
+
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      // setTimeout(() => {
+      // paragraphBibleRef.current?.setState({
+      //   partialSections: bookPaths[title]["crossway-bible"].book.chapter,
+      // });
+
+      topPanel.current?.setState({
+        currentBook: bookPaths[title]["crossway-bible"].book,
+      });
+      // });
+    });
+    () => interactionPromise.cancel();
+  }, []);
+
   const { colors } = useTheme();
 
   const { gridChapters } = route?.params;
@@ -52,14 +71,13 @@ export default function ChaptersGridScreen({
   // };
 
   const changeBook = (chapter) => {
-    topPanel.current.setState({ collapsed: true });
+    topPanel.current?.setState({ collapsed: true });
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       let chapterIndex = chapter - 1;
-      setTimeout(() => topPanel.current?.setSections(chapterIndex));
-
-      // paragraphBibleRef.current?.scrollToOffset(chapter - 1);
-      // paragraphBibleRef.current?.scrollByIndex(chapter - 1);
-      // paragraphBibleRef.current?.setState({ index: chapterIndex });
+      setTimeout(() => {
+        topPanel.current?.setSections(chapterIndex);
+        // paragraphBibleRef.current?.setState({ index: chapterIndex });
+      });
     });
     () => interactionPromise.cancel();
   };

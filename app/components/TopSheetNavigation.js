@@ -71,6 +71,7 @@ class TopSheetNavigation extends Component {
     collapsed: true,
     isPlaying: false,
     sections: [],
+    startingIndex: 0,
     verses: [],
   };
 
@@ -85,10 +86,9 @@ class TopSheetNavigation extends Component {
               <Stack.Screen
                 name="Books"
                 component={BooksGridScreen}
-                initialParams={{
-                  paragraphBibleRef: this.props.paragraphBibleRef,
-                  topPanel: this.props.topPanel,
-                }}
+                // initialParams={{
+                //   topPanel: this.props.topPanel,
+                // }}
                 options={{
                   headerShown: false,
                   title: "Books",
@@ -116,6 +116,7 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <ChaptersGridScreen
                     {...props}
+                    bibleScreen={this.props.bibleScreen}
                     paragraphBibleRef={this.props.paragraphBibleRef}
                     topPanel={this.props.topPanel}
                   />
@@ -182,6 +183,7 @@ class TopSheetNavigation extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.partialSections !== this.state.partialSections) {
       this.props.paragraphBibleRef.current?.setState({
+        // index: this.state.startingIndex,
         partialSections: this.state.partialSections,
       });
     } else if (prevState.currentBook !== this.state.currentBook) {
@@ -208,35 +210,26 @@ class TopSheetNavigation extends Component {
     // var jsonObj = parser.parse(myBook, options);
     // let sections = jsonObj["crossway-bible"].book.chapter[chapterIndex];
 
-    let chapters = this.state.currentBook.chapter; //["crossway-bible"].book.chapter;
-    // console.log("chapters", chapters);
+    // let chapters = this.state.currentBook.chapter; //["crossway-bible"].book.chapter;
 
-    let partialSections = [];
-    for (let i = -2; i <= 2; i++) {
-      let theoreticalIndex = chapterIndex + i;
-      if (theoreticalIndex >= 0 && theoreticalIndex < chapters.length)
-        partialSections.push({
-          chapter: theoreticalIndex + 1,
-          heading: Array.isArray(chapters[chapterIndex + i].heading)
-            ? chapters[chapterIndex + i].heading[0]
-            : chapters[chapterIndex + i].heading,
-          verses: chapters[chapterIndex + i].verse.map((v) => {
-            return Array.isArray(v["#text"])
-              ? v["#text"].map((text) => {
-                  return text;
-                })
-              : v["#text"];
-            // v.crossref
-            //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
-            //       Array.isArray(v.crossref)
-            //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
-            //         : v.crossref._let
-            //     )
-            //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
-          }),
-        });
-    }
-    // console.log(mySections.length);
+    // let partialSections = [];
+    // for (let i = 0; i <= 0; i++) {
+    //   let theoreticalIndex = chapterIndex + i;
+    //   if (theoreticalIndex >= 0 && theoreticalIndex < chapters.length)
+    //     partialSections.push({
+    //       chapter: theoreticalIndex + 1,
+    //       heading: Array.isArray(chapters[chapterIndex + i].heading)
+    //         ? chapters[chapterIndex + i].heading[0]
+    //         : chapters[chapterIndex + i].heading,
+    //       verses: chapters[chapterIndex + i].verse.map((v) => {
+    //         return Array.isArray(v["#text"])
+    //           ? v["#text"].map((text) => {
+    //               return text;
+    //             })
+    //           : v["#text"];
+    //       }),
+    //     });
+    // }
 
     // let chapter = myBook["crossway-bible"].book.chapter[chapterIndex].verse;
     // let mySections = chapters.map((c) => {
@@ -258,10 +251,40 @@ class TopSheetNavigation extends Component {
     //     }),
     //   };
     // });
-    // console.log(chapter);
-    this.setState({ partialSections: partialSections });
+
+    console.log(this.state.currentBook);
+    let arrayLength = this.state.currentBook.chapter.length;
+    console.log("number of chapters in book", arrayLength);
+
+    // let mostlyBlankArray = Array(arrayLength).fill({
+    //   "@num": "",
+    //   heading: "",
+    //   verse: [],
+    // });
+
+    let partialSections = [];
+    for (let i = -1; i <= 1; i++) {
+      let theoreticalIndex = chapterIndex + i;
+      if (theoreticalIndex >= 0 && theoreticalIndex < arrayLength) {
+        let atTheIndex = this.state.currentBook.chapter[theoreticalIndex];
+        partialSections.push(atTheIndex);
+      }
+      //   mostlyBlankArray[theoreticalIndex] = {
+      //     // ...mostlyBlankArray[chapterIndex],
+      //     "@num": atTheIndex["@num"],
+      //     heading: atTheIndex["heading"],
+      //     verse: atTheIndex.verse,
+      //   };
+      // }
+    }
+    this.setState({
+      partialSections: partialSections,
+      // startingIndex: chapterIndex,
+    });
+    console.log(partialSections.length);
     // this.props.paragraphBibleRef.current?.setState({
-    //   partialSections: this.state.partialSections,
+    //   // index: chapterIndex,
+    //   partialSections: partialSections, //this.state.currentBook.chapter,
     // });
   };
 

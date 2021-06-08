@@ -14,8 +14,9 @@ import Chapter from "./Chapter";
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
-const AnimatedRecyclerListView =
-  Animated.createAnimatedComponent(RecyclerListView);
+const AnimatedRecyclerListView = Animated.createAnimatedComponent(
+  RecyclerListView
+);
 
 class ContextHelper extends ContextProvider {
   constructor(uniqueKey) {
@@ -116,6 +117,7 @@ export default class RecyclerListBible extends Component {
       this.setState({
         dataProvider: this.provideData.cloneWithRows(this.state.sections),
       });
+      console.log("RecyclerListBible set!");
     }
   }
 
@@ -196,7 +198,7 @@ export default class RecyclerListBible extends Component {
   //   return (
   //     <Chapter
   //       bibleScreen={this.props.bibleScreen}
-  //       chapterHeading={item.chapterHeading}
+  //       // chapterHeading={item.heading}
   //       chapterNum={index + 1}
   //       colors={this.props.colors}
   //       // extendedState={extendedState}
@@ -206,7 +208,7 @@ export default class RecyclerListBible extends Component {
   //       _heights={this._heights}
   //       style={this.chapterStyle}
   //       titleSize={this.props.fontSize * 1.75}
-  //       verses={item.verses}
+  //       verses={item}
   //       verseTextStyle={[
   //         defaultStyles.bibleText,
   //         {

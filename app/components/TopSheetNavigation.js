@@ -67,6 +67,7 @@ class TopSheetNavigation extends Component {
     partialSections: [],
     pickerType: 0,
     collapsed: true,
+    isPlaying: false,
     sections: [],
     verses: [],
   };

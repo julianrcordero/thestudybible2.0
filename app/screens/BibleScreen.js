@@ -146,7 +146,7 @@ export default class BibleScreen extends Component {
           toolBar={toolBar}
           topPanel={topPanel}
         />
-        <ParagraphBible
+        <RecyclerListBible
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}

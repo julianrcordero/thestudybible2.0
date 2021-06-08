@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
 // import { Text } from "react-native-paper";
-import reactStringReplace from "react-string-replace";
+import HTML from "react-native-render-html";
 
 export default class Verse extends Component {
   constructor(props) {
@@ -69,17 +69,48 @@ export default class Verse extends Component {
     };
 
     return (
+      // <HTML
+      //   // color={colors.text}
+      //   source={{
+      //     html: verseText,
+      //   }}
+      //   renderers={{
+      //     // verse: {
+      //     //   renderer: (
+      //     //     htmlAttribs,
+      //     //     children,
+      //     //     convertedCSSStyles,
+      //     //     passProps
+      //     //   ) => {
+      //     //     return children;
+      //     //   },
+      //     //   wrapper: "Text",
+      //     // },
+      //     crossref: {
+      //       renderer: (
+      //         htmlAttribs,
+      //         children,
+      //         convertedCSSStyles,
+      //         passProps
+      //       ) => {
+      //         children;
+      //       },
+      //       wrapper: "Text",
+      //     },
+      //   }}
+      //   // tagsStyles={{
+      //   //   heading: { color: "blue", fontSize: 16, lineHeight: 20 },
+      //   // }}
+      // />
       <>
         {verseNumber + " "}
+
         <Text
           onPress={this._toggleHighlight}
           onLongPress={() => _openStudyScreen(verseNumber)}
           style={[verseTextStyle, verseStyle]}
-          // onLayout={this.onLayout}
         >
           {verseText}
-          {/* {reactStringReplace(verseText, /<(.*)\/>/g, (match, i) => i)} */}
-          {/* <VerseFormatted verse={verse} /> */}
         </Text>
       </>
     );

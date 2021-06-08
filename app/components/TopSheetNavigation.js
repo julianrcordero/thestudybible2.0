@@ -12,9 +12,11 @@ import SegmentedControl from "@react-native-community/segmented-control";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import SearchHistory from "./SearchHistory";
 
-import bookPaths from "../xml/Bible";
+import bookPaths from "../json/Bible";
+// import bookPaths from "../xml/Bible";
 import reactStringReplace from "react-string-replace";
 import parser from "fast-xml-parser";
+import Ecclesiastes from "../xml/Ecclesiastes";
 
 var he = require("he");
 var options = {
@@ -43,11 +45,10 @@ var options = {
   stopNodes: ["heading", "verse"],
 };
 
-const notesArray = require("../json/bible/esvmsb.notes.json")[
-  "crossway-studynotes"
-].book;
+const notesArray = require("../json/esvmsb.notes.json")["crossway-studynotes"]
+  .book;
 
-const crossrefsJsonObject = require("../json/bible/GenesisCrossrefs.json").book;
+const crossrefsJsonObject = require("../json/GenesisCrossrefs.json").book;
 
 class TopSheetNavigation extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ class TopSheetNavigation extends Component {
     //   backgroundColor: "",
     //   icon: "",
     // }
+    partialSections: [],
     pickerType: 0,
     collapsed: true,
     sections: [],
@@ -80,6 +82,10 @@ class TopSheetNavigation extends Component {
               <Stack.Screen
                 name="Books"
                 component={BooksGridScreen}
+                initialParams={{
+                  paragraphBibleRef: this.props.paragraphBibleRef,
+                  topPanel: this.props.topPanel,
+                }}
                 options={{
                   headerShown: false,
                   title: "Books",
@@ -156,28 +162,32 @@ class TopSheetNavigation extends Component {
 
   componentDidMount() {
     if (!this.state.currentBook) {
-      let newBook = {
-        label: "Ecclesiastes",
-        value: 21,
-        backgroundColor: "#345171",
-        icon: "apps",
-      };
-      this.setState({ currentBook: newBook });
-      this.setSections(newBook);
+      this.setState({
+        currentBook: bookPaths["Ecclesiastes"]["crossway-bible"].book,
+      });
+      // this.setSections(0);
+      // let newBook = {
+      //   label: "Ecclesiastes",
+      //   value: 21,
+      //   backgroundColor: "#345171",
+      //   icon: "apps",
+      // };
       // this.setVerses(newBook);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.sections !== this.state.sections) {
-      // console.log("topPanel sections update");
+    if (prevState.partialSections !== this.state.partialSections) {
       this.props.paragraphBibleRef.current?.setState({
-        sections: this.state.sections,
+        partialSections: this.state.partialSections,
       });
     } else if (prevState.currentBook !== this.state.currentBook) {
-      // console.log("topPanel currentBook update");
+      if (this.state.partialSections.length === 0) {
+        console.log("initial setSections");
+        this.setSections(0);
+      }
       this.props.bibleScreen.current?.setState({
-        currentBook: this.state.currentBook,
+        currentBook: this.state.currentBook["@title"],
       });
     } else if (prevState.verses !== this.state.verses) {
       this.props.studyScreen.current?.setState({
@@ -188,20 +198,44 @@ class TopSheetNavigation extends Component {
     }
   }
 
-  setSections = (newBook) => {
-    let myBook = bookPaths[newBook.label];
-    if (parser.validate(myBook)) {
-      //optional (it'll return an object in case it's not valid)
-      var jsonObj = parser.parse(myBook, options);
-      let sections = jsonObj["crossway-bible"].book.chapter;
-      // console.log(sections);
-      this.setState({ sections: sections });
-      console.log("LOADED!");
-    } else {
-      console.log("Not validated");
-    }
-    // let chapters = bookPaths[newBook.label]["crossway-bible"].book.chapter;
+  setSections = (chapterIndex) => {
+    // let myBook = bookPaths[newBook];
+    // console.log(myBook);
+    //optional (it'll return an object in case it's not valid)
+    // var jsonObj = parser.parse(myBook, options);
+    // let sections = jsonObj["crossway-bible"].book.chapter[chapterIndex];
 
+    let chapters = this.state.currentBook.chapter; //["crossway-bible"].book.chapter;
+    // console.log("chapters", chapters);
+
+    let partialSections = [];
+    for (let i = -2; i <= 2; i++) {
+      let theoreticalIndex = chapterIndex + i;
+      if (theoreticalIndex >= 0 && theoreticalIndex < chapters.length)
+        partialSections.push({
+          chapter: theoreticalIndex + 1,
+          heading: Array.isArray(chapters[chapterIndex + i].heading)
+            ? chapters[chapterIndex + i].heading[0]
+            : chapters[chapterIndex + i].heading,
+          verses: chapters[chapterIndex + i].verse.map((v) => {
+            return Array.isArray(v["#text"])
+              ? v["#text"].map((text) => {
+                  return text;
+                })
+              : v["#text"];
+            // v.crossref
+            //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
+            //       Array.isArray(v.crossref)
+            //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
+            //         : v.crossref._let
+            //     )
+            //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
+          }),
+        });
+    }
+    // console.log(mySections.length);
+
+    // let chapter = myBook["crossway-bible"].book.chapter[chapterIndex].verse;
     // let mySections = chapters.map((c) => {
     //   return {
     //     chapterHeading: c.heading,
@@ -221,8 +255,11 @@ class TopSheetNavigation extends Component {
     //     }),
     //   };
     // });
-
-    // this.setState({ sections: mySections });
+    // console.log(chapter);
+    this.setState({ partialSections: partialSections });
+    // this.props.paragraphBibleRef.current?.setState({
+    //   partialSections: this.state.partialSections,
+    // });
   };
 
   setVerses = (newBook) => {
@@ -266,31 +303,14 @@ class TopSheetNavigation extends Component {
     this.setState({ verses: verses });
   };
 
-  // {
-  //   chapterNum: 4,
-  //   verseNum: 1,
-  //   content: ["Now Adam knew Eve his wife, and she conceived and bore Cain, saying, ",
-  //         "I have gotten",
-  //         " a man with the help of the ",
-  //         "."],
-  //         johnsNote: "I'm John MacArthur and I approve this message.",
-  //         crossrefs: [{
-  //           title: "a",
-  //           text: "",
-  //         }, {
-  //           title: "b",
-  //           text: "",
-  //         }]
-  // }
-
-  changeBibleBook = (newBook) => {
-    if (this.state.currentBook.label !== newBook.label) {
-      // console.log(this.state.currentBook.label, "-->", newBook.label);
-      this.setState({ currentBook: newBook });
-      this.setSections(newBook);
-      // this.setVerses(newBook);
-    }
-  };
+  // changeBibleBook = (newBook, chapterIndex) => {
+  //   if (this.state.currentBook !== newBook) {
+  //     // console.log(this.state.currentBook, "-->", newBook);
+  //     this.setState({ currentBook: newBook });
+  //     // this.setVerses(newBook);
+  //   }
+  //   this.setSections(chapterIndex);
+  // };
 
   changeStudyScreenBook = () => {
     return this.state.verses;

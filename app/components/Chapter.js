@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from "react";
 import { Text, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
+import { TouchableHighlight } from "react-native";
 // import { Paragraph, Text } from "react-native-paper";
 
 class SectionHeader extends PureComponent {
@@ -32,7 +33,7 @@ export default class Chapter extends Component {
   // };
 
   // componentDidUpdate = (prevProps, prevState) => {
-  //   if (prevProps.verses !== this.props.verses) {
+  //   if (prevProps.verse !== this.props.verse) {
   //   }
   // };
 
@@ -87,31 +88,35 @@ export default class Chapter extends Component {
 
   render() {
     const {
-      // chapterHeading,
-      // chapterNum,
-      // colors,
+      chapterHeading,
+      chapterNum,
+      colors,
       fontSize,
-      // titleSize,
+      // onHideUnderlay,
+      // onShowUnderlay,
+      titleSize,
       verses,
       verseTextStyle,
     } = this.props;
 
-    // const title =
-    //   chapterNum +
-    //   "\t" +
-    //   (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
+    const title =
+      chapterNum +
+      "\t" +
+      (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
 
     return (
-      // <View onLayout={this.onLayout}>
-      <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
-        {/* {verses.text} */}
-        {verses.map(this.mapVerseObject)}
-      </Text>
-      // </View>
+      <
+        // TouchableHighlight
+        // onShowUnderlay={onShowUnderlay}
+        // onHideUnderlay={onHideUnderlay}
+      >
+        <SectionHeader colors={colors} title={title} titleSize={titleSize} />
+        <Text style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.map(this.mapVerse)}
+        </Text>
+      </
+        // TouchableHighlight
+      >
     );
   }
-}
-
-{
-  /* <SectionHeader colors={colors} title={title} titleSize={titleSize} /> */
 }

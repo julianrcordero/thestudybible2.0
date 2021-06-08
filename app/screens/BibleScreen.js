@@ -20,15 +20,16 @@ export default class BibleScreen extends Component {
   }
 
   state = {
-    currentBook: {
-      label: "Ecclesiastes",
-      value: 21,
-      backgroundColor: "#345171",
-      icon: "apps",
-    },
+    // currentBook: {
+    //   label: "Ecclesiastes",
+    //   value: 21,
+    //   backgroundColor: "#345171",
+    //   icon: "apps",
+    // },
+    currentBook: "Ecclesiastes",
     currentChapter: 1,
     currentVerse: 1,
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: "Avenir",
     formatting: "Default",
   };

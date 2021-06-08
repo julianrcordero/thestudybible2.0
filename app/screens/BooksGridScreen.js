@@ -1,12 +1,19 @@
 import React, { PureComponent } from "react";
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  InteractionManager,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { useTheme } from "../config/ThemeProvider";
 
 import AppText from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
+import bookPaths from "../json/Bible";
 
-export default function BooksGridScreen({ navigation }) {
+export default function BooksGridScreen({ route, navigation }) {
   const { colors } = useTheme();
 
   const styles = StyleSheet.create({
@@ -562,6 +569,16 @@ export default function BooksGridScreen({ navigation }) {
     };
 
     navigation.navigate("Chapters", passThis);
+
+    const interactionPromise = InteractionManager.runAfterInteractions(() => {
+      route.params.topPanel.current?.setState({
+        currentBook: bookPaths[title]["crossway-bible"].book,
+      });
+      // setTimeout(() => {
+
+      // });
+    });
+    () => interactionPromise.cancel();
   };
 
   const renderItem = ({ item }) => (

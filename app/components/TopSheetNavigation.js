@@ -15,8 +15,7 @@ import SearchHistory from "./SearchHistory";
 import bookPaths from "../json/Bible";
 // import bookPaths from "../xml/Bible";
 import reactStringReplace from "react-string-replace";
-import parser from "fast-xml-parser";
-import Ecclesiastes from "../xml/Ecclesiastes";
+import { List } from "immutable";
 
 var he = require("he");
 var options = {
@@ -47,10 +46,10 @@ var options = {
   stopNodes: ["heading", "verse"], //"crossref", "q", "note"],
 };
 
-const notesArray = require("../json/esvmsb.notes.json")["crossway-studynotes"]
-  .book;
+// const notesArray = require("../json/esvmsb.notes.json")["crossway-studynotes"]
+//   .book;
 
-const crossrefsJsonObject = require("../json/GenesisCrossrefs.json").book;
+// const crossrefsJsonObject = require("../json/GenesisCrossrefs.json").book;
 
 class TopSheetNavigation extends Component {
   constructor(props) {
@@ -66,11 +65,10 @@ class TopSheetNavigation extends Component {
     //   backgroundColor: "",
     //   icon: "",
     // }
-    partialSections: [],
     pickerType: 0,
     collapsed: true,
     isPlaying: false,
-    sections: [],
+    sections: List([]),
     startingIndex: 0,
     verses: [],
   };
@@ -181,26 +179,28 @@ class TopSheetNavigation extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.partialSections !== this.state.partialSections) {
-      this.props.paragraphBibleRef.current?.setState({
+    if (prevState.sections !== this.state.sections) {
+      let paragraphBible = this.props.paragraphBibleRef.current;
+
+      paragraphBible?.setState({
         // index: this.state.startingIndex,
-        partialSections: this.state.partialSections,
+        // dataProvider: paragraphBible?.provideData.cloneWithRows(
+        //   this.state.sections
+        // ),
+        sections: this.state.sections,
       });
     } else if (prevState.currentBook !== this.state.currentBook) {
-      if (this.state.partialSections.length === 0) {
-        console.log("initial setSections");
+      if (this.state.sections.length === 0) {
         this.setSections(0);
       }
-      this.props.bibleScreen.current?.setState({
-        currentBook: this.state.currentBook["@title"],
-      });
-    } else if (prevState.verses !== this.state.verses) {
-      this.props.studyScreen.current?.setState({
-        bookFilter: this.state.currentBook.value,
-        currentBook: this.state.currentBook,
-        verseList: this.state.verses,
-      });
     }
+    // else if (prevState.verses !== this.state.verses) {
+    //   this.props.studyScreen.current?.setState({
+    //     bookFilter: this.state.currentBook.value,
+    //     currentBook: this.state.currentBook,
+    //     verseList: this.state.verses,
+    //   });
+    // }
   }
 
   setSections = (chapterIndex) => {
@@ -212,11 +212,11 @@ class TopSheetNavigation extends Component {
 
     // let chapters = this.state.currentBook.chapter; //["crossway-bible"].book.chapter;
 
-    // let partialSections = [];
+    // let sections = [];
     // for (let i = 0; i <= 0; i++) {
     //   let theoreticalIndex = chapterIndex + i;
     //   if (theoreticalIndex >= 0 && theoreticalIndex < chapters.length)
-    //     partialSections.push({
+    //     sections.push({
     //       chapter: theoreticalIndex + 1,
     //       heading: Array.isArray(chapters[chapterIndex + i].heading)
     //         ? chapters[chapterIndex + i].heading[0]
@@ -252,40 +252,18 @@ class TopSheetNavigation extends Component {
     //   };
     // });
 
-    console.log(this.state.currentBook);
-    let arrayLength = this.state.currentBook.chapter.length;
-    console.log("number of chapters in book", arrayLength);
+    // let slicedSection =
+    //   chapterIndex - 1 >= 0
+    //     ? this.state.currentBook.chapter.slice(
+    //         chapterIndex - 1,
+    //         chapterIndex + 2
+    //       )
+    //     : this.state.currentBook.chapter.slice(0, 3);
 
-    // let mostlyBlankArray = Array(arrayLength).fill({
-    //   "@num": "",
-    //   heading: "",
-    //   verse: [],
-    // });
-
-    let partialSections = [];
-    for (let i = -1; i <= 1; i++) {
-      let theoreticalIndex = chapterIndex + i;
-      if (theoreticalIndex >= 0 && theoreticalIndex < arrayLength) {
-        let atTheIndex = this.state.currentBook.chapter[theoreticalIndex];
-        partialSections.push(atTheIndex);
-      }
-      //   mostlyBlankArray[theoreticalIndex] = {
-      //     // ...mostlyBlankArray[chapterIndex],
-      //     "@num": atTheIndex["@num"],
-      //     heading: atTheIndex["heading"],
-      //     verse: atTheIndex.verse,
-      //   };
-      // }
-    }
     this.setState({
-      partialSections: partialSections,
+      sections: List(this.state.currentBook.chapter),
       // startingIndex: chapterIndex,
     });
-    console.log(partialSections.length);
-    // this.props.paragraphBibleRef.current?.setState({
-    //   // index: chapterIndex,
-    //   partialSections: partialSections, //this.state.currentBook.chapter,
-    // });
   };
 
   setVerses = (newBook) => {

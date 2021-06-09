@@ -6,17 +6,18 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { View } from "react-native-animatable";
 import bookPaths from "../json/Bible";
 const { height, width } = Dimensions.get("window");
+import { List } from "immutable";
 
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
+import { ImmutableVirtualizedList } from "react-native-immutable-list-view";
 
 export default function ChaptersGridScreen({
   chapters,
   route,
-  // bibleScreen,
+  bibleScreen,
   paragraphBibleRef,
   topPanel,
   value,
@@ -25,15 +26,15 @@ export default function ChaptersGridScreen({
     let title = route?.params.title;
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      // setTimeout(() => {
-      // paragraphBibleRef.current?.setState({
-      //   partialSections: bookPaths[title]["crossway-bible"].book.chapter,
-      // });
-
       topPanel.current?.setState({
         currentBook: bookPaths[title]["crossway-bible"].book,
+        sections: List(bookPaths[title]["crossway-bible"].book.chapter),
       });
-      // });
+      console.log("loaded ChaptersGridScreen and changed book to", title);
+
+      bibleScreen.current?.setState({
+        currentBook: bookPaths[title]["crossway-bible"].book["@title"],
+      });
     });
     () => interactionPromise.cancel();
   }, []);
@@ -43,14 +44,14 @@ export default function ChaptersGridScreen({
   const { gridChapters } = route?.params;
 
   const chapterNum = gridChapters ?? chapters;
-  const DATA = [];
+  const DATA = []; //Immutable.Range(1, chapterNum);
 
   for (let i = 1; i <= chapterNum; i++) {
     DATA.push(i);
   }
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => changeBook(item)}>
+    <TouchableOpacity onPress={() => selectChapter(item)} style={{}}>
       <BiblePickerItem
         backgroundColor={"#FFFB79"}
         label={item}
@@ -60,23 +61,14 @@ export default function ChaptersGridScreen({
     </TouchableOpacity>
   );
 
-  // const changeTopPanelBook = (chapterIndex) => {
-  //   let newBook = {
-  //     label: route?.params.title,
-  //     value: route?.params.value ?? value, //
-  //     backgroundColor: "#345171",
-  //     icon: "apps",
-  //   };
-  //   topPanel.current?.setSections(chapterIndex);
-  // };
-
-  const changeBook = (chapter) => {
+  const selectChapter = (chapter) => {
     topPanel.current?.setState({ collapsed: true });
+    let chapterIndex = chapter - 1;
+
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      let chapterIndex = chapter - 1;
       setTimeout(() => {
-        topPanel.current?.setSections(chapterIndex);
-        // paragraphBibleRef.current?.setState({ index: chapterIndex });
+        // topPanel.current?.setSections(chapterIndex);
+        paragraphBibleRef.current?.setState({ index: chapterIndex });
       });
     });
     () => interactionPromise.cancel();
@@ -87,18 +79,34 @@ export default function ChaptersGridScreen({
     width: "14.2857%",
   };
 
-  const keyExtractor = (item) => item;
+  const keyExtractor = (item, index) => index.toString();
+
+  const viewStyle = { backgroundColor: colors.background, width: width - 30 };
+
+  const getItemLayout = (data, index) => ({
+    length: (width - 30) / 7,
+    offset: (width - 30) * index,
+    index,
+  });
 
   return (
-    <View style={[{ backgroundColor: colors.background, width: width - 30 }]}>
-      <FlatList
-        data={DATA}
-        keyExtractor={keyExtractor}
-        numColumns={7}
-        renderItem={renderItem}
-        columnWrapperStyle={columnWrapperStyle}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+    <FlatList
+      data={DATA}
+      keyExtractor={keyExtractor}
+      numColumns={7}
+      renderItem={renderItem}
+      columnWrapperStyle={columnWrapperStyle}
+      showsVerticalScrollIndicator={false}
+      style={viewStyle}
+    />
+    // <ImmutableVirtualizedList
+    //   getItemLayout={getItemLayout}
+    //   immutableData={DATA}
+    //   keyExtractor={keyExtractor}
+    //   numColumns={7}
+    //   renderItem={renderItem}
+    //   columnWrapperStyle={columnWrapperStyle}
+    //   showsVerticalScrollIndicator={false}
+    // />
   );
 }

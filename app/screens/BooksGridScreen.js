@@ -561,30 +561,15 @@ export default function BooksGridScreen({ route, navigation }) {
     },
   ];
 
-  const navigateToChapters = (title, gridChapters, value) => {
-    let passThis = {
-      title: title,
-      gridChapters: gridChapters,
-      value: value,
-    };
-
-    navigation.navigate("Chapters", passThis);
-
-    // const interactionPromise = InteractionManager.runAfterInteractions(() => {
-    //   route.params.topPanel.current?.setState({
-    //     currentBook: bookPaths[title]["crossway-bible"].book,
-    //     partialSections: bookPaths[title]["crossway-bible"].book.chapter,
-    //   });
-    //   // setTimeout(() => {
-
-    //   // });
-    // });
-    // () => interactionPromise.cancel();
-  };
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigateToChapters(item.label, item.chapters, item.value)}
+      onPress={() =>
+        navigation.navigate("Chapters", {
+          title: item.label,
+          gridChapters: item.chapters,
+          value: item.value,
+        })
+      }
     >
       <BiblePickerItem
         backgroundColor={item.backgroundColor}

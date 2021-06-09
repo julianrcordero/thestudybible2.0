@@ -100,24 +100,33 @@ export default class RecyclerListBible extends Component {
   };
 
   componentDidMount() {
-    if (
-      this.state.sections.length !==
-      this.props.topPanel.current?.state.sections.length
-    ) {
+    if (this.state.sections.length === 0) {
+      console.log("setting RecyclerListView sections to topPanel sections");
       this.setState({
         sections: this.props.topPanel.current?.state.sections,
       });
+    } else {
+      console.log("componentDidMount");
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.index !== this.state.index) {
       this.scrollToOffset(this.state.index);
-    } else if (prevState.sections !== this.state.sections) {
-      this.setState({
-        dataProvider: this.provideData.cloneWithRows(this.state.sections),
-      });
-      console.log("RecyclerListBible set!");
+    }
+    // else if (prevState.sections !== this.state.sections) {
+    //   console.log(
+    //     "RecyclerListView sections changed, changing dataProvider now"
+    //   );
+    //   this.setState({
+    //     dataProvider: this.provideData.cloneWithRows(this.state.sections),
+    //   });
+    // }
+    else if (prevState.dataProvider !== this.state.dataProvider) {
+      console.log("dataProvider updated");
+    } else {
+      console.log("something else happened");
+      // this.scrollToOffset(1);
     }
   }
 
@@ -126,9 +135,11 @@ export default class RecyclerListBible extends Component {
       return true;
     } else if (this.props.fontSize !== nextProps.fontSize) {
       return true;
-    } else if (this.state.sections !== nextState.sections) {
-      return true;
-    } else if (this.props.colors !== nextProps.colors) {
+    }
+    // else if (this.state.sections !== nextState.sections) {
+    //   return true;
+    // }
+    else if (this.props.colors !== nextProps.colors) {
       return true;
     } else if (this.state.index !== nextState.index) {
       return true;
@@ -228,10 +239,10 @@ export default class RecyclerListBible extends Component {
       <Chapter
         bibleScreen={this.props.bibleScreen}
         chapterHeading={item.heading}
-        chapterNum={index + 1}
+        chapterNum={item["@num"] ?? index + 1}
         colors={this.props.colors}
-        // extendedState={extendedState}
         fontSize={this.props.fontSize}
+        index={index}
         // key={i}
         // searchWords={searchWords}
         _heights={this._heights}
@@ -299,7 +310,7 @@ export default class RecyclerListBible extends Component {
         // extendedState={fontSize}
         layoutProvider={this._layoutProvider}
         dataProvider={this.state.dataProvider}
-        initialRenderIndex={this.state.index}
+        initialRenderIndex={1}
         // onRecreate={this.onRecreate}
         onVisibleIndicesChanged={this.onVisibleIndicesChanged}
         rowRenderer={this._rowRenderer}

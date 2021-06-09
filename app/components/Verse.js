@@ -102,7 +102,7 @@ export default class Verse extends Component {
 
         <Text
           onPress={this._toggleHighlight}
-          onLongPress={() => _openStudyScreen(verseNumber)}
+          // onLongPress={() => _openStudyScreen(verseNumber)}
           style={verseStyle}
         >
           {Array.isArray(verseText)

@@ -1,4 +1,4 @@
-export default booksPaths = {
+export default bookPaths = {
   Genesis: require("./Genesis.json"),
   Exodus: require("./Exodus.json"),
   Leviticus: require("./Leviticus.json"),

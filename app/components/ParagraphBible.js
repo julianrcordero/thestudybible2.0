@@ -4,6 +4,7 @@ import Animated from "react-native-reanimated";
 
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
+import bookPaths from "../json/Bible";
 
 import Constants from "expo-constants";
 import { ImmutableVirtualizedList } from "react-native-immutable-list-view";
@@ -21,11 +22,14 @@ export default class ParagraphBible extends Component {
 
     this.state = {
       index: 0,
+      bookToSlice: List(
+        bookPaths["Ecclesiastes"]["crossway-bible"].book.chapter
+      ),
       sections: List([]),
     };
   }
 
-  screenHeight = height - Constants.statusBarHeight - 70;
+  screenHeight = height - Constants.statusBarHeight;
 
   componentDidMount() {
     console.log("paragraphBible componentDidMount");
@@ -36,10 +40,10 @@ export default class ParagraphBible extends Component {
       console.log("scrolling to", this.state.index);
       this.scrollByIndex(this.state.index);
     } else if (prevState.sections !== this.state.sections) {
-      console.log(this.state.sections.size, "chapters loaded");
+      // console.log(this.state.sections.size, "chapters loaded");
       // let scrollToThis = Math.floor(this.state.sections.length / 2);
       // console.log("scrolling to", this.state.index);
-      // this.scrollByIndex(1);
+      this.scrollByIndex(1);
       // this.scrollByIndex(this.state.index);
     }
     // else {
@@ -94,10 +98,20 @@ export default class ParagraphBible extends Component {
   };
 
   onViewRef = ({ viewableItems, changed }) => {
-    // console.log("viewable items", viewableItems);
     if (viewableItems[0]) {
       const v = viewableItems[0];
-      // console.log("addThis", v.index - this.state.index);
+      console.log("chapter visible:", v.item["@num"]);
+
+      let chapterIndex = Number(v.item["@num"]);
+      let slicedSection =
+        chapterIndex - 1 >= 0
+          ? this.state.bookToSlice.slice(chapterIndex - 1, chapterIndex + 2)
+          : this.state.bookToSlice.slice(0, 3);
+
+      console.log("slicedSection", slicedSection.size);
+      this.setState({
+        sections: slicedSection,
+      });
       // this.setState({ addThis: v.index - this.state.index });
       this.props.bibleScreen.current.setState({
         currentChapter: v.item["@num"], //.chapter,
@@ -108,7 +122,7 @@ export default class ParagraphBible extends Component {
   viewConfigRef = {
     waitForInteraction: false,
     // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
-    viewAreaCoveragePercentThreshold: 50,
+    viewAreaCoveragePercentThreshold: 100,
     // itemVisiblePercentThreshold: 25,
   };
 
@@ -166,6 +180,9 @@ export default class ParagraphBible extends Component {
         immutableData={this.state.sections}
         // initialNumToRender={150}
         keyExtractor={this.keyExtractor}
+        maxToRenderPerBatch={10}
+        onViewableItemsChanged={this.onViewRef}
+        removeClippedSubviews
         renderItem={this.renderItem}
         renderEmptyInList={() => <Text>{"No data"}</Text>}
         ref={bibleSectionsRef}
@@ -175,6 +192,9 @@ export default class ParagraphBible extends Component {
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         ListFooterComponent={<View />}
         ListFooterComponentStyle={{ height: 70 }}
+        updateCellsBatchingPeriod={25}
+        viewabilityConfig={this.viewConfigRef}
+        windowSize={7}
       />
       // <AnimatedFlatList
       //   bounces={false}

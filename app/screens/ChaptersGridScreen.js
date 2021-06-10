@@ -27,7 +27,7 @@ export default function ChaptersGridScreen({
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       topPanel.current?.setState({
-        currentBook: bookPaths[title]["crossway-bible"].book,
+        // currentBook: bookPaths[title]["crossway-bible"].book,
         sections: List(bookPaths[title]["crossway-bible"].book.chapter),
       });
       console.log("loaded ChaptersGridScreen and changed book to", title);

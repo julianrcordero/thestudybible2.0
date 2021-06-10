@@ -166,8 +166,10 @@ class TopSheetNavigation extends Component {
     if (!this.state.currentBook) {
       this.setState({
         currentBook: bookPaths["Ecclesiastes"]["crossway-bible"].book,
+        sections: List(
+          bookPaths["Ecclesiastes"]["crossway-bible"].book.chapter
+        ),
       });
-      // this.setSections(0);
       // let newBook = {
       //   label: "Ecclesiastes",
       //   value: 21,
@@ -189,10 +191,6 @@ class TopSheetNavigation extends Component {
         // ),
         sections: this.state.sections,
       });
-    } else if (prevState.currentBook !== this.state.currentBook) {
-      if (this.state.sections.length === 0) {
-        this.setSections(0);
-      }
     }
     // else if (prevState.verses !== this.state.verses) {
     //   this.props.studyScreen.current?.setState({
@@ -209,9 +207,7 @@ class TopSheetNavigation extends Component {
     //optional (it'll return an object in case it's not valid)
     // var jsonObj = parser.parse(myBook, options);
     // let sections = jsonObj["crossway-bible"].book.chapter[chapterIndex];
-
     // let chapters = this.state.currentBook.chapter; //["crossway-bible"].book.chapter;
-
     // let sections = [];
     // for (let i = 0; i <= 0; i++) {
     //   let theoreticalIndex = chapterIndex + i;
@@ -230,7 +226,6 @@ class TopSheetNavigation extends Component {
     //       }),
     //     });
     // }
-
     // let chapter = myBook["crossway-bible"].book.chapter[chapterIndex].verse;
     // let mySections = chapters.map((c) => {
     //   return {
@@ -251,19 +246,6 @@ class TopSheetNavigation extends Component {
     //     }),
     //   };
     // });
-
-    // let slicedSection =
-    //   chapterIndex - 1 >= 0
-    //     ? this.state.currentBook.chapter.slice(
-    //         chapterIndex - 1,
-    //         chapterIndex + 2
-    //       )
-    //     : this.state.currentBook.chapter.slice(0, 3);
-
-    this.setState({
-      sections: List(this.state.currentBook.chapter),
-      // startingIndex: chapterIndex,
-    });
   };
 
   setVerses = (newBook) => {

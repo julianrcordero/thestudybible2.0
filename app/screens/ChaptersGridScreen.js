@@ -61,8 +61,11 @@ export default function ChaptersGridScreen({
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         // topPanel.current?.setSections(chapterIndex);
-        // paragraphBible?.scrollByIndex(0);
+        paragraphBible?.scrollByIndex(0);
         paragraphBible?.setState({ startChapter: chapter });
+        bibleScreen.current?.setState({
+          currentChapter: chapter,
+        });
       }, 0);
     });
     () => interactionPromise.cancel();

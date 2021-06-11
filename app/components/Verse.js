@@ -4,6 +4,7 @@ import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
 // import { Text } from "react-native-paper";
 import HTML from "react-native-render-html";
+import { List } from "immutable";
 
 export default class Verse extends PureComponent {
   constructor(props) {
@@ -90,19 +91,15 @@ export default class Verse extends PureComponent {
       //   //   heading: { color: "blue", fontSize: 16, lineHeight: 20 },
       //   // }}
       // />
-      <>
+      <Text
+        onPress={this._toggleHighlight}
+        // onLongPress={onPress}
+        style={verseStyle}
+      >
         {verseNumber + " "}
 
-        <Text
-          onPress={this._toggleHighlight}
-          // onLongPress={onPress}
-          style={verseStyle}
-        >
-          {Array.isArray(verseText)
-            ? verseText.map((phrase) => phrase)
-            : verseText}
-        </Text>
-      </>
+        {List.isList(verseText) ? verseText.map((phrase) => phrase) : verseText}
+      </Text>
     );
   }
 }

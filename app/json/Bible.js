@@ -1,3 +1,5 @@
+import { List } from "immutable";
+
 export default bookPaths = {
   Genesis: require("./Genesis.json"),
   Exodus: require("./Exodus.json"),

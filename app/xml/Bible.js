@@ -1,5 +1,5 @@
-import Genesis from "./Genesis";
-import Exodus from "./Exodus";
+import Genesis from "./Genesis.js";
+import Exodus from "./Exodus.js";
 import Leviticus from "./Leviticus";
 import Numbers from "./Numbers.js";
 import Deuteronomy from "./Deuteronomy.js";

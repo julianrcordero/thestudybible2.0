@@ -7,11 +7,36 @@ import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
 import bookPaths from "../json/Bible";
+// import booksPaths from "../xml/Bible";
+import parser from "fast-xml-parser";
 
 import Constants from "expo-constants";
 import { ImmutableVirtualizedList } from "react-native-immutable-list-view";
 import { List } from "immutable";
 const { height, width } = Dimensions.get("window");
+
+// var he = require("he");
+// var options = {
+//   attributeNamePrefix: "",
+//   attrNodeName: "attr", //default is 'false'
+//   textNodeName: "text",
+//   ignoreAttributes: true,
+//   ignoreNameSpace: true,
+//   allowBooleanAttributes: false,
+//   parseNodeValue: true,
+//   parseAttributeValue: true,
+//   trimValues: true,
+//   cdataTagName: "__cdata", //default is 'false'
+//   cdataPositionChar: "\\c",
+//   parseTrueNumberOnly: false,
+//   arrayMode: false,
+//   attrValueProcessor: (val, attrName) =>
+//     he.decode(val, { isAttributeValue: true }), //default is a=>a
+//   tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+//   format: true,
+//   supressEmptyNode: true,
+//   stopNodes: ["heading", "verse"], //"crossref", "q", "note"],
+// };
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedImmutableVirtualizedList = Animated.createAnimatedComponent(
@@ -25,17 +50,44 @@ export default class ParagraphBible extends Component {
 
   state = {
     bookTitle: "Psalms",
-    startChapter: 1,
+    startChapter: 0,
     endChapter: 4,
     refreshing: false,
-    sections: bookPaths["Psalms"]["crossway-bible"].book.chapter.slice(0, 3),
-    totalChapters: bookPaths["Psalms"]["crossway-bible"].book.chapter.length,
+    // totalChapters: bookPaths["Psalms"].getIn([
+    //   "crossway-bible",
+    //   "book",
+    //   "chapter"
+    // ]).size,
   };
 
   screenHeight = height - Constants.statusBarHeight;
 
   componentDidMount() {
-    // console.log("paragraphBible componentDidMount");
+    //XML ONLY
+    // let myBook = booksPaths["Ecclesiastes"];
+    // //optional (it'll return an object in case it's not valid)
+    // var jsonObj = parser.parse(myBook, options);
+    // let sections = jsonObj["crossway-bible"].book.chapter;
+    // console.log(sections);
+    // this.setState({
+    //   sections: sections.slice(0, 3),
+    //   totalChapters: sections.length,
+    // });
+
+    // let sections = bookPaths["Psalms"]
+    //   .getIn(["crossway-bible", "book", "chapter"])
+    //   .slice(0, 3);
+    // console.log(sections.size);
+
+    // let theBook = bookPaths["Psalms"]["crossway-bible"].book.chapter;
+    this.setState({
+      startChapter: 1,
+      // sections: theBook.slice(0, 3),
+      // totalChapters: theBook.length,
+    });
+    this.props.bibleScreen.current?.setState({
+      currentBook: this.state.bookTitle,
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -45,26 +97,30 @@ export default class ParagraphBible extends Component {
       let newBook =
         bookPaths[this.state.bookTitle]["crossway-bible"].book.chapter;
 
-      let newSections = newBook.slice(
-        this.state.startChapter - 1,
-        endChapter - 1
-      ); //3
+      let newSections = newBook[this.state.startChapter - 1];
+      // newBook[this.state.startChapter - 1];
+      // let newSections = newBook.slice(
+      //   this.state.startChapter - 1,
+      //   endChapter - 1
+      // ); //3
 
+      console.log("loading new sections");
       this.setState({
-        endChapter: endChapter,
+        endChapter: this.state.startChapter + 1,
         refreshing: true,
-        sections: newSections,
+        sections: [newSections],
         totalChapters: newBook.length,
       });
     } else if (prevState.endChapter !== this.state.endChapter) {
-      // this.loadPreviousVerses();
-      // this.scrollByIndex(2);
-    } else if (prevState.bookTitle !== this.state.bookTitle) {
-    } else if (prevState.sections !== this.state.sections) {
-      // console.log("sections updated", this.state.sections.length);
+      if (this.state.startChapter + 1 === this.state.endChapter) {
+        this.loadNextVerses();
+      }
       this.setState({ refreshing: false });
+    } else if (prevState.bookTitle !== this.state.bookTitle) {
+    } else if (prevState.totalChapters !== this.state.totalChapters) {
+    } else if (prevState.sections !== this.state.sections) {
     } else {
-      // console.log("something else happened");
+      console.log("something else happened");
     }
   }
 
@@ -75,13 +131,15 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.props.fontSize !== nextProps.fontSize) {
       return true;
-    } else if (this.state.sections !== nextState.sections) {
-      return true;
     } else if (this.props.colors !== nextProps.colors) {
+      return true;
+    } else if (this.state.sections !== nextState.sections) {
       return true;
     } else if (this.state.startChapter !== nextState.startChapter) {
       return true;
     } else if (this.state.endChapter !== nextState.endChapter) {
+      return true;
+    } else if (this.state.totalChapters !== nextState.totalChapters) {
       return true;
     }
     return false;
@@ -143,7 +201,7 @@ export default class ParagraphBible extends Component {
       openStudyScreen={this.openStudyScreen}
       // style={{ height: this.screenHeight }}
       titleSize={this.props.fontSize * 1.75}
-      verses={item.verse}
+      verses={List(item.verse)}
       verseTextStyle={[
         defaultStyles.bibleText,
         {
@@ -183,15 +241,19 @@ export default class ParagraphBible extends Component {
   };
 
   loadNextVerses = () => {
+    console.log(this.state.endChapter, this.state.totalChapters);
     if (this.state.endChapter <= this.state.totalChapters) {
-      const newMessages = this.queryMoreChapters(3);
+      const newMessages = bookPaths[this.state.bookTitle][
+        "crossway-bible"
+      ].book.chapter.slice(
+        this.state.endChapter - 1,
+        this.state.endChapter - 1 + 3
+      );
 
       if (newMessages.length > 0) {
-        let newSections = this.state.sections.concat(newMessages);
-
         this.setState({
           endChapter: this.state.endChapter + 3,
-          sections: newSections,
+          sections: [...this.state.sections, ...newMessages],
           // .slice(newMessages.length),
         });
       }
@@ -287,7 +349,7 @@ export default class ParagraphBible extends Component {
       <AnimatedFlatList
         bounces={false}
         data={this.state.sections}
-        // decelerationRate={"fast"}
+        disableIntervalMomentum
         // getItemLayout={this.getItemLayout}
         // initialNumToRender={10}
         // initialScrollIndex={1}
@@ -310,7 +372,8 @@ export default class ParagraphBible extends Component {
           minIndexForVisible: 0,
         }}
         // maintainPositionAtOrBeyondIndex={0}
-        // maxToRenderPerBatch={10}
+        maxToRenderPerBatch={2}
+        // onContentSizeChange={() => console.log("onContentSizeChange")}
         // onEndReached={this.loadNextVerses}
         // onEndReachedThreshold={height * 3}
         // onStartReached={this.loadPreviousVerses}
@@ -326,7 +389,7 @@ export default class ParagraphBible extends Component {
         // snapToAlignment={"center"}
         // snapToInterval={this.height}
         style={[styles.bibleTextView, defaultStyles.paddingText]}
-        updateCellsBatchingPeriod={25}
+        updateCellsBatchingPeriod={10}
         viewabilityConfig={this.viewConfigRef}
         windowSize={5}
       />

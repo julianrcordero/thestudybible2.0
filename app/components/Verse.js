@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { Text } from "react-native";
 import Highlighter from "react-native-highlight-words";
 import VerseFormatted from "./VerseFormatted";
 // import { Text } from "react-native-paper";
 import HTML from "react-native-render-html";
 
-export default class Verse extends Component {
+export default class Verse extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -31,26 +31,19 @@ export default class Verse extends Component {
   //   }
   // };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.verseNumber !== nextProps.verseNumber) {
-      return true;
-    } else if (this.props.verseText !== nextProps.verseText) {
-      return true;
-    } else if (this.state.backgroundColor !== nextState.backgroundColor) {
-      return true;
-    }
-    return false;
-  }
-
-  // onLayout = ({ nativeEvent: { layout } }) => {
-  //   this.props.paragraphBibleRef.current?.addToLayoutsMap(
-  //     layout,
-  //     Number(this.props.chapterNum) - 1
-  //   );
-  // };
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.props.verseNumber !== nextProps.verseNumber) {
+  //     return true;
+  //   } else if (this.props.verseText !== nextProps.verseText) {
+  //     return true;
+  //   } else if (this.state.backgroundColor !== nextState.backgroundColor) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   render() {
-    const { _openStudyScreen, verseNumber, verseText } = this.props;
+    const { onPress, verseNumber, verseText } = this.props;
 
     const verseNumberStyle = {
       fontWeight: "bold",
@@ -102,7 +95,7 @@ export default class Verse extends Component {
 
         <Text
           onPress={this._toggleHighlight}
-          // onLongPress={() => _openStudyScreen(verseNumber)}
+          onLongPress={onPress}
           style={verseStyle}
         >
           {Array.isArray(verseText)

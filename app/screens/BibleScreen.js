@@ -20,13 +20,7 @@ export default class BibleScreen extends Component {
   }
 
   state = {
-    // currentBook: {
-    //   label: "Ecclesiastes",
-    //   value: 21,
-    //   backgroundColor: "#345171",
-    //   icon: "apps",
-    // },
-    currentBook: "Ecclesiastes",
+    currentBook: "Psalms",
     currentChapter: 1,
     currentVerse: 1,
     fontSize: 22,
@@ -150,7 +144,6 @@ export default class BibleScreen extends Component {
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}
-          darkMode={darkMode}
           fontFamily={this.state.fontFamily}
           fontSize={this.state.fontSize}
           paragraphBibleRef={paragraphBibleRef}

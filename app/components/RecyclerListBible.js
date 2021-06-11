@@ -11,36 +11,13 @@ import {
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
 
+import { List } from "immutable";
 import Constants from "expo-constants";
 const { height, width } = Dimensions.get("window");
 
 const AnimatedRecyclerListView = Animated.createAnimatedComponent(
   RecyclerListView
 );
-
-class ContextHelper extends ContextProvider {
-  constructor(uniqueKey) {
-    super();
-    this._contextStore = {};
-    this._uniqueKey = uniqueKey;
-  }
-
-  getUniqueKey() {
-    return this._uniqueKey;
-  }
-
-  save(key, value) {
-    this._contextStore[key] = value;
-  }
-
-  get(key) {
-    return this._contextStore[key];
-  }
-
-  remove(key) {
-    delete this._contextStore[key];
-  }
-}
 
 export default class RecyclerListBible extends Component {
   constructor(props) {
@@ -74,7 +51,6 @@ export default class RecyclerListBible extends Component {
       ]),
       index: 0,
       sections: [],
-      verses: [],
     };
   }
 
@@ -101,9 +77,13 @@ export default class RecyclerListBible extends Component {
 
   componentDidMount() {
     if (this.state.sections.length === 0) {
-      console.log("setting RecyclerListView sections to topPanel sections");
+      let topPanelSections = this.props.topPanel.current?.state.sections;
+      console.log(
+        "setting RecyclerListView sections to topPanel sections",
+        topPanelSections.length
+      );
       this.setState({
-        sections: this.props.topPanel.current?.state.sections,
+        sections: topPanelSections,
       });
     } else {
       console.log("componentDidMount");
@@ -237,7 +217,6 @@ export default class RecyclerListBible extends Component {
   _rowRenderer(type, item, index, extendedState) {
     return (
       <Chapter
-        bibleScreen={this.props.bibleScreen}
         chapterHeading={item.heading}
         chapterNum={item["@num"] ?? index + 1}
         colors={this.props.colors}
@@ -306,11 +285,11 @@ export default class RecyclerListBible extends Component {
         // applyWindowCorrection={this.applyWindowCorrection}
         bounces={false}
         canChangeSize={true}
-        contextProvider={this.state.contextProvider}
+        // contextProvider={this.state.contextProvider}
         // extendedState={fontSize}
         layoutProvider={this._layoutProvider}
         dataProvider={this.state.dataProvider}
-        initialRenderIndex={1}
+        // initialRenderIndex={1}
         // onRecreate={this.onRecreate}
         onVisibleIndicesChanged={this.onVisibleIndicesChanged}
         rowRenderer={this._rowRenderer}

@@ -25,18 +25,12 @@ export default function ChaptersGridScreen({
   useEffect(() => {
     let title = route?.params.title;
 
-    const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      topPanel.current?.setState({
-        // currentBook: bookPaths[title]["crossway-bible"].book,
-        sections: List(bookPaths[title]["crossway-bible"].book.chapter),
-      });
-      console.log("loaded ChaptersGridScreen and changed book to", title);
+    paragraphBibleRef.current?.setState({ bookTitle: title });
+    console.log("loaded ChaptersGridScreen and changed book to", title);
 
-      bibleScreen.current?.setState({
-        currentBook: bookPaths[title]["crossway-bible"].book["@title"],
-      });
+    bibleScreen.current?.setState({
+      currentBook: bookPaths[title]["crossway-bible"].book["@title"],
     });
-    () => interactionPromise.cancel();
   }, []);
 
   const { colors } = useTheme();
@@ -64,12 +58,14 @@ export default function ChaptersGridScreen({
   const selectChapter = (chapter) => {
     topPanel.current?.setState({ collapsed: true });
     let chapterIndex = chapter - 1;
+    let paragraphBible = paragraphBibleRef.current;
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         // topPanel.current?.setSections(chapterIndex);
-        paragraphBibleRef.current?.setState({ index: chapterIndex });
-      });
+        paragraphBible?.scrollByIndex(0);
+        paragraphBible?.setState({ startIndex: chapterIndex });
+      }, 0);
     });
     () => interactionPromise.cancel();
   };

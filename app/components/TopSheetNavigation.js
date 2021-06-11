@@ -57,196 +57,17 @@ class TopSheetNavigation extends Component {
   }
 
   state = {
+    bookTitle: null,
     currentBook: null,
-    // {
-    //   label: "",
-    //   short: "",
-    //   value: 0,
-    //   backgroundColor: "",
-    //   icon: "",
-    // }
     pickerType: 0,
     collapsed: true,
     isPlaying: false,
-    sections: List([]),
+    sections: [],
     startingIndex: 0,
     verses: [],
   };
 
   close = () => this.setState({ collapsed: true });
-
-  selectedPicker = () => {
-    switch (this.state.pickerType) {
-      case 0:
-        return (
-          <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: true }}>
-              <Stack.Screen
-                name="Books"
-                component={BooksGridScreen}
-                // initialParams={{
-                //   topPanel: this.props.topPanel,
-                // }}
-                options={{
-                  headerShown: false,
-                  title: "Books",
-                }}
-              />
-
-              <Stack.Screen
-                name="Chapters"
-                options={({ route }) => ({
-                  cardStyle: {
-                    backgroundColor: "transparent",
-                  },
-                  headerRight: () => (
-                    <AppText style={styles.sectionTitle}>
-                      {route.params.title}
-                    </AppText>
-                  ),
-                  headerStyle: {
-                    backgroundColor: "transparent",
-                    height: 55,
-                  },
-                  headerTitle: "",
-                })}
-              >
-                {(props) => (
-                  <ChaptersGridScreen
-                    {...props}
-                    bibleScreen={this.props.bibleScreen}
-                    paragraphBibleRef={this.props.paragraphBibleRef}
-                    topPanel={this.props.topPanel}
-                  />
-                )}
-              </Stack.Screen>
-            </Stack.Navigator>
-          </NavigationContainer>
-        );
-      case 1:
-        return (
-          <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: true }}>
-              <Stack.Screen
-                name="BooksList"
-                options={({ route }) => ({
-                  headerShown: false,
-                  title: "Books",
-                  cardStyle: {
-                    // backgroundColor: this.props.darkMode
-                    //   ? colors.medium
-                    //   : colors.light,
-                  },
-                })}
-              >
-                {(props) => (
-                  <BooksListScreen
-                    {...props}
-                    paragraphBibleRef={this.props.paragraphBibleRef}
-                    topPanel={this.props.topPanel}
-                    width={this.props.width - 30}
-                  />
-                )}
-              </Stack.Screen>
-            </Stack.Navigator>
-          </NavigationContainer>
-        );
-      case 2:
-        return (
-          <SearchHistory
-            data={this.props.searchHistoryRef.current.state.searchHistory}
-          />
-        );
-      default:
-        break;
-    }
-  };
-
-  componentDidMount() {
-    if (!this.state.currentBook) {
-      this.setState({
-        currentBook: bookPaths["Ecclesiastes"]["crossway-bible"].book,
-        sections: List(
-          bookPaths["Ecclesiastes"]["crossway-bible"].book.chapter
-        ),
-      });
-      // let newBook = {
-      //   label: "Ecclesiastes",
-      //   value: 21,
-      //   backgroundColor: "#345171",
-      //   icon: "apps",
-      // };
-      // this.setVerses(newBook);
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.sections !== this.state.sections) {
-      let paragraphBible = this.props.paragraphBibleRef.current;
-
-      paragraphBible?.setState({
-        // index: this.state.startingIndex,
-        // dataProvider: paragraphBible?.provideData.cloneWithRows(
-        //   this.state.sections
-        // ),
-        sections: this.state.sections,
-      });
-    }
-    // else if (prevState.verses !== this.state.verses) {
-    //   this.props.studyScreen.current?.setState({
-    //     bookFilter: this.state.currentBook.value,
-    //     currentBook: this.state.currentBook,
-    //     verseList: this.state.verses,
-    //   });
-    // }
-  }
-
-  setSections = (chapterIndex) => {
-    // let myBook = bookPaths[newBook];
-    // console.log(myBook);
-    //optional (it'll return an object in case it's not valid)
-    // var jsonObj = parser.parse(myBook, options);
-    // let sections = jsonObj["crossway-bible"].book.chapter[chapterIndex];
-    // let chapters = this.state.currentBook.chapter; //["crossway-bible"].book.chapter;
-    // let sections = [];
-    // for (let i = 0; i <= 0; i++) {
-    //   let theoreticalIndex = chapterIndex + i;
-    //   if (theoreticalIndex >= 0 && theoreticalIndex < chapters.length)
-    //     sections.push({
-    //       chapter: theoreticalIndex + 1,
-    //       heading: Array.isArray(chapters[chapterIndex + i].heading)
-    //         ? chapters[chapterIndex + i].heading[0]
-    //         : chapters[chapterIndex + i].heading,
-    //       verses: chapters[chapterIndex + i].verse.map((v) => {
-    //         return Array.isArray(v["#text"])
-    //           ? v["#text"].map((text) => {
-    //               return text;
-    //             })
-    //           : v["#text"];
-    //       }),
-    //     });
-    // }
-    // let chapter = myBook["crossway-bible"].book.chapter[chapterIndex].verse;
-    // let mySections = chapters.map((c) => {
-    //   return {
-    //     chapterHeading: c.heading,
-    //     verses: c.verse.map((v) => {
-    //       return Array.isArray(v["#text"])
-    //         ? v["#text"].map((text) => {
-    //             return text;
-    //           })
-    //         : v["#text"];
-    //       // v.crossref
-    //       //   ? reactStringReplace(v["#text"], /(\n)/g, (match, i) =>
-    //       //       Array.isArray(v.crossref)
-    //       //         ? v.crossref[0]._let // can't index, quotes must be replaced with quote literals
-    //       //         : v.crossref._let
-    //       //     )
-    //       //   : reactStringReplace(v["#text"], /(\n)/g, (match, i) => match);
-    //     }),
-    //   };
-    // });
-  };
 
   setVerses = (newBook) => {
     let verses = [];
@@ -347,6 +168,93 @@ class TopSheetNavigation extends Component {
       paddingVertical: 4,
     },
   });
+
+  selectedPicker = () => {
+    switch (this.state.pickerType) {
+      case 0:
+        return (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: true }}>
+              <Stack.Screen
+                name="Books"
+                component={BooksGridScreen}
+                // initialParams={{
+                //   topPanel: this.props.topPanel,
+                // }}
+                options={{
+                  headerShown: false,
+                  title: "Books",
+                }}
+              />
+
+              <Stack.Screen
+                name="Chapters"
+                options={({ route }) => ({
+                  cardStyle: {
+                    backgroundColor: "transparent",
+                  },
+                  headerRight: () => (
+                    <AppText style={styles.sectionTitle}>
+                      {route.params.title}
+                    </AppText>
+                  ),
+                  headerStyle: {
+                    backgroundColor: "transparent",
+                    height: 55,
+                  },
+                  headerTitle: "",
+                })}
+              >
+                {(props) => (
+                  <ChaptersGridScreen
+                    {...props}
+                    bibleScreen={this.props.bibleScreen}
+                    paragraphBibleRef={this.props.paragraphBibleRef}
+                    topPanel={this.props.topPanel}
+                  />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </NavigationContainer>
+        );
+      case 1:
+        return (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: true }}>
+              <Stack.Screen
+                name="BooksList"
+                options={({ route }) => ({
+                  headerShown: false,
+                  title: "Books",
+                  cardStyle: {
+                    // backgroundColor: this.props.darkMode
+                    //   ? colors.medium
+                    //   : colors.light,
+                  },
+                })}
+              >
+                {(props) => (
+                  <BooksListScreen
+                    {...props}
+                    paragraphBibleRef={this.props.paragraphBibleRef}
+                    topPanel={this.props.topPanel}
+                    width={this.props.width - 30}
+                  />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </NavigationContainer>
+        );
+      case 2:
+        return (
+          <SearchHistory
+            data={this.props.searchHistoryRef.current.state.searchHistory}
+          />
+        );
+      default:
+        break;
+    }
+  };
 
   render() {
     const { height } = this.props;

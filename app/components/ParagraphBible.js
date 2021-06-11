@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { FlatList } from "react-native-bidirectional-infinite-scroll";
+// import { FlatList } from "@stream-io/flat-list-mvcp";
 
 import defaultStyles from "../config/styles";
 import Chapter from "./Chapter";
@@ -24,8 +25,8 @@ export default class ParagraphBible extends Component {
 
   state = {
     bookTitle: "Psalms",
-    startIndex: 0,
-    endIndex: 3,
+    startChapter: 1,
+    endChapter: 4,
     refreshing: false,
     sections: bookPaths["Psalms"]["crossway-bible"].book.chapter.slice(0, 3),
     totalChapters: bookPaths["Psalms"]["crossway-bible"].book.chapter.length,
@@ -38,22 +39,29 @@ export default class ParagraphBible extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.startIndex !== this.state.startIndex) {
-      this.componentDidMount();
-      let endIndex = this.state.startIndex + 3;
+    if (prevState.startChapter !== this.state.startChapter) {
+      let endChapter = this.state.startChapter + 3;
 
-      console.log("setting book to", this.state.bookTitle);
+      let newBook =
+        bookPaths[this.state.bookTitle]["crossway-bible"].book.chapter;
+
+      let newSections = newBook.slice(
+        this.state.startChapter - 1,
+        endChapter - 1
+      ); //3
+
       this.setState({
-        endIndex: endIndex,
+        endChapter: endChapter,
         refreshing: true,
-        sections: bookPaths[this.state.bookTitle][
-          "crossway-bible"
-        ].book.chapter.slice(this.state.startIndex, endIndex),
-        totalChapters:
-          bookPaths[this.state.bookTitle]["crossway-bible"].book.chapter.length,
+        sections: newSections,
+        totalChapters: newBook.length,
       });
+    } else if (prevState.endChapter !== this.state.endChapter) {
+      // this.loadPreviousVerses();
+      // this.scrollByIndex(2);
     } else if (prevState.bookTitle !== this.state.bookTitle) {
     } else if (prevState.sections !== this.state.sections) {
+      // console.log("sections updated", this.state.sections.length);
       this.setState({ refreshing: false });
     } else {
       // console.log("something else happened");
@@ -71,9 +79,9 @@ export default class ParagraphBible extends Component {
       return true;
     } else if (this.props.colors !== nextProps.colors) {
       return true;
-    } else if (this.state.startIndex !== nextState.startIndex) {
+    } else if (this.state.startChapter !== nextState.startChapter) {
       return true;
-    } else if (this.state.endIndex !== nextState.endIndex) {
+    } else if (this.state.endChapter !== nextState.endChapter) {
       return true;
     }
     return false;
@@ -96,11 +104,11 @@ export default class ParagraphBible extends Component {
   };
 
   onViewRef = ({ viewableItems, changed }) => {
-    if (viewableItems[0]) {
-      const v = viewableItems[0];
-
-      if (this.state.endIndex - Number(v.item["@num"]) == 2) {
-        console.log("I am 2 away from the end");
+    // console.log("changed", changed[0].item["@num"]);
+    const v = viewableItems[0];
+    if (v) {
+      // console.log(v);
+      if (this.state.endChapter - Number(v.item["@num"]) == 2) {
         this.loadNextVerses();
       }
 
@@ -108,13 +116,10 @@ export default class ParagraphBible extends Component {
         currentChapter: v.item["@num"], //.chapter,
       });
     }
-    // Use viewable items in state or as intended
   };
   viewConfigRef = {
     waitForInteraction: false,
-    // At least one of the viewAreaCoveragePercentThreshold or itemVisiblePercentThreshold is required.
     viewAreaCoveragePercentThreshold: 50,
-    // itemVisiblePercentThreshold: 25,
   };
 
   keyExtractor = (item, index) => String(index);
@@ -153,47 +158,96 @@ export default class ParagraphBible extends Component {
   );
 
   queryMoreChapters = (numChapters) => {
-    return new Promise((resolve) => {
-      // Lets resolve after 500 ms, to simulate network latency.
-      setTimeout(() => {
-        resolve(
-          bookPaths[this.state.bookTitle]["crossway-bible"].book.chapter.slice(
-            this.state.endIndex,
-            this.state.endIndex + numChapters
-          )
-        );
-      }, 0);
-    });
+    return bookPaths[this.state.bookTitle]["crossway-bible"].book.chapter.slice(
+      this.state.endChapter - 1,
+      this.state.endChapter - 1 + numChapters
+    );
   };
 
-  loadPreviousVerses = async () => {
+  loadPreviousVerses = () => {
+    if (this.state.startChapter > 1) {
+      let startIndex = this.state.startChapter - 1;
+
+      const newMessages = bookPaths[this.state.bookTitle][
+        "crossway-bible"
+      ].book.chapter.slice(startIndex - 3, startIndex);
+
+      if (newMessages.length > 0) {
+        // let newSections = newMessages.concat(this.state.sections);
+
+        this.setState({
+          sections: [...newMessages, ...this.state.sections],
+        });
+      }
+    }
+  };
+
+  loadNextVerses = () => {
+    if (this.state.endChapter <= this.state.totalChapters) {
+      const newMessages = this.queryMoreChapters(3);
+
+      if (newMessages.length > 0) {
+        let newSections = this.state.sections.concat(newMessages);
+
+        this.setState({
+          endChapter: this.state.endChapter + 3,
+          sections: newSections,
+          // .slice(newMessages.length),
+        });
+      }
+    }
+  };
+
+  // queryMoreChapters = (numChapters) => {
+  //   return new Promise((resolve) => {
+  //     // Lets resolve after 500 ms, to simulate network latency.
+  //     setTimeout(() => {
+  //       resolve(
+  //         bookPaths[this.state.bookTitle]["crossway-bible"].book.chapter.slice(
+  //           this.state.endChapter,
+  //           this.state.endChapter + numChapters
+  //         )
+  //       );
+  //     }, 0);
+  //   });
+  // };
+
+  // loadPreviousVerses = async () => {
+  //   const newMessages = await this.queryMoreChapters(3);
+  //   // this.setState({
+  //   //   sections: newMessages.concat(this.state.sections),
+  //   // });
+
+  //   console.log("loaded previous verses!");
+  // };
+
+  // loadNextVerses = async () => {
+  //   console.log(this.state.startChapter, this.state.endChapter);
+  //   if (this.state.endChapter < this.state.totalChapters) {
+  //     const newMessages = await this.queryMoreChapters(3);
+
+  //     if (newMessages.length > 0) {
+  //       let newSections = this.state.sections.concat(newMessages);
+
+  //       console.log("new sections.length", newSections.length);
+  //       this.setState({
+  //         endChapter: this.state.endChapter + 3,
+  //         sections: newSections,
+  //         // .slice(newMessages.length),
+  //       });
+  //     }
+  //   }
+
+  //   console.log("loaded next verses!");
+  // };
+
+  onStartReached = async () => {
     const newMessages = await this.queryMoreChapters(3);
     // this.setState({
     //   sections: newMessages.concat(this.state.sections),
     // });
 
     console.log("loaded previous verses!");
-    // setMessages((m) => {
-    //   return m.concat(newMessages);
-    // });
-  };
-
-  // Add 10 more messages to beginning of the list.
-  // In real chat application, this is where you have your pagination logic.
-  loadNextVerses = async () => {
-    console.log(this.state.startIndex, this.state.endIndex);
-    if (this.state.endIndex < this.state.totalChapters) {
-      const newMessages = await this.queryMoreChapters(3);
-
-      if (newMessages.length > 0)
-        this.setState({
-          endIndex: this.state.endIndex + 3,
-          sections: this.state.sections.concat(newMessages),
-          // .slice(newMessages.length),
-        });
-    }
-
-    console.log("loaded next verses!");
   };
 
   render() {
@@ -251,11 +305,16 @@ export default class ParagraphBible extends Component {
         }
         ListFooterComponent={<View />}
         ListFooterComponentStyle={{ height: 70 }}
-        maintainVisibleContentPosition
+        maintainVisibleContentPosition={{
+          // autoscrollToTopThreshold: 10,
+          minIndexForVisible: 0,
+        }}
+        // maintainPositionAtOrBeyondIndex={0}
         // maxToRenderPerBatch={10}
         // onEndReached={this.loadNextVerses}
         // onEndReachedThreshold={height * 3}
         // onStartReached={this.loadPreviousVerses}
+        // onStartReachedThreshold={}
         onViewableItemsChanged={this.onViewRef}
         onScroll={this.onScroll}
         ref={bibleSectionsRef}
@@ -269,7 +328,7 @@ export default class ParagraphBible extends Component {
         style={[styles.bibleTextView, defaultStyles.paddingText]}
         updateCellsBatchingPeriod={25}
         viewabilityConfig={this.viewConfigRef}
-        windowSize={7}
+        windowSize={5}
       />
     );
   }

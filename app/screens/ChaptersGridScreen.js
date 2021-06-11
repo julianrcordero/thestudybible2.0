@@ -12,7 +12,6 @@ import { List } from "immutable";
 
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
-import { ImmutableVirtualizedList } from "react-native-immutable-list-view";
 
 export default function ChaptersGridScreen({
   chapters,
@@ -57,14 +56,13 @@ export default function ChaptersGridScreen({
 
   const selectChapter = (chapter) => {
     topPanel.current?.setState({ collapsed: true });
-    let chapterIndex = chapter - 1;
     let paragraphBible = paragraphBibleRef.current;
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         // topPanel.current?.setSections(chapterIndex);
-        paragraphBible?.scrollByIndex(0);
-        paragraphBible?.setState({ startIndex: chapterIndex });
+        // paragraphBible?.scrollByIndex(0);
+        paragraphBible?.setState({ startChapter: chapter });
       }, 0);
     });
     () => interactionPromise.cancel();

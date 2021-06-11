@@ -109,8 +109,8 @@ export const SettingsScreen = ({ bibleScreen, studyScreen }) => {
           {"Text Size: " + fontSize + "pt"}
         </Text>
         <Slider
-          minimumValue={12}
-          maximumValue={24}
+          minimumValue={16}
+          maximumValue={32}
           minimumTrackTintColor={colors.primary}
           maximumTrackTintColor={colors.secondary}
           onSlidingComplete={handleSlide}

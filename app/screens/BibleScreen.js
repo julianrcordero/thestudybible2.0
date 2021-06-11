@@ -23,7 +23,7 @@ export default class BibleScreen extends Component {
     currentBook: "Psalms",
     currentChapter: 1,
     currentVerse: 1,
-    fontSize: 22,
+    fontSize: 26,
     fontFamily: "Avenir",
     formatting: "Default",
   };

@@ -1,10 +1,10 @@
-import React, { Component, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import { Text } from "react-native";
-import Highlighter from "react-native-highlight-words";
-import VerseFormatted from "./VerseFormatted";
+// import Highlighter from "react-native-highlight-words";
+// import VerseFormatted from "./VerseFormatted";
 // import { Text } from "react-native-paper";
-import HTML from "react-native-render-html";
-import { List } from "immutable";
+// import HTML from "react-native-render-html";
+// import { List } from "immutable";
 
 export default class Verse extends PureComponent {
   constructor(props) {
@@ -98,7 +98,9 @@ export default class Verse extends PureComponent {
       >
         {verseNumber + " "}
 
-        {List.isList(verseText) ? verseText.map((phrase) => phrase) : verseText}
+        {Array.isArray(verseText)
+          ? verseText.map((phrase) => phrase)
+          : verseText}
       </Text>
     );
   }

@@ -1,30 +1,29 @@
-import React, { PureComponent, Component } from "react";
-import { FlatList, Text, View } from "react-native";
+import React, { PureComponent } from "react";
+import { Text } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
-import { TouchableHighlight } from "react-native";
 import { Paragraph } from "react-native-paper";
-import { List } from "immutable";
+import { Map } from "immutable";
 
-class SectionHeader extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+// class SectionHeader extends PureComponent {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  sectionStyle = {
-    backgroundColor: "red",
-    color: this.props.colors.primary,
-    fontSize: this.props.titleSize,
-  };
+//   sectionStyle = {
+//     backgroundColor: "red",
+//     color: this.props.colors.primary,
+//     fontSize: this.props.titleSize,
+//   };
 
-  render() {
-    return (
-      <Text style={[defaultStyles.bibleText, this.sectionStyle]}>
-        {this.props.title}
-      </Text>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <Text style={[defaultStyles.bibleText, this.sectionStyle]}>
+//         {this.props.title}
+//       </Text>
+//     );
+//   }
+// }
 
 export default class Chapter extends PureComponent {
   constructor(props) {
@@ -51,34 +50,27 @@ export default class Chapter extends PureComponent {
   //   return false;
   // }
 
-  mapVerse = ({ item, index, separators }) => (
-    <Verse
-      chapterNum={this.props.chapterNum}
-      key={this.keyExtractor}
-      onPress={() => this.props.openStudyScreen(this.props.chapterNum, i + 1)}
-      verseNumber={index + 1}
-      verseText={item["#text"]}
-      verseTextStyle={this.props.verseTextStyle}
-      // searchWords={searchWords}
-    />
-  );
-
-  mapVerseObject = (verse, i) => (
-    <Verse
-      chapterNum={this.props.chapterNum}
-      key={i}
-      onPress={() => this.props.openStudyScreen(this.props.chapterNum, i + 1)}
-      verseNumber={i + 1}
-      verseText={List(verse["#text"])}
-      verseTextStyle={this.props.verseTextStyle}
-      // searchWords={searchWords}
-    />
-  );
-
-  onLayout = ({ nativeEvent: { layout } }) => {
-    this.props._heights[this.props.index] = layout.height;
-    // console.log("onLayout");
+  mapVerse = (verse, i) => {
+    let verseText = verse.get("#text");
+    return Array.isArray(verseText)
+      ? verseText.map((phrase) => phrase)
+      : verseText;
   };
+
+  // mapVerseObject = (verse, i) => (
+  //   <Verse
+  //     key={i}
+  //     onPress={() => this.props.openStudyScreen(this.props.chapterNum, i + 1)}
+  //     verseNumber={i + 1}
+  //     verseText={verse.get("#text")}
+  //     // searchWords={searchWords}
+  //   />
+  // );
+
+  // onLayout = ({ nativeEvent: { layout } }) => {
+  //   this.props._heights[this.props.index] = layout.height;
+  //   // console.log("onLayout");
+  // };
 
   render() {
     const {
@@ -86,9 +78,7 @@ export default class Chapter extends PureComponent {
       chapterNum,
       colors,
       fontSize,
-      // onHideUnderlay,
-      // onShowUnderlay,
-      style,
+      // style,
       titleSize,
       verses,
       verseTextStyle,
@@ -97,15 +87,22 @@ export default class Chapter extends PureComponent {
     const title =
       chapterNum +
       "\t" +
-      (Array.isArray(chapterHeading) ? chapterHeading[0] : chapterHeading);
+      (Map.isMap(chapterHeading) ? chapterHeading.get(0) : chapterHeading);
+
+    const sectionStyle = {
+      backgroundColor: "red",
+      color: colors.primary,
+      fontSize: titleSize,
+    };
 
     return (
       // style={style}
       // onLayout={this.onLayout}
       <>
-        <SectionHeader colors={colors} title={title} titleSize={titleSize} />
+        {/* <SectionHeader colors={colors} title={title} titleSize={titleSize} /> */}
+        <Text style={[defaultStyles.bibleText, sectionStyle]}>{title}</Text>
         <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
-          {verses.map(this.mapVerseObject)}
+          {verses.map(this.mapVerse)}
         </Paragraph>
       </>
       // <FlatList

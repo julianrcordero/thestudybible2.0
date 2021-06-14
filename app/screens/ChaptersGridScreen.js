@@ -1,14 +1,12 @@
-import React, { PureComponent, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   FlatList,
   InteractionManager,
-  StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import bookPaths from "../json/Bible";
-const { height, width } = Dimensions.get("window");
-import { List } from "immutable";
+const { width } = Dimensions.get("window");
 
 import BiblePickerItem from "../components/BiblePickerItem";
 import { useTheme } from "../config/ThemeProvider";
@@ -28,7 +26,9 @@ export default function ChaptersGridScreen({
     console.log("loaded ChaptersGridScreen and changed book to", title);
 
     bibleScreen.current?.setState({
-      currentBook: bookPaths[title]["crossway-bible"].book["@title"],
+      currentBook: bookPaths[title]
+        .getIn(["crossway-bible", "book"])
+        .get("@title"), //["crossway-bible"].book["@title"],
     });
   }, []);
 
@@ -80,12 +80,6 @@ export default function ChaptersGridScreen({
 
   const viewStyle = { backgroundColor: colors.background, width: width - 30 };
 
-  const getItemLayout = (data, index) => ({
-    length: (width - 30) / 7,
-    offset: (width - 30) * index,
-    index,
-  });
-
   return (
     <FlatList
       data={DATA}
@@ -96,14 +90,5 @@ export default function ChaptersGridScreen({
       showsVerticalScrollIndicator={false}
       style={viewStyle}
     />
-    // <ImmutableVirtualizedList
-    //   getItemLayout={getItemLayout}
-    //   immutableData={DATA}
-    //   keyExtractor={keyExtractor}
-    //   numColumns={7}
-    //   renderItem={renderItem}
-    //   columnWrapperStyle={columnWrapperStyle}
-    //   showsVerticalScrollIndicator={false}
-    // />
   );
 }

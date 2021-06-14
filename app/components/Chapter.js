@@ -1,9 +1,9 @@
-import React, { PureComponent } from "react";
-import { Text } from "react-native";
+import React, { PureComponent, Component } from "react";
+import { Text, View } from "react-native";
 import Verse from "./Verse";
 import defaultStyles from "../config/styles";
 import { Paragraph } from "react-native-paper";
-import { Map } from "immutable";
+import { List, Map } from "immutable";
 
 // class SectionHeader extends PureComponent {
 //   constructor(props) {
@@ -28,18 +28,32 @@ import { Map } from "immutable";
 export default class Chapter extends PureComponent {
   constructor(props) {
     super(props);
+
+    // this.state = { isLoading: true };
   }
 
   keyExtractor = (item, index) => item.chapterNum.concat(index);
 
+  // componentDidMount() {
+  //   console.log("componentDidMount");
+  //   this.setState({ isLoading: false });
+  // }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   this.setState({ isLoading: false });
+  // }
+
   // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props.chapterHeading !== nextProps.chapterHeading) {
+  //   if (this.state.isLoading !== nextState.isLoading) {
+  //     return true;
+  //   } else if (this.props.chapterHeading !== nextProps.chapterHeading) {
   //     return true;
   //   } else if (this.props.chapterNum !== nextProps.chapterNum) {
   //     return true;
   //   } else if (this.props.colors !== nextProps.colors) {
   //     return true;
   //   } else if (this.props.verses !== nextProps.verses) {
+  //     this.setState({ isLoading: true });
   //     return true;
   //   } else if (this.props.titleSize !== nextProps.titleSize) {
   //     return true;
@@ -50,27 +64,28 @@ export default class Chapter extends PureComponent {
   //   return false;
   // }
 
-  mapVerse = (verse, i) => {
-    let verseText = verse.get("#text");
-    return Array.isArray(verseText)
-      ? verseText.map((phrase) => phrase)
-      : verseText;
-  };
-
-  // mapVerseObject = (verse, i) => (
-  //   <Verse
-  //     key={i}
-  //     onPress={() => this.props.openStudyScreen(this.props.chapterNum, i + 1)}
-  //     verseNumber={i + 1}
-  //     verseText={verse.get("#text")}
-  //     // searchWords={searchWords}
-  //   />
-  // );
-
-  // onLayout = ({ nativeEvent: { layout } }) => {
-  //   this.props._heights[this.props.index] = layout.height;
-  //   // console.log("onLayout");
+  // mapVerse = (verse, i) => {
+  //   let verseText = verse.get("#text");
+  //   return List.isList(verseText)
+  //     ? verseText.map((phrase) => phrase)
+  //     : verseText;
   // };
+
+  mapVerseObject = (verse, i) => (
+    <Verse
+      key={i}
+      onPress={() => this.props.openStudyScreen(this.props.chapterNum, i + 1)}
+      verseNumber={i + 1}
+      verseText={verse.get("#text")}
+      // searchWords={searchWords}
+    />
+  );
+
+  onLayout = ({ nativeEvent: { layout } }) => {
+    let parent = this.props.paragraphBibleRef.current;
+    parent._heights[this.props.index] = layout.height;
+    parent.setState((state) => ({ timesUpdated: state.timesUpdated + 1 }));
+  };
 
   render() {
     const {
@@ -78,7 +93,7 @@ export default class Chapter extends PureComponent {
       chapterNum,
       colors,
       fontSize,
-      // style,
+      style,
       titleSize,
       verses,
       verseTextStyle,
@@ -90,7 +105,7 @@ export default class Chapter extends PureComponent {
       (Map.isMap(chapterHeading) ? chapterHeading.get(0) : chapterHeading);
 
     const sectionStyle = {
-      backgroundColor: "red",
+      // backgroundColor: "red",
       color: colors.primary,
       fontSize: titleSize,
     };
@@ -98,21 +113,13 @@ export default class Chapter extends PureComponent {
     return (
       // style={style}
       // onLayout={this.onLayout}
-      <>
+      <View onLayout={this.onLayout} style={style}>
         {/* <SectionHeader colors={colors} title={title} titleSize={titleSize} /> */}
         <Text style={[defaultStyles.bibleText, sectionStyle]}>{title}</Text>
         <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
-          {verses.map(this.mapVerse)}
+          {verses.map(this.mapVerseObject)}
         </Paragraph>
-      </>
-      // <FlatList
-      //   // contentContainerStyle={{ flexDirection: "column" }}
-      //   horizontal
-      //   data={verses}
-      //   // numColumns={3}
-      //   renderItem={this.mapVerse}
-      //   style={{ width: "100%" }}
-      // />
+      </View>
     );
   }
 }

@@ -4,7 +4,7 @@ import { Text } from "react-native";
 // import VerseFormatted from "./VerseFormatted";
 // import { Text } from "react-native-paper";
 // import HTML from "react-native-render-html";
-// import { List } from "immutable";
+import { List } from "immutable";
 
 export default class Verse extends PureComponent {
   constructor(props) {
@@ -98,9 +98,7 @@ export default class Verse extends PureComponent {
       >
         {verseNumber + " "}
 
-        {Array.isArray(verseText)
-          ? verseText.map((phrase) => phrase)
-          : verseText}
+        {List.isList(verseText) ? verseText.map((phrase) => phrase) : verseText}
       </Text>
     );
   }

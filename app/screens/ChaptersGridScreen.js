@@ -22,7 +22,13 @@ export default function ChaptersGridScreen({
   useEffect(() => {
     let title = route?.params.title;
 
-    paragraphBibleRef.current?.setState({ bookTitle: title });
+    let paragraphBible = paragraphBibleRef.current;
+    paragraphBible?.setState({
+      bookTitle: title,
+      startChapter: 0,
+      timesUpdated: 0,
+    });
+    paragraphBible._heights = [];
     console.log("loaded ChaptersGridScreen and changed book to", title);
 
     bibleScreen.current?.setState({
@@ -55,18 +61,15 @@ export default function ChaptersGridScreen({
   );
 
   const selectChapter = (chapter) => {
+    console.log("clicked on chapter", chapter);
     topPanel.current?.setState({ collapsed: true });
     let paragraphBible = paragraphBibleRef.current;
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        // topPanel.current?.setSections(chapterIndex);
-        paragraphBible?.scrollByIndex(0);
-        paragraphBible?.setState({ startChapter: chapter });
-        bibleScreen.current?.setState({
-          currentChapter: chapter,
-        });
-      }, 0);
+      paragraphBible?.setState({ startChapter: chapter });
+      bibleScreen.current?.setState({
+        currentChapter: chapter,
+      });
     });
     () => interactionPromise.cancel();
   };

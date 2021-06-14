@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 
 import AppText from "../components/Text";
 import BiblePickerItem from "../components/BiblePickerItem";
@@ -7,17 +7,20 @@ import ChaptersGridScreen from "./ChaptersGridScreen";
 import { AccordionList } from "accordion-collapse-react-native";
 import { useTheme } from "../config/ThemeProvider";
 
+const { width } = Dimensions.get("window");
+
 export default function BooksListScreen({
   navigation,
   route,
+  bibleScreen,
   paragraphBibleRef,
   topPanel,
-  width,
 }) {
   const { colors, isDark } = useTheme();
   const [rightOpen, setRightOpen] = useState(false);
   const headerHeight = 55;
-  const buttonWidth = (width - 15) / 2;
+  const myWidth = width - 30;
+  const buttonWidth = (myWidth - 15) / 2;
 
   const books = [
     ////
@@ -587,11 +590,12 @@ export default function BooksListScreen({
     return (
       <ChaptersGridScreen
         chapters={section.chapters}
+        bibleScreen={bibleScreen}
         paragraphBibleRef={paragraphBibleRef}
         route={route}
         topPanel={topPanel}
         value={section.value}
-        width={width}
+        width={myWidth}
       />
     );
   };

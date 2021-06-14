@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Component } from "react";
 import { InteractionManager, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 import userMarkupApi from "../api/userMarkup";
 import { useTheme } from "../config/ThemeProvider";
@@ -109,9 +110,9 @@ export default class BibleScreen extends Component {
       headerContentRef,
       HEADER_HEIGHT,
       headerOpacity,
-      scrollY,
       headerY,
       bottomSheetRef,
+      onScroll,
       paragraphBibleRef,
       searchHistoryRef,
       toolBar,
@@ -140,7 +141,7 @@ export default class BibleScreen extends Component {
           toolBar={toolBar}
           topPanel={topPanel}
         />
-        <ParagraphBible
+        <RecyclerListBible
           bibleScreen={bibleScreen}
           bibleSectionsRef={bibleSectionsRef}
           colors={colors}
@@ -148,9 +149,8 @@ export default class BibleScreen extends Component {
           fontSize={this.state.fontSize}
           paragraphBibleRef={paragraphBibleRef}
           HEADER_HEIGHT={HEADER_HEIGHT}
+          onScroll={onScroll}
           ref={paragraphBibleRef}
-          scrollY={scrollY}
-          // toggleSlideView={this.toggleSlideView}
           topPanel={topPanel}
         />
       </>

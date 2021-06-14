@@ -236,9 +236,9 @@ class TopSheetNavigation extends Component {
                 {(props) => (
                   <BooksListScreen
                     {...props}
+                    bibleScreen={this.props.bibleScreen}
                     paragraphBibleRef={this.props.paragraphBibleRef}
                     topPanel={this.props.topPanel}
-                    width={this.props.width - 30}
                   />
                 )}
               </Stack.Screen>

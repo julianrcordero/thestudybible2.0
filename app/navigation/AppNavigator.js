@@ -8,7 +8,7 @@ import ListingEditScreen from "../screens/ListingEditScreen";
 import BibleScreen from "../screens/BibleScreen";
 
 import useNotifications from "../hooks/useNotifications";
-import Animated, { Easing } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 const { Value, diffClamp, interpolateNode, multiply, timing } = Animated;
 
 import MenuButton from "../components/MenuButton";
@@ -33,6 +33,15 @@ const headerOpacity = interpolateNode(diffClampScrollY, {
   extrapolate: "clamp",
 });
 const navigationY = multiply(headerY, -1);
+
+const onScroll = Animated.event(
+  [
+    {
+      nativeEvent: { contentOffset: { y: scrollY } },
+    },
+  ],
+  { useNativeDriver: true }
+);
 
 const AppNavigator = (props) =>
   // { user }
@@ -88,9 +97,10 @@ const AppNavigator = (props) =>
               HEADER_HEIGHT={HEADER_HEIGHT}
               headerY={headerY}
               headerOpacity={headerOpacity}
+              onScroll={onScroll}
               paragraphBibleRef={paragraphBibleRef}
               ref={bibleScreen}
-              scrollY={scrollY}
+              // scrollY={scrollY}
               searchHistoryRef={searchHistoryRef}
               studyScreen={studyScreen}
               titleSize={titleSize}

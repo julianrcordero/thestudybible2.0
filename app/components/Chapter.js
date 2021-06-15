@@ -4,6 +4,11 @@ import Verse from "./Verse";
 import defaultStyles from "../config/styles";
 import { Paragraph } from "react-native-paper";
 import { List, Map } from "immutable";
+// import {
+//   LazyloadScrollView,
+//   LazyloadView,
+//   LazyloadImage,
+// } from "react-native-lazyload";
 
 // class SectionHeader extends PureComponent {
 //   constructor(props) {
@@ -32,7 +37,7 @@ export default class Chapter extends PureComponent {
     // this.state = { isLoading: true };
   }
 
-  keyExtractor = (item, index) => item.chapterNum.concat(index);
+  keyExtractor = (item, index) => String(index);
 
   // componentDidMount() {
   //   console.log("componentDidMount");
@@ -87,6 +92,17 @@ export default class Chapter extends PureComponent {
     parent.setState((state) => ({ timesUpdated: state.timesUpdated + 1 }));
   };
 
+  renderItem = (item, index) => (
+    <LazyloadView host="lazyload-list">
+      <Paragraph
+        style={[{ fontSize: this.props.fontSize }, this.props.verseTextStyle]}
+      >
+        {"TEST PARAGRAPH"}
+        {/* {item.map(this.mapVerseObject)} */}
+      </Paragraph>
+    </LazyloadView>
+  );
+
   render() {
     const {
       chapterHeading,
@@ -110,15 +126,51 @@ export default class Chapter extends PureComponent {
       fontSize: titleSize,
     };
 
+    const tenArray = [];
+
+    for (let i = 0; i < Math.ceil(verses / 10); i++) {
+      tenArray.push(verse.slice(i * 10, (i + 1) * 10));
+    }
+
     return (
       // style={style}
       // onLayout={this.onLayout}
       <View onLayout={this.onLayout} style={style}>
         {/* <SectionHeader colors={colors} title={title} titleSize={titleSize} /> */}
         <Text style={[defaultStyles.bibleText, sectionStyle]}>{title}</Text>
+        {/* <FlatList data={tenArray} renderItem={this.renderItem} /> */}
+
+        {/* <LazyloadScrollView
+          // style={styles.container}
+          // contentContainerStyle={styles.content}
+          name="lazyload-list"
+        >
+          {tenArray.map(this.renderItem)}
+        </LazyloadScrollView> */}
         <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
           {verses.map(this.mapVerseObject)}
         </Paragraph>
+        {/* <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(0, 10).map(this.mapVerseObject)}
+        </Paragraph>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(10, 20).map(this.mapVerseObject)}
+        </Paragraph>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(20, 30).map(this.mapVerseObject)}
+        </Paragraph>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(30, 40).map(this.mapVerseObject)}
+        </Paragraph>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(40, 50).map(this.mapVerseObject)}
+        </Paragraph>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(50, 60).map(this.mapVerseObject)}
+        </Paragraph>
+        <Paragraph style={[{ fontSize: fontSize }, verseTextStyle]}>
+          {verses.slice(60, verses.size + 1).map(this.mapVerseObject)}
+        </Paragraph> */}
       </View>
     );
   }

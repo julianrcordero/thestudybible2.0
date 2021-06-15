@@ -50,14 +50,12 @@ export default function ChaptersGridScreen({
   }
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => selectChapter(item)} style={{}}>
-      <BiblePickerItem
-        backgroundColor={"#FFFB79"}
-        label={item}
-        flex={1 / 7}
-        textColor={colors.text}
-      />
-    </TouchableOpacity>
+    <BiblePickerItem
+      backgroundColor={"#FFFB79"}
+      label={item}
+      onPress={() => selectChapter(item)}
+      textColor={colors.text}
+    />
   );
 
   const selectChapter = (chapter) => {

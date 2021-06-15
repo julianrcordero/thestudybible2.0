@@ -562,7 +562,10 @@ export default function BooksGridScreen({ route, navigation }) {
   ];
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
+    <BiblePickerItem
+      backgroundColor={item.backgroundColor}
+      label={item.short}
+      value={item.value}
       onPress={() =>
         navigation.navigate("Chapters", {
           title: item.label,
@@ -570,13 +573,7 @@ export default function BooksGridScreen({ route, navigation }) {
           value: item.value,
         })
       }
-    >
-      <BiblePickerItem
-        backgroundColor={item.backgroundColor}
-        label={item.short}
-        value={item.value}
-      />
-    </TouchableOpacity>
+    />
   );
 
   const keyExtractor = (item) => item.value.toString();

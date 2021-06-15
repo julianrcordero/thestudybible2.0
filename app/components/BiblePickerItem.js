@@ -14,7 +14,11 @@ class BiblePickerItem extends PureComponent {
       justifyContent: "center",
     },
     text: {
+      backgroundColor: "red",
+      textAlign: "center",
+      alignSelf: "stretch",
       color: this.props.textColor,
+      height: "100%",
     },
   };
 
@@ -23,9 +27,8 @@ class BiblePickerItem extends PureComponent {
       aspectRatio = 1.2,
       backgroundColor,
       borderWidth = 1,
-      flex,
-      height,
       label,
+      onPress,
       width = "100%",
     } = this.props;
 
@@ -33,15 +36,15 @@ class BiblePickerItem extends PureComponent {
       backgroundColor: backgroundColor,
       borderWidth,
       aspectRatio,
-      height,
-      flex,
       width,
     };
 
     return (
-      <View style={[this.styles.container, myStyle]}>
-        <AppText style={this.styles.text}>{label}</AppText>
-      </View>
+      // <View style={[this.styles.container, myStyle]}>
+      <AppText style={[this.styles.text, myStyle]} onPress={onPress}>
+        {label}
+      </AppText>
+      // </View>
     );
   }
 }

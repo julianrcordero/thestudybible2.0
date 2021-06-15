@@ -32,9 +32,7 @@ export default function ChaptersGridScreen({
     console.log("loaded ChaptersGridScreen and changed book to", title);
 
     bibleScreen.current?.setState({
-      currentBook: bookPaths[title]
-        .getIn(["crossway-bible", "book"])
-        .get("@title"), //["crossway-bible"].book["@title"],
+      currentBook: title, //bookPaths[title].getIn(["crossway-bible", "book", "@title"]),
     });
   }, []);
 
@@ -59,17 +57,17 @@ export default function ChaptersGridScreen({
   );
 
   const selectChapter = (chapter) => {
-    console.log("clicked on chapter", chapter);
+    // console.log("clicked on chapter", chapter);
     topPanel.current?.setState({ collapsed: true });
     let paragraphBible = paragraphBibleRef.current;
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
       paragraphBible?.setState({ startChapter: chapter });
-      bibleScreen.current?.setState({
-        currentChapter: chapter,
-      });
     });
     () => interactionPromise.cancel();
+    bibleScreen.current?.setState({
+      currentChapter: chapter,
+    });
   };
 
   const columnWrapperStyle = {

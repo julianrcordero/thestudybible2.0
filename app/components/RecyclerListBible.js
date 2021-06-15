@@ -18,8 +18,9 @@ import { InteractionManager } from "react-native";
 import { View } from "react-native";
 const { height, width } = Dimensions.get("window");
 
-const AnimatedRecyclerListView =
-  Animated.createAnimatedComponent(RecyclerListView);
+const AnimatedRecyclerListView = Animated.createAnimatedComponent(
+  RecyclerListView
+);
 
 export default class RecyclerListBible extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ export default class RecyclerListBible extends Component {
     this._rowRenderer = this._rowRenderer.bind(this);
 
     this.state = {
-      bookTitle: "Psalms",
+      // bookTitle: "Psalms",
       startChapter: 0,
       endChapter: 4,
       loading: true,
@@ -62,7 +63,7 @@ export default class RecyclerListBible extends Component {
           ],
         },
       ]),
-
+      // sections: [],
       timesUpdated: 0,
     };
   }
@@ -78,10 +79,8 @@ export default class RecyclerListBible extends Component {
 
   componentDidMount() {
     this.setState({
+      bookTitle: this.props.bibleScreen.current?.state.currentBook ?? "Psalms",
       startChapter: 1,
-    });
-    this.props.bibleScreen.current?.setState({
-      currentBook: this.state.bookTitle,
     });
   }
 
@@ -96,13 +95,18 @@ export default class RecyclerListBible extends Component {
       //   this.state.startChapter <= this.state.endChapter &&
       //   this.state.startChapter !== 1
       // ) {
-      //   this.scrollByIndex(this.state.startChapter - prevState.startChapter);
+      //   console.log(
+      //     "already loaded",
+      //     this.state.startChapter,
+      //     "just scrolling"
+      //   );
+      //   this.scrollByIndex(
+      //     this.state.startChapter - prevState.startChapter + 1
+      //   );
       // } else {
-      let newBook = bookPaths[this.state.bookTitle].getIn([
-        "crossway-bible",
-        "book",
-        "chapter",
-      ]);
+      let newBook = bookPaths[
+        this.props.bibleScreen.current?.state.currentBook
+      ].getIn(["crossway-bible", "book", "chapter"]);
 
       let startIndex = this.state.startChapter - 2;
       let newSections = newBook
@@ -118,26 +122,20 @@ export default class RecyclerListBible extends Component {
         totalChapters: newBook.size, //.length,
       });
       // }
+
+      setTimeout(this.loadNextVerses, 0);
     } else if (prevState.timesUpdated !== this.state.timesUpdated) {
       if (this.state.timesUpdated === 2) {
-        const interactionPromise = InteractionManager.runAfterInteractions(() =>
-          setTimeout(() => this.scrollByIndex(1), 0)
-        );
-        () => interactionPromise.cancel();
-        this.loadNextVerses();
+        if (this.state.startChapter !== 1) {
+          const interactionPromise = InteractionManager.runAfterInteractions(
+            () => setTimeout(() => this.scrollByIndex(1), 0)
+          );
+          () => interactionPromise.cancel();
+        }
+        // this.loadPreviousVerses();
+        // this.loadNextVerses();
       }
-    }
-    // else if (prevState.endChapter !== this.state.endChapter) {
-    //   if (this.state.startChapter + 1 === this.state.endChapter) {
-    //     //initial load
-    //     // this.loadPreviousVerses();
-    //     this.loadNextVerses();
-    //   }
-    //   // console.log("endChapter changed");
-
-    //   // this.setState({ refreshing: false });
-    // }
-    else if (prevState.dataProvider !== this.state.dataProvider) {
+    } else if (prevState.dataProvider !== this.state.dataProvider) {
       // console.log("dataProvider changed");
     } else if (prevState.sections !== this.state.sections) {
       console.log("sections changed");
@@ -147,6 +145,17 @@ export default class RecyclerListBible extends Component {
     } else {
       console.log("something else happened");
     }
+    // if (prevState.endChapter !== this.state.endChapter) {
+    //   if (this.state.startChapter + 1 === this.state.endChapter) {
+    //     //initial load
+    //     // this.loadPreviousVerses();
+    //     console.log("initial load");
+    //     this.loadNextVerses();
+    //   }
+    //   // console.log("endChapter changed");
+
+    //   // this.setState({ refreshing: false });
+    // }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -184,7 +193,7 @@ export default class RecyclerListBible extends Component {
         offset += this._heights[i];
       }
     }
-    return offset;
+    return offset + 5;
   };
 
   scrollByIndex = (index) => {
@@ -198,9 +207,15 @@ export default class RecyclerListBible extends Component {
   };
 
   onVisibleIndicesChanged = (TOnItemStatusChanged) => {
-    // console.log(TOnItemStatusChanged);
-    let currentChapter = TOnItemStatusChanged[0] + this.state.startChapter - 1;
-    console.log(this.state.endChapter, currentChapter);
+    console.log(TOnItemStatusChanged);
+    let firstVisibleIndex = TOnItemStatusChanged[0];
+    // if (firstVisibleIndex === 1) {
+    //   console.log("LOAD PREVIOUS VERSES");
+    //   // this.loadPreviousVerses();
+    // }
+
+    let currentChapter = firstVisibleIndex + this.state.startChapter - 1;
+    // console.log(this.state.endChapter, currentChapter);
     if (this.state.endChapter - currentChapter == 3) {
       this.loadNextVerses();
     }
@@ -264,9 +279,9 @@ export default class RecyclerListBible extends Component {
   loadPreviousVerses = () => {
     // console.log(this.state.startChapter, this.state.totalChapters);
     if (this.state.startChapter > 1) {
-      let endIndex = this.state.startChapter - 1;
+      let endIndex = this.state.startChapter - 2;
 
-      let newBeginning = endIndex - 2;
+      let newBeginning = endIndex - 3;
 
       const newMessages = bookPaths[this.state.bookTitle]
         .getIn(["crossway-bible", "book", "chapter"])
@@ -286,6 +301,7 @@ export default class RecyclerListBible extends Component {
   };
 
   loadNextVerses = () => {
+    // console.log("loadNextVerses");
     // console.log(this.state.endChapter, this.state.totalChapters);
     if (this.state.endChapter <= this.state.totalChapters) {
       const newMessages = bookPaths[this.state.bookTitle]
@@ -310,8 +326,13 @@ export default class RecyclerListBible extends Component {
   };
 
   render() {
-    const { bibleSectionsRef, colors, fontSize, HEADER_HEIGHT, onScroll } =
-      this.props;
+    const {
+      bibleSectionsRef,
+      colors,
+      fontSize,
+      HEADER_HEIGHT,
+      onScroll,
+    } = this.props;
 
     const styles = {
       bibleTextView: {

@@ -53,12 +53,6 @@ export default class ParagraphBible extends Component {
     startChapter: 0,
     endChapter: 4,
     scrolledYet: false,
-    // refreshing: false,
-    // totalChapters: bookPaths["Psalms"].getIn([
-    //   "crossway-bible",
-    //   "book",
-    //   "chapter"
-    // ]).size,
   };
 
   screenHeight = height - Constants.statusBarHeight;

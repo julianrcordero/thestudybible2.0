@@ -1,19 +1,9 @@
-import React, { useState, useEffect, Component } from "react";
-import { InteractionManager, View } from "react-native";
-import Animated from "react-native-reanimated";
-
-import userMarkupApi from "../api/userMarkup";
-import { useTheme } from "../config/ThemeProvider";
+import React, { Component } from "react";
+import { InteractionManager } from "react-native";
 
 import ToolBar from "../components/ToolBar";
-import ParagraphBible from "../components/ParagraphBible";
-import useAuth from "../auth/useAuth";
-import VerseByVerseBible from "../components/VerseByVerseBible";
-
-import defaultStyles from "../config/styles";
+// import ParagraphBible from "../components/ParagraphBible";
 import RecyclerListBible from "../components/RecyclerListBible";
-import VerseBible from "../components/VerseBible";
-import { useStickyHeader } from "react-use-sticky-header";
 
 export default class BibleScreen extends Component {
   constructor(props) {
@@ -29,29 +19,6 @@ export default class BibleScreen extends Component {
     formatting: "Default",
   };
 
-  //Bible Screen
-  // componentDidMount() {
-  //   let currentBook = this.state.currentBook;
-  //   this.props.topPanel.current.changeBibleBook(currentBook);
-  // }
-
-  //Study Screen
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.currentBook.label !== this.state.currentBook.label) {
-  //     let verses = this.props.topPanel.current.changeStudyScreenBook(
-  //       this.state.currentBook
-  //     );
-
-  //     this.props.studyScreen.current.setState({
-  //       bookFilter: this.state.currentBook.value,
-  //       currentBook: this.state.currentBook,
-  //       verseList: verses,
-  //     });
-
-  //     // this.props.paragraphBibleRef.current.setState({ verses: verses });
-  //   }
-  // }
-
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.currentBook !== nextState.currentBook) {
       return true;
@@ -64,7 +31,6 @@ export default class BibleScreen extends Component {
     } else if (this.state.fontFamily !== nextState.fontFamily) {
       return true;
     } else if (this.props.headerY !== nextProps.headerY) {
-      console.log("scrollY different");
       return true;
     }
     return false;

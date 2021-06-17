@@ -13,14 +13,25 @@ import { useTheme } from "../config/ThemeProvider";
 import AppText from "../components/Text";
 import PanelBox from "../components/PanelBox";
 import Favorite from "../components/Favorite";
-import VerseFormatted from "../components/VerseFormatted";
-import useAuth from "../auth/useAuth";
+// import VerseFormatted from "../components/VerseFormatted";
+// import useAuth from "../auth/useAuth";
 // import referenceCode from "../hooks/referenceCode";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Highlight from "../components/Highlight";
-import AppButton from "../components/Button";
+// import AppButton from "../components/Button";
+import reactStringReplace from "react-string-replace";
 
 import defaultStyles from "../config/styles";
+import { List, fromJS } from "immutable";
+import bookPaths from "../json/Bible";
+import books from "../json/Books";
+
+const notesArray = fromJS(require("../json/esvmsb.notes.json")).getIn([
+  "crossway-studynotes",
+  "book",
+]);
+
+const crossrefsJsonObject = require("../json/GenesisCrossrefs.json")["book"];
 
 function Reference({ book, fontFamily, fontSize, reference }) {
   const { colors } = useTheme();
@@ -129,15 +140,7 @@ export default class StudyScreen extends Component {
     currentFavorites: [],
     currentHighlights: [],
 
-    currentBook: {
-      label: "",
-      short: "",
-      value: 0,
-      backgroundColor: "",
-      icon: "",
-    },
     currentReference: "1 : 1",
-    bookFilter: 1,
     referenceFilter: "001001",
     currentCrossrefs: [],
     currentJohnsNote: [],
@@ -152,14 +155,66 @@ export default class StudyScreen extends Component {
   };
 
   componentDidMount() {
+    let bookTitle =
+      this.props.bibleScreen.current?.state.currentBook ?? "Psalms";
+
+    if (this.state.bookTitle !== bookTitle) {
+      this.setState({
+        bookTitle: bookTitle,
+        bookFilter: books.find((b) => b.label === bookTitle).value,
+      });
+    }
+
     let myUser = this.props.user;
     this.loadUserMarkup(this.props.user);
     if (!this.state.user) {
       this.setState({ user: myUser });
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.bookTitle !== this.state.bookTitle) {
+      console.log("studyScreen bookTitle updated to", this.state.bookTitle);
+
+      let newVerseList = [];
+      let verseList = bookPaths[this.state.bookTitle].getIn([
+        "crossway-bible",
+        "book",
+        "chapter",
+      ]);
+
+      verseList.map((chapter, i) => {
+        chapter.get("verse").map((v, j) => {
+          newVerseList.push({
+            chapter: i + 1,
+            verse: j + 1,
+            text: v.get("crossref")
+              ? reactStringReplace(v.get("#text"), /(\n)/g, (match, i) =>
+                  List.isList(v.get("crossref"))
+                    ? v.crossref.getIn([0, "_let"]) // can't index, quotes must be replaced with quote literals
+                    : v.crossref.get("_let")
+                )
+              : reactStringReplace(
+                  v.get("#text"),
+                  /(\n)/g,
+                  (match, i) => match
+                ),
+          });
+        });
+      });
+
+      this.setState({
+        bookFilter: books.find((b) => b.label === this.state.bookTitle).value,
+        verseList: newVerseList,
+      });
+      console.log("studyScreen verseList updated!");
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.currentNotes !== nextState.currentNotes) {
+    if (this.state.bookTitle !== nextState.bookTitle) {
+      return true;
+    } else if (this.state.currentNotes !== nextState.currentNotes) {
       return true;
     } else if (this.state.currentFavorites !== nextState.currentFavorites) {
       return true;
@@ -175,9 +230,6 @@ export default class StudyScreen extends Component {
     // else if (this.state.user !== nextState.user) {
     //   return false;
     // }
-    // else if (this.state.currentBook !== nextState.currentBook) {
-    //   return true;
-    // }
     else if (this.state.verseList !== nextState.verseList) {
       return true;
     }
@@ -188,22 +240,19 @@ export default class StudyScreen extends Component {
   async loadUserMarkup(user) {
     const myMarkup = await userMarkup.getUserMarkup(user.sub);
     if (myMarkup) {
-      // console.log("User markup loaded");
       const data = myMarkup.data;
       let bookNotes = data.notes.filter(
         (n) =>
           n.refs[0].start_ref.toString().slice(0, -6) ==
-          this.state.currentBook.value.toString()
+          String(this.state.bookFilter)
       );
       let bookFavorites = data.favorites.filter(
         (n) =>
-          n.start_ref.toString().slice(0, -6) ==
-          this.state.currentBook.value.toString()
+          n.start_ref.toString().slice(0, -6) == String(this.state.bookFilter)
       );
       let bookHighlights = data.highlights.filter(
         (n) =>
-          n.start_ref.toString().slice(0, -6) ==
-          this.state.currentBook.value.toString()
+          n.start_ref.toString().slice(0, -6) == String(this.state.bookFilter)
       );
 
       this.setState({
@@ -255,15 +304,37 @@ export default class StudyScreen extends Component {
   };
 
   onViewRef = (viewableItems) => {
-    if (viewableItems.viewableItems[0]) {
-      const v = viewableItems.viewableItems[0];
+    const v = viewableItems.viewableItems[0];
 
-      // console.log(v);
+    // johnsNote:
+    //   note?.content.p[0].__text ?? "There is no note for this passage",
+    // crossrefs: crossrefList?.letter,
+
+    if (v) {
+      let referenceCode =
+        ("00" + this.state.bookFilter).substr(-2) +
+        ("000" + v.item.chapter).substr(-3) +
+        ("000" + v.item.verse).substr(-3);
+
+      let crossrefList = crossrefsJsonObject?.chapter[
+        this.state.bookFilter - 1
+      ].verse.find((el) => el.id === referenceCode);
+
+      let note = notesArray
+        .getIn([this.state.bookFilter - 1, "note"])
+        .find(
+          (el) =>
+            el.get("_start") === "n" + referenceCode &&
+            !el.get("_id").includes("introduction")
+        );
+
       this.setState({
         currentReference: v.item.chapter + " : " + v.item.verse,
-        currentCrossrefs: v.item.crossrefs,
+        currentCrossrefs: crossrefList?.letter,
         referenceFilter: this.referenceCode(v.item.chapter, v.item.verse),
-        currentJohnsNote: v.item.johnsNote,
+        currentJohnsNote:
+          note?.getIn(["content", "p", 0, "__text"]) ??
+          "There is no note for this passage",
       });
       // sendVerseToToolBar(v.item.chapter, v.item.verse);
     }
@@ -333,7 +404,7 @@ export default class StudyScreen extends Component {
           ]}
         >
           <Reference
-            book={this.state.currentBook.label}
+            book={this.state.bookTitle}
             reference={this.state.currentReference}
             fontFamily={this.state.fontFamily}
             fontSize={this.state.fontSize}

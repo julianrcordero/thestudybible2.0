@@ -18,9 +18,8 @@ import { InteractionManager } from "react-native";
 import { View } from "react-native";
 const { height, width } = Dimensions.get("window");
 
-const AnimatedRecyclerListView = Animated.createAnimatedComponent(
-  RecyclerListView
-);
+const AnimatedRecyclerListView =
+  Animated.createAnimatedComponent(RecyclerListView);
 
 export default class RecyclerListBible extends Component {
   constructor(props) {
@@ -63,6 +62,7 @@ export default class RecyclerListBible extends Component {
           ],
         },
       ]),
+      offsetter: 0,
       // sections: [],
       timesUpdated: 0,
     };
@@ -127,6 +127,7 @@ export default class RecyclerListBible extends Component {
     } else if (prevState.timesUpdated !== this.state.timesUpdated) {
       if (this.state.timesUpdated === 2) {
         if (this.state.startChapter !== 1) {
+          this.setState({ offsetter: -1 });
           const interactionPromise = InteractionManager.runAfterInteractions(
             () => setTimeout(() => this.scrollByIndex(1), 0)
           );
@@ -179,6 +180,8 @@ export default class RecyclerListBible extends Component {
       return true;
     } else if (this.state.timesUpdated !== nextState.timesUpdated) {
       return true;
+    } else if (this.state.offsetter !== nextState.offsetter) {
+      return true;
     }
     return false;
   }
@@ -207,14 +210,15 @@ export default class RecyclerListBible extends Component {
   };
 
   onVisibleIndicesChanged = (TOnItemStatusChanged) => {
-    console.log(TOnItemStatusChanged);
+    // console.log(TOnItemStatusChanged);
     let firstVisibleIndex = TOnItemStatusChanged[0];
     // if (firstVisibleIndex === 1) {
     //   console.log("LOAD PREVIOUS VERSES");
     //   // this.loadPreviousVerses();
     // }
 
-    let currentChapter = firstVisibleIndex + this.state.startChapter - 1;
+    let currentChapter =
+      firstVisibleIndex + this.state.startChapter + this.state.offsetter;
     // console.log(this.state.endChapter, currentChapter);
     if (this.state.endChapter - currentChapter == 3) {
       this.loadNextVerses();
@@ -242,7 +246,7 @@ export default class RecyclerListBible extends Component {
     return (
       <Chapter
         chapterHeading={item.get("heading")}
-        chapterNum={item.get("@num") ?? String(index + 1)}
+        chapterNum={Number(item.get("@num")) ?? index + 1}
         colors={this.props.colors}
         fontSize={this.props.fontSize}
         openStudyScreen={this.openStudyScreen}
@@ -326,13 +330,8 @@ export default class RecyclerListBible extends Component {
   };
 
   render() {
-    const {
-      bibleSectionsRef,
-      colors,
-      fontSize,
-      HEADER_HEIGHT,
-      onScroll,
-    } = this.props;
+    const { bibleSectionsRef, colors, fontSize, HEADER_HEIGHT, onScroll } =
+      this.props;
 
     const styles = {
       bibleTextView: {

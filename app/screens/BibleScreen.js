@@ -41,17 +41,11 @@ export default class BibleScreen extends Component {
     this.props.bottomSheetContentRef.current.setState({ settingsMode: false });
 
     let studyScreen = this.props.studyScreen.current;
-    let topPanel = this.props.topPanel.current;
-    if (studyScreen.state.verseList.length === 0) {
-      console.log("setting study screen now to", topPanel.state.verses.length);
-      studyScreen.setState({
-        currentBook: topPanel.state.currentBook,
-        verseList: topPanel.state.verses,
-      });
-    }
 
     const interactionPromise = InteractionManager.runAfterInteractions(() => {
-      let myIndex = this.props.topPanel.current.state.verses.findIndex(
+      console.log(chapter, verse);
+      // console.log(studyScreen.state.verseList.slice(0, 10));
+      let myIndex = studyScreen.state.verseList.findIndex(
         (obj) => obj.chapter === chapter && obj.verse === verse
       );
 

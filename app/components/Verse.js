@@ -93,7 +93,7 @@ export default class Verse extends PureComponent {
       // />
       <Text
         onPress={this._toggleHighlight}
-        // onLongPress={onPress}
+        onLongPress={onPress}
         style={verseStyle}
       >
         {verseNumber + " "}

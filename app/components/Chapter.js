@@ -92,16 +92,16 @@ export default class Chapter extends PureComponent {
     parent.setState((state) => ({ timesUpdated: state.timesUpdated + 1 }));
   };
 
-  renderItem = (item, index) => (
-    <LazyloadView host="lazyload-list">
-      <Paragraph
-        style={[{ fontSize: this.props.fontSize }, this.props.verseTextStyle]}
-      >
-        {"TEST PARAGRAPH"}
-        {/* {item.map(this.mapVerseObject)} */}
-      </Paragraph>
-    </LazyloadView>
-  );
+  // renderItem = (item, index) => (
+  //   <LazyloadView host="lazyload-list">
+  //     <Paragraph
+  //       style={[{ fontSize: this.props.fontSize }, this.props.verseTextStyle]}
+  //     >
+  //       {"TEST PARAGRAPH"}
+  //       {/* {item.map(this.mapVerseObject)} */}
+  //     </Paragraph>
+  //   </LazyloadView>
+  // );
 
   render() {
     const {
@@ -115,10 +115,12 @@ export default class Chapter extends PureComponent {
       verseTextStyle,
     } = this.props;
 
+    let heading = Map.isMap(chapterHeading)
+      ? chapterHeading.get("#text")
+      : chapterHeading;
+
     const title =
-      chapterNum +
-      "\t" +
-      (Map.isMap(chapterHeading) ? chapterHeading.get(0) : chapterHeading);
+      chapterNum + "\t" + (List.isList(heading) ? heading.get(0) : heading);
 
     const sectionStyle = {
       // backgroundColor: "red",

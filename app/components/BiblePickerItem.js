@@ -17,7 +17,7 @@ class BiblePickerItem extends PureComponent {
       backgroundColor: "red",
       textAlign: "center",
       alignSelf: "stretch",
-      color: this.props.textColor,
+      color: "#007AFF", //this.props.textColor,
       height: "100%",
     },
   };

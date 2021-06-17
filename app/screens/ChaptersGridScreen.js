@@ -16,6 +16,7 @@ export default function ChaptersGridScreen({
   route,
   bibleScreen,
   paragraphBibleRef,
+  studyScreen,
   topPanel,
   value,
 }) {
@@ -33,6 +34,9 @@ export default function ChaptersGridScreen({
 
     bibleScreen.current?.setState({
       currentBook: title, //bookPaths[title].getIn(["crossway-bible", "book", "@title"]),
+    });
+    studyScreen.current?.setState({
+      bookTitle: title,
     });
   }, []);
 

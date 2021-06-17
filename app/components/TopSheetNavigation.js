@@ -17,34 +17,34 @@ import bookPaths from "../json/Bible";
 import reactStringReplace from "react-string-replace";
 import { List } from "immutable";
 
-var he = require("he");
-var options = {
-  attributeNamePrefix: "",
-  attrNodeName: "attr", //default is 'false'
-  textNodeName: "text",
-  ignoreAttributes: true,
-  ignoreNameSpace: true,
-  allowBooleanAttributes: false,
-  parseNodeValue: true,
-  parseAttributeValue: true,
-  trimValues: true,
-  cdataTagName: "__cdata", //default is 'false'
-  cdataPositionChar: "\\c",
-  parseTrueNumberOnly: false,
-  arrayMode: false,
-  // attrValueProcessor: (val, attrName) =>
-  //   attrName === "let"
-  //     ? console.log(val)
-  //     : he.decode(val, { isAttributeValue: true }),
-  // tagValueProcessor: (val, tagName) =>
-  //   tagName === "crossref" ? console.log(val) : he.decode(val),
-  attrValueProcessor: (val, attrName) =>
-    he.decode(val, { isAttributeValue: true }), //default is a=>a
-  tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
-  format: true,
-  supressEmptyNode: true,
-  stopNodes: ["heading", "verse"], //"crossref", "q", "note"],
-};
+// var he = require("he");
+// var options = {
+//   attributeNamePrefix: "",
+//   attrNodeName: "attr", //default is 'false'
+//   textNodeName: "text",
+//   ignoreAttributes: true,
+//   ignoreNameSpace: true,
+//   allowBooleanAttributes: false,
+//   parseNodeValue: true,
+//   parseAttributeValue: true,
+//   trimValues: true,
+//   cdataTagName: "__cdata", //default is 'false'
+//   cdataPositionChar: "\\c",
+//   parseTrueNumberOnly: false,
+//   arrayMode: false,
+//   // attrValueProcessor: (val, attrName) =>
+//   //   attrName === "let"
+//   //     ? console.log(val)
+//   //     : he.decode(val, { isAttributeValue: true }),
+//   // tagValueProcessor: (val, tagName) =>
+//   //   tagName === "crossref" ? console.log(val) : he.decode(val),
+//   attrValueProcessor: (val, attrName) =>
+//     he.decode(val, { isAttributeValue: true }), //default is a=>a
+//   tagValueProcessor: (val, tagName) => he.decode(val), //default is a=>a
+//   format: true,
+//   supressEmptyNode: true,
+//   stopNodes: ["heading", "verse"], //"crossref", "q", "note"],
+// };
 
 // const notesArray = require("../json/esvmsb.notes.json")["crossway-studynotes"]
 //   .book;
@@ -210,6 +210,7 @@ class TopSheetNavigation extends Component {
                     {...props}
                     bibleScreen={this.props.bibleScreen}
                     paragraphBibleRef={this.props.paragraphBibleRef}
+                    studyScreen={this.props.studyScreen}
                     topPanel={this.props.topPanel}
                   />
                 )}
